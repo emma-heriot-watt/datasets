@@ -1,0 +1,114 @@
+[tool.poetry]
+name = "python-template"
+version = "0.1.0"
+description = ""
+authors = ["Amit Parekh <amit.parekh@hw.ac.uk>"]
+readme = "README.md"
+repository = "https://github.com/emma-simbot/python-template"
+
+packages = [{ include = "src" }]
+
+[tool.poe]
+envfile = ".env"
+
+[tool.poe.tasks]
+format = { cmd = "pre-commit run --all-files", help = "Format using pre-commit hooks" }
+typecheck = { cmd = "mypy src/", help = "Check types with mypy" }
+lint = { cmd = "flake8 src/", help = "Lint with flake8" }
+test = "pytest --cov=src"
+cov-export = "pytest --cov=src --cov-report xml:coverage.xml"
+## PyTorch with CUDA 11.1. If PyTorch is imported first, importing Tensorflow will detect CUDA + cuDNN bundled with PyTorch
+## See https://github.com/python-poetry/poetry/issues/2543
+force-cuda11 = "pip install torch==1.10.0+cu111 torchvision==0.11.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html"
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+torch = "^1.10.0"
+pytorch-lightning = "^1.5.6"
+torchvision = "^0.11.1"
+wandb = "^0.12.9"
+typing-extensions = "^4.0.1"
+torchmetrics = "^0.6.2"
+hydra-core = "^1.1.1"
+hydra-colorlog = "^1.1.0"
+transformers = "^4.14.1"
+pydantic = { extras = ["dotenv"], version = "^1.8.2" }
+rich = "^10.16.1"
+overrides = "^6.1.0"
+python-dotenv = "^0.19.2"
+plotly = "^5.5.0"
+scikit-learn = "^1.0.1"
+
+
+[tool.poetry.dev-dependencies]
+wemake-python-styleguide = "^0.16.0"
+flake8 = "^4.0"
+mypy = "^0.920"
+pytest = "^6.2.5"
+ipykernel = "^6.6.0"
+testfixtures = "^6.18.3"
+pre-commit = "^2.16.0"
+poethepoet = "^0.11.0"
+pytest-cov = "^3.0.0"
+jupyterlab = "^3.2.5"
+black = { version = "^21.12b0", extras = ["jupyter"] }
+pudb = "^2021.2.2"
+regex = "2021.11.1"
+isort = "^5.10.1"
+
+[tool.black]
+line-length = 99
+
+[tool.isort]
+profile = "black"
+combine_as_imports = true
+lines_after_imports = 2
+line_length = 99
+known_first_party = ["src"]
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::UserWarning", "ignore::DeprecationWarning"]
+
+
+[tool.mypy]
+python_version = "3.9"
+# Import discovery
+ignore_missing_imports = true
+
+# Untyped definitions and calls
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = false
+
+# None and Optional handling
+no_implicit_optional = true
+
+# Warnings
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_unused_configs = true
+warn_unreachable = true
+
+# Config error messages
+show_error_context = false
+show_column_numbers = true
+show_error_codes = true
+pretty = false
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+# Issue with transformers and mypy. Waiting for fix: https://github.com/python/mypy/pull/11344
+module = "transformers.*"
+follow_imports = "skip"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
