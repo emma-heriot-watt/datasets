@@ -205,6 +205,7 @@ env.bak/
 venv.bak/
 pythonenv*
 .autoenv
+.envrc
 
 # Spyder project settings
 .spyderproject
