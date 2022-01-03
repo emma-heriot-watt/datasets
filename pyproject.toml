@@ -29,7 +29,7 @@ pytorch-lightning = "^1.5.7"
 torchvision = "^0.11.1"
 hydra-core = "^1.1.1"
 hydra-colorlog = "^1.1.0"
-pydantic = { extras = ["dotenv"], version = "^1.8.2" }
+pydantic = { extras = ["dotenv"], version = "^1.9.0" }
 overrides = "^6.1.0"
 datasets = "^1.17.0"
 typer = "^0.4.0"
