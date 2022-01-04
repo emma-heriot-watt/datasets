@@ -17,22 +17,18 @@ typecheck = { cmd = "mypy src/", help = "Check types with mypy" }
 lint = { cmd = "flake8 src/", help = "Lint with flake8" }
 test = "pytest --cov=src"
 cov-export = "pytest --cov=src --cov-report xml:coverage.xml"
-## PyTorch with CUDA 11.1. If PyTorch is imported first, importing Tensorflow will detect CUDA + cuDNN bundled with PyTorch
-## See https://github.com/python-poetry/poetry/issues/2543
-force-cuda11 = "pip install torch==1.10.0+cu111 torchvision==0.11.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html"
-
 
 [tool.poetry.dependencies]
 python = "^3.9"
-torch = "^1.10.0"
-pytorch-lightning = "^1.5.7"
-torchvision = "^0.11.1"
-hydra-core = "^1.1.1"
-hydra-colorlog = "^1.1.0"
-pydantic = { extras = ["dotenv"], version = "^1.9.0" }
+pydantic = { extras = ["dotenv"], version = "^1.8.2" }
 overrides = "^6.1.0"
 datasets = "^1.17.0"
 typer = "^0.4.0"
+rich = "^10.16.1"
+numpy = "^1.22.0"
+orjson = "^3.6.5"
+pandas = "^1.3.5"
+Pillow = "^8.4.0"
 
 
 [tool.poetry.dev-dependencies]
@@ -47,7 +43,8 @@ poethepoet = "^0.11.0"
 pytest-cov = "^3.0.0"
 jupyterlab = "^3.2.5"
 isort = "^5.10.1"
-black = {extras = ["jupyter"], version = "^21.12b0"}
+black = { extras = ["jupyter"], version = "^21.12b0" }
+hypothesis = { extras = ["numpy"], version = "^6.34.1" }
 
 [tool.black]
 line-length = 99
