@@ -34,7 +34,7 @@ Pillow = "^8.4.0"
 [tool.poetry.dev-dependencies]
 wemake-python-styleguide = "^0.16.0"
 flake8 = "^4.0"
-mypy = "^0.930"
+mypy = "^0.931"
 pytest = "^6.2.5"
 ipykernel = "^6.6.1"
 testfixtures = "^6.18.3"
