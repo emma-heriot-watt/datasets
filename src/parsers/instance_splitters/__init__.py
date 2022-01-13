@@ -1,0 +1,5 @@
+from src.parsers.instance_splitters.coco_caption import CocoCaptionSplitter
+from src.parsers.instance_splitters.gqa_qa_pairs import GqaQaPairSplitter
+from src.parsers.instance_splitters.gqa_scene_graphs import GqaSceneGraphSplitter
+from src.parsers.instance_splitters.instance_splitter import InstanceSplitter
+from src.parsers.instance_splitters.vg_regions import VgRegionsSplitter

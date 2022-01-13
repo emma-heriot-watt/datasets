@@ -12,6 +12,8 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+slurm-*
+
 # Generated files
 .idea/**/contentModel.xml
 
@@ -266,7 +268,6 @@ logs/
 *.tax2010
 *.vcf
 *.xml
-storage/**/*.json
 
 ### Images ###
 # JPEG
@@ -350,5 +351,8 @@ storage/**/*.json
 *.vob
 *.wmv
 *.webm
+
+# Ignoring storage folder
+storage/
 
 # End of https://www.toptal.com/developers/gitignore/api/data,images,video
