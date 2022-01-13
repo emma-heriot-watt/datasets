@@ -1,4 +1,4 @@
-from typing import Iterable, Optional
+from typing import Optional
 
 import numpy
 from numpy.typing import NDArray
@@ -27,5 +27,5 @@ class Instance(Scene):
     # id: str
     caption: Optional[Caption]
     qa: Optional[QuestionAnswerPair]
-    regions: Optional[Iterable[Region]]
+    regions: Optional[list[Region]]
     scene_graph: Optional[SceneGraph]

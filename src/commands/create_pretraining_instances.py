@@ -4,6 +4,7 @@ from typing import Optional
 
 from rich.progress import Progress
 
+from src.api.storage import DatasetDB
 from src.common import get_progress
 from src.datamodels import DatasetName
 from src.datamodels.datasets import CocoImageMetadata, GqaImageMetadata, VgImageMetadata
@@ -19,9 +20,13 @@ QA_PAIRS_DIR = BASE_DIR.joinpath("qa_pairs").as_posix()
 SCENE_GRAPH_DIR = BASE_DIR.joinpath("scene_graphs").as_posix()
 REGIONS_DIR = BASE_DIR.joinpath("regions").as_posix()
 
+database_directory = Path("storage/data/db/")
+database_directory.mkdir(parents=True, exist_ok=True)
+instances_db_path = database_directory.joinpath("instances.db")
+
 
 def create_pretraining_instances(
-    num_workers: int = 4, progress: Optional[Progress] = None
+    num_workers: int = 3, progress: Optional[Progress] = None
 ) -> None:
     """Create all the pretraining instances."""
     progress = progress if progress else get_progress()
@@ -78,10 +83,14 @@ def create_pretraining_instances(
             [aligned_vg_coco_metadata, aligned_gqa_vg_metadata]
         )
 
-        with Pool(num_workers) as pool:
-            instances_iterator = structure_instances.from_scenes(scenes, progress, pool)
+        with DatasetDB(instances_db_path, readonly=False) as db:
+            progress.update(structure_instances.task_id, filepath=instances_db_path)
 
-            list(instances_iterator)
+            with Pool(num_workers) as pool:
+                instances_iterator = structure_instances.from_scenes(scenes, progress, pool)
+
+                for i, instance in enumerate(instances_iterator):
+                    db[(i, f"pretrain_{i}")] = instance.json()
 
 
 if __name__ == "__main__":
