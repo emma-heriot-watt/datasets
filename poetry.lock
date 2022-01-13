@@ -1140,7 +1140,7 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "poethepoet"
-version = "0.11.0"
+version = "0.12.0"
 description = "A task runner that works well with poetry."
 category = "dev"
 optional = false
@@ -1149,6 +1149,9 @@ python-versions = ">=3.6.2,<4.0.0"
 [package.dependencies]
 pastel = ">=0.2.1,<0.3.0"
 tomli = ">=1.2.2,<2.0.0"
+
+[package.extras]
+poetry_plugin = ["poetry (>=1.0,<2.0)"]
 
 [[package]]
 name = "pre-commit"
@@ -1696,8 +1699,7 @@ typing_extensions = ">=3.6,<5.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "dcacd529bc16f831b9321decff874d70a7ce4c4792dae5654921f7a53c506521"
-
+content-hash = "dd15f79f73749dfbfb0f7617f9ec9c6e4499fa3e67a6d3681f43155730a386c6"
 
 [metadata.files]
 anyio = [
@@ -2355,8 +2357,8 @@ pluggy = [
     {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
 ]
 poethepoet = [
-    {file = "poethepoet-0.11.0-py3-none-any.whl", hash = "sha256:4aac200f52e0faa309a655c064f2a522d9d18b64f717de9805151421166ba4d8"},
-    {file = "poethepoet-0.11.0.tar.gz", hash = "sha256:a0618e198600db801588bae627982682f8bd5304a49a75c6dbc430feade5a8a9"},
+    {file = "poethepoet-0.12.0-py3-none-any.whl", hash = "sha256:59215a7b0828295a499fa28a5e2c6d0202520a290cd0a74d59f54c1c74cbd2c7"},
+    {file = "poethepoet-0.12.0.tar.gz", hash = "sha256:d86a29707c24d964bbee15750d07dc763a9ca48265e1cd64dab15647f173bab7"},
 ]
 pre-commit = [
     {file = "pre_commit-2.16.0-py2.py3-none-any.whl", hash = "sha256:758d1dc9b62c2ed8881585c254976d66eae0889919ab9b859064fc2fe3c7743e"},
