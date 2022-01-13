@@ -11,7 +11,7 @@ from src.datamodels.scene_graph import SceneGraph
 from src.datamodels.text import Caption, QuestionAnswerPair
 
 
-Pixels = NDArray[numpy.floating]
+Pixels = NDArray[numpy.float32]
 
 
 class Scene(BaseModel):

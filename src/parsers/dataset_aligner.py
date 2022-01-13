@@ -177,7 +177,7 @@ class DatasetAligner(Generic[S, T]):
 
         return mapped_metadata
 
-    def _print_statistics(self, aligned: Iterable) -> None:
+    def _print_statistics(self, aligned: Iterable[dict[DatasetName, DatasetMetadata]]) -> None:
         table = Table(
             title=f"Alignment Stats for {self._source_dataset_name} and {self._target_dataset_name}",
         )

@@ -7,7 +7,7 @@ from pydantic import validator
 from src.datamodels.base_model import BaseModel
 
 
-BBox = NDArray[numpy.floating]
+BBox = NDArray[numpy.float32]
 
 
 class Region(BaseModel):

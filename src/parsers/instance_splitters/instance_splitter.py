@@ -70,7 +70,7 @@ class InstanceSplitter(ABC, Generic[RawFeature, Feature]):
         """
         return raw_data
 
-    def postprocess_raw_data(self, raw_data: Any) -> Iterator:
+    def postprocess_raw_data(self, raw_data: Any) -> Iterator[Any]:
         """Process all the raw data from all files.
 
         See `_read()` method for how this is used.
@@ -102,7 +102,7 @@ class InstanceSplitter(ABC, Generic[RawFeature, Feature]):
 
         return read_json(file_path)
 
-    def _read(self) -> Iterator:
+    def _read(self) -> Iterator[Any]:
         """Read all files and return a single Iterator over all of them."""
         raw_data = itertools.chain.from_iterable(
             self.process_raw_file_return(self.read(file_path)) for file_path in self.file_paths
