@@ -1,11 +1,10 @@
 from multiprocessing.pool import Pool
-from pathlib import Path
 from typing import Optional
 
 from rich.progress import Progress
 
 from src.api.storage import DatasetDB
-from src.common import get_progress
+from src.common import Settings, get_progress
 from src.datamodels import DatasetName
 from src.datamodels.datasets import CocoImageMetadata, GqaImageMetadata, VgImageMetadata
 from src.parsers.align_multiple_datasets import AlignMultipleDatasets
@@ -14,15 +13,10 @@ from src.parsers.dataset_metadata import CocoMetadataParser, GqaMetadataParser, 
 from src.parsers.structure_instances import StructureInstances
 
 
-BASE_DIR = Path("storage/data")
-CAPTIONS_DIR = BASE_DIR.joinpath("captions").as_posix()
-QA_PAIRS_DIR = BASE_DIR.joinpath("qa_pairs").as_posix()
-SCENE_GRAPH_DIR = BASE_DIR.joinpath("scene_graphs").as_posix()
-REGIONS_DIR = BASE_DIR.joinpath("regions").as_posix()
+settings = Settings()
 
-database_directory = Path("storage/data/db/")
-database_directory.mkdir(parents=True, exist_ok=True)
-instances_db_path = database_directory.joinpath("instances.db")
+
+instances_db_path = settings.directories.databases.joinpath("instances.db")
 
 
 def create_pretraining_instances(
@@ -36,21 +30,21 @@ def create_pretraining_instances(
             scene_graphs_train_path="storage/data/gqa/train_sceneGraphs.json",
             scene_graphs_val_path="storage/data/gqa/val_sceneGraphs.json",
             images_dir="storage/data/gqa/images",
-            scene_graphs_dir=SCENE_GRAPH_DIR,
-            qa_pairs_dir=QA_PAIRS_DIR,
+            scene_graphs_dir=settings.directories.scene_graphs.as_posix(),
+            qa_pairs_dir=settings.directories.qa_pairs.as_posix(),
             progress=progress,
         )
         vg_metadata_parser = VgMetadataParser(
             "storage/data/visual_genome/image_data.json",
             images_dir="storage/data/visual_genome/images",
-            regions_dir=REGIONS_DIR,
+            regions_dir=settings.directories.regions.as_posix(),
             progress=progress,
         )
         coco_metadata_parser = CocoMetadataParser(
             caption_train_path="storage/data/coco/captions_train2017.json",
             caption_val_path="storage/data/coco/captions_val2017.json",
             images_dir="storage/data/coco/images",
-            captions_dir=CAPTIONS_DIR,
+            captions_dir=settings.directories.captions.as_posix(),
             progress=progress,
         )
 

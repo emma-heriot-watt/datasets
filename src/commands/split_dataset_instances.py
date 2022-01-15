@@ -1,10 +1,9 @@
 from multiprocessing.pool import Pool
-from pathlib import Path
 from typing import Optional
 
 from rich.progress import Progress
 
-from src.common import get_progress
+from src.common import Settings, get_progress
 from src.parsers.instance_splitters import (
     CocoCaptionSplitter,
     GqaQaPairSplitter,
@@ -13,11 +12,7 @@ from src.parsers.instance_splitters import (
 )
 
 
-BASE_DIR = Path("storage/data")
-CAPTIONS_DIR = BASE_DIR.joinpath("captions").as_posix()
-QA_PAIRS_DIR = BASE_DIR.joinpath("qa_pairs").as_posix()
-SCENE_GRAPH_DIR = BASE_DIR.joinpath("scene_graphs").as_posix()
-REGIONS_DIR = BASE_DIR.joinpath("regions").as_posix()
+settings = Settings()
 
 
 def split_dataset_instances(num_workers: int = 4, progress: Optional[Progress] = None) -> None:
@@ -30,7 +25,7 @@ def split_dataset_instances(num_workers: int = 4, progress: Optional[Progress] =
                 "storage/data/coco/captions_train2017.json",
                 "storage/data/coco/captions_val2017.json",
             ],
-            CAPTIONS_DIR,
+            settings.directories.captions.as_posix(),
             progress,
         )
 
@@ -39,7 +34,7 @@ def split_dataset_instances(num_workers: int = 4, progress: Optional[Progress] =
                 "storage/data/gqa/questions/val_balanced_questions.json",
                 "storage/data/gqa/questions/train_balanced_questions.json",
             ],
-            QA_PAIRS_DIR,
+            settings.directories.qa_pairs.as_posix(),
             progress,
         )
 
@@ -48,13 +43,13 @@ def split_dataset_instances(num_workers: int = 4, progress: Optional[Progress] =
                 "storage/data/gqa/train_sceneGraphs.json",
                 "storage/data/gqa/val_sceneGraphs.json",
             ],
-            SCENE_GRAPH_DIR,
+            settings.directories.scene_graphs.as_posix(),
             progress,
         )
 
         vg_regions = VgRegionsSplitter(
             "storage/data/visual_genome/region_descriptions.json",
-            REGIONS_DIR,
+            settings.directories.regions.as_posix(),
             progress,
         )
 
