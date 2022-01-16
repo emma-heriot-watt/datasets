@@ -28,6 +28,7 @@ class Paths:  # noqa: WPS230
         self.coco = self.datasets.joinpath("coco/")
         self.visual_genome = self.datasets.joinpath("visual_genome/")
         self.gqa = self.datasets.joinpath("gqa/")
+        self.epic_kitchens = self.datasets.joinpath("epic_kitchens/")
 
         # Databases for output
         self.databases = self.storage.joinpath("db/")
@@ -49,6 +50,7 @@ class Paths:  # noqa: WPS230
         self.coco.mkdir(parents=True, exist_ok=True)
         self.visual_genome.mkdir(parents=True, exist_ok=True)
         self.gqa.mkdir(parents=True, exist_ok=True)
+        self.epic_kitchens.mkdir(parents=True, exist_ok=True)
 
         self.databases.mkdir(parents=True, exist_ok=True)
 
