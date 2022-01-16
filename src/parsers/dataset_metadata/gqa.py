@@ -18,11 +18,11 @@ class GqaMetadataParser(DatasetMetadataParser[GqaImageMetadata]):
 
     def __init__(
         self,
-        scene_graphs_train_path: str,
-        scene_graphs_val_path: str,
-        images_dir: str,
-        scene_graphs_dir: str,
-        qa_pairs_dir: str,
+        scene_graphs_train_path: Path,
+        scene_graphs_val_path: Path,
+        images_dir: Path,
+        scene_graphs_dir: Path,
+        qa_pairs_dir: Path,
         progress: Progress,
     ) -> None:
         super().__init__(progress=progress)
@@ -59,12 +59,10 @@ class GqaMetadataParser(DatasetMetadataParser[GqaImageMetadata]):
             split=metadata.dataset_split,
             media=SourceMedia(
                 media_type=MediaType.image,
-                path=Path(self.images_dir).joinpath(metadata.file_name).as_posix(),
+                path=self.images_dir.joinpath(metadata.file_name).as_posix(),
             ),
-            scene_graph_path=Path(self.scene_graphs_dir)
-            .joinpath(f"{metadata.id}.json")
-            .as_posix(),
-            qa_pairs_path=Path(self.qa_pairs_dir).joinpath(f"{metadata.id}.json").as_posix(),
+            scene_graph_path=self.scene_graphs_dir.joinpath(f"{metadata.id}.json").as_posix(),
+            qa_pairs_path=self.qa_pairs_dir.joinpath(f"{metadata.id}.json").as_posix(),
         )
 
     def _preprocess_raw_data(self, image_id: str, scene_graph: dict[str, Any]) -> dict[str, Any]:

@@ -16,7 +16,7 @@ from src.parsers.structure_instances import StructureInstances
 settings = Settings()
 
 
-instances_db_path = settings.directories.databases.joinpath("instances.db")
+instances_db_path = settings.paths.databases.joinpath("instances.db")
 
 
 def create_pretraining_instances(
@@ -27,24 +27,24 @@ def create_pretraining_instances(
 
     with progress:
         gqa_metadata_parser = GqaMetadataParser(
-            scene_graphs_train_path="storage/data/gqa/train_sceneGraphs.json",
-            scene_graphs_val_path="storage/data/gqa/val_sceneGraphs.json",
-            images_dir="storage/data/gqa/images",
-            scene_graphs_dir=settings.directories.scene_graphs.as_posix(),
-            qa_pairs_dir=settings.directories.qa_pairs.as_posix(),
+            scene_graphs_train_path=settings.paths.gqa.joinpath("train_sceneGraphs.json"),
+            scene_graphs_val_path=settings.paths.gqa.joinpath("val_sceneGraphs.json"),
+            images_dir=settings.paths.gqa.joinpath("images/"),
+            scene_graphs_dir=settings.paths.scene_graphs,
+            qa_pairs_dir=settings.paths.qa_pairs,
             progress=progress,
         )
         vg_metadata_parser = VgMetadataParser(
-            "storage/data/visual_genome/image_data.json",
-            images_dir="storage/data/visual_genome/images",
-            regions_dir=settings.directories.regions.as_posix(),
+            settings.paths.visual_genome.joinpath("image_data.json"),
+            images_dir=settings.paths.visual_genome.joinpath("images/"),
+            regions_dir=settings.paths.regions,
             progress=progress,
         )
         coco_metadata_parser = CocoMetadataParser(
-            caption_train_path="storage/data/coco/captions_train2017.json",
-            caption_val_path="storage/data/coco/captions_val2017.json",
-            images_dir="storage/data/coco/images",
-            captions_dir=settings.directories.captions.as_posix(),
+            caption_train_path=settings.paths.coco.joinpath("captions_train2017.json"),
+            caption_val_path=settings.paths.coco.joinpath("captions_val2017.json"),
+            images_dir=settings.paths.coco.joinpath("images/"),
+            captions_dir=settings.paths.captions,
             progress=progress,
         )
 

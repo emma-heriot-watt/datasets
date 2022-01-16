@@ -18,10 +18,10 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
 
     def __init__(
         self,
-        caption_train_path: str,
-        caption_val_path: str,
-        images_dir: str,
-        captions_dir: str,
+        caption_train_path: Path,
+        caption_val_path: Path,
+        images_dir: Path,
+        captions_dir: Path,
         progress: Progress,
     ) -> None:
         super().__init__(progress=progress)
@@ -49,7 +49,7 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
             media=SourceMedia(
                 url=metadata.coco_url,
                 media_type=MediaType.image,
-                path=Path(self.images_dir).joinpath(metadata.file_name).as_posix(),
+                path=self.images_dir.joinpath(metadata.file_name).as_posix(),
             ),
-            caption_path=Path(self.captions_dir).joinpath(f"{metadata.id}.json").as_posix(),
+            caption_path=self.captions_dir.joinpath(f"{metadata.id}.json").as_posix(),
         )

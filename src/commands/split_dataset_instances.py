@@ -22,34 +22,34 @@ def split_dataset_instances(num_workers: int = 4, progress: Optional[Progress] =
     with progress:
         coco_captions = CocoCaptionSplitter(
             [
-                "storage/data/coco/captions_train2017.json",
-                "storage/data/coco/captions_val2017.json",
+                settings.paths.coco.joinpath("captions_train2017.json"),
+                settings.paths.coco.joinpath("captions_val2017.json"),
             ],
-            settings.directories.captions.as_posix(),
+            settings.paths.captions,
             progress,
         )
 
         gqa_qa_pairs = GqaQaPairSplitter(
             [
-                "storage/data/gqa/questions/val_balanced_questions.json",
-                "storage/data/gqa/questions/train_balanced_questions.json",
+                settings.paths.gqa.joinpath("questions/val_balanced_questions.json"),
+                settings.paths.gqa.joinpath("questions/train_balanced_questions.json"),
             ],
-            settings.directories.qa_pairs.as_posix(),
+            settings.paths.qa_pairs,
             progress,
         )
 
         gqa_scene_graph = GqaSceneGraphSplitter(
             [
-                "storage/data/gqa/train_sceneGraphs.json",
-                "storage/data/gqa/val_sceneGraphs.json",
+                settings.paths.gqa.joinpath("train_sceneGraphs.json"),
+                settings.paths.gqa.joinpath("val_sceneGraphs.json"),
             ],
-            settings.directories.scene_graphs.as_posix(),
+            settings.paths.scene_graphs,
             progress,
         )
 
         vg_regions = VgRegionsSplitter(
-            "storage/data/visual_genome/region_descriptions.json",
-            settings.directories.regions.as_posix(),
+            settings.paths.visual_genome.joinpath("region_descriptions.json"),
+            settings.paths.regions,
             progress,
         )
 

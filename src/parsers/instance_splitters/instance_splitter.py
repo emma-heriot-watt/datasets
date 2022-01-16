@@ -20,14 +20,12 @@ class InstanceSplitter(ABC, Generic[Feature]):
 
     def __init__(
         self,
-        paths: Union[str, list[str]],
-        output_dir: str,
+        paths: Union[str, list[str], Path, list[Path]],
+        output_dir: Union[str, Path],
         progress: Progress,
     ) -> None:
         self.file_paths = get_all_file_paths(paths)
         self.output_dir = Path(output_dir)
-
-        self.output_dir.mkdir(parents=True, exist_ok=True)
 
         self.task_id = progress.add_task(
             self.progress_bar_description, start=False, visible=False, total=float("inf")

@@ -16,7 +16,11 @@ class VgMetadataParser(DatasetMetadataParser[VgImageMetadata]):
     dataset_name = DatasetName.visual_genome
 
     def __init__(
-        self, image_data_json_path: str, images_dir: str, regions_dir: str, progress: Progress
+        self,
+        image_data_json_path: Path,
+        images_dir: Path,
+        regions_dir: Path,
+        progress: Progress,
     ) -> None:
         super().__init__(progress=progress)
         self.image_data_json_path = image_data_json_path
@@ -37,7 +41,7 @@ class VgMetadataParser(DatasetMetadataParser[VgImageMetadata]):
             media=SourceMedia(
                 url=metadata.url,
                 media_type=MediaType.image,
-                path=Path(self.images_dir).joinpath(f"{metadata.image_id}.jpg").as_posix(),
+                path=self.images_dir.joinpath(f"{metadata.image_id}.jpg").as_posix(),
             ),
-            regions_path=Path(self.regions_dir).joinpath(f"{metadata.image_id}.json").as_posix(),
+            regions_path=self.regions_dir.joinpath(f"{metadata.image_id}.json").as_posix(),
         )
