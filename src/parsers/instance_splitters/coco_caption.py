@@ -8,7 +8,7 @@ from src.datamodels.datasets import CocoCaption
 from src.parsers.instance_splitters.instance_splitter import InstanceSplitter
 
 
-class CocoCaptionSplitter(InstanceSplitter[CocoCaption, Caption]):
+class CocoCaptionSplitter(InstanceSplitter[Caption]):
     """Split COCO captions into multiple files."""
 
     progress_bar_description = "Splitting captions for [u]COCO[/]"

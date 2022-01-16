@@ -2,7 +2,7 @@ import itertools
 from abc import ABC, abstractmethod
 from multiprocessing.pool import Pool
 from pathlib import Path
-from typing import Any, Generic, Iterator, Optional, TypeVar, Union, overload
+from typing import Any, Generic, Iterable, Iterator, Optional, TypeVar, Union, overload
 
 from pydantic import BaseModel
 from rich.progress import Progress
@@ -11,10 +11,9 @@ from src.io import get_all_file_paths, read_json, write_json
 
 
 Feature = TypeVar("Feature", bound=BaseModel)
-RawFeature = TypeVar("RawFeature")
 
 
-class InstanceSplitter(ABC, Generic[RawFeature, Feature]):
+class InstanceSplitter(ABC, Generic[Feature]):
     """Split dataset instances into multiple files for easier loading."""
 
     progress_bar_description = "Splitting features"
@@ -70,7 +69,7 @@ class InstanceSplitter(ABC, Generic[RawFeature, Feature]):
         """
         return raw_data
 
-    def postprocess_raw_data(self, raw_data: Any) -> Iterator[Any]:
+    def postprocess_raw_data(self, raw_data: Any) -> Iterable[Any]:
         """Process all the raw data from all files.
 
         See `_read()` method for how this is used.

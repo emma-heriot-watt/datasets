@@ -5,7 +5,7 @@ from src.datamodels.datasets import GqaSceneGraph
 from src.parsers.instance_splitters.instance_splitter import InstanceSplitter
 
 
-class GqaSceneGraphSplitter(InstanceSplitter[GqaSceneGraph, SceneGraph]):
+class GqaSceneGraphSplitter(InstanceSplitter[SceneGraph]):
     """Split scene graphs from GQA into multiple files."""
 
     progress_bar_description = "Spliting scene graphs for [u]GQA[/]"

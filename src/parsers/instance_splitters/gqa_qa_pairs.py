@@ -8,7 +8,7 @@ from src.parsers.instance_splitters.instance_splitter import InstanceSplitter
 RawInstanceType = tuple[str, list[dict[str, Any]]]
 
 
-class GqaQaPairSplitter(InstanceSplitter[str, QuestionAnswerPair]):
+class GqaQaPairSplitter(InstanceSplitter[QuestionAnswerPair]):
     """Split QA pairs from GQA into multiple files."""
 
     progress_bar_description = "Splitting QA pairs for [u]GQA[/]"

@@ -7,7 +7,7 @@ from src.datamodels.datasets import VgImageRegions
 from src.parsers.instance_splitters.instance_splitter import InstanceSplitter
 
 
-class VgRegionsSplitter(InstanceSplitter[VgImageRegions, Region]):
+class VgRegionsSplitter(InstanceSplitter[Region]):
     """Split Regions per VG instance into multiple files."""
 
     progress_bar_description = "Splitting regions for [u]Visual Genome[/]"
