@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterator
+from typing import Any
 
 from rich.progress import Progress
 
@@ -22,15 +22,10 @@ class VgMetadataParser(DatasetMetadataParser[VgImageMetadata]):
         regions_dir: Path,
         progress: Progress,
     ) -> None:
-        super().__init__(progress=progress)
-        self.image_data_json_path = image_data_json_path
+        super().__init__(progress=progress, data_paths=[(image_data_json_path, None)])
+
         self.images_dir = images_dir
         self.regions_dir = regions_dir
-
-    def get_metadata(self) -> Iterator[VgImageMetadata]:
-        """Get all the image metadata from VG."""
-        raw_data = read_json(self.image_data_json_path)
-        return self.structure_raw_metadata(raw_data)
 
     def convert_to_dataset_metadata(self, metadata: VgImageMetadata) -> DatasetMetadata:
         """Convert single instance's metadata to the common datamodel."""
@@ -45,3 +40,7 @@ class VgMetadataParser(DatasetMetadataParser[VgImageMetadata]):
             ),
             regions_path=self.regions_dir.joinpath(f"{metadata.image_id}.json").as_posix(),
         )
+
+    def _read(self, path: Path) -> Any:
+        """Read data from the given path."""
+        return read_json(path)

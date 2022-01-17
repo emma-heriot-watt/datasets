@@ -1,6 +1,5 @@
-import itertools
 from pathlib import Path
-from typing import Iterator
+from typing import Any
 
 from rich.progress import Progress
 
@@ -24,21 +23,16 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
         captions_dir: Path,
         progress: Progress,
     ) -> None:
-        super().__init__(progress=progress)
-        self.caption_train_path = caption_train_path
-        self.caption_val_path = caption_val_path
+        super().__init__(
+            progress=progress,
+            data_paths=[
+                (caption_train_path, DatasetSplit.train),
+                (caption_val_path, DatasetSplit.valid),
+            ],
+        )
+
         self.images_dir = images_dir
         self.captions_dir = captions_dir
-
-    def get_metadata(self) -> Iterator[CocoImageMetadata]:
-        """Get all the image metadat from COCO."""
-        train_data = read_json(self.caption_train_path)["images"]
-        val_data = read_json(self.caption_val_path)["images"]
-
-        structured_train = self.structure_raw_metadata(train_data, DatasetSplit.train)
-        structured_val = self.structure_raw_metadata(val_data, DatasetSplit.valid)
-
-        return itertools.chain.from_iterable([structured_train, structured_val])
 
     def convert_to_dataset_metadata(self, metadata: CocoImageMetadata) -> DatasetMetadata:
         """Convert single instance's metadata to the common datamodel."""
@@ -53,3 +47,7 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
             ),
             caption_path=self.captions_dir.joinpath(f"{metadata.id}.json").as_posix(),
         )
+
+    def _read(self, path: Path) -> Any:
+        """Read data from the given path."""
+        return read_json(path)["images"]

@@ -1,6 +1,5 @@
-import itertools
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 from rich.progress import Progress
 
@@ -25,31 +24,16 @@ class GqaMetadataParser(DatasetMetadataParser[GqaImageMetadata]):
         qa_pairs_dir: Path,
         progress: Progress,
     ) -> None:
-        super().__init__(progress=progress)
-        self.scene_graphs_train_path = scene_graphs_train_path
-        self.scene_graphs_val_path = scene_graphs_val_path
+        super().__init__(
+            progress=progress,
+            data_paths=[
+                (scene_graphs_train_path, DatasetSplit.train),
+                (scene_graphs_val_path, DatasetSplit.valid),
+            ],
+        )
         self.images_dir = images_dir
         self.scene_graphs_dir = scene_graphs_dir
         self.qa_pairs_dir = qa_pairs_dir
-
-    def get_metadata(self) -> Iterator[GqaImageMetadata]:
-        """Get all the instance metadata for GQA."""
-        train_data = read_json(self.scene_graphs_train_path)
-        val_data = read_json(self.scene_graphs_val_path)
-
-        train_data = [
-            self._preprocess_raw_data(image_id, scene_graph)
-            for image_id, scene_graph in train_data.items()
-        ]
-        val_data = [
-            self._preprocess_raw_data(image_id, scene_graph)
-            for image_id, scene_graph in val_data.items()
-        ]
-
-        structured_train = self.structure_raw_metadata(train_data, DatasetSplit.train)
-        structured_val = self.structure_raw_metadata(val_data, DatasetSplit.valid)
-
-        return itertools.chain.from_iterable([structured_train, structured_val])
 
     def convert_to_dataset_metadata(self, metadata: GqaImageMetadata) -> DatasetMetadata:
         """Convert single instance's metadata to the common datamodel."""
@@ -72,3 +56,11 @@ class GqaMetadataParser(DatasetMetadataParser[GqaImageMetadata]):
             "height": scene_graph["height"],
             "width": scene_graph["width"],
         }
+
+    def _read(self, path: Path) -> Any:
+        """Read data from the given path."""
+        raw_data = read_json(path)
+        return [
+            self._preprocess_raw_data(image_id, scene_graph)
+            for image_id, scene_graph in raw_data.items()
+        ]
