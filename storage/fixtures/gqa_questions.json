@@ -1,0 +1,127 @@
+{
+	"05515938": {
+		"semantic": [
+			{
+				"operation": "select",
+				"dependencies": [],
+				"argument": "bird (329774)"
+			},
+			{ "operation": "query", "dependencies": [0], "argument": "name" }
+		],
+		"entailed": ["05515937", "05515936", "05515922", "05515921"],
+		"equivalent": ["05515938"],
+		"question": "What is this bird called?",
+		"imageId": "2405722",
+		"isBalanced": true,
+		"groups": { "global": "bird", "local": "11q-bird" },
+		"answer": "parrot",
+		"semanticStr": "select: bird (329774)->query: name [0]",
+		"annotations": {
+			"answer": { "0": "329774" },
+			"question": { "3": "329774" },
+			"fullAnswer": { "3": "329774" }
+		},
+		"types": {
+			"detailed": "categoryThis",
+			"semantic": "cat",
+			"structural": "query"
+		},
+		"fullAnswer": "This is a parrot."
+	},
+	"08223573": {
+		"semantic": [
+			{ "operation": "select", "dependencies": [], "argument": "scene" },
+			{
+				"operation": "choose location",
+				"dependencies": [0],
+				"argument": "indoors|outdoors"
+			}
+		],
+		"entailed": ["08223572"],
+		"equivalent": ["08223573", "08223572"],
+		"question": "Is it an indoors or outdoors scene?",
+		"imageId": "2400861",
+		"isBalanced": true,
+		"groups": { "global": "41", "local": "02c-location" },
+		"answer": "indoors",
+		"semanticStr": "select: scene->choose location: indoors|outdoors [0]",
+		"annotations": { "answer": {}, "question": {}, "fullAnswer": {} },
+		"types": {
+			"detailed": "locationChoose",
+			"semantic": "global",
+			"structural": "choose"
+		},
+		"fullAnswer": "It is indoors."
+	},
+	"1231468": {
+		"semantic": [
+			{
+				"operation": "select",
+				"dependencies": [],
+				"argument": "knife (1135762)"
+			},
+			{ "operation": "query", "dependencies": [0], "argument": "hposition" }
+		],
+		"entailed": ["1231467", "1231466", "1231465"],
+		"equivalent": ["1231468"],
+		"question": "Which side of the photo is the knife on?",
+		"imageId": "2402467",
+		"isBalanced": true,
+		"groups": { "global": null, "local": "10q-knife_hposition" },
+		"answer": "left",
+		"semanticStr": "select: knife (1135762)->query: hposition [0]",
+		"annotations": {
+			"answer": {},
+			"question": { "7": "1135762" },
+			"fullAnswer": { "1": "1135762" }
+		},
+		"types": {
+			"detailed": "positionQuery",
+			"semantic": "attr",
+			"structural": "query"
+		},
+		"fullAnswer": "The knife is on the left of the image."
+	},
+	"12143164": {
+		"semantic": [
+			{ "operation": "select", "dependencies": [], "argument": "scene" },
+			{ "operation": "query", "dependencies": [0], "argument": "place" }
+		],
+		"entailed": ["12143165"],
+		"equivalent": ["12143164"],
+		"question": "What place is pictured?",
+		"imageId": "2352110",
+		"isBalanced": true,
+		"groups": { "global": "place", "local": "02q-place" },
+		"answer": "shore",
+		"semanticStr": "select: scene->query: place [0]",
+		"annotations": { "answer": {}, "question": {}, "fullAnswer": {} },
+		"types": {
+			"detailed": "place",
+			"semantic": "global",
+			"structural": "query"
+		},
+		"fullAnswer": "It is a shore."
+	},
+	"12143165": {
+		"semantic": [
+			{ "operation": "select", "dependencies": [], "argument": "scene" },
+			{ "operation": "query", "dependencies": [0], "argument": "place" }
+		],
+		"entailed": ["12143164"],
+		"equivalent": ["12143165"],
+		"question": "Which place is it?",
+		"imageId": "2352110",
+		"isBalanced": true,
+		"groups": { "global": "place", "local": "02q-place" },
+		"answer": "shore",
+		"semanticStr": "select: scene->query: place [0]",
+		"annotations": { "answer": {}, "question": {}, "fullAnswer": {} },
+		"types": {
+			"detailed": "place",
+			"semantic": "global",
+			"structural": "query"
+		},
+		"fullAnswer": "It is a shore."
+	}
+}

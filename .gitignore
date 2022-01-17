@@ -353,6 +353,7 @@ logs/
 *.webm
 
 # Ignoring storage folder
-storage/
+storage/*
+!storage/fixtures/
 
 # End of https://www.toptal.com/developers/gitignore/api/data,images,video

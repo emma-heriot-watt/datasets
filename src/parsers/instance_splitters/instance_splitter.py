@@ -2,7 +2,7 @@ import itertools
 from abc import ABC, abstractmethod
 from multiprocessing.pool import Pool
 from pathlib import Path
-from typing import Any, Generic, Iterable, Iterator, Optional, TypeVar, Union, overload
+from typing import Any, Generic, Iterator, Optional, TypeVar, Union, overload
 
 from pydantic import BaseModel
 from rich.progress import Progress
@@ -67,7 +67,7 @@ class InstanceSplitter(ABC, Generic[Feature]):
         """
         return raw_data
 
-    def postprocess_raw_data(self, raw_data: Any) -> Iterable[Any]:
+    def postprocess_raw_data(self, raw_data: Any) -> Iterator[Any]:
         """Process all the raw data from all files.
 
         See `_read()` method for how this is used.
