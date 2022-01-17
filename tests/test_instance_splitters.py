@@ -7,6 +7,7 @@ from rich.progress import Progress
 from src.datamodels import Caption, QuestionAnswerPair, Region, SceneGraph
 from src.parsers.instance_splitters import (
     CocoCaptionSplitter,
+    EpicKitchensCaptionSplitter,
     GqaQaPairSplitter,
     GqaSceneGraphSplitter,
     VgRegionsSplitter,
@@ -71,3 +72,15 @@ def test_gqa_scene_graph_splitter(tmp_path, fixtures_path):
     ]
 
     assert len(generated_scene_graphs) == 3
+
+
+def test_epic_kitchens_caption_splitter(tmp_path, fixtures_path):
+    split_instances(EpicKitchensCaptionSplitter, "epic_kitchens.csv", tmp_path, fixtures_path)
+
+    generated_captions = list(
+        itertools.chain.from_iterable(
+            parse_file_as(list[Caption], file_path) for file_path in tmp_path.iterdir()
+        )
+    )
+
+    assert len(generated_captions) == 19

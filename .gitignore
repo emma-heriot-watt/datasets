@@ -256,7 +256,7 @@ logs/
 # Edit at https://www.toptal.com/developers/gitignore?templates=data,images,video
 
 ### Data ###
-*.csv
+# *.csv
 *.dat
 *.efx
 *.gbr

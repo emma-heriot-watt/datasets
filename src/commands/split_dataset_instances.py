@@ -6,6 +6,7 @@ from rich.progress import Progress
 from src.common import Settings, get_progress
 from src.parsers.instance_splitters import (
     CocoCaptionSplitter,
+    EpicKitchensCaptionSplitter,
     GqaQaPairSplitter,
     GqaSceneGraphSplitter,
     VgRegionsSplitter,
@@ -53,11 +54,21 @@ def split_dataset_instances(num_workers: int = 4, progress: Optional[Progress] =
             progress,
         )
 
+        ek_captions = EpicKitchensCaptionSplitter(
+            [
+                settings.paths.epic_kitchens.joinpath("EPIC_100_train.csv"),
+                settings.paths.epic_kitchens.joinpath("EPIC_100_validation.csv"),
+            ],
+            settings.paths.captions,
+            progress,
+        )
+
         with Pool(num_workers) as pool:
             coco_captions.run(progress, pool)
             gqa_qa_pairs.run(progress, pool)
             gqa_scene_graph.run(progress, pool)
             vg_regions.run(progress, pool)
+            ek_captions.run(progress, pool)
 
 
 if __name__ == "__main__":

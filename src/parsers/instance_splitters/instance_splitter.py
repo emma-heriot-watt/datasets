@@ -2,7 +2,7 @@ import itertools
 from abc import ABC, abstractmethod
 from multiprocessing.pool import Pool
 from pathlib import Path
-from typing import Any, Generic, Iterator, Optional, TypeVar, Union, overload
+from typing import Any, Generic, Iterable, Iterator, Optional, TypeVar, Union, overload
 
 from pydantic import BaseModel
 from rich.progress import Progress
@@ -10,13 +10,13 @@ from rich.progress import Progress
 from src.io import get_all_file_paths, read_json, write_json
 
 
-Feature = TypeVar("Feature", bound=BaseModel)
+Annotation = TypeVar("Annotation", bound=BaseModel)
 
 
-class InstanceSplitter(ABC, Generic[Feature]):
-    """Split dataset instances into multiple files for easier loading."""
+class InstanceSplitter(ABC, Generic[Annotation]):
+    """Split annotations from instances into multiple files for easier loading."""
 
-    progress_bar_description = "Splitting features"
+    progress_bar_description = "Splitting annotations"
 
     def __init__(
         self,
@@ -40,7 +40,7 @@ class InstanceSplitter(ABC, Generic[Feature]):
         ...  # noqa: WPS428
 
     def run(self, progress: Progress, pool: Optional[Pool] = None) -> None:
-        """Run the instance splitter.
+        """Run the splitter.
 
         Args:
             progress (Progress): Rich Progress Bar
@@ -75,8 +75,8 @@ class InstanceSplitter(ABC, Generic[Feature]):
         return raw_data
 
     @abstractmethod
-    def convert(self, raw_feature: Any) -> Union[Feature, Iterator[Feature]]:
-        """Convert a RawFeature into a Feature."""
+    def convert(self, raw_feature: Any) -> Union[Annotation, Iterable[Annotation]]:
+        """Convert a RawAnnotation into a Annotation."""
         raise NotImplementedError()
 
     @abstractmethod
@@ -109,7 +109,7 @@ class InstanceSplitter(ABC, Generic[Feature]):
 
     def _write(
         self,
-        features: Union[Feature, Iterator[Feature]],
+        features: Union[Annotation, Iterable[Annotation]],
         filename: str,
         ext: str = "json",
     ) -> None:
@@ -118,7 +118,7 @@ class InstanceSplitter(ABC, Generic[Feature]):
 
         features_dict = (
             [feature.dict() for feature in features]
-            if isinstance(features, Iterator)
+            if isinstance(features, Iterable) and not isinstance(features, BaseModel)
             else features.dict()
         )
 
