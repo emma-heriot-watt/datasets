@@ -5,7 +5,12 @@ import pytest
 from rich.progress import Progress
 
 from src.datamodels import DatasetMetadata
-from src.parsers.dataset_metadata import CocoMetadataParser, GqaMetadataParser, VgMetadataParser
+from src.parsers.dataset_metadata import (
+    CocoMetadataParser,
+    EpicKitchensMetadataParser,
+    GqaMetadataParser,
+    VgMetadataParser,
+)
 
 
 @pytest.fixture
@@ -49,18 +54,30 @@ def gqa_parser(fixtures_path, progress):
     )
 
 
+def epic_kitchen_parser(fixtures_path, progress):
+    return EpicKitchensMetadataParser(
+        data_paths=[(fixtures_path.joinpath("epic_kitchens.csv"), None)],
+        frames_dir=Path("frames"),
+        captions_dir=Path("captions"),
+        progress=progress,
+    )
+
+
 @pytest.fixture
 def parser(request, fixtures_path, progress):
     parser_type_switcher = {
         "COCO": coco_parser(fixtures_path, progress),
         "Visual Genome": vg_parser(fixtures_path, progress),
         "GQA": gqa_parser(fixtures_path, progress),
+        "EPIC-KITCHENS": epic_kitchen_parser(fixtures_path, progress),
     }
 
     return parser_type_switcher[request.param]
 
 
-@pytest.mark.parametrize("parser", ["COCO", "Visual Genome", "GQA"], indirect=True)
+@pytest.mark.parametrize(
+    "parser", ["COCO", "Visual Genome", "GQA", "EPIC-KITCHENS"], indirect=True
+)
 class TestMetadataParser:
     def test_get_metadata(self, parser, progress):
         metadata = list(parser.get_metadata(progress))
