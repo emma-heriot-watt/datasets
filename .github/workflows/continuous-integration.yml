@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 env:
   PYTHON_VERSION: 3.9
@@ -11,7 +14,7 @@ env:
 
 jobs:
   changes:
-    name: Check for file changes
+    name: Check for Python file changes
     runs-on: ubuntu-latest
     outputs:
       python: ${{steps.filter.outputs.python}}
@@ -26,7 +29,7 @@ jobs:
               - '**/*.py'
 
   typecheck:
-    name: Type check
+    name: Type check Python
     needs: [changes]
     if: ${{needs.changes.outputs.python == 'true'}}
     runs-on: ubuntu-latest
@@ -60,7 +63,7 @@ jobs:
           level: error
 
   lint:
-    name: Lint
+    name: Lint Python
     needs: [changes]
     if: ${{needs.changes.outputs.python == 'true'}}
     runs-on: ubuntu-latest
@@ -73,47 +76,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
 
-  pre-format:
-    name: Build pre-commit hooks
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Load cached Python
-        uses: actions/cache@v2
-        id: python-cache
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install pre-commit
-        run: |
-          pip install pre-commit
-
-      - name: Load cached pre-commit environment
-        uses: actions/cache@v2
-        id: pre-commit-cache
-        with:
-          path: ~/.cache/pre-commit
-          key: ${{ runner.os }}-pre-commit-${{ hashFiles('**/.pre-commit-config.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pre-commit-
-
-      - name: Install pre-commit hooks
-        run: |
-          pre-commit install-hooks
-
   format:
     name: Format
-    needs: [pre-format]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

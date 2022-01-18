@@ -4,30 +4,16 @@ on:
   pull_request:
     branches: [main]
     paths-ignore: ["**/*.md", "**/*.rst"]
+  push:
+    branches:
+      - main
 
 env:
   PYTHON_VERSION: 3.9
 
 jobs:
-  changes:
-    name: Check for file changes
-    runs-on: ubuntu-latest
-    outputs:
-      python: ${{steps.filter.outputs.python}}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            python:
-              - '**/*.py'
-
-  test_python:
-    name: Python
-    needs: [changes]
-    if: ${{needs.changes.outputs.python == 'true'}}
+  python:
+    name: Run Python test suite
 
     runs-on: ubuntu-latest
     steps:
