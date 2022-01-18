@@ -3,8 +3,6 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
-      - id: no-commit-to-branch
-        name: Prevent committing to main
       - id: check-added-large-files
         name: Check for added large files
       - id: check-merge-conflict
