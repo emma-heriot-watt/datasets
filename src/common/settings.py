@@ -19,7 +19,6 @@ class Paths:  # noqa: WPS230
         self.qa_pairs = self.temp.joinpath("qa_pairs/")
         self.scene_graphs = self.temp.joinpath("scene_graphs/")
         self.regions = self.temp.joinpath("regions/")
-        self.scenes = self.temp.joinpath("scenes/")
         self.instances = self.temp.joinpath("instances/")
 
         # Dataset source files
@@ -42,7 +41,6 @@ class Paths:  # noqa: WPS230
         self.qa_pairs.mkdir(parents=True, exist_ok=True)
         self.scene_graphs.mkdir(parents=True, exist_ok=True)
         self.regions.mkdir(parents=True, exist_ok=True)
-        self.scenes.mkdir(parents=True, exist_ok=True)
         self.instances.mkdir(parents=True, exist_ok=True)
 
         self.datasets.mkdir(parents=True, exist_ok=True)

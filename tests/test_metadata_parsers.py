@@ -1,107 +1,49 @@
 from multiprocessing.pool import Pool
-from pathlib import Path
 
-import pytest
-from rich.progress import Progress
+from pytest_cases import fixture, fixture_ref, parametrize
 
 from src.datamodels import DatasetMetadata
-from src.parsers.dataset_metadata import (
-    CocoMetadataParser,
-    EpicKitchensMetadataParser,
-    GqaMetadataParser,
-    VgMetadataParser,
+
+
+@fixture
+@parametrize(
+    "metadata_parser",
+    [
+        fixture_ref("coco_metadata_parser"),
+        fixture_ref("vg_metadata_parser"),
+        fixture_ref("gqa_metadata_parser"),
+        fixture_ref("epic_kitchens_metadata_parser"),
+    ],
 )
+def metadata_parser(metadata_parser):
+    return metadata_parser
 
 
-@pytest.fixture
-def progress() -> Progress:
-    return Progress()
+def test_metadata_parser_works(metadata_parser, progress):
+    metadata = list(metadata_parser.get_metadata(progress))
+
+    assert metadata
+
+    for instance in metadata:
+        assert isinstance(instance, metadata_parser.metadata_model)
 
 
-def coco_parser(fixtures_path, progress):
-    fake_caption_dir = Path("caption")
-    fake_image_dir = Path("images")
+def test_metadata_parser_works_with_multiprocessing(metadata_parser, progress):
+    with Pool(2) as pool:
+        metadata = list(metadata_parser.get_metadata(progress, pool))
 
-    return CocoMetadataParser(
-        caption_train_path=fixtures_path.joinpath("coco_captions.json"),
-        caption_val_path=fixtures_path.joinpath("coco_captions.json"),
-        images_dir=fake_image_dir,
-        captions_dir=fake_caption_dir,
-        progress=progress,
-    )
+    assert metadata
+
+    for instance in metadata:
+        assert isinstance(instance, metadata_parser.metadata_model)
 
 
-def vg_parser(fixtures_path, progress):
-    fake_images_dir = Path("images")
-    fake_regions_dir = Path("regions")
+def test_metadata_parser_can_convert_to_dataset_metadata(metadata_parser, progress):
+    structured_metadata = list(metadata_parser.get_metadata(progress))
 
-    return VgMetadataParser(
-        image_data_json_path=fixtures_path.joinpath("vg_image_data.json"),
-        images_dir=fake_images_dir,
-        regions_dir=fake_regions_dir,
-        progress=progress,
-    )
+    dataset_metadata = [
+        metadata_parser.convert_to_dataset_metadata(metadata) for metadata in structured_metadata
+    ]
 
-
-def gqa_parser(fixtures_path, progress):
-    return GqaMetadataParser(
-        scene_graphs_train_path=fixtures_path.joinpath("gqa_scene_graph.json"),
-        scene_graphs_val_path=fixtures_path.joinpath("gqa_scene_graph.json"),
-        images_dir=Path("images"),
-        scene_graphs_dir=Path("scene_graphs"),
-        qa_pairs_dir=Path("qa_pairs"),
-        progress=progress,
-    )
-
-
-def epic_kitchen_parser(fixtures_path, progress):
-    return EpicKitchensMetadataParser(
-        data_paths=[(fixtures_path.joinpath("epic_kitchens.csv"), None)],
-        frames_dir=Path("frames"),
-        captions_dir=Path("captions"),
-        progress=progress,
-    )
-
-
-@pytest.fixture
-def parser(request, fixtures_path, progress):
-    parser_type_switcher = {
-        "COCO": coco_parser(fixtures_path, progress),
-        "Visual Genome": vg_parser(fixtures_path, progress),
-        "GQA": gqa_parser(fixtures_path, progress),
-        "EPIC-KITCHENS": epic_kitchen_parser(fixtures_path, progress),
-    }
-
-    return parser_type_switcher[request.param]
-
-
-@pytest.mark.parametrize(
-    "parser", ["COCO", "Visual Genome", "GQA", "EPIC-KITCHENS"], indirect=True
-)
-class TestMetadataParser:
-    def test_get_metadata(self, parser, progress):
-        metadata = list(parser.get_metadata(progress))
-
-        assert metadata
-
-        for instance in metadata:
-            assert isinstance(instance, parser.metadata_model)
-
-    def test_get_metadata_with_pool(self, parser, progress):
-        with Pool(2) as pool:
-            metadata = list(parser.get_metadata(progress, pool))
-
-        assert metadata
-
-        for instance in metadata:
-            assert isinstance(instance, parser.metadata_model)
-
-    def test_convert_to_dataset_metadata(self, parser, progress):
-        structured_metadata = list(parser.get_metadata(progress))
-
-        dataset_metadata = [
-            parser.convert_to_dataset_metadata(metadata) for metadata in structured_metadata
-        ]
-
-        for instance in dataset_metadata:
-            assert isinstance(instance, DatasetMetadata)
+    for instance in dataset_metadata:
+        assert isinstance(instance, DatasetMetadata)

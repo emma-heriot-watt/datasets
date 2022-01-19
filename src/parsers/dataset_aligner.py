@@ -56,10 +56,15 @@ class DatasetAligner(Generic[S, T]):
 
     def get_aligned_metadata(self, pool: Optional[Pool] = None) -> DatasetAlignerReturn:
         """Align and return the metadata for the two datasets."""
-        source_metadata = self.source_metadata_parser.get_metadata(self.progress, pool)
+        source_metadata = list(self.source_metadata_parser.get_metadata(self.progress, pool))
         target_metadata = self.target_metadata_parser.get_metadata(self.progress, pool)
 
-        aligned, non_aligned = self.align_all_instances(source_metadata, target_metadata)
+        aligned, non_aligned_from_target = self.align_all_instances(
+            source_metadata, target_metadata
+        )
+        non_aligned_from_source = self.get_non_aligned_from_source(aligned, source_metadata)
+
+        non_aligned = non_aligned_from_target + non_aligned_from_source
 
         self._print_statistics(aligned)
 
@@ -80,7 +85,7 @@ class DatasetAligner(Generic[S, T]):
             DatasetAlignerReturn: Named tuple with lists of aligned and non-aligned instances.
         """
         aligned = []
-        non_aligned = []
+        non_aligned_from_target = []
 
         target_mapping_for_source = self.get_target_mapping_for_source(source_instances)
         alignable_target_metadata = self.get_alignable_target_metadata(target_instances)
@@ -98,18 +103,18 @@ class DatasetAligner(Generic[S, T]):
             if any(aligned_target):
                 aligned.append(aligned_target)
             elif any(non_aligned_target):
-                non_aligned.append(non_aligned_target)
+                non_aligned_from_target.append(non_aligned_target)
 
-        if non_aligned:
+        if non_aligned_from_target:
             log.warning(
                 "{incorrect_length:,} instances from {target_name} do not have a valid ID for {source_name}. These additional instances are [bold red]not[/] ignored, but maybe you want to have a look at them?".format(
-                    incorrect_length=len(non_aligned),
+                    incorrect_length=len(non_aligned_from_target),
                     target_name=self._target_dataset_name,
                     source_name=self._source_dataset_name,
                 )
             )
 
-        return DatasetAlignerReturn(aligned=aligned, non_aligned=non_aligned)
+        return DatasetAlignerReturn(aligned=aligned, non_aligned=non_aligned_from_target)
 
     def align_target_instance_to_source(
         self, target_instance: T, target_mapping_for_source: dict[str, S]
@@ -151,6 +156,23 @@ class DatasetAligner(Generic[S, T]):
         ]
 
         return alignable_target_metadata
+
+    def get_non_aligned_from_source(
+        self, aligned: list[dict[DatasetName, DatasetMetadata]], source_metadata: Iterable[S]
+    ) -> list[dict[DatasetName, DatasetMetadata]]:
+        """Get instances from the source dataset which are not aligned to the target dataset."""
+        aligned_from_source = {
+            metadata[self.source_metadata_parser.dataset_name] for metadata in aligned
+        }
+
+        source_dataset_metadata = {
+            self.source_metadata_parser.convert_to_dataset_metadata(metadata)
+            for metadata in source_metadata
+        }
+
+        non_aligned_from_source = source_dataset_metadata - aligned_from_source
+
+        return [{metadata.name: metadata} for metadata in non_aligned_from_source]
 
     def get_target_mapping_for_source(self, source_instances: Iterable[S]) -> dict[str, S]:
         """Map each source instance to a target instance using the target attribute.

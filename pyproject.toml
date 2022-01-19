@@ -15,7 +15,7 @@ envfile = ".env"
 format = { cmd = "pre-commit run --all-files", help = "Format using pre-commit hooks" }
 typecheck = { cmd = "mypy src/", help = "Check types with mypy" }
 lint = { cmd = "flake8 src/", help = "Lint with flake8" }
-test = "pytest --cov=src"
+test = { cmd = "pytest --cov=src -m 'not slow'", help = "Run fast Python tests" }
 cov-export = "pytest --cov=src --cov-report xml:coverage.xml"
 
 [tool.poetry.dependencies]
@@ -38,14 +38,13 @@ flake8 = "^4.0"
 mypy = "^0.931"
 pytest = "^6.2.5"
 ipykernel = "^6.6.1"
-testfixtures = "^6.18.3"
 pre-commit = "^2.16.0"
 poethepoet = "^0.12.2"
 pytest-cov = "^3.0.0"
 jupyterlab = "^3.2.8"
 isort = "^5.10.1"
 black = { extras = ["jupyter"], version = "^21.12b0" }
-hypothesis = { extras = ["numpy"], version = "^6.35.1" }
+pytest-cases = "^3.6.8"
 
 [tool.black]
 line-length = 99
@@ -61,6 +60,7 @@ known_first_party = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 filterwarnings = ["ignore::UserWarning", "ignore::DeprecationWarning"]
+markers = ["slow: mark test as slow"]
 
 
 [tool.mypy]

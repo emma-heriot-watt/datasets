@@ -1,7 +1,9 @@
 import itertools
+from pathlib import Path
+from typing import Any
 
-# import pytest
 from pydantic import parse_file_as
+from pytest_cases import parametrize_with_cases
 from rich.progress import Progress
 
 from src.datamodels import Caption, QuestionAnswerPair, Region, SceneGraph
@@ -14,20 +16,25 @@ from src.parsers.instance_splitters import (
 )
 
 
-def split_instances(instance_splitter_class, source_file, tmp_path, fixtures_path):
+def split_instances(
+    instance_splitter_class: Any,
+    paths: list[Path],
+    tmp_path: Path,
+) -> None:
     with Progress() as progress:
         instance_splitter = instance_splitter_class(
-            paths=fixtures_path.joinpath(source_file),
+            paths=paths,
             output_dir=tmp_path,
             progress=progress,
         )
         instance_splitter.run(progress)
 
 
-def test_coco_caption_splitter(tmp_path, fixtures_path):
-    total_captions_count = 14
-
-    split_instances(CocoCaptionSplitter, "coco_captions.json", tmp_path, fixtures_path)
+@parametrize_with_cases("paths", cases=".conftest")
+def test_coco_caption_splitter_works(paths: dict[str, Path], tmp_path: Path) -> None:
+    split_instances(
+        CocoCaptionSplitter, [paths["coco_caption_train"], paths["coco_caption_val"]], tmp_path
+    )
 
     generated_caption_files = list(
         itertools.chain.from_iterable(
@@ -35,47 +42,48 @@ def test_coco_caption_splitter(tmp_path, fixtures_path):
         )
     )
 
-    assert len(generated_caption_files) == total_captions_count
+    assert generated_caption_files
 
 
-def test_vg_region_splitter(tmp_path, fixtures_path):
-    total_region_count = 5
-
-    split_instances(VgRegionsSplitter, "region_descriptions.json", tmp_path, fixtures_path)
+@parametrize_with_cases("paths", cases=".conftest")
+def test_vg_region_splitter_works(paths: dict[str, Path], tmp_path: Path) -> None:
+    split_instances(VgRegionsSplitter, [paths["vg_regions"]], tmp_path)
 
     generated_region_files = [
         parse_file_as(list[Region], file_path) for file_path in tmp_path.iterdir()
     ]
 
-    assert len(generated_region_files) == total_region_count
+    assert generated_region_files
 
 
-def test_gqa_qa_pairs_splitter(tmp_path, fixtures_path):
-    split_instances(GqaQaPairSplitter, "gqa_questions.json", tmp_path, fixtures_path)
+@parametrize_with_cases("paths", cases=".conftest")
+def test_gqa_qa_splitter_works(paths: dict[str, list[Path]], tmp_path: Path) -> None:
+    split_instances(GqaQaPairSplitter, paths["gqa_questions"], tmp_path)
 
     generated_qa_pairs = [
         parse_file_as(list[QuestionAnswerPair], file_path) for file_path in tmp_path.iterdir()
     ]
-
-    unique_image_ids = 4
-    total_qa_pairs = 5
-
-    assert len(generated_qa_pairs) == unique_image_ids
-    assert len([qa_pair for image in generated_qa_pairs for qa_pair in image]) == total_qa_pairs
+    assert generated_qa_pairs
 
 
-def test_gqa_scene_graph_splitter(tmp_path, fixtures_path):
-    split_instances(GqaSceneGraphSplitter, "gqa_scene_graph.json", tmp_path, fixtures_path)
+@parametrize_with_cases("paths", cases=".conftest")
+def test_gqa_scene_graph_splitter_works(paths: dict[str, Path], tmp_path: Path) -> None:
+    split_instances(
+        GqaSceneGraphSplitter,
+        [paths["gqa_scene_graph_train"], paths["gqa_scene_graph_val"]],
+        tmp_path,
+    )
 
     generated_scene_graphs = [
         parse_file_as(SceneGraph, file_path) for file_path in tmp_path.iterdir()
     ]
 
-    assert len(generated_scene_graphs) == 3
+    assert generated_scene_graphs
 
 
-def test_epic_kitchens_caption_splitter(tmp_path, fixtures_path):
-    split_instances(EpicKitchensCaptionSplitter, "epic_kitchens.csv", tmp_path, fixtures_path)
+@parametrize_with_cases("paths", cases=".conftest")
+def test_epic_kitchens_caption_splitter_works(paths: dict[str, Path], tmp_path: Path) -> None:
+    split_instances(EpicKitchensCaptionSplitter, [paths["ek_train"], paths["ek_val"]], tmp_path)
 
     generated_captions = list(
         itertools.chain.from_iterable(
@@ -83,4 +91,4 @@ def test_epic_kitchens_caption_splitter(tmp_path, fixtures_path):
         )
     )
 
-    assert len(generated_captions) == 19
+    assert generated_captions
