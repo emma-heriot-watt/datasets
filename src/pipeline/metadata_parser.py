@@ -5,11 +5,16 @@ from typing import Iterator, Optional
 from rich.progress import Progress
 
 from src.common import Settings
-from src.datamodels import DatasetMetadata, DatasetName
+from src.datamodels import DatasetMetadata, DatasetName, DatasetSplit
 from src.datamodels.datasets import CocoImageMetadata, GqaImageMetadata, VgImageMetadata
 from src.parsers.align_multiple_datasets import AlignMultipleDatasets
 from src.parsers.dataset_aligner import DatasetAligner
-from src.parsers.dataset_metadata import CocoMetadataParser, GqaMetadataParser, VgMetadataParser
+from src.parsers.dataset_metadata import (
+    CocoMetadataParser,
+    EpicKitchensMetadataParser,
+    GqaMetadataParser,
+    VgMetadataParser,
+)
 
 
 settings = Settings()
@@ -45,6 +50,19 @@ class MetadataParser:
             progress=progress,
         )
 
+        self._epic_kitchens = EpicKitchensMetadataParser(
+            data_paths=[
+                (settings.paths.epic_kitchens.joinpath("EPIC_100_train.csv"), DatasetSplit.train),
+                (
+                    settings.paths.epic_kitchens.joinpath("EPIC_100_validation.csv"),
+                    DatasetSplit.valid,
+                ),
+            ],
+            frames_dir=settings.paths.epic_kitchens.joinpath("rgb_frames"),
+            captions_dir=settings.paths.captions,
+            progress=progress,
+        )
+
         self._vg_coco_aligner = DatasetAligner[VgImageMetadata, CocoImageMetadata](
             self._vg,
             self._coco,
@@ -71,6 +89,7 @@ class MetadataParser:
         """Get all dataset metadata from the input datasets."""
         return itertools.chain(
             self.coco_vg_gqa(pool),
+            self.epic_kitchens(),
         )
 
     def coco_vg_gqa(self, pool: Optional[Pool] = None) -> Iterator[list[DatasetMetadata]]:
@@ -81,4 +100,14 @@ class MetadataParser:
         dataset_metadata = self._align_coco_gqa_with_vg(
             aligned_vg_coco_metadata, aligned_gqa_vg_metadata
         )
+        return dataset_metadata
+
+    def epic_kitchens(self, pool: Optional[Pool] = None) -> Iterator[list[DatasetMetadata]]:
+        """Get dataset metadata from the EPIC-KITCHENS dataset."""
+        narration_metadata = self._epic_kitchens.get_metadata(self.progress, pool)
+        dataset_metadata = (
+            [self._epic_kitchens.convert_to_dataset_metadata(metadata)]
+            for metadata in narration_metadata
+        )
+
         return dataset_metadata
