@@ -57,7 +57,10 @@ class DatasetAligner(Generic[S, T]):
     def get_aligned_metadata(self, pool: Optional[Pool] = None) -> DatasetAlignerReturn:
         """Align and return the metadata for the two datasets."""
         source_metadata = list(self.source_metadata_parser.get_metadata(self.progress, pool))
-        target_metadata = self.target_metadata_parser.get_metadata(self.progress, pool)
+        target_metadata = list(self.target_metadata_parser.get_metadata(self.progress, pool))
+
+        self._source_dataset_size = len(source_metadata)
+        self._target_dataset_size = len(target_metadata)
 
         aligned, non_aligned_from_target = self.align_all_instances(
             source_metadata, target_metadata
@@ -87,12 +90,14 @@ class DatasetAligner(Generic[S, T]):
         aligned = []
         non_aligned_from_target = []
 
+        source_instances = list(source_instances)
+        target_instances = list(target_instances)
+
         target_mapping_for_source = self.get_target_mapping_for_source(source_instances)
-        alignable_target_metadata = self.get_alignable_target_metadata(target_instances)
 
         self.progress.reset(self.task_id, visible=True, start=True)
         progress_bar = self.progress.track(
-            alignable_target_metadata, total=len(alignable_target_metadata), task_id=self.task_id
+            target_instances, total=len(target_instances), task_id=self.task_id
         )
 
         for target_instance in progress_bar:
@@ -141,36 +146,27 @@ class DatasetAligner(Generic[S, T]):
 
         return aligned, non_aligned
 
-    def get_alignable_target_metadata(self, target_metadata: Iterable[T]) -> list[T]:
-        """Get all target metadata which can be aligned to the source.
-
-        This also updates the `_target_dataset_size` attribute.
-        """
-        target_metadata = list(target_metadata)
-        self._target_dataset_size = len(target_metadata)
-
-        alignable_target_metadata = [
-            metadata
-            for metadata in target_metadata
-            if getattr(metadata, self.target_mapping_attr_for_source, None) is not None
-        ]
-
-        return alignable_target_metadata
-
     def get_non_aligned_from_source(
-        self, aligned: list[dict[DatasetName, DatasetMetadata]], source_metadata: Iterable[S]
+        self, aligned: list[dict[DatasetName, DatasetMetadata]], source_metadata: list[S]
     ) -> list[dict[DatasetName, DatasetMetadata]]:
         """Get instances from the source dataset which are not aligned to the target dataset."""
         aligned_from_source = {
             metadata[self.source_metadata_parser.dataset_name] for metadata in aligned
         }
 
-        source_dataset_metadata = {
-            self.source_metadata_parser.convert_to_dataset_metadata(metadata)
-            for metadata in source_metadata
-        }
+        self.progress.update(
+            self.task_id,
+            total=self.progress._tasks[self.task_id].total + len(source_metadata),  # noqa: WPS437
+        )
 
-        non_aligned_from_source = source_dataset_metadata - aligned_from_source
+        source_dataset_metadata: list[DatasetMetadata] = []
+        for raw_metadata in source_metadata:
+            source_dataset_metadata.append(
+                self.source_metadata_parser.convert_to_dataset_metadata(raw_metadata)
+            )
+            self.progress.advance(self.task_id)
+
+        non_aligned_from_source = set(source_dataset_metadata) - aligned_from_source
 
         return [{metadata.name: metadata} for metadata in non_aligned_from_source]
 

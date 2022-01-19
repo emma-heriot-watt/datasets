@@ -1,10 +1,8 @@
 import math
 from dataclasses import dataclass
 from datetime import timedelta
-from pathlib import Path
 from typing import Any, Optional
 
-from rich import filesize
 from rich.console import RenderableType
 from rich.progress import BarColumn, Progress, ProgressColumn, Task, TaskID
 from rich.progress_bar import ProgressBar
@@ -109,23 +107,6 @@ class ProcessingSpeedColumn(ProgressColumn):
         return Text(f"{task_speed}it/s", style="progress.data.speed")
 
 
-class CustomFileSizeColumn(ProgressColumn):
-    """Column for current file size of file."""
-
-    # Only refresh once every two seconds because it doesn't need to be faster.
-    max_refresh = 2
-
-    def render(self, task: Task) -> RenderableType:
-        """Render file size if filename is given in fields."""
-        filepath: Optional[Path] = task.fields.get("filepath", None)
-
-        if filepath and filepath.exists():
-            file_size = filesize.decimal(int(filepath.stat().st_size))
-            return Text(f"Size {file_size}", style="progress.filesize")
-
-        return Text("")
-
-
 def get_progress() -> Progress:
     """Get custom progress with support for generators."""
     return CustomProgress(
@@ -134,5 +115,4 @@ def get_progress() -> Progress:
         BatchesProcessedColumn(),
         CustomTimeColumn(),
         ProcessingSpeedColumn(),
-        CustomFileSizeColumn(),
     )
