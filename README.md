@@ -41,6 +41,9 @@ Assuming you have [pyenv](https://github.com/pyenv/pyenv) and [Poetry](https://p
 # Use Python 3.9.9 in the project
 pyenv local 3.9.9
 
+# Tell Poetry to use pyenv
+poetry env use $(pyenv which python)
+
 # Install dependencies
 poetry install
 
@@ -60,7 +63,7 @@ We've tried to keep necessary things as simplistic as possible. However, we need
 This project uses Poetry for **creating virtual environments** and **managing Python packages**. This should be installed globally and can be done by running:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+curl -sSL https://install.python-poetry.org | python3 -
 ```
 
 You can verify it's installed and accessible by running `poetry --version`.
@@ -107,65 +110,15 @@ conda activate PROJECT_NAME
 This is organised in very similarly to structure from the [Lightning-Hydra-Template](https://github.com/ashleve/lightning-hydra-template#project-structure) to facilitate reproducible research code.
 
 - `scripts` — `sh` scripts to run experiments
-- `configs` — configurations files using the [Hydra framework](https://hydra.cc/)
 - `docker` — Dockerfiles to ease deployment
 - `notebooks` — Jupyter notebook for analysis and exploration
 - `storage` — data for training/inference _(and maybe use symlinks to point to other parts of the filesystem)_
 - `tests` — [pytest](https://docs.pytest.org/en/) scripts to verify the code
 - `src` — where the main code lives
 
-## Running things
+### Downloading the data
 
-Train model with default configuration
-
-```bash
-# train on CPU
-python run.py trainer.gpus=0
-
-# train on 1 GPU
-python run.py trainer.gpus=1
-```
-
-Train model with chosen experiment configuration from [configs/experiment/](configs/experiment/)
-
-```bash
-python run.py experiment=experiment_name.yaml
-```
-
-You can override any parameter from command line like this
-
-```bash
-python run.py trainer.max_epochs=20 datamodule.batch_size=64
-```
-
-Especially when you're trying to specify extra parameters for the class `Trainer` from
-[PyTorch-Lightning](https://pytorch-lightning.readthedocs.io/en/latest/api/pytorch_lightning.trainer.trainer.html#module-pytorch_lightning.trainer.trainer),
-you might run into trouble when running a command like the following:
-
-```bash
-python run.py trainer.precision=16 datamodule.batch_size=64
-```
-
-This is because Hydra allows you to modify only parameters specified in the configuration file. So
-if you don't have `precision` among them, Hydra will complain. If you're sure that the parameters
-is allowed, just change the previous command as follows:
-
-```bash
-python run.py +trainer.precision=16 datamodule.batch_size=64
-```
-
-In this way, Hydra will automatically _append_ the new parameter to the configuration dictionary of
-the `Trainer` we're trying to instantiate.
-
-<details>
-<summary>It's annoying, why do I have to do that? </summary>
-
-<br>
-
-We're working on a possible fix and we're exploring different options. If you're interested in
-this, please follow this [issue](https://github.com/emma-simbot/research-base/issues/26).
-
-</details>
+There is a single CSV file which contains a link to every file which needs to be downloaded to create the full dataset.
 
 ## Developer tooling
 
@@ -227,17 +180,6 @@ We've settled on a middle ground when it comes to developing: **keep the `main` 
 Within branches, you can do whatever you want to do, but you should **never push anything directly to the `main` branch**.
 
 For every PR, an automated set of linters and formatters will check your code to see whether it follows the set rules. If it fails, **do not merge** with the `main` branch.
-
-##### Before submitting
-
-1. Run `pytest` to make sure no errors before you start.
-2. Add any changes you want.
-3. Add tests for changes
-4. Add integration test
-5. Run `pytest` again
-6. Run `mypy`
-
-_NOTE: This list needs updating._
 
 ## Other repositories
 

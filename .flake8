@@ -18,6 +18,8 @@ ignore =
     T499,
 		# Do not complain about line-break before binary operator (caused by Black)
 		W503,
+		# Do not warn on too many imports.
+		WPS201,
 		# Do not warn on too many module members
 		WPS202,
 		# Do not warn when too many arguments in functions

@@ -8,6 +8,7 @@ from src.common import Settings, get_progress
 from src.pipeline import InstanceCreator, MetadataParser
 
 
+BATCH_SIZE = 4096
 settings = Settings()
 
 
@@ -15,7 +16,7 @@ instances_db_path = settings.paths.databases.joinpath("instances.db")
 
 
 def create_pretraining_instances(
-    num_workers: int = 8, progress: Optional[Progress] = None
+    num_workers: Optional[int] = None, progress: Optional[Progress] = None
 ) -> None:
     """Create all the pretraining instances."""
     progress = progress if progress else get_progress()
@@ -26,7 +27,7 @@ def create_pretraining_instances(
 
         metadata_groups = metadata_parser.get_all_metadata_groups()
 
-        with DatasetDB(instances_db_path, readonly=False) as db:
+        with DatasetDB(instances_db_path, readonly=False, batch_size=BATCH_SIZE) as db:
             with Pool(num_workers) as pool:
                 instances_iterator = instance_creator(metadata_groups, progress, pool)
 

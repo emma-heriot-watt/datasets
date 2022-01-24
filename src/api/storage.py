@@ -18,7 +18,7 @@ try:
     import torch  # noqa: WPS433
 except ImportError:
     logger.warning(
-        "Unable to import `torch`. You will NOT be able to use the `TorchDataStorage` class"
+        "Unable to import `torch`. You will NOT be able to use the `TorchDataStorage` class. "
         + "Consider installing it if you want to use it!"
     )
 

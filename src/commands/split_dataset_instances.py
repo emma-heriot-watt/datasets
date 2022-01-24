@@ -16,7 +16,9 @@ from src.parsers.instance_splitters import (
 settings = Settings()
 
 
-def split_dataset_instances(num_workers: int = 4, progress: Optional[Progress] = None) -> None:
+def split_dataset_instances(
+    num_workers: Optional[int] = None, progress: Optional[Progress] = None
+) -> None:
     """Split dataset instances into multiple files for faster merging later."""
     progress = progress if progress else get_progress()
 
@@ -32,8 +34,8 @@ def split_dataset_instances(num_workers: int = 4, progress: Optional[Progress] =
 
         gqa_qa_pairs = GqaQaPairSplitter(
             [
-                settings.paths.gqa.joinpath("questions/val_balanced_questions.json"),
-                settings.paths.gqa.joinpath("questions/train_balanced_questions.json"),
+                settings.paths.gqa_questions.joinpath("val_balanced_questions.json"),
+                settings.paths.gqa_questions.joinpath("train_balanced_questions.json"),
             ],
             settings.paths.qa_pairs,
             progress,
@@ -41,8 +43,8 @@ def split_dataset_instances(num_workers: int = 4, progress: Optional[Progress] =
 
         gqa_scene_graph = GqaSceneGraphSplitter(
             [
-                settings.paths.gqa.joinpath("train_sceneGraphs.json"),
-                settings.paths.gqa.joinpath("val_sceneGraphs.json"),
+                settings.paths.gqa_scene_graphs.joinpath("train_sceneGraphs.json"),
+                settings.paths.gqa_scene_graphs.joinpath("val_sceneGraphs.json"),
             ],
             settings.paths.scene_graphs,
             progress,
@@ -72,4 +74,4 @@ def split_dataset_instances(num_workers: int = 4, progress: Optional[Progress] =
 
 
 if __name__ == "__main__":
-    split_dataset_instances(8)
+    split_dataset_instances()

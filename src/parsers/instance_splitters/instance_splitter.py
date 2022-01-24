@@ -135,7 +135,5 @@ class InstanceSplitter(ABC, Generic[Annotation]):
     def _end_progress(self, progress: Progress) -> None:
         """Stop the progress bar and make sure to freeze the finished bar."""
         completed = int(progress._tasks[self.task_id].completed)  # noqa: WPS437
-        progress.reset(
-            self.task_id, start=True, visible=True, total=completed, completed=completed
-        )
+        progress.update(self.task_id, visible=True, total=completed, completed=completed)
         progress.stop_task(self.task_id)

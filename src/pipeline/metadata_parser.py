@@ -28,7 +28,7 @@ class MetadataParser:
 
         self._vg = VgMetadataParser(
             settings.paths.visual_genome.joinpath("image_data.json"),
-            images_dir=settings.paths.visual_genome.joinpath("images/"),
+            images_dir=settings.paths.visual_genome_images,
             regions_dir=settings.paths.regions,
             progress=self.progress,
         )
@@ -36,7 +36,7 @@ class MetadataParser:
         self._gqa = GqaMetadataParser(
             scene_graphs_train_path=settings.paths.gqa.joinpath("train_sceneGraphs.json"),
             scene_graphs_val_path=settings.paths.gqa.joinpath("val_sceneGraphs.json"),
-            images_dir=settings.paths.gqa.joinpath("images/"),
+            images_dir=settings.paths.gqa_images,
             scene_graphs_dir=settings.paths.scene_graphs,
             qa_pairs_dir=settings.paths.qa_pairs,
             progress=progress,
@@ -45,7 +45,7 @@ class MetadataParser:
         self._coco = CocoMetadataParser(
             caption_train_path=settings.paths.coco.joinpath("captions_train2017.json"),
             caption_val_path=settings.paths.coco.joinpath("captions_val2017.json"),
-            images_dir=settings.paths.coco.joinpath("images/"),
+            images_dir=settings.paths.coco_images,
             captions_dir=settings.paths.captions,
             progress=progress,
         )

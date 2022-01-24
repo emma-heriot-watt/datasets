@@ -19,7 +19,6 @@ class Paths:  # noqa: WPS230
         self.qa_pairs = self.temp.joinpath("qa_pairs/")
         self.scene_graphs = self.temp.joinpath("scene_graphs/")
         self.regions = self.temp.joinpath("regions/")
-        self.instances = self.temp.joinpath("instances/")
 
         # Dataset source files
         self.datasets = self.storage.joinpath("datasets/")
@@ -28,6 +27,16 @@ class Paths:  # noqa: WPS230
         self.visual_genome = self.datasets.joinpath("visual_genome/")
         self.gqa = self.datasets.joinpath("gqa/")
         self.epic_kitchens = self.datasets.joinpath("epic_kitchens/")
+        self.alfred = self.datasets.joinpath("alfred/")
+        self.teach = self.datasets.joinpath("teach/")
+
+        self.coco_images = self.coco.joinpath("images/")
+        self.visual_genome_images = self.visual_genome.joinpath("images/")
+        self.gqa_images = self.gqa.joinpath("images/")
+        self.gqa_questions = self.gqa.joinpath("questions/")
+        self.gqa_scene_graphs = self.gqa.joinpath("scene_graphs/")
+        self.epic_kitchens_frames = self.epic_kitchens.joinpath("frames/")
+        self.alfred_trajectories = self.alfred.joinpath("json_2.1.0/")
 
         # Databases for output
         self.databases = self.storage.joinpath("db/")
@@ -41,7 +50,6 @@ class Paths:  # noqa: WPS230
         self.qa_pairs.mkdir(parents=True, exist_ok=True)
         self.scene_graphs.mkdir(parents=True, exist_ok=True)
         self.regions.mkdir(parents=True, exist_ok=True)
-        self.instances.mkdir(parents=True, exist_ok=True)
 
         self.datasets.mkdir(parents=True, exist_ok=True)
 
@@ -49,6 +57,16 @@ class Paths:  # noqa: WPS230
         self.visual_genome.mkdir(parents=True, exist_ok=True)
         self.gqa.mkdir(parents=True, exist_ok=True)
         self.epic_kitchens.mkdir(parents=True, exist_ok=True)
+        self.alfred.mkdir(parents=True, exist_ok=True)
+        self.teach.mkdir(parents=True, exist_ok=True)
+
+        self.coco_images.mkdir(parents=True, exist_ok=True)
+        self.visual_genome_images.mkdir(parents=True, exist_ok=True)
+        self.gqa_images.mkdir(parents=True, exist_ok=True)
+        self.gqa_questions.mkdir(parents=True, exist_ok=True)
+        self.gqa_scene_graphs.mkdir(parents=True, exist_ok=True)
+        self.epic_kitchens_frames.mkdir(parents=True, exist_ok=True)
+        self.alfred_trajectories.mkdir(parents=True, exist_ok=True)
 
         self.databases.mkdir(parents=True, exist_ok=True)
 
