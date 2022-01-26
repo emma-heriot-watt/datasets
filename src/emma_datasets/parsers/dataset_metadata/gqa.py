@@ -4,6 +4,7 @@ from typing import Any
 from rich.progress import Progress
 
 from emma_datasets.datamodels import (
+    Annotation,
     DatasetMetadata,
     DatasetName,
     DatasetSplit,
@@ -49,10 +50,12 @@ class GqaMetadataParser(DatasetMetadataParser[GqaImageMetadata]):
             split=metadata.dataset_split,
             media=SourceMedia(
                 media_type=MediaType.image,
-                path=self.images_dir.joinpath(metadata.file_name).as_posix(),
+                path=self.images_dir.joinpath(metadata.file_name),
             ),
-            scene_graph_path=self.scene_graphs_dir.joinpath(f"{metadata.id}.json").as_posix(),
-            qa_pairs_path=self.qa_pairs_dir.joinpath(f"{metadata.id}.json").as_posix(),
+            annotation_paths={
+                Annotation.scene_graph: self.scene_graphs_dir.joinpath(f"{metadata.id}.json"),
+                Annotation.qa_pair: self.qa_pairs_dir.joinpath(f"{metadata.id}.json"),
+            },
         )
 
     def _preprocess_raw_data(self, image_id: str, scene_graph: dict[str, Any]) -> dict[str, Any]:

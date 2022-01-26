@@ -3,7 +3,13 @@ from typing import Any
 
 from rich.progress import Progress
 
-from emma_datasets.datamodels import DatasetMetadata, DatasetName, MediaType, SourceMedia
+from emma_datasets.datamodels import (
+    Annotation,
+    DatasetMetadata,
+    DatasetName,
+    MediaType,
+    SourceMedia,
+)
 from emma_datasets.datamodels.datasets import VgImageMetadata
 from emma_datasets.io import read_json
 from emma_datasets.parsers.dataset_metadata.metadata_parser import DatasetMetadataParser
@@ -36,9 +42,11 @@ class VgMetadataParser(DatasetMetadataParser[VgImageMetadata]):
             media=SourceMedia(
                 url=metadata.url,
                 media_type=MediaType.image,
-                path=self.images_dir.joinpath(f"{metadata.image_id}.jpg").as_posix(),
+                path=self.images_dir.joinpath(f"{metadata.image_id}.jpg"),
             ),
-            regions_path=self.regions_dir.joinpath(f"{metadata.image_id}.json").as_posix(),
+            annotation_paths={
+                Annotation.region: self.regions_dir.joinpath(f"{metadata.image_id}.json")
+            },
         )
 
     def _read(self, path: Path) -> Any:

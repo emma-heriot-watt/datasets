@@ -3,7 +3,13 @@ from typing import Any
 
 from rich.progress import Progress
 
-from emma_datasets.datamodels import DatasetMetadata, DatasetName, MediaType, SourceMedia
+from emma_datasets.datamodels import (
+    Annotation,
+    DatasetMetadata,
+    DatasetName,
+    MediaType,
+    SourceMedia,
+)
 from emma_datasets.datamodels.datasets import EpicKitchensNarrationMetadata
 from emma_datasets.io import read_csv
 from emma_datasets.parsers.dataset_metadata.metadata_parser import (
@@ -40,7 +46,9 @@ class EpicKitchensMetadataParser(DatasetMetadataParser[EpicKitchensNarrationMeta
             name=self.dataset_name,
             split=metadata.dataset_split,
             media=self.get_all_source_media_for_narration(metadata),
-            caption_path=self.captions_dir.joinpath(f"{metadata.narration_id}.json").as_posix(),
+            annotation_paths={
+                Annotation.caption: self.captions_dir.joinpath(f"{metadata.narration_id}.json")
+            },
         )
 
     def get_all_source_media_for_narration(
@@ -61,7 +69,7 @@ class EpicKitchensMetadataParser(DatasetMetadataParser[EpicKitchensNarrationMeta
                 media_type=MediaType.image,
                 path=frames_for_video_dir.joinpath(
                     f"frame_{str(frame_number).zfill(max_padding_length)}.jpg"
-                ).as_posix(),
+                ),
             )
             for frame_number in range(metadata.start_frame, metadata.stop_frame + 1)
         ]

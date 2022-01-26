@@ -8,7 +8,6 @@ from rich.progress import Progress
 from emma_datasets.datamodels import (
     ActionTrajectory,
     Annotation,
-    AnnotationDatasetMap,
     Caption,
     DatasetMetadata,
     Instance,
@@ -150,10 +149,7 @@ class InstanceCreator:
         # If it is not None, we are assuming there is ONLY one in the list.
         metadata = filtered_metadata_list[0]
 
-        if metadata.regions_path is None:
-            raise ValueError("`metadata.regions_path` should not be `None`")
-
-        return parse_file_as(list[Region], metadata.regions_path)
+        return parse_file_as(list[Region], metadata.annotation_paths[Annotation.region])
 
     def _get_scene_graph(self, metadata_list: list[DatasetMetadata]) -> Optional[SceneGraph]:
         """Get scene graph for scene from given path."""
@@ -165,10 +161,7 @@ class InstanceCreator:
         # If it is not None, we are assuming there is ONLY one in the list.
         metadata = filtered_metadata_list[0]
 
-        if metadata.scene_graph_path is None:
-            raise ValueError("`metadata.scene_graph_path` should not be `None`")
-
-        return SceneGraph.parse_file(metadata.scene_graph_path)
+        return SceneGraph.parse_file(metadata.annotation_paths[Annotation.scene_graph])
 
     def _get_action_trajectory(
         self, metadata_list: list[DatasetMetadata]
@@ -183,10 +176,7 @@ class InstanceCreator:
         # If not None, assume only ONE trajectory in the list
         metadata = filtered_metadata_list[0]
 
-        if metadata.action_trajectory_path is None:
-            raise ValueError("`metadata.action_trajectory_path` should not be `None`")
-
-        return ActionTrajectory.parse_file(metadata.action_trajectory_path)
+        return ActionTrajectory.parse_file(metadata.annotation_paths[Annotation.action_trajectory])
 
     def _get_captions(self, metadata_list: list[DatasetMetadata]) -> list[Caption]:
         """Get captions for instance."""
@@ -198,10 +188,9 @@ class InstanceCreator:
         captions = []
 
         for metadata in filtered_metadata_list:
-            if metadata.caption_path is None:
-                raise ValueError("`metadata.caption_path` should not be `None`")
-
-            captions.extend(parse_file_as(list[Caption], metadata.caption_path))
+            captions.extend(
+                parse_file_as(list[Caption], metadata.annotation_paths[Annotation.caption])
+            )
 
         return captions
 
@@ -215,11 +204,12 @@ class InstanceCreator:
         qa_pairs = []
 
         for metadata in filtered_metadata_list:
-            if metadata.qa_pairs_path is None:
-                raise ValueError("`metadata.qa_pairs_path` should not be `None`")
-
             try:
-                qa_pairs.extend(parse_file_as(list[QuestionAnswerPair], metadata.qa_pairs_path))
+                qa_pairs.extend(
+                    parse_file_as(
+                        list[QuestionAnswerPair], metadata.annotation_paths[Annotation.qa_pair]
+                    )
+                )
             except FileNotFoundError:
                 # TODO(amit): add reasoning for this exception in docstring
                 pass  # noqa: WPS420
@@ -232,5 +222,5 @@ class InstanceCreator:
         return [
             metadata
             for metadata in metadata_list
-            if metadata.name in AnnotationDatasetMap[annotation]
+            if annotation in metadata.annotation_paths.keys()
         ]

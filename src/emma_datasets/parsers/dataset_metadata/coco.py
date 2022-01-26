@@ -4,6 +4,7 @@ from typing import Any
 from rich.progress import Progress
 
 from emma_datasets.datamodels import (
+    Annotation,
     DatasetMetadata,
     DatasetName,
     DatasetSplit,
@@ -49,9 +50,11 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
             media=SourceMedia(
                 url=metadata.coco_url,
                 media_type=MediaType.image,
-                path=self.images_dir.joinpath(metadata.file_name).as_posix(),
+                path=self.images_dir.joinpath(metadata.file_name),
             ),
-            caption_path=self.captions_dir.joinpath(f"{metadata.id}.json").as_posix(),
+            annotation_paths={
+                Annotation.caption: self.captions_dir.joinpath(f"{metadata.id}.json"),
+            },
         )
 
     def _read(self, path: Path) -> Any:

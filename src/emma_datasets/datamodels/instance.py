@@ -1,7 +1,5 @@
-from typing import Optional
-
-import numpy
-from numpy.typing import NDArray
+from pathlib import Path
+from typing import Optional, Union
 
 from emma_datasets.datamodels.base_model import BaseModel
 from emma_datasets.datamodels.constants import DatasetModalityMap, DatasetName, MediaType
@@ -11,8 +9,6 @@ from emma_datasets.datamodels.scene_graph import SceneGraph
 from emma_datasets.datamodels.text import Caption, QuestionAnswerPair
 from emma_datasets.datamodels.trajectory import ActionTrajectory
 
-
-Pixels = NDArray[numpy.float32]
 
 DatasetDict = dict[DatasetName, DatasetMetadata]
 
@@ -39,3 +35,13 @@ class Instance(BaseModel):
             return max(instance_modalities)
 
         return next(iter(instance_modalities))
+
+    @property
+    def paths(self) -> Union[Path, list[Path], None]:
+        """Get source paths for this instance.
+
+        Since an instance can be mapped to more than one dataset, we assume that the source media
+        is going to be identical across them. Therefore, it doesn't matter which dataset's image
+        file we use since they should be identical.
+        """
+        return next(iter(self.dataset.values())).paths

@@ -50,11 +50,3 @@ DatasetModalityMap: dict[DatasetName, MediaType] = {
     DatasetName.open_images: MediaType.image,
     DatasetName.alfred: MediaType.video,
 }
-
-AnnotationDatasetMap: dict[Annotation, list[DatasetName]] = {
-    Annotation.qa_pair: [DatasetName.gqa],
-    Annotation.caption: [DatasetName.coco, DatasetName.epic_kitchens, DatasetName.alfred],
-    Annotation.region: [DatasetName.visual_genome],
-    Annotation.scene_graph: [DatasetName.gqa],
-    Annotation.action_trajectory: [DatasetName.alfred],
-}
