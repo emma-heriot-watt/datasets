@@ -1946,7 +1946,7 @@ torch = ["torch"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "3fb517ba0a62e23823cdb53879dc4964067ab67c06befe9e5fab27a088d59c8f"
+content-hash = "c7733877cec5ff5429a29a55d4f1b9b98fc76985f3613e2967371000372036fb"
 
 [metadata.files]
 anyio = [

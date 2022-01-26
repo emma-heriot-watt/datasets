@@ -3,9 +3,9 @@ from typing import Any
 
 from rich.progress import Progress
 
-from src.datamodels.constants import DatasetName
-from src.parsers.align_multiple_datasets import AlignMultipleDatasets
-from src.parsers.dataset_aligner import DatasetAligner
+from emma_datasets.datamodels.constants import DatasetName
+from emma_datasets.parsers.align_multiple_datasets import AlignMultipleDatasets
+from emma_datasets.parsers.dataset_aligner import DatasetAligner
 
 
 def test_dataset_aligner_works(

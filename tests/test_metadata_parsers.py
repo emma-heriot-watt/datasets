@@ -5,8 +5,8 @@ import pytest
 from pytest_cases import fixture, fixture_ref, parametrize
 from rich.progress import Progress
 
-from src.datamodels import DatasetMetadata
-from src.parsers.dataset_metadata.metadata_parser import DatasetMetadataParser
+from emma_datasets.datamodels import DatasetMetadata
+from emma_datasets.parsers.dataset_metadata.metadata_parser import DatasetMetadataParser
 
 
 @fixture

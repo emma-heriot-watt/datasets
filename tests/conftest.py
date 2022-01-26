@@ -7,12 +7,12 @@ import pytest
 from pytest_cases import fixture, parametrize, parametrize_with_cases
 from rich.progress import Progress
 
-from src.datamodels import DatasetMetadata, DatasetName, DatasetSplit
-from src.datamodels.datasets import CocoImageMetadata, GqaImageMetadata, VgImageMetadata
-from src.io.paths import get_paths_from_dir
-from src.parsers.align_multiple_datasets import AlignMultipleDatasets
-from src.parsers.dataset_aligner import DatasetAligner
-from src.parsers.dataset_metadata import (
+from emma_datasets.datamodels import DatasetMetadata, DatasetName, DatasetSplit
+from emma_datasets.datamodels.datasets import CocoImageMetadata, GqaImageMetadata, VgImageMetadata
+from emma_datasets.io.paths import get_paths_from_dir
+from emma_datasets.parsers.align_multiple_datasets import AlignMultipleDatasets
+from emma_datasets.parsers.dataset_aligner import DatasetAligner
+from emma_datasets.parsers.dataset_metadata import (
     AlfredMetadataParser,
     CocoMetadataParser,
     DataPathTuple,
@@ -224,7 +224,7 @@ def vg_coco_gqa_grouped_metadata(
 ) -> Iterator[list[DatasetMetadata]]:
     align_multiple_datasets = AlignMultipleDatasets(DatasetName.visual_genome, progress)
     aligned_metadata_iterable = [
-        dataset_aligner.get_aligned_metadata()  # type: ignore[attr-defined]
+        dataset_aligner.get_aligned_metadata()
         for dataset_aligner in (vg_coco_aligner, gqa_vg_aligner)
     ]
     all_metadata_groups = itertools.chain(align_multiple_datasets(*aligned_metadata_iterable))

@@ -1,0 +1,10 @@
+from emma_datasets.parsers.instance_splitters.alfred_captions import AlfredCaptionSplitter
+from emma_datasets.parsers.instance_splitters.alfred_trajectories import AlfredTrajectorySplitter
+from emma_datasets.parsers.instance_splitters.coco_caption import CocoCaptionSplitter
+from emma_datasets.parsers.instance_splitters.epic_kitchens_captions import (
+    EpicKitchensCaptionSplitter,
+)
+from emma_datasets.parsers.instance_splitters.gqa_qa_pairs import GqaQaPairSplitter
+from emma_datasets.parsers.instance_splitters.gqa_scene_graphs import GqaSceneGraphSplitter
+from emma_datasets.parsers.instance_splitters.instance_splitter import InstanceSplitter
+from emma_datasets.parsers.instance_splitters.vg_regions import VgRegionsSplitter

@@ -1,12 +1,15 @@
 [tool.poetry]
 name = "emma-datasets"
-version = "0.1.0"
+version = "0.3.0"
 description = ""
-authors = ["Amit Parekh <amit.parekh@hw.ac.uk>"]
+authors = [
+	"Amit Parekh <amit.parekh@hw.ac.uk>",
+	"Alessandro Suglia <alessandro.suglia@gmail.com>",
+]
 readme = "README.md"
 repository = "https://github.com/emma-simbot/datasets"
 
-packages = [{ include = "src" }]
+packages = [{ include = "emma_datasets", from = "src" }]
 
 [tool.poe]
 envfile = ".env"
@@ -30,6 +33,7 @@ torch = { version = "^1.10.1", optional = true }
 py7zr = "^0.17.2"
 boto3 = "^1.20.41"
 overrides = "^6.1.0"
+setuptools = "^60.5.0"
 
 
 [tool.poetry.extras]
@@ -57,7 +61,7 @@ profile = "black"
 combine_as_imports = true
 lines_after_imports = 2
 line_length = 99
-known_first_party = ["src"]
+known_first_party = ["src", "emma_datasets"]
 
 
 [tool.pytest.ini_options]
@@ -114,5 +118,5 @@ init_typed = true
 warn_untyped_fields = true
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.0", "setuptools"]
 build-backend = "poetry.core.masonry.api"

@@ -6,8 +6,14 @@ from pydantic import parse_file_as
 from pytest_cases import parametrize_with_cases
 from rich.progress import Progress
 
-from src.datamodels import ActionTrajectory, Caption, QuestionAnswerPair, Region, SceneGraph
-from src.parsers.instance_splitters import (
+from emma_datasets.datamodels import (
+    ActionTrajectory,
+    Caption,
+    QuestionAnswerPair,
+    Region,
+    SceneGraph,
+)
+from emma_datasets.parsers.instance_splitters import (
     AlfredCaptionSplitter,
     CocoCaptionSplitter,
     EpicKitchensCaptionSplitter,
@@ -15,7 +21,7 @@ from src.parsers.instance_splitters import (
     GqaSceneGraphSplitter,
     VgRegionsSplitter,
 )
-from src.parsers.instance_splitters.alfred_trajectories import AlfredTrajectorySplitter
+from emma_datasets.parsers.instance_splitters.alfred_trajectories import AlfredTrajectorySplitter
 
 
 def split_instances(
