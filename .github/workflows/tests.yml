@@ -42,4 +42,4 @@ jobs:
 
       - name: Run test suite
         run: |
-          poetry run poe test
+          poetry run pytest --cov=src -m 'not slow and not multiprocessing' -v

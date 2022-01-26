@@ -1,6 +1,7 @@
 from multiprocessing.pool import Pool
 from typing import Any, Iterator
 
+import pytest
 from pytest_cases import fixture, fixture_ref, parametrize
 from rich.progress import Progress
 
@@ -32,6 +33,7 @@ def test_metadata_parser_works(metadata_parser, progress):
         assert isinstance(instance, metadata_parser.metadata_model)
 
 
+@pytest.mark.multiprocessing
 def test_metadata_parser_works_with_multiprocessing(metadata_parser, progress):
     with Pool(2) as pool:
         metadata = list(metadata_parser.get_metadata(progress, pool))
