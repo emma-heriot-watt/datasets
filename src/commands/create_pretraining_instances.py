@@ -4,11 +4,13 @@ from typing import Optional
 from rich.progress import Progress
 
 from src.api.storage import DatasetDB
-from src.common import Settings, get_progress
+from src.common import Settings, get_progress, use_rich_for_logging, use_rich_for_tracebacks
 from src.pipeline import InstanceCreator, MetadataParser
 
 
 BATCH_SIZE = 4096
+use_rich_for_logging()
+use_rich_for_tracebacks()
 settings = Settings()
 
 

@@ -26,6 +26,8 @@ ignore =
 		WPS211,
 		# Do not warn on too many methods
 		WPS214,
+		# Allow lots of importing from the same module --- it can happen and thats okay!
+		WPS235,
 		# Do not warn on complex f-string
 		WPS237,
 		# Allow relative module references
@@ -78,6 +80,7 @@ max-expressions = 20
 max-string-usages = 10
 min-name-length = 1
 max-try-body-length = 2
+max-annotation-complexity = 4
 format = wemake
 
 # Black enforces double quotes.
@@ -89,6 +92,10 @@ docstring-convention = google
 docstring_style = google
 strictness = long
 
+nested-classes-whitelist =
+	Meta
+	Params
+	Config
 
 allowed-domain-names =
 		data

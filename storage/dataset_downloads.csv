@@ -712,6 +712,8 @@ epic_kitchens,https://data.bris.ac.uk/datasets/2g1n6qdydwa9u22shpxqzp0t8m/P37/rg
 epic_kitchens,https://raw.githubusercontent.com/epic-kitchens/epic-kitchens-100-annotations/master/EPIC_100_train.csv
 epic_kitchens,https://raw.githubusercontent.com/epic-kitchens/epic-kitchens-100-annotations/master/EPIC_100_validation.csv
 alfred,https://ai2-vision-alfred.s3-us-west-2.amazonaws.com/json_2.1.0.7z
+alfred,https://ai2-vision-alfred.s3-us-west-2.amazonaws.com/full_2.1.0.7z
 teach,s3://teach-dataset/all_games.tar.gz
 teach,s3://teach-dataset/edh_instances.tar.gz
 teach,s3://teach-dataset/experiment_games.tar.gz
+teach,s3://teach-dataset/images_and_states.tar.gz

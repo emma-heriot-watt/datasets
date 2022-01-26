@@ -1,3 +1,5 @@
+from src.parsers.instance_splitters.alfred_captions import AlfredCaptionSplitter
+from src.parsers.instance_splitters.alfred_trajectories import AlfredTrajectorySplitter
 from src.parsers.instance_splitters.coco_caption import CocoCaptionSplitter
 from src.parsers.instance_splitters.epic_kitchens_captions import EpicKitchensCaptionSplitter
 from src.parsers.instance_splitters.gqa_qa_pairs import GqaQaPairSplitter

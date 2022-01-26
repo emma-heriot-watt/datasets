@@ -4,12 +4,14 @@ from typing import Optional
 
 from rich.progress import BarColumn, Progress, TextColumn
 
-from src.common import Settings
+from src.common import Settings, use_rich_for_logging, use_rich_for_tracebacks
 from src.common.progress import BatchesProcessedColumn, CustomTimeColumn
 from src.datamodels import DatasetName
 from src.io import extract_archive
 
 
+use_rich_for_logging()
+use_rich_for_tracebacks()
 settings = Settings()
 
 
@@ -33,7 +35,12 @@ class OrganiseDataset:
         archive_paths = [self._dataset_path.joinpath(archive) for archive in file_names]
 
         task_id = progress.add_task(
-            description, start=False, visible=False, total=0, dataset_name=self._dataset_name.value
+            description,
+            start=False,
+            visible=False,
+            total=0,
+            dataset_name=self._dataset_name.value,
+            comment="",
         )
 
         for path in archive_paths:
@@ -143,8 +150,15 @@ def organise_alfred(pool: ThreadPoolExecutor, progress: Progress) -> None:
         output_dir=settings.paths.alfred,
         pool=pool,
         progress=progress,
-        move_files_to_output_dir=True,
     )
+    # TODO(amit): This is going to take forever and needs to be better
+    # organise_dataset.submit(
+    #     description="Extracting images",
+    #     file_names=["full_2.1.0.7z"],
+    #     output_dir=settings.paths.alfred,
+    #     pool=pool,
+    #     progress=progress,
+    # )
 
 
 def organise_teach(pool: ThreadPoolExecutor, progress: Progress) -> None:
@@ -172,6 +186,13 @@ def organise_teach(pool: ThreadPoolExecutor, progress: Progress) -> None:
         progress=progress,
     )
 
+    organise_dataset.submit(
+        description="Extracting images and states",
+        file_names=["images_and_states.tar.gz"],
+        pool=pool,
+        progress=progress,
+    )
+
 
 def organise_all_datasets() -> None:
     """Organise all the datasets in the storage folder.
@@ -186,6 +207,7 @@ def organise_all_datasets() -> None:
         BarColumn(),
         BatchesProcessedColumn(),
         CustomTimeColumn(),
+        TextColumn("[bright_black i]{task.fields[comment]}[/]"),
     )
 
     with progress_bar:

@@ -1,7 +1,7 @@
 import itertools
 import os
 from pathlib import Path
-from typing import Iterator, Union
+from typing import Iterator, Union, cast
 
 import pytest
 from pytest_cases import fixture, parametrize, parametrize_with_cases
@@ -9,9 +9,11 @@ from rich.progress import Progress
 
 from src.datamodels import DatasetMetadata, DatasetName, DatasetSplit
 from src.datamodels.datasets import CocoImageMetadata, GqaImageMetadata, VgImageMetadata
+from src.io.paths import get_paths_from_dir
 from src.parsers.align_multiple_datasets import AlignMultipleDatasets
 from src.parsers.dataset_aligner import DatasetAligner
 from src.parsers.dataset_metadata import (
+    AlfredMetadataParser,
     CocoMetadataParser,
     DataPathTuple,
     EpicKitchensMetadataParser,
@@ -47,6 +49,7 @@ CaseReturnType = dict[str, Union[Path, list[Path]]]
 
 def case_subset() -> CaseReturnType:
     return {
+        "base": FIXTURES_PATH,
         "coco_caption_train": FIXTURES_PATH.joinpath("coco_captions.json"),
         "coco_caption_val": FIXTURES_PATH.joinpath("coco_captions.json"),
         "vg_image_data": FIXTURES_PATH.joinpath("vg_image_data.json"),
@@ -56,12 +59,17 @@ def case_subset() -> CaseReturnType:
         "gqa_questions": [FIXTURES_PATH.joinpath("gqa_questions.json")],
         "ek_train": FIXTURES_PATH.joinpath("epic_kitchens.csv"),
         "ek_val": FIXTURES_PATH.joinpath("epic_kitchens.csv"),
+        "alfred_train": list(get_paths_from_dir(FIXTURES_PATH.joinpath("alfred/train/"))),
+        "alfred_valid_seen": list(
+            get_paths_from_dir(FIXTURES_PATH.joinpath("alfred/valid_seen/"))
+        ),
     }
 
 
 @pytest.mark.slow
 def case_full() -> CaseReturnType:
     return {
+        "base": DATASETS_PATH,
         "coco_caption_train": DATASETS_PATH.joinpath("coco/captions_train2017.json"),
         "coco_caption_val": DATASETS_PATH.joinpath("coco/captions_val2017.json"),
         "vg_image_data": DATASETS_PATH.joinpath("visual_genome/image_data.json"),
@@ -74,6 +82,12 @@ def case_full() -> CaseReturnType:
         ],
         "ek_train": DATASETS_PATH.joinpath("EPIC_100_train.csv"),
         "ek_val": DATASETS_PATH.joinpath("EPIC_100_validation.csv"),
+        "alfred_train": list(
+            get_paths_from_dir(DATASETS_PATH.joinpath("alfred/json_2.1.0/train/"))
+        ),
+        "alfred_valid_seen": list(
+            get_paths_from_dir(DATASETS_PATH.joinpath("alfred/json_2.1.0/valid_seen/"))
+        ),
     }
 
 
@@ -135,6 +149,31 @@ def epic_kitchens_metadata_parser(
         data_paths=data_paths,
         frames_dir=Path("frames"),
         captions_dir=Path("captions"),
+        progress=progress,
+    )
+
+
+@fixture
+@parametrize_with_cases("paths", cases=".")
+def alfred_metadata_parser(
+    paths: dict[str, list[Path]], progress: Progress
+) -> AlfredMetadataParser:
+    data_paths: list[DataPathTuple] = list(
+        itertools.chain.from_iterable(
+            [
+                zip(paths["alfred_train"], itertools.cycle([DatasetSplit.train])),
+                zip(paths["alfred_valid_seen"], itertools.cycle([DatasetSplit.valid])),
+            ]
+        )
+    )
+
+    base_path: Path = cast(Path, paths["base"])
+
+    return AlfredMetadataParser(
+        data_paths=data_paths,
+        alfred_dir=base_path.joinpath("alfred/"),
+        captions_dir=Path("captions"),
+        trajectories_dir=Path("trajectories"),
         progress=progress,
     )
 
@@ -203,8 +242,21 @@ def epic_kitchens_grouped_metadata(
 
 
 @fixture
+def alfred_grouped_metadata(
+    alfred_metadata_parser: AlfredMetadataParser, progress: Progress
+) -> Iterator[list[DatasetMetadata]]:
+    return (
+        list(alfred_metadata_parser.convert_to_dataset_metadata(metadata))
+        for metadata in alfred_metadata_parser.get_metadata(progress)
+    )
+
+
+@fixture
 def all_grouped_metadata(
     vg_coco_gqa_grouped_metadata: Iterator[list[DatasetMetadata]],
     epic_kitchens_grouped_metadata: Iterator[list[DatasetMetadata]],
+    alfred_grouped_metadata: Iterator[list[DatasetMetadata]],
 ) -> Iterator[list[DatasetMetadata]]:
-    return itertools.chain(epic_kitchens_grouped_metadata, vg_coco_gqa_grouped_metadata)
+    return itertools.chain(
+        epic_kitchens_grouped_metadata, vg_coco_gqa_grouped_metadata, alfred_grouped_metadata
+    )

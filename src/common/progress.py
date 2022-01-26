@@ -4,7 +4,7 @@ from datetime import timedelta
 from typing import Any, Optional
 
 from rich.console import RenderableType
-from rich.progress import BarColumn, Progress, ProgressColumn, Task, TaskID
+from rich.progress import BarColumn, Progress, ProgressColumn, Task, TaskID, TextColumn
 from rich.progress_bar import ProgressBar
 from rich.text import Text
 
@@ -115,4 +115,5 @@ def get_progress() -> Progress:
         BatchesProcessedColumn(),
         CustomTimeColumn(),
         ProcessingSpeedColumn(),
+        TextColumn("[purple]{task.fields[comment]}[/]"),
     )

@@ -52,6 +52,7 @@ class DatasetAligner(Generic[S, T]):
             description=f"Aligning [u]{self._source_dataset_name}[/] with [u]{self._target_dataset_name}[/]",
             start=False,
             visible=False,
+            comment="",
         )
 
     def get_aligned_metadata(self, pool: Optional[Pool] = None) -> DatasetAlignerReturn:

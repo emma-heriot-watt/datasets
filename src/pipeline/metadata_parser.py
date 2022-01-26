@@ -10,6 +10,7 @@ from src.datamodels.datasets import CocoImageMetadata, GqaImageMetadata, VgImage
 from src.parsers.align_multiple_datasets import AlignMultipleDatasets
 from src.parsers.dataset_aligner import DatasetAligner
 from src.parsers.dataset_metadata import (
+    AlfredMetadataParser,
     CocoMetadataParser,
     EpicKitchensMetadataParser,
     GqaMetadataParser,
@@ -34,12 +35,14 @@ class MetadataParser:
         )
 
         self._gqa = GqaMetadataParser(
-            scene_graphs_train_path=settings.paths.gqa.joinpath("train_sceneGraphs.json"),
-            scene_graphs_val_path=settings.paths.gqa.joinpath("val_sceneGraphs.json"),
+            scene_graphs_train_path=settings.paths.gqa_scene_graphs.joinpath(
+                "train_sceneGraphs.json"
+            ),
+            scene_graphs_val_path=settings.paths.gqa_scene_graphs.joinpath("val_sceneGraphs.json"),
             images_dir=settings.paths.gqa_images,
             scene_graphs_dir=settings.paths.scene_graphs,
             qa_pairs_dir=settings.paths.qa_pairs,
-            progress=progress,
+            progress=self.progress,
         )
 
         self._coco = CocoMetadataParser(
@@ -47,7 +50,7 @@ class MetadataParser:
             caption_val_path=settings.paths.coco.joinpath("captions_val2017.json"),
             images_dir=settings.paths.coco_images,
             captions_dir=settings.paths.captions,
-            progress=progress,
+            progress=self.progress,
         )
 
         self._epic_kitchens = EpicKitchensMetadataParser(
@@ -58,9 +61,20 @@ class MetadataParser:
                     DatasetSplit.valid,
                 ),
             ],
-            frames_dir=settings.paths.epic_kitchens.joinpath("rgb_frames"),
+            frames_dir=settings.paths.epic_kitchens_frames,
             captions_dir=settings.paths.captions,
-            progress=progress,
+            progress=self.progress,
+        )
+
+        self._alfred = AlfredMetadataParser(
+            data_paths=[
+                (settings.paths.alfred_data.joinpath("train/"), DatasetSplit.train),
+                (settings.paths.alfred_data.joinpath("valid_seen/"), DatasetSplit.valid),
+            ],
+            alfred_dir=settings.paths.alfred_data,
+            captions_dir=settings.paths.captions,
+            trajectories_dir=settings.paths.trajectories,
+            progress=self.progress,
         )
 
         self._vg_coco_aligner = DatasetAligner[VgImageMetadata, CocoImageMetadata](
@@ -89,7 +103,8 @@ class MetadataParser:
         """Get all dataset metadata from the input datasets."""
         return itertools.chain(
             self.coco_vg_gqa(pool),
-            self.epic_kitchens(),
+            self.epic_kitchens(pool),
+            self.alfred(pool),
         )
 
     def coco_vg_gqa(self, pool: Optional[Pool] = None) -> Iterator[list[DatasetMetadata]]:
@@ -109,5 +124,15 @@ class MetadataParser:
             [self._epic_kitchens.convert_to_dataset_metadata(metadata)]
             for metadata in narration_metadata
         )
+
+        return dataset_metadata
+
+    def alfred(self, pool: Optional[Pool] = None) -> Iterator[list[DatasetMetadata]]:
+        """Get dataset metadata from the ALFRED dataset."""
+        alfred_metadata = self._alfred.get_metadata(self.progress, pool)
+        dataset_metadata_iterator = itertools.chain.from_iterable(
+            self._alfred.convert_to_dataset_metadata(metadata) for metadata in alfred_metadata
+        )
+        dataset_metadata = ([metadata] for metadata in dataset_metadata_iterator)
 
         return dataset_metadata

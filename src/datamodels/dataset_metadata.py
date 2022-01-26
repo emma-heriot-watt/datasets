@@ -11,7 +11,7 @@ class SourceMedia(BaseModel, frozen=True):
 
     url: Optional[HttpUrl]
     media_type: MediaType
-    path: str
+    path: Optional[str]
 
 
 class DatasetMetadata(BaseModel, frozen=True):
@@ -25,3 +25,4 @@ class DatasetMetadata(BaseModel, frozen=True):
     regions_path: Optional[str] = None
     caption_path: Optional[str] = None
     qa_pairs_path: Optional[str] = None
+    action_trajectory_path: Optional[str] = None

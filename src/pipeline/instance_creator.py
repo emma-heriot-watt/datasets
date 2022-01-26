@@ -6,6 +6,7 @@ from pydantic import parse_file_as
 from rich.progress import Progress
 
 from src.datamodels import (
+    ActionTrajectory,
     Annotation,
     AnnotationDatasetMap,
     Caption,
@@ -22,7 +23,11 @@ class InstanceCreator:
 
     def __init__(self, progress: Progress) -> None:
         self.task_id = progress.add_task(
-            "Creating instances", visible=False, start=False, total=float("inf")
+            "Creating instances",
+            visible=False,
+            start=False,
+            total=float("inf"),
+            comment="",
         )
 
     def __call__(
@@ -164,6 +169,24 @@ class InstanceCreator:
             raise ValueError("`metadata.scene_graph_path` should not be `None`")
 
         return SceneGraph.parse_file(metadata.scene_graph_path)
+
+    def _get_action_trajectory(
+        self, metadata_list: list[DatasetMetadata]
+    ) -> Optional[ActionTrajectory]:
+        filtered_metadata_list = self._filter_metadata_list(
+            metadata_list, Annotation.action_trajectory
+        )
+
+        if not filtered_metadata_list:
+            return None
+
+        # If not None, assume only ONE trajectory in the list
+        metadata = filtered_metadata_list[0]
+
+        if metadata.action_trajectory_path is None:
+            raise ValueError("`metadata.action_trajectory_path` should not be `None`")
+
+        return ActionTrajectory.parse_file(metadata.action_trajectory_path)
 
     def _get_captions(self, metadata_list: list[DatasetMetadata]) -> list[Caption]:
         """Get captions for instance."""

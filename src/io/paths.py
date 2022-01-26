@@ -11,7 +11,7 @@ def get_paths_from_dir(dir_path: Path) -> Iterator[Path]:
     if not dir_path.is_dir():
         raise RuntimeError("`dir_path` should point to a directory.")
 
-    paths_from_dir = dir_path.glob("**/*")
+    paths_from_dir = dir_path.rglob("*.*")
     files_from_dirs = (file_path for file_path in paths_from_dir if file_path.is_file())
 
     return files_from_dirs

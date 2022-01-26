@@ -1,3 +1,4 @@
+from src.parsers.dataset_metadata.alfred import AlfredMetadataParser
 from src.parsers.dataset_metadata.coco import CocoMetadataParser
 from src.parsers.dataset_metadata.epic_kitchens import EpicKitchensMetadataParser
 from src.parsers.dataset_metadata.gqa import GqaMetadataParser

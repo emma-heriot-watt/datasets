@@ -14,6 +14,7 @@ class EpicKitchensMetadataParser(DatasetMetadataParser[EpicKitchensNarrationMeta
 
     metadata_model = EpicKitchensNarrationMetadata
     dataset_name = DatasetName.epic_kitchens
+    file_ext = "csv"
 
     def __init__(
         self,

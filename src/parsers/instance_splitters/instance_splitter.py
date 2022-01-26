@@ -17,6 +17,7 @@ class InstanceSplitter(ABC, Generic[Annotation]):
     """Split annotations from instances into multiple files for easier loading."""
 
     progress_bar_description = "Splitting annotations"
+    file_ext: str = "json"
 
     def __init__(
         self,
@@ -24,12 +25,21 @@ class InstanceSplitter(ABC, Generic[Annotation]):
         output_dir: Union[str, Path],
         progress: Progress,
     ) -> None:
-        self.file_paths = get_all_file_paths(paths)
+        self.task_id = progress.add_task(
+            self.progress_bar_description,
+            start=False,
+            visible=True,
+            total=float("inf"),
+            comment="",
+        )
+
+        progress.update(self.task_id, comment="Getting paths to raw files")
+        self.file_paths = [
+            path for path in get_all_file_paths(paths) if path.suffix.endswith(self.file_ext)
+        ]
         self.output_dir = Path(output_dir)
 
-        self.task_id = progress.add_task(
-            self.progress_bar_description, start=False, visible=False, total=float("inf")
-        )
+        progress.update(self.task_id, comment="Waiting for turn...")
 
     @overload
     def run(self, progress: Progress, pool: Pool) -> None:
@@ -46,10 +56,12 @@ class InstanceSplitter(ABC, Generic[Annotation]):
             progress (Progress): Rich Progress Bar
             pool (Pool, optional): Pool for multiprocessing. Defaults to None.
         """
+        progress.update(self.task_id, comment="Reading all raw data")
         raw_data = self._read()
 
         self._start_progress(progress)
 
+        progress.update(self.task_id, comment="Processing data")
         if pool is not None:
             for _ in pool.imap_unordered(self.process_single_instance, raw_data):
                 self._advance(progress)
@@ -135,5 +147,7 @@ class InstanceSplitter(ABC, Generic[Annotation]):
     def _end_progress(self, progress: Progress) -> None:
         """Stop the progress bar and make sure to freeze the finished bar."""
         completed = int(progress._tasks[self.task_id].completed)  # noqa: WPS437
-        progress.update(self.task_id, visible=True, total=completed, completed=completed)
+        progress.update(
+            self.task_id, visible=True, total=completed, completed=completed, comment="Done!"
+        )
         progress.stop_task(self.task_id)

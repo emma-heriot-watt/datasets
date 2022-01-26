@@ -5,7 +5,7 @@ from rich.logging import RichHandler
 from rich.traceback import install
 
 
-def use_rich_for_callbacks() -> None:
+def use_rich_for_tracebacks() -> None:
     """Use Rich for rendering tracebacks."""
     install(show_locals=True)
 

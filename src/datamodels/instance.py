@@ -9,6 +9,7 @@ from src.datamodels.dataset_metadata import DatasetMetadata
 from src.datamodels.region import Region
 from src.datamodels.scene_graph import SceneGraph
 from src.datamodels.text import Caption, QuestionAnswerPair
+from src.datamodels.trajectory import ActionTrajectory
 
 
 Pixels = NDArray[numpy.float32]
@@ -25,6 +26,7 @@ class Instance(BaseModel):
     qa: Optional[QuestionAnswerPair]
     regions: Optional[list[Region]]
     scene_graph: Optional[SceneGraph]
+    trajectory: Optional[ActionTrajectory]
 
     @property
     def modality(self) -> MediaType:

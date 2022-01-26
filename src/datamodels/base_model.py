@@ -7,7 +7,7 @@ from src.io.json import orjson_dumps
 class BaseModel(PydanticBaseModel):
     """Base model class, inherited from Pydantic."""
 
-    class Config:  # noqa: WPS431
+    class Config:
         """Updated config."""
 
         json_loads = orjson.loads

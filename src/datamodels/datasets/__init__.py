@@ -1,3 +1,4 @@
+from src.datamodels.datasets.alfred import AlfredAnnotation, AlfredMetadata, AlfredScene
 from src.datamodels.datasets.coco import CocoCaption, CocoImageMetadata
 from src.datamodels.datasets.epic_kitchens import EpicKitchensNarrationMetadata
 from src.datamodels.datasets.gqa import GqaImageMetadata, GqaObject, GqaRelation, GqaSceneGraph

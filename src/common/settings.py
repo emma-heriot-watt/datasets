@@ -19,6 +19,7 @@ class Paths:  # noqa: WPS230
         self.qa_pairs = self.temp.joinpath("qa_pairs/")
         self.scene_graphs = self.temp.joinpath("scene_graphs/")
         self.regions = self.temp.joinpath("regions/")
+        self.trajectories = self.temp.joinpath("trajectories/")
 
         # Dataset source files
         self.datasets = self.storage.joinpath("datasets/")
@@ -36,20 +37,21 @@ class Paths:  # noqa: WPS230
         self.gqa_questions = self.gqa.joinpath("questions/")
         self.gqa_scene_graphs = self.gqa.joinpath("scene_graphs/")
         self.epic_kitchens_frames = self.epic_kitchens.joinpath("frames/")
-        self.alfred_trajectories = self.alfred.joinpath("json_2.1.0/")
+        self.alfred_data = self.alfred.joinpath("json_2.1.0/")
 
         # Databases for output
         self.databases = self.storage.joinpath("db/")
 
         self._create_dirs()
 
-    def _create_dirs(self) -> None:
+    def _create_dirs(self) -> None:  # noqa: WPS213
         self.temp.mkdir(parents=True, exist_ok=True)
 
         self.captions.mkdir(parents=True, exist_ok=True)
         self.qa_pairs.mkdir(parents=True, exist_ok=True)
         self.scene_graphs.mkdir(parents=True, exist_ok=True)
         self.regions.mkdir(parents=True, exist_ok=True)
+        self.trajectories.mkdir(parents=True, exist_ok=True)
 
         self.datasets.mkdir(parents=True, exist_ok=True)
 
@@ -66,7 +68,7 @@ class Paths:  # noqa: WPS230
         self.gqa_questions.mkdir(parents=True, exist_ok=True)
         self.gqa_scene_graphs.mkdir(parents=True, exist_ok=True)
         self.epic_kitchens_frames.mkdir(parents=True, exist_ok=True)
-        self.alfred_trajectories.mkdir(parents=True, exist_ok=True)
+        self.alfred_data.mkdir(parents=True, exist_ok=True)
 
         self.databases.mkdir(parents=True, exist_ok=True)
 

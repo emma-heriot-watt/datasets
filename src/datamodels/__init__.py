@@ -11,3 +11,4 @@ from src.datamodels.instance import Instance, Pixels
 from src.datamodels.region import Region
 from src.datamodels.scene_graph import SceneGraph
 from src.datamodels.text import Caption, QuestionAnswerPair, Text
+from src.datamodels.trajectory import ActionTrajectory

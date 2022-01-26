@@ -10,6 +10,7 @@ class EpicKitchensCaptionSplitter(InstanceSplitter[Caption]):
     """Split captions for EpicKitchens into multiple files."""
 
     progress_bar_description = f"[b]Captions[/] from [u]{DatasetName.epic_kitchens.value}[/]"
+    file_ext = "csv"
 
     def read(self, file_path: Any) -> list[dict[str, Any]]:
         """Read Epic Kitchen CSV file."""

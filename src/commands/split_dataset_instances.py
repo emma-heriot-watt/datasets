@@ -3,8 +3,10 @@ from typing import Optional
 
 from rich.progress import Progress
 
-from src.common import Settings, get_progress
+from src.common import Settings, get_progress, use_rich_for_logging, use_rich_for_tracebacks
 from src.parsers.instance_splitters import (
+    AlfredCaptionSplitter,
+    AlfredTrajectorySplitter,
     CocoCaptionSplitter,
     EpicKitchensCaptionSplitter,
     GqaQaPairSplitter,
@@ -13,6 +15,8 @@ from src.parsers.instance_splitters import (
 )
 
 
+use_rich_for_logging()
+use_rich_for_tracebacks()
 settings = Settings()
 
 
@@ -65,12 +69,32 @@ def split_dataset_instances(
             progress,
         )
 
+        alfred_captions = AlfredCaptionSplitter(
+            [
+                settings.paths.alfred_data.joinpath("train/"),
+                settings.paths.alfred_data.joinpath("valid_seen/"),
+            ],
+            settings.paths.captions,
+            progress,
+        )
+
+        alfred_trajectories = AlfredTrajectorySplitter(
+            [
+                settings.paths.alfred_data.joinpath("train/"),
+                settings.paths.alfred_data.joinpath("valid_seen/"),
+            ],
+            settings.paths.trajectories,
+            progress,
+        )
+
         with Pool(num_workers) as pool:
             coco_captions.run(progress, pool)
             gqa_qa_pairs.run(progress, pool)
             gqa_scene_graph.run(progress, pool)
             vg_regions.run(progress, pool)
             ek_captions.run(progress, pool)
+            alfred_captions.run(progress, pool)
+            alfred_trajectories.run(progress, pool)
 
 
 if __name__ == "__main__":

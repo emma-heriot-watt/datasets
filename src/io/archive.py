@@ -61,6 +61,8 @@ class ExtractArchive:
     ) -> None:
         """Extract all files from within a zip archive."""
         with ZipFile(path) as archive_file:
+            progress.update(task_id, visible=True, comment="Getting file list")
+
             all_files = [
                 zipped_file for zipped_file in archive_file.infolist() if not zipped_file.is_dir()
             ]
@@ -90,6 +92,8 @@ class ExtractArchive:
     ) -> None:
         """Extract all files from within a tar archive."""
         with tarfile.open(path) as tar_file:
+            progress.update(task_id, visible=True, comment="Getting file list")
+
             all_files = tar_file.getmembers()
 
             self._start_progress(progress, task_id, len(all_files))
@@ -120,12 +124,29 @@ class ExtractArchive:
         Python. Therefore, the same implementation within `members_iterator()` can't be directly
         used.
         """
+        progress.update(task_id, visible=True, comment="Opening file")
         with SevenZipFile(path) as zip_file:
-            all_files = zip_file.getnames()
+            progress.update(task_id, visible=True, comment="Getting file list")
 
-            self._start_progress(progress, task_id, len(all_files))
+            all_file_info = zip_file.list()
 
-            for file_name, binary_file in zip_file.readall().items():
+            all_file_info = (
+                file_info for file_info in all_file_info if not file_info.is_directory
+            )
+
+            all_files = []
+
+            progress.update(task_id, visible=True, comment="Filtering file list")
+
+            for file_info in all_file_info:
+                all_files.append(file_info.filename)
+                progress.update(task_id, total=progress.tasks[task_id].total + 1)
+
+            progress.start_task(task_id)
+
+            for file_name, binary_file in zip_file.read(targets=all_files).items():
+                progress.update(task_id, comment=f"Extracting {file_name}")
+
                 file_path = Path(file_name)
                 extracted_path = output_dir.joinpath(file_path.parent)
                 extracted_path.mkdir(parents=True, exist_ok=True)
@@ -147,10 +168,12 @@ class ExtractArchive:
     ) -> Iterator[T]:
         """Iterate through members of an archive, moving if needed and updating the progress."""
         for member in members:
+            filename: str = getattr(member, file_name_attr)
+            progress.update(task_id, comment=f"Extracting {filename}")
+
             yield member
 
             if move_files_to_output_dir:
-                filename: str = getattr(member, file_name_attr)
                 extracted_path = output_dir.joinpath(filename)
 
                 if not getattr(member, is_dir_attr)() and extracted_path.parent != output_dir:

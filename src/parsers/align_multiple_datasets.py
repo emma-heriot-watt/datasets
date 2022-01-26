@@ -23,7 +23,7 @@ class AlignMultipleDatasets:
         self.common_dataset = common_dataset
 
         self.progress = progress
-        self.task_id = progress.add_task(description, start=False, visible=False)
+        self.task_id = progress.add_task(description, start=False, visible=False, comment="")
 
     def __call__(
         self,

@@ -6,14 +6,16 @@ from pydantic import parse_file_as
 from pytest_cases import parametrize_with_cases
 from rich.progress import Progress
 
-from src.datamodels import Caption, QuestionAnswerPair, Region, SceneGraph
+from src.datamodels import ActionTrajectory, Caption, QuestionAnswerPair, Region, SceneGraph
 from src.parsers.instance_splitters import (
+    AlfredCaptionSplitter,
     CocoCaptionSplitter,
     EpicKitchensCaptionSplitter,
     GqaQaPairSplitter,
     GqaSceneGraphSplitter,
     VgRegionsSplitter,
 )
+from src.parsers.instance_splitters.alfred_trajectories import AlfredTrajectorySplitter
 
 
 def split_instances(
@@ -92,3 +94,31 @@ def test_epic_kitchens_caption_splitter_works(paths: dict[str, Path], tmp_path: 
     )
 
     assert generated_captions
+
+
+@parametrize_with_cases("paths", cases=".conftest")
+def test_alfred_caption_splitter_works(paths: dict[str, list[Path]], tmp_path: Path) -> None:
+    instance_paths = list(itertools.chain(paths["alfred_train"], paths["alfred_valid_seen"]))
+
+    split_instances(AlfredCaptionSplitter, instance_paths, tmp_path)
+
+    generated_captions = list(
+        itertools.chain.from_iterable(
+            parse_file_as(list[Caption], file_path) for file_path in tmp_path.iterdir()
+        )
+    )
+
+    assert generated_captions
+
+
+@parametrize_with_cases("paths", cases=".conftest")
+def test_alfred_trajectory_splitter_works(paths: dict[str, list[Path]], tmp_path: Path) -> None:
+    instance_paths = list(itertools.chain(paths["alfred_train"], paths["alfred_valid_seen"]))
+
+    split_instances(AlfredTrajectorySplitter, instance_paths, tmp_path)
+
+    generated_trajectories = [
+        parse_file_as(ActionTrajectory, file_path) for file_path in tmp_path.iterdir()
+    ]
+
+    assert generated_trajectories
