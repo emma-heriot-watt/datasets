@@ -15,10 +15,14 @@ from botocore.config import Config
 from rich.console import Console
 from rich.progress import DownloadColumn, TaskID, TextColumn, TransferSpeedColumn
 
+from emma_datasets.common import Settings
 from emma_datasets.common.progress import CustomBarColumn, CustomProgress, CustomTimeColumn
 from emma_datasets.datamodels import DatasetName
 from emma_datasets.io import read_csv
 
+
+settings = Settings()
+settings.paths.create_dirs()
 
 progress = CustomProgress(
     TextColumn("[white]{task.fields[dataset_name]}", justify="left"),

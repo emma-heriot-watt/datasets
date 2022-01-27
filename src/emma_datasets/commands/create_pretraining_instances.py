@@ -17,6 +17,7 @@ BATCH_SIZE = 4096
 use_rich_for_logging()
 use_rich_for_tracebacks()
 settings = Settings()
+settings.paths.create_dirs()
 
 
 instances_db_path = settings.paths.databases.joinpath("instances.db")

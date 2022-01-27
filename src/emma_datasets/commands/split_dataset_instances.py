@@ -23,6 +23,7 @@ from emma_datasets.parsers.instance_splitters import (
 use_rich_for_logging()
 use_rich_for_tracebacks()
 settings = Settings()
+settings.paths.create_dirs()
 
 
 def split_dataset_instances(

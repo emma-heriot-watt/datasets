@@ -13,6 +13,7 @@ from emma_datasets.io import extract_archive
 use_rich_for_logging()
 use_rich_for_tracebacks()
 settings = Settings()
+settings.paths.create_dirs()
 
 
 class OrganiseDataset:
