@@ -133,6 +133,8 @@ class DatasetDB:
         """Instantiates an object that can be used to manipulate an SQLite database."""
         self.readonly = readonly
         self.db_dir = db_dir
+        # if we're opening a dataset in read-only mode, we can safely remove this guard
+        self.check_same_thread = not self.readonly
         if self.readonly and not os.path.exists(self.db_dir):
             raise ValueError(
                 f"You specified a <read-only> option but the path to the DB doesn't exist!\nDatabase path: {self.db_dir}"
@@ -320,7 +322,7 @@ class DatasetDB:
 
     def _open(self) -> None:
         """Opens the connection to the underlying SQLite database."""
-        self._env = sqlite3.connect(self.db_dir)
+        self._env = sqlite3.connect(self.db_dir, check_same_thread=self.check_same_thread)
 
         if self.readonly:
             # training
