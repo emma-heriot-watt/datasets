@@ -1,5 +1,6 @@
 from emma_datasets.datamodels.constants import (
     Annotation,
+    AnnotationDatasetMap,
     DatasetModalityMap,
     DatasetName,
     DatasetSplit,
