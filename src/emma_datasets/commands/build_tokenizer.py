@@ -4,7 +4,8 @@ from typing import Iterable
 
 from tokenizers import Tokenizer
 from tokenizers.models import BPE, WordPiece
-from tokenizers.pre_tokenizers import Whitespace
+from tokenizers.normalizers import BertNormalizer
+from tokenizers.pre_tokenizers import ByteLevel, Whitespace
 from tokenizers.trainers import BpeTrainer, WordPieceTrainer
 
 from emma_datasets.api.storage import DatasetDB
@@ -33,6 +34,9 @@ def main(args: Namespace) -> None:
 
     if args.tokenizer == "bpe":
         tokenizer = Tokenizer(BPE(unk_token=special_tokens[0]))
+        # After we instantiate the tokenizer, we need to setup a pre-tokenizer
+        # to find correct word boundaries
+        tokenizer.pre_tokenizer = ByteLevel()
         trainer = BpeTrainer(
             vocab_size=args.vocab_size,
             min_frequency=args.min_frequency,
@@ -40,6 +44,7 @@ def main(args: Namespace) -> None:
         )
     elif args.tokenizer == "wordpieces":
         tokenizer = Tokenizer(WordPiece(unk_token=special_tokens[0]))
+        tokenizer.pre_tokenizer = Whitespace()
         trainer = WordPieceTrainer(
             vocab_size=args.vocab_size,
             min_frequency=args.min_frequency,
@@ -48,10 +53,7 @@ def main(args: Namespace) -> None:
     else:
         raise ValueError(f"Wrong choice of Tokenizer: {args.tokenizer}")
 
-    # After we instantiate the tokenizer, we need to setup a pre-tokenizer
-    # to find correct word boundaries
-    tokenizer.pre_tokenizer = Whitespace()
-
+    tokenizer.normalizer = BertNormalizer(lowercase=args.lowercase)
     logger.info(f"Created {type(tokenizer)} tokenizer")
 
     tokenizer.train_from_iterator(data_iterator, trainer)
@@ -74,7 +76,12 @@ if __name__ == "__main__":
         choices=("wordpieces", "bpe"),
         help="The type of tokenizer to train",
     )
-    parser.add_argument("--vocab_size", type=int, default=30000)  # noqa: WPS432
+    parser.add_argument(
+        "--lowercase",
+        action="store_true",
+        help="Whether to lowercase the tokens",
+    )
+    parser.add_argument("--vocab_size", type=int, default=10000)  # noqa: WPS432
     parser.add_argument("--min_frequency", type=int, default=0)
     parser.add_argument(
         "--output_path",
