@@ -51,7 +51,7 @@ poethepoet = "^0.12.2"
 pytest-cov = "^3.0.0"
 jupyterlab = "^3.2.8"
 isort = "^5.10.1"
-black = { extras = ["jupyter"], version = "^21.12b0" }
+black = { extras = ["jupyter"], version = "^22.1" }
 pytest-cases = "^3.6.8"
 
 [tool.black]
