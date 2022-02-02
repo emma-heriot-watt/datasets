@@ -13,6 +13,7 @@
     - [Linting](#linting)
     - [Type checking](#type-checking)
     - [Working with branches](#working-with-branches)
+- [Cutting a release](#cutting-a-release)
 
 ## Quick start
 
@@ -144,3 +145,12 @@ We've settled on a middle ground when it comes to developing: **keep the `main` 
 Within branches, you can do whatever you want to do, but you should **never push anything directly to the `main` branch**.
 
 For every PR, an automated set of linters and formatters will check your code to see whether it follows the set rules. If it fails, **do not merge** with the `main` branch.
+
+## Cutting a release
+
+1. Edit the version number in the `pyproject.toml`, make a PR, and merge it into the main branch.
+2. Go to the [releases page](https://github.com/emma-simbot/datasets/releases)
+3. Click the **pencil ✏️ icon** on the Draft release
+4. Change the tag to the version number you set in the `pyproject.toml`. Follow semantic versioning and prefix the version with the letter `v`. So your tag should be `v1.4.239`.
+5. Set the **Release title** to be the same as the tag. Following the above example, it should be `v1.4.239`.
+6. Click **Publish release**.
