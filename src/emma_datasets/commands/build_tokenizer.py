@@ -2,11 +2,7 @@ import os
 from argparse import ArgumentParser, Namespace
 from typing import Iterable
 
-from tokenizers import Tokenizer
-from tokenizers.models import BPE, WordPiece
-from tokenizers.normalizers import BertNormalizer
-from tokenizers.pre_tokenizers import ByteLevel, Whitespace
-from tokenizers.trainers import BpeTrainer, WordPieceTrainer
+from transformers import AutoTokenizer
 
 from emma_datasets.api.storage import DatasetDB
 from emma_datasets.common.logger import get_logger
@@ -29,38 +25,23 @@ def main(args: Namespace) -> None:
     """Trains a new tokenizer."""
     logger.info(f"Loading data from dataset {args.db_path}")
     data_iterator = create_data_iterator(args.db_path)
-    # The order of the special tokens matters!
-    special_tokens = ["[UNK]", "[CLS]", "[SEP]", "[PAD]", "[MASK]"]
 
-    if args.tokenizer == "bpe":
-        tokenizer = Tokenizer(BPE(unk_token=special_tokens[0]))
-        # After we instantiate the tokenizer, we need to setup a pre-tokenizer
-        # to find correct word boundaries
-        tokenizer.pre_tokenizer = ByteLevel()
-        trainer = BpeTrainer(
-            vocab_size=args.vocab_size,
-            min_frequency=args.min_frequency,
-            special_tokens=special_tokens,
-        )
-    elif args.tokenizer == "wordpieces":
-        tokenizer = Tokenizer(WordPiece(unk_token=special_tokens[0]))
-        tokenizer.pre_tokenizer = Whitespace()
-        trainer = WordPieceTrainer(
-            vocab_size=args.vocab_size,
-            min_frequency=args.min_frequency,
-            special_tokens=special_tokens,
-        )
-    else:
-        raise ValueError(f"Wrong choice of Tokenizer: {args.tokenizer}")
+    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
 
-    tokenizer.normalizer = BertNormalizer(lowercase=args.lowercase)
     logger.info(f"Created {type(tokenizer)} tokenizer")
 
-    tokenizer.train_from_iterator(data_iterator, trainer)
+    object_tokens = [f"<vis_token_{i}>" for i in range(1, args.num_visual_tokens + 1)]
+
+    tokenizer = tokenizer.train_new_from_iterator(
+        data_iterator,
+        vocab_size=args.vocab_size,
+        min_frequency=args.min_frequency,
+        new_special_tokens=object_tokens,
+    )
 
     logger.info(f"Saving tokenizer to path {args.output_path}")
     os.makedirs(os.path.dirname(args.output_path), exist_ok=True)
-    tokenizer.save(args.output_path)
+    tokenizer.save_pretrained(args.output_path)
 
 
 if __name__ == "__main__":
@@ -72,9 +53,15 @@ if __name__ == "__main__":
     parser.add_argument(
         "--tokenizer",
         type=str,
-        default="bpe",
-        choices=("wordpieces", "bpe"),
+        default="allenai/led-base-16384",
+        choices=("allenai/led-base-16384", "facebook/bart-base"),
         help="The type of tokenizer to train",
+    )
+    parser.add_argument(
+        "--num_visual_tokens",
+        type=int,
+        default=100,
+        help="Number of total visual tokens for each visual frame.",
     )
     parser.add_argument(
         "--lowercase",
