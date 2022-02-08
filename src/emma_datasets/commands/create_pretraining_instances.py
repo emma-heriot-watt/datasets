@@ -3,13 +3,13 @@ from typing import Optional
 
 from rich.progress import Progress
 
-from emma_datasets.api.storage import DatasetDB
 from emma_datasets.common import (
     Settings,
     get_progress,
     use_rich_for_logging,
     use_rich_for_tracebacks,
 )
+from emma_datasets.db import DatasetDb
 from emma_datasets.pipeline import InstanceCreator, MetadataParser
 
 
@@ -35,7 +35,7 @@ def create_pretraining_instances(
 
         metadata_groups = metadata_parser.get_all_metadata_groups()
 
-        with DatasetDB(instances_db_path, readonly=False, batch_size=BATCH_SIZE) as db:
+        with DatasetDb(instances_db_path, readonly=False, batch_size=BATCH_SIZE) as db:
             with Pool(num_workers) as pool:
                 instances_iterator = instance_creator(metadata_groups, progress, pool)
 

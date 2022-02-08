@@ -1,26 +1,13 @@
-import io
-import os
 import sqlite3
-from abc import ABC, abstractmethod
-from enum import Enum
-from lzma import compress, decompress
+from pathlib import Path
 from types import TracebackType
-from typing import Any, Iterable, Optional, Union
-
-import orjson
+from typing import Any, Iterable, Iterator, Optional, Union
 
 from emma_datasets.common.logger import get_logger
+from src.emma_datasets.db.storage import DataStorage, JsonStorage, StorageType, TorchStorage
 
 
 logger = get_logger(__name__)
-
-try:
-    import torch  # noqa: WPS433
-except ImportError:
-    logger.warning(
-        "Unable to import `torch`. You will NOT be able to use the `TorchDataStorage` class. "
-        + "Consider installing it if you want to use it!"
-    )
 
 CREATE_DATA_TABLE = """
     CREATE TABLE dataset (data_id INTEGER PRIMARY KEY, example_id TEXT, data BLOB);
@@ -59,83 +46,25 @@ DELETE_EXAMPLES = """
 """
 
 
-class StorageType(Enum):
-    """Different serialisation formats for objects in SQLite database."""
-
-    torch = "torch"
-    json = "json"
-
-
-class DataStorage(ABC):
-    """Abstract class for converting data object to bytes for the SQLite database.
-
-    Data are by default stored as BLOB type in the database.
-    """
-
-    @abstractmethod
-    def decompress(self, data_buf: bytes) -> Any:
-        """Given a byte representation of an object, returns the original object representation."""
-        raise NotImplementedError
-
-    @abstractmethod
-    def compress(self, data: Any) -> bytes:
-        """Given an object representation, returns a compressed byte representation."""
-        raise NotImplementedError
-
-
-class JsonStorage(DataStorage):
-    """Uses orjson serialisation to convert Python object to bytes."""
-
-    def decompress(self, data_buf: bytes) -> Any:
-        """Decompress using LZMA and then loads the underlying bytes using orjson."""
-        return orjson.loads(decompress(data_buf))
-
-    def compress(self, data: Any) -> bytes:
-        """Uses orjson + LZMA compression to generate a byte representation of the object."""
-        return compress(
-            orjson.dumps(data, option=orjson.OPT_NON_STR_KEYS | orjson.OPT_SERIALIZE_NUMPY)
-        )
-
-
-class TorchStorage(DataStorage):
-    """Data storage that uses the PyTorch Pickle format for serialising Python objects."""
-
-    def decompress(self, data_buf: bytes) -> Any:
-        """Loads an object from a pytorch-pickle representation."""
-        buffer = io.BytesIO(data_buf)
-
-        return torch.load(buffer)
-
-    def compress(self, data: Any) -> bytes:
-        """Given an object, returns its byte representation using pytorch-pickle."""
-        buffer = io.BytesIO()
-
-        torch.save(data, buffer)
-        buffer.seek(0)
-
-        return buffer.read()
-
-
-DataStorage.register(TorchStorage)
-DataStorage.register(JsonStorage)
-
-
-class DatasetDB:
+class DatasetDb:
     """A class that mimics the dict interface to access to an SQLite database storing a dataset."""
 
     def __init__(
         self,
-        db_dir: str,
+        db_dir: Union[str, Path],
         readonly: bool = True,
         batch_size: int = 512,
         storage_type: StorageType = StorageType.json,
-    ):
-        """Instantiates an object that can be used to manipulate an SQLite database."""
-        self.readonly = readonly
+    ) -> None:
+        if isinstance(db_dir, str):
+            db_dir = Path(db_dir)
+
         self.db_dir = db_dir
+        self.readonly = readonly
+
         # if we're opening a dataset in read-only mode, we can safely remove this guard
         self.check_same_thread = not self.readonly
-        if self.readonly and not os.path.exists(self.db_dir):
+        if self.readonly and not self.db_dir.exists():
             raise ValueError(
                 f"You specified a <read-only> option but the path to the DB doesn't exist!\nDatabase path: {self.db_dir}"
             )
@@ -188,7 +117,7 @@ class DatasetDB:
                 "UPDATE dataset SET data_id = ? WHERE example_id = ?", (data_id, example_id)
             )
 
-    def __enter__(self) -> "DatasetDB":
+    def __enter__(self) -> "DatasetDb":
         """Returns the current database when context manager is initialised."""
         return self
 
@@ -205,7 +134,7 @@ class DatasetDB:
         """Closes the connection to the database when object goes out of scope."""
         self.close()
 
-    def __iter__(self) -> Iterable[tuple[int, str, Any]]:
+    def __iter__(self) -> Iterator[tuple[int, str, Any]]:
         """Iterator over the instances of the database."""
         self.open()
 

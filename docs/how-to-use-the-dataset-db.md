@@ -1,20 +1,20 @@
-# DatasetDB: EMMA's dataset manager
+# DatasetDb: EMMA's dataset manager
 
-We implemented `DatasetDB`, a dedicated database for storing datasets that can be easily
+We implemented `DatasetDb`, a dedicated database for storing datasets that can be easily
 processed in PyTorch. It provides a simple interface to access, iterate and create datasets. It is
 based on [SQLite](https://www.sqlite.org/index.html) so it avoids loading in memory all the dataset
-content which is perfect for multi-process training.
+content which is perfect for multiprocess training.
 
 If you're interested in
 understanding how it was implemented, please go the `Dataset structure` section.
 
 ## How do I use it?
 
-A `DatasetDB` can be instantiated using a Python context manager to make sure that the underlying
+A `DatasetDb` can be instantiated using a Python context manager to make sure that the underlying
 database connection is correctly closed. This can be done as follows:
 
 ```python
-with DatasetDB("path/to/dataset.db") as db:
+with DatasetDb("path/to/dataset.db") as db:
   # now you can use the db...
 ```
 
@@ -29,26 +29,26 @@ tuple `(data_id, example_id, data)`:
 - `example_id` is the identifier used by the dataset to represent the current instance
 - `data` is a byte representation of the instance's content.
 
-By default, the instance content is assumed to be JSON, so the `DatasetDB` will return a Python
+By default, the instance content is assumed to be JSON, so the `DatasetDb` will return a Python
 object when reading from the underlying SQLite database.
 
 To access the data, you can iterate over them as follows:
 
 ```python
-from src.api.storage import DatasetDB
+from emma_datasets.db import DatasetDb
 
-with DatasetDB("path/to/dataset.db") as db:
+with DatasetDb("path/to/dataset.db") as db:
   for data_id, example_id, data in db:
     # do something with the fields...
 ```
 
-You can access to a specific instance using either type of identifier. The `DatasetDB` can be
+You can access to a specific instance using either type of identifier. The `DatasetDb` can be
 used as a Python dictionary:
 
 ```python
-from src.api.storage import DatasetDB
+from emma_datasets.db import DatasetDb
 
-with DatasetDB("path/to/dataset.db") as db:
+with DatasetDb("path/to/dataset.db") as db:
   # the `data_id` has to be of type `int`
   data_id = 150
   instance = db[data_id]
@@ -58,19 +58,19 @@ with DatasetDB("path/to/dataset.db") as db:
   instance = db[example_id]
 ```
 
-### Integration in Pytorch
+### Integration in PyTorch
 
 The previous examples are useful if you are just interested in exploring the data. However, one
-important use case for EMMA is to use the data to train a PyTorch model. We can use the `DatasetDB`
+important use case for EMMA is to use the data to train a PyTorch model. We can use the `DatasetDb`
 as follows:
 
 ```python
-from src.api.storage import DatasetDB
+from emma_datasets.db import DatasetDb
 from torch.utils.data import Dataset
 
 class EmmaPretrainingDataset(Dataset):
   def __init__(self, db_path):
-    self.db = DatasetDB(db_path)
+    self.db = DatasetDb(db_path)
 
   def __len__(self):
     # Don't worry, this is extremely efficient because we have an index on the primary key :)
@@ -88,14 +88,14 @@ class EmmaPretrainingDataset(Dataset):
 
 ### Writing to a database
 
-We can create a `DatasetDB` using a similar API which is described in the following code snippet:
+We can create a `DatasetDb` using a similar API which is described in the following code snippet:
 
 ```python
-from src.api.storage import DatasetDB
+from emma_datasets.db import DatasetDb
 
 num_instances = 10
 
-with DatasetDB("path/to/dataset.db", readonly=False) as db:
+with DatasetDb("path/to/dataset.db", readonly=False) as db:
   for data_id in range(num_instances):
     # this is just an example, you can use any Python object
     instance = {"caption": "This is a caption"}
@@ -119,7 +119,7 @@ implementation can be found in the [storage module](../src/api/storage.py).
 ### Database structure
 
 SQLite is a powerful and efficient relational database that we use for storing the dataset we are
-interested in. We assume that a dataset is composed of `N` datapoints `[x_1, x_2, ..., x_N]`.
+interested in. We assume that a dataset is composed of `N` data points `[x_1, x_2, ..., x_N]`.
 In order to represent it in a relational database, we define a table `dataset` that has the
 following columns:
 
@@ -135,14 +135,14 @@ support two different storage types:
 
 1. `TorchStorage`: This storage uses the default PyTorch serialisation format and can be used to
    store any PyTorch/Python object. For more details refer to the [official documentation](https://pytorch.org/docs/stable/notes/serialization.html).
-2. `JsonStorage`: We use the custom [Orjson](https://github.com/ijl/orjson) library that also supports NumPy serialisation.
+2. `JsonStorage`: We use the custom [orjson](https://github.com/ijl/orjson) library that also supports NumPy serialisation.
 
 By default, `JsonStorage` is used as serialisation type for all the instances. If you're interested
 in storing actual PyTorch tensors, you can change the serialisation format as follows:
 
 ```python
-from src.api.storage import DatasetDB, StorageType
+from emma_datasets.db import DatasetDb, StorageType
 
-db = DatasetDB("/path/to/dataset.db", storage_type=StorageType.torch)
+db = DatasetDb("/path/to/dataset.db", storage_type=StorageType.torch)
 
 ```

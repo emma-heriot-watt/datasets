@@ -4,9 +4,9 @@ from typing import Iterable
 
 from transformers import AutoTokenizer
 
-from emma_datasets.api.storage import DatasetDB
-from emma_datasets.common.logger import get_logger
-from emma_datasets.datamodels.instance import Instance
+from emma_datasets.common import get_logger
+from emma_datasets.datamodels import Instance
+from emma_datasets.db import DatasetDb
 
 
 logger = get_logger(__name__)
@@ -14,7 +14,7 @@ logger = get_logger(__name__)
 
 def create_data_iterator(db_path: str) -> Iterable[str]:
     """Opens the dataset and create an iterator over all the language annotations."""
-    with DatasetDB(db_path) as db:
+    with DatasetDb(db_path) as db:
         for _, _, raw_data in db:
             data = Instance.parse_raw(raw_data)
 
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
 
     parser.add_argument(
-        "--db_path", type=str, help="Path to a DatasetDB file", default="storage/db/instances.db"
+        "--db_path", type=str, help="Path to a DatasetDb file", default="storage/db/instances.db"
     )
     parser.add_argument(
         "--tokenizer",
