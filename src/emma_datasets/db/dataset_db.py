@@ -4,7 +4,7 @@ from types import TracebackType
 from typing import Any, Iterable, Iterator, Optional, Union
 
 from emma_datasets.common.logger import get_logger
-from src.emma_datasets.db.storage import DataStorage, JsonStorage, StorageType, TorchStorage
+from emma_datasets.db.storage import DataStorage, JsonStorage, StorageType, TorchStorage
 
 
 logger = get_logger(__name__)
