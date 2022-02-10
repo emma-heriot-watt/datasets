@@ -36,11 +36,17 @@
 To use this package in your project, you can install it by running
 
 ```bash
-postry add git+ssh://git@github.com/emma-simbot/datasets
+poetry add git+https://github.com/emma-simbot/datasets#main
 ```
 
 To use it, just import from `emma_datasets` and you should be good to go!
 
+<details>
+  <summary> Why does this install the main branch and not the most-stable version?</summary>
+  <br />
+If you are using Poetry, this command will currently install from the main branch and not the latest released version. The `#main` suffix can be removed once [this issue in Poetry](https://github.com/python-poetry/poetry/issues/5152) is fixed.
+
+  </details>
 ## Writing code and running things
 
 ### Project structure
