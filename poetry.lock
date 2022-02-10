@@ -1350,7 +1350,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "py7zr"
-version = "0.17.3"
+version = "0.17.4"
 description = "Pure python 7-zip library"
 category = "main"
 optional = false
@@ -2081,7 +2081,7 @@ torch = ["torch"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "293624326aae5edd582a9166c4f76c236f396d6db7603b781de396ef263fddbe"
+content-hash = "a3a3af707389805760dc9410c410b54aebfddd707f68f9b940fccd73e5c27b2e"
 
 [metadata.files]
 anyio = [
@@ -2909,8 +2909,8 @@ py = [
     {file = "py-1.11.0.tar.gz", hash = "sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719"},
 ]
 py7zr = [
-    {file = "py7zr-0.17.3-py3-none-any.whl", hash = "sha256:a65a08c668bfe0b269ed418ae7d7c720638ac9efb2a2eb159095d1a0127f5977"},
-    {file = "py7zr-0.17.3.tar.gz", hash = "sha256:0a1be7d2100b9bd9194e1551f76e6a1ac794f31f54822d45da7cb21adfbdeb42"},
+    {file = "py7zr-0.17.4-py3-none-any.whl", hash = "sha256:69489b15f6ed1fdee1380092541f02fba193ea8fb5a854bc6ff9cd78cce3440d"},
+    {file = "py7zr-0.17.4.tar.gz", hash = "sha256:1df67edaa8dd1613fc5a7de3354322e7bc75d989d6069924ce2d08bb7fabdd19"},
 ]
 pybcj = [
     {file = "pybcj-0.5.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:506a53d1ae7adf0e51aa27b694eebf8629b7cf9d1a38ded1a476907fe847cbec"},
