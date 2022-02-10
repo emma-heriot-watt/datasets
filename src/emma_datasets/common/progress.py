@@ -45,7 +45,13 @@ class CustomProgress(Progress):
         visible: bool = True,
         **fields: Any,
     ) -> TaskID:
-        """Create task, with support for possible infinite tasks."""
+        """Create task, with support for possible infinite tasks.
+
+        A default field called `comment` is added but kept blank to support the common use of
+        having an additional text column for the progress bar.
+        """
+        fields.update({"comment": ""})
+
         if not math.isfinite(total):
             task = CustomInfiniteTask(
                 self._task_index,
