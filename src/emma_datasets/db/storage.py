@@ -54,7 +54,9 @@ class JsonStorage(DataStorage):
     def compress(self, data: Any) -> bytes:
         """Uses orjson + LZMA compression to generate a byte representation of the object."""
         return compress(
-            orjson.dumps(data, option=orjson.OPT_NON_STR_KEYS | orjson.OPT_SERIALIZE_NUMPY)
+            orjson.dumps(
+                data, default=str, option=orjson.OPT_NON_STR_KEYS | orjson.OPT_SERIALIZE_NUMPY
+            )
         )
 
 
