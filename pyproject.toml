@@ -33,9 +33,6 @@ torch = { version = "^1.10.2", optional = true }
 py7zr = "^0.17.4"
 boto3 = "^1.20.53"
 overrides = "^6.1.0"
-setuptools = "^60.5.0"
-tokenizers = "^0.11.4"
-transformers = "^4.16.2"
 
 
 [tool.poetry.extras]
