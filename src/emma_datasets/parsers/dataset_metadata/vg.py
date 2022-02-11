@@ -20,12 +20,14 @@ class VgMetadataParser(DatasetMetadataParser[VgImageMetadata]):
         image_data_json_path: Path,
         images_dir: Path,
         regions_dir: Path,
+        features_dir: Path,
         progress: Progress,
     ) -> None:
         super().__init__(progress=progress, data_paths=[(image_data_json_path, None)])
 
         self.images_dir = images_dir
         self.regions_dir = regions_dir
+        self.features_dir = features_dir
 
     def convert_to_dataset_metadata(self, metadata: VgImageMetadata) -> DatasetMetadata:
         """Convert single instance's metadata to the common datamodel."""
@@ -38,6 +40,7 @@ class VgMetadataParser(DatasetMetadataParser[VgImageMetadata]):
                 media_type=MediaType.image,
                 path=self.images_dir.joinpath(f"{metadata.image_id}.jpg"),
             ),
+            features_path=self.features_dir.joinpath(f"{metadata.image_id}.{self.feature_ext}"),
             regions_path=self.regions_dir.joinpath(f"{metadata.image_id}.json"),
         )
 

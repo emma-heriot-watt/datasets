@@ -137,3 +137,12 @@ class Instance(BaseModel):
         file we use since they should be identical.
         """
         return next(iter(self.dataset.values())).paths
+
+    @property
+    def features_path(self) -> Path:
+        """Get the path to the features for this instance.
+
+        If the instance is connected to more than one dataset, just get any one feature file.
+        """
+        all_feature_paths = (metadata.features_path for metadata in self.dataset.values())
+        return next(all_feature_paths)

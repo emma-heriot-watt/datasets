@@ -28,6 +28,7 @@ class GqaMetadataParser(DatasetMetadataParser[GqaImageMetadata]):
         images_dir: Path,
         scene_graphs_dir: Path,
         qa_pairs_dir: Path,
+        features_dir: Path,
         progress: Progress,
     ) -> None:
         super().__init__(
@@ -40,6 +41,7 @@ class GqaMetadataParser(DatasetMetadataParser[GqaImageMetadata]):
         self.images_dir = images_dir
         self.scene_graphs_dir = scene_graphs_dir
         self.qa_pairs_dir = qa_pairs_dir
+        self.features_dir = features_dir
 
     def convert_to_dataset_metadata(self, metadata: GqaImageMetadata) -> DatasetMetadata:
         """Convert single instance's metadata to the common datamodel."""
@@ -51,6 +53,7 @@ class GqaMetadataParser(DatasetMetadataParser[GqaImageMetadata]):
                 media_type=MediaType.image,
                 path=self.images_dir.joinpath(metadata.file_name),
             ),
+            features_path=self.features_dir.joinpath(f"{metadata.id}.{self.feature_ext}"),
             scene_graph_path=self.scene_graphs_dir.joinpath(f"{metadata.id}.json"),
             qa_pairs_path=self.qa_pairs_dir.joinpath(f"{metadata.id}.json"),
         )

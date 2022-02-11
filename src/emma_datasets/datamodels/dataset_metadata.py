@@ -22,6 +22,9 @@ class DatasetMetadata(BaseModel, frozen=True):
     name: DatasetName
     split: Optional[DatasetSplit] = None
     media: Union[SourceMedia, list[SourceMedia]]
+    features_path: Path
+
+    # From splitters
     scene_graph_path: Optional[Path] = None
     regions_path: Optional[Path] = None
     caption_path: Optional[Path] = None

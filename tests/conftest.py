@@ -105,6 +105,7 @@ def coco_metadata_parser(paths: dict[str, Path], progress: Progress) -> CocoMeta
         caption_val_path=paths["coco_caption_val"],
         images_dir=fake_image_dir,
         captions_dir=fake_caption_dir,
+        features_dir=Path("features"),
         progress=progress,
     )
 
@@ -119,6 +120,7 @@ def vg_metadata_parser(paths: dict[str, Path], progress: Progress) -> VgMetadata
         image_data_json_path=paths["vg_image_data"],
         images_dir=fake_images_dir,
         regions_dir=fake_regions_dir,
+        features_dir=Path("features"),
         progress=progress,
     )
 
@@ -132,6 +134,7 @@ def gqa_metadata_parser(paths: dict[str, Path], progress: Progress) -> GqaMetada
         images_dir=Path("images"),
         scene_graphs_dir=Path("scene_graphs"),
         qa_pairs_dir=Path("qa_pairs"),
+        features_dir=Path("features"),
         progress=progress,
     )
 
@@ -149,6 +152,7 @@ def epic_kitchens_metadata_parser(
         data_paths=data_paths,
         frames_dir=Path("frames"),
         captions_dir=Path("captions"),
+        features_dir=Path("features"),
         progress=progress,
     )
 
@@ -174,6 +178,7 @@ def alfred_metadata_parser(
         alfred_dir=base_path.joinpath("alfred/"),
         captions_dir=Path("captions"),
         trajectories_dir=Path("trajectories"),
+        features_dir=Path("features"),
         progress=progress,
     )
 

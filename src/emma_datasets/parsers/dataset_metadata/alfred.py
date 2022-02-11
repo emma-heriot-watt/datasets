@@ -26,12 +26,14 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
         alfred_dir: Path,
         captions_dir: Path,
         trajectories_dir: Path,
+        features_dir: Path,
     ) -> None:
         super().__init__(data_paths=data_paths, progress=progress)
 
         self.alfred_dir = alfred_dir
         self.captions_dir = captions_dir
         self.trajectories_dir = trajectories_dir
+        self.features_dir = features_dir
 
     @overrides(check_signature=False)
     def convert_to_dataset_metadata(self, metadata: AlfredMetadata) -> Iterator[DatasetMetadata]:
@@ -43,11 +45,14 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
                 id=metadata.task_id,
                 name=self.dataset_name,
                 split=metadata.dataset_split,
+                media=self.get_all_source_media_for_subgoal(metadata, high_idx),
+                features_path=self.features_dir.joinpath(
+                    f"{metadata.task_id}_{high_idx}.{self.feature_ext}"
+                ),
+                caption_path=self.captions_dir.joinpath(f"{metadata.task_id}_{high_idx}.json"),
                 action_trajectory_path=self.trajectories_dir.joinpath(
                     f"{metadata.task_id}_{high_idx}.json"
                 ),
-                caption_path=self.captions_dir.joinpath(f"{metadata.task_id}_{high_idx}.json"),
-                media=self.get_all_source_media_for_subgoal(metadata, high_idx),
             )
 
     def get_all_source_media_for_subgoal(

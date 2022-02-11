@@ -24,12 +24,14 @@ class EpicKitchensMetadataParser(DatasetMetadataParser[EpicKitchensNarrationMeta
         data_paths: list[DataPathTuple],
         frames_dir: Path,
         captions_dir: Path,
+        features_dir: Path,
         progress: Progress,
     ) -> None:
         super().__init__(data_paths=data_paths, progress=progress)
 
         self.frames_dir = frames_dir
         self.captions_dir = captions_dir
+        self.features_dir = features_dir
 
     def convert_to_dataset_metadata(
         self, metadata: EpicKitchensNarrationMetadata
@@ -40,6 +42,9 @@ class EpicKitchensMetadataParser(DatasetMetadataParser[EpicKitchensNarrationMeta
             name=self.dataset_name,
             split=metadata.dataset_split,
             media=self.get_all_source_media_for_narration(metadata),
+            features_path=self.features_dir.joinpath(
+                f"{metadata.narration_id}.{self.feature_ext}"
+            ),
             caption_path=self.captions_dir.joinpath(f"{metadata.narration_id}.json"),
         )
 

@@ -31,6 +31,7 @@ class MetadataParser:
             settings.paths.visual_genome.joinpath("image_data.json"),
             images_dir=settings.paths.visual_genome_images,
             regions_dir=settings.paths.regions,
+            features_dir=settings.paths.visual_genome_features,
             progress=self.progress,
         )
 
@@ -42,6 +43,7 @@ class MetadataParser:
             images_dir=settings.paths.gqa_images,
             scene_graphs_dir=settings.paths.scene_graphs,
             qa_pairs_dir=settings.paths.qa_pairs,
+            features_dir=settings.paths.gqa_features,
             progress=self.progress,
         )
 
@@ -50,6 +52,7 @@ class MetadataParser:
             caption_val_path=settings.paths.coco.joinpath("captions_val2017.json"),
             images_dir=settings.paths.coco_images,
             captions_dir=settings.paths.captions,
+            features_dir=settings.paths.coco_features,
             progress=self.progress,
         )
 
@@ -63,6 +66,7 @@ class MetadataParser:
             ],
             frames_dir=settings.paths.epic_kitchens_frames,
             captions_dir=settings.paths.captions,
+            features_dir=settings.paths.epic_kitchens_features,
             progress=self.progress,
         )
 
@@ -74,6 +78,7 @@ class MetadataParser:
             alfred_dir=settings.paths.alfred_data,
             captions_dir=settings.paths.captions,
             trajectories_dir=settings.paths.trajectories,
+            features_dir=settings.paths.alfred_features,
             progress=self.progress,
         )
 

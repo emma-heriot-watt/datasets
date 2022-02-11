@@ -25,6 +25,7 @@ class DatasetMetadataParser(ABC, Generic[T]):
     metadata_model: type[T]
     dataset_name: DatasetName
     file_ext: str = "json"
+    feature_ext: str = "pt"
 
     def __init__(self, data_paths: list[DataPathTuple], progress: Progress) -> None:
         self.data_paths = self._get_all_file_paths(data_paths)
