@@ -5,6 +5,7 @@ from lzma import compress, decompress
 from typing import Any
 
 import orjson
+from pydantic import BaseModel
 
 from emma_datasets.common.logger import get_logger
 
@@ -55,9 +56,17 @@ class JsonStorage(DataStorage):
         """Uses orjson + LZMA compression to generate a byte representation of the object."""
         return compress(
             orjson.dumps(
-                data, default=str, option=orjson.OPT_NON_STR_KEYS | orjson.OPT_SERIALIZE_NUMPY
+                data,
+                default=self._serialize_custom_types,
+                option=orjson.OPT_NON_STR_KEYS | orjson.OPT_SERIALIZE_NUMPY,
             )
         )
+
+    def _serialize_custom_types(self, custom_obj: Any) -> Any:
+        if isinstance(custom_obj, BaseModel):
+            return custom_obj.json()
+
+        raise TypeError
 
 
 class TorchStorage(DataStorage):
