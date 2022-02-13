@@ -10,7 +10,6 @@ from emma_datasets.common import (
     use_rich_for_logging,
     use_rich_for_tracebacks,
 )
-from emma_datasets.datamodels import Instance
 from emma_datasets.db import DatasetDb
 from emma_datasets.pipeline import InstanceCreator, MetadataParser
 
@@ -23,11 +22,6 @@ settings.paths.create_dirs()
 
 
 instances_db_path = settings.paths.databases.joinpath("instances.db")
-
-
-def write_to_db(db: DatasetDb, idx: int, instance: Instance) -> None:
-    """Send the instance to be written to the database."""
-    db[(idx, f"pretrain_{idx}")] = instance
 
 
 def create_pretraining_instances(
@@ -50,7 +44,7 @@ def create_pretraining_instances(
             instances_iterator = instance_creator(metadata_groups, progress, process_pool)
 
             for i, instance in enumerate(instances_iterator):
-                thread_pool.submit(write_to_db, db, i, instance)
+                db[(i, f"pretrain_{i}")] = instance
 
 
 if __name__ == "__main__":
