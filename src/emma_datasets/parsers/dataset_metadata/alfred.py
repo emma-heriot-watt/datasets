@@ -40,12 +40,17 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
         """Convert ALFRED metadata to DatasetMetadata."""
         num_subgoals = min(len(ann.high_descs) for ann in metadata.turk_annotations["anns"])
 
+        path_to_frames = self.alfred_dir.glob(
+            f"*/{metadata.task_type}-*-{metadata.scene.scene_num}/{metadata.task_id}/"
+        )
+        frames_dir = next(iter(path_to_frames)).joinpath("raw_images")
+
         for high_idx in range(num_subgoals):  # noqa: WPS526
             yield DatasetMetadata(
                 id=metadata.task_id,
                 name=self.dataset_name,
                 split=metadata.dataset_split,
-                media=self.get_all_source_media_for_subgoal(metadata, high_idx),
+                media=self.get_all_source_media_for_subgoal(metadata, frames_dir, high_idx),
                 features_path=self.features_dir.joinpath(
                     f"{metadata.task_id}_{high_idx}.{self.feature_ext}"
                 ),
@@ -56,10 +61,9 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
             )
 
     def get_all_source_media_for_subgoal(
-        self, metadata: AlfredMetadata, high_idx: int
+        self, metadata: AlfredMetadata, frames_dir: Path, high_idx: int
     ) -> list[SourceMedia]:
         """Get all images for the given subgoal."""
-        frames_dir = next(iter(self.alfred_dir.glob(f"**/{metadata.task_id}/")))
         return [
             SourceMedia(
                 media_type=MediaType.image,
