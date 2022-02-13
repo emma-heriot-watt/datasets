@@ -61,17 +61,22 @@ class InstanceCreator:
         """
         regions = self._get_regions(metadata_group)
         scene_graph = self._get_scene_graph(metadata_group)
+        trajectory = self._get_action_trajectory(metadata_group)
         captions = self._get_captions(metadata_group)
         qa_pairs = self._get_qa_pairs(metadata_group)
 
         caption_instances = (
-            self._instances_from_captions(metadata_group, captions, regions, scene_graph)
+            self._instances_from_captions(
+                metadata_group, captions, regions, scene_graph, trajectory
+            )
             if captions
             else None
         )
 
         qa_pair_instances = (
-            self._instances_from_qa_pairs(metadata_group, qa_pairs, regions, scene_graph)
+            self._instances_from_qa_pairs(
+                metadata_group, qa_pairs, regions, scene_graph, trajectory
+            )
             if qa_pairs
             else None
         )
@@ -82,7 +87,7 @@ class InstanceCreator:
 
         # If there are no instances with text, return without
         if not instance_iterators:
-            return [self._instance_without_text(metadata_group, scene_graph, regions)]
+            return [self._instance_without_text(metadata_group, scene_graph, regions, trajectory)]
 
         return list(itertools.chain.from_iterable(instance_iterators))
 
@@ -92,6 +97,7 @@ class InstanceCreator:
         qa_pairs: list[QuestionAnswerPair],
         regions: Optional[list[Region]],
         scene_graph: Optional[SceneGraph],
+        trajectory: Optional[ActionTrajectory],
     ) -> Iterator[Instance]:
         """Create instances from provided QA-pairs."""
         return (
@@ -100,6 +106,7 @@ class InstanceCreator:
                 qa=qa_pair,
                 regions=regions,
                 scene_graph=scene_graph,
+                trajectory=trajectory,
             )
             for qa_pair in qa_pairs
         )
@@ -110,6 +117,7 @@ class InstanceCreator:
         captions: list[Caption],
         regions: Optional[list[Region]],
         scene_graph: Optional[SceneGraph],
+        trajectory: Optional[ActionTrajectory],
     ) -> Iterator[Instance]:
         """Get all instances from a list of captions."""
         return (
@@ -118,6 +126,7 @@ class InstanceCreator:
                 caption=text,
                 regions=regions,
                 scene_graph=scene_graph,
+                trajectory=trajectory,
             )
             for text in captions
         )
@@ -127,6 +136,7 @@ class InstanceCreator:
         metadata_list: list[DatasetMetadata],
         scene_graph: Optional[SceneGraph],
         regions: Optional[list[Region]],
+        trajectory: Optional[ActionTrajectory],
     ) -> Instance:
         """Return instance from a scene without any text."""
         if not regions or not len(regions):
@@ -138,6 +148,7 @@ class InstanceCreator:
             dataset={metadata.name: metadata for metadata in metadata_list},
             regions=regions,
             scene_graph=scene_graph,
+            trajectory=trajectory,
         )
 
     def _get_regions(self, metadata_list: list[DatasetMetadata]) -> Optional[list[Region]]:
