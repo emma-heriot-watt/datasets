@@ -37,7 +37,7 @@ class Paths:  # noqa: WPS230
         self.gqa_questions = self.gqa.joinpath("questions/")
         self.gqa_scene_graphs = self.gqa.joinpath("scene_graphs/")
         self.epic_kitchens_frames = self.epic_kitchens.joinpath("frames/")
-        self.alfred_data = self.alfred.joinpath("json_2.1.0/")
+        self.alfred_data = self.alfred.joinpath("full_2.1.0/")
 
         self.coco_features = self.coco.joinpath("image_features/")
         self.visual_genome_features = self.visual_genome.joinpath("image_features/")
