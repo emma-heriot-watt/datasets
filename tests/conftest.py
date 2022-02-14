@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Iterator, Union, cast
 
 import pytest
-from pytest_cases import fixture, parametrize, parametrize_with_cases
+from pytest_cases import fixture, parametrize
 from rich.progress import Progress
 
 from emma_datasets.datamodels import DatasetMetadata, DatasetName, DatasetSplit
@@ -44,10 +44,9 @@ def progress() -> Progress:
 
 # ----------------------------------- Cases ---------------------------------- #
 
-CaseReturnType = dict[str, Union[Path, list[Path]]]
 
-
-def case_subset() -> CaseReturnType:
+@fixture
+def paths() -> dict[str, Union[Path, list[Path]]]:
     return {
         "base": FIXTURES_PATH,
         "coco_caption_train": FIXTURES_PATH.joinpath("coco_captions.json"),
@@ -66,36 +65,10 @@ def case_subset() -> CaseReturnType:
     }
 
 
-@pytest.mark.slow
-def case_full() -> CaseReturnType:
-    return {
-        "base": DATASETS_PATH,
-        "coco_caption_train": DATASETS_PATH.joinpath("coco/captions_train2017.json"),
-        "coco_caption_val": DATASETS_PATH.joinpath("coco/captions_val2017.json"),
-        "vg_image_data": DATASETS_PATH.joinpath("visual_genome/image_data.json"),
-        "vg_regions": DATASETS_PATH.joinpath("visual_genome/region_descriptions.json"),
-        "gqa_scene_graph_train": DATASETS_PATH.joinpath("gqa/train_sceneGraphs.json"),
-        "gqa_scene_graph_val": DATASETS_PATH.joinpath("gqa/val_sceneGraphs.json"),
-        "gqa_questions": [
-            DATASETS_PATH.joinpath("gqa/questions/val_balanced_questions.json"),
-            DATASETS_PATH.joinpath("gqa/questions/train_balanced_questions.json"),
-        ],
-        "ek_train": DATASETS_PATH.joinpath("EPIC_100_train.csv"),
-        "ek_val": DATASETS_PATH.joinpath("EPIC_100_validation.csv"),
-        "alfred_train": list(
-            get_paths_from_dir(DATASETS_PATH.joinpath("alfred/json_2.1.0/train/"))
-        ),
-        "alfred_valid_seen": list(
-            get_paths_from_dir(DATASETS_PATH.joinpath("alfred/json_2.1.0/valid_seen/"))
-        ),
-    }
-
-
 # ----------------------------- Metadata Parsers ----------------------------- #
 
 
 @fixture
-@parametrize_with_cases("paths", cases=".")
 def coco_metadata_parser(paths: dict[str, Path], progress: Progress) -> CocoMetadataParser:
     fake_caption_dir = Path("caption")
     fake_image_dir = Path("images")
@@ -111,7 +84,6 @@ def coco_metadata_parser(paths: dict[str, Path], progress: Progress) -> CocoMeta
 
 
 @fixture
-@parametrize_with_cases("paths", cases=".")
 def vg_metadata_parser(paths: dict[str, Path], progress: Progress) -> VgMetadataParser:
     fake_images_dir = Path("images")
     fake_regions_dir = Path("regions")
@@ -126,7 +98,6 @@ def vg_metadata_parser(paths: dict[str, Path], progress: Progress) -> VgMetadata
 
 
 @fixture
-@parametrize_with_cases("paths", cases=".")
 def gqa_metadata_parser(paths: dict[str, Path], progress: Progress) -> GqaMetadataParser:
     return GqaMetadataParser(
         scene_graphs_train_path=paths["gqa_scene_graph_train"],
@@ -140,7 +111,6 @@ def gqa_metadata_parser(paths: dict[str, Path], progress: Progress) -> GqaMetada
 
 
 @fixture
-@parametrize_with_cases("paths", cases=".")
 def epic_kitchens_metadata_parser(
     paths: dict[str, Path], progress: Progress
 ) -> EpicKitchensMetadataParser:
@@ -158,7 +128,6 @@ def epic_kitchens_metadata_parser(
 
 
 @fixture
-@parametrize_with_cases("paths", cases=".")
 def alfred_metadata_parser(
     paths: dict[str, list[Path]], progress: Progress
 ) -> AlfredMetadataParser:

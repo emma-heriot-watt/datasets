@@ -1,4 +1,10 @@
-from emma_datasets.datamodels.datasets.alfred import AlfredAnnotation, AlfredMetadata, AlfredScene
+from emma_datasets.datamodels.datasets.alfred import (
+    AlfredAnnotation,
+    AlfredHighAction,
+    AlfredLowAction,
+    AlfredMetadata,
+    AlfredScene,
+)
 from emma_datasets.datamodels.datasets.coco import CocoCaption, CocoImageMetadata
 from emma_datasets.datamodels.datasets.epic_kitchens import EpicKitchensNarrationMetadata
 from emma_datasets.datamodels.datasets.gqa import (

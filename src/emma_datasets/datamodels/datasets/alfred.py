@@ -1,9 +1,9 @@
 from typing import Any, Optional
 
-from pydantic import BaseModel, root_validator
+from pydantic import BaseModel, Field, root_validator
 
 from emma_datasets.datamodels.constants import DatasetSplit
-from emma_datasets.datamodels.trajectory import Action, GenericActionTrajectory
+from emma_datasets.datamodels.trajectory import Action, Coordinate, GenericActionTrajectory
 
 
 class AlfredImageMetadata(BaseModel):
@@ -14,38 +14,27 @@ class AlfredImageMetadata(BaseModel):
     image_name: str
 
 
-class AlfredInitAction(BaseModel):
+class AlfredInitAction(Coordinate):
     """Metadata of the action used to initialise the agent."""
 
     action: str
     horizon: int
-    rotateOnTeleport: bool  # noqa: N815, WPS115
+    rotate_on_teleport: bool = Field(..., alias="rotateOnTeleport")
     rotation: int
-    x: float
-    y: float
-    z: float
 
 
-class AlfredObjectPosition(BaseModel):
+class AlfredObjectPosition(Coordinate):
     """Position of object in 3D space."""
 
-    x: float
-    y: float
-    z: float
 
-
-class AlfredObjectRotation(BaseModel):
+class AlfredObjectRotation(Coordinate):
     """The rotation component on an object in 3D space."""
-
-    x: float
-    y: float
-    z: float
 
 
 class AlfredObjectPose(BaseModel):
     """Pose of an object in the 3D world."""
 
-    objectName: str  # noqa: N815, WPS115
+    object_name: str = Field(..., alias="objectName")
     position: AlfredObjectPosition
     rotation: AlfredObjectRotation
 
@@ -55,8 +44,8 @@ class AlfredScene(BaseModel):
 
     dirty_and_empty: bool
     floor_plan: str
-    init_action: Any
-    object_poses: Any
+    init_action: AlfredInitAction
+    object_poses: list[AlfredObjectPose]
     object_toggles: Any
     random_seed: int
     scene_num: int
@@ -72,33 +61,36 @@ class AlfredAnnotation(BaseModel):
 class AlfredApiAction(Action):
     """Represents an AI2Thor action that can be executed on the simulartor."""
 
-    objectId: Optional[str]  # noqa: N815, WPS115
-    forceAction: Optional[bool]  # noqa: N815, WPS115
-
-
-class AlfredLowDiscreteAction(Action):
-    """Represents a discrete representation of the low-level action used by the planner."""
-
-    args: Optional[dict[str, Any]]
+    object_id: Optional[str] = Field(None, alias="objectId")
+    force_action: Optional[bool] = Field(None, alias="forceAction")
+    move_magnitude: Optional[float] = Field(None, alias="moveMagnitude")
 
 
 class AlfredPlannerAction(Action):
     """Represents a PDDL planner action."""
 
     location: Optional[str]
-    coordinateObjectId: Optional[Any]  # noqa: N815, WPS115
-    coordinateReceptacleObjectId: Optional[Any]  # noqa: N815, WPS115
-    forceVisible: Optional[bool]  # noqa: N815, WPS115
-    objectId: Optional[str]  # noqa: N815, WPS115
+    coordinate_object_id: Optional[tuple[str, list[int]]] = Field(None, alias="coordinateObjectId")
+    coordinate_receptable_object_id: Optional[tuple[str, list[int]]] = Field(
+        None, alias="coordinateReceptacleObjectId"
+    )
+    force_visible: Optional[bool] = Field(None, alias="forceVisible")
+    object_id: Optional[str] = Field(None, alias="objectId")
+
+
+class AlfredLowDiscreteAction(Action):
+    """Represents a discrete representation of the low-level action used by the planner."""
+
+    args: dict[str, Any]
 
 
 class AlfredHighDiscreteAction(Action):
     """ALFRED high-level discrete action."""
 
-    args: Optional[Any]
+    args: list[str]
 
 
-class AlfredHighAction(Action):
+class AlfredHighAction(BaseModel):
     """An ALFRED high-level action definition based on discrete and planner actions."""
 
     discrete_action: AlfredHighDiscreteAction
@@ -106,7 +98,7 @@ class AlfredHighAction(Action):
     high_idx: int
 
 
-class AlfredLowAction(Action):
+class AlfredLowAction(BaseModel):
     """Low-level AI2Thor action."""
 
     api_action: AlfredApiAction
@@ -117,13 +109,8 @@ class AlfredLowAction(Action):
 class AlfredTrajectory(GenericActionTrajectory[AlfredLowAction, AlfredHighAction]):
     """An ALFRED trajectory divided in low-level and high-level actions."""
 
-    class Config:
-        """Re-map fields from raw ALFRED data to give more semantic meaning."""
-
-        fields = {"high_level_actions": "high_pddl", "low_level_actions": "low_actions"}
-
-    low_level_actions: list[AlfredLowAction]
-    high_level_actions: list[AlfredHighAction]
+    low_level_actions: list[AlfredLowAction] = Field(..., alias="low_actions")
+    high_level_actions: list[AlfredHighAction] = Field(..., alias="high_pddl")
 
 
 class AlfredMetadata(BaseModel):

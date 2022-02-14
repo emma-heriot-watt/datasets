@@ -123,7 +123,8 @@ class Instance(BaseModel):
 
         return lang_data_iterable
 
-    def paths(self) -> Union[Path, list[Path], None]:
+    @property
+    def source_paths(self) -> Union[Path, list[Path], None]:
         """Get source paths for this instance.
 
         Since an instance can be mapped to more than one dataset, we assume that the source media

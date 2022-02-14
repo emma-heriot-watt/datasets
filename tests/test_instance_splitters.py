@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Any
 
 from pydantic import parse_file_as
-from pytest_cases import parametrize_with_cases
 from rich.progress import Progress
 
 from emma_datasets.datamodels import (
@@ -15,30 +14,29 @@ from emma_datasets.datamodels import (
 )
 from emma_datasets.parsers.instance_splitters import (
     AlfredCaptionSplitter,
+    AlfredTrajectorySplitter,
     CocoCaptionSplitter,
     EpicKitchensCaptionSplitter,
     GqaQaPairSplitter,
     GqaSceneGraphSplitter,
     VgRegionsSplitter,
 )
-from emma_datasets.parsers.instance_splitters.alfred_trajectories import AlfredTrajectorySplitter
 
 
 def split_instances(
     instance_splitter_class: Any,
     paths: list[Path],
-    tmp_path: Path,
+    output_dir: Path,
 ) -> None:
     with Progress() as progress:
         instance_splitter = instance_splitter_class(
             paths=paths,
-            output_dir=tmp_path,
+            output_dir=output_dir,
             progress=progress,
         )
         instance_splitter.run(progress)
 
 
-@parametrize_with_cases("paths", cases=".conftest")
 def test_coco_caption_splitter_works(paths: dict[str, Path], tmp_path: Path) -> None:
     split_instances(
         CocoCaptionSplitter, [paths["coco_caption_train"], paths["coco_caption_val"]], tmp_path
@@ -53,7 +51,6 @@ def test_coco_caption_splitter_works(paths: dict[str, Path], tmp_path: Path) -> 
     assert generated_caption_files
 
 
-@parametrize_with_cases("paths", cases=".conftest")
 def test_vg_region_splitter_works(paths: dict[str, Path], tmp_path: Path) -> None:
     split_instances(VgRegionsSplitter, [paths["vg_regions"]], tmp_path)
 
@@ -64,7 +61,6 @@ def test_vg_region_splitter_works(paths: dict[str, Path], tmp_path: Path) -> Non
     assert generated_region_files
 
 
-@parametrize_with_cases("paths", cases=".conftest")
 def test_gqa_qa_splitter_works(paths: dict[str, list[Path]], tmp_path: Path) -> None:
     split_instances(GqaQaPairSplitter, paths["gqa_questions"], tmp_path)
 
@@ -74,7 +70,6 @@ def test_gqa_qa_splitter_works(paths: dict[str, list[Path]], tmp_path: Path) -> 
     assert generated_qa_pairs
 
 
-@parametrize_with_cases("paths", cases=".conftest")
 def test_gqa_scene_graph_splitter_works(paths: dict[str, Path], tmp_path: Path) -> None:
     split_instances(
         GqaSceneGraphSplitter,
@@ -89,7 +84,6 @@ def test_gqa_scene_graph_splitter_works(paths: dict[str, Path], tmp_path: Path) 
     assert generated_scene_graphs
 
 
-@parametrize_with_cases("paths", cases=".conftest")
 def test_epic_kitchens_caption_splitter_works(paths: dict[str, Path], tmp_path: Path) -> None:
     split_instances(EpicKitchensCaptionSplitter, [paths["ek_train"], paths["ek_val"]], tmp_path)
 
@@ -102,7 +96,6 @@ def test_epic_kitchens_caption_splitter_works(paths: dict[str, Path], tmp_path: 
     assert generated_captions
 
 
-@parametrize_with_cases("paths", cases=".conftest")
 def test_alfred_caption_splitter_works(paths: dict[str, list[Path]], tmp_path: Path) -> None:
     instance_paths = list(itertools.chain(paths["alfred_train"], paths["alfred_valid_seen"]))
 
@@ -117,7 +110,6 @@ def test_alfred_caption_splitter_works(paths: dict[str, list[Path]], tmp_path: P
     assert generated_captions
 
 
-@parametrize_with_cases("paths", cases=".conftest")
 def test_alfred_trajectory_splitter_works(paths: dict[str, list[Path]], tmp_path: Path) -> None:
     instance_paths = list(itertools.chain(paths["alfred_train"], paths["alfred_valid_seen"]))
 
