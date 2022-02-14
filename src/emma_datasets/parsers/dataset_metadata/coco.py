@@ -54,6 +54,8 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
                 url=metadata.coco_url,
                 media_type=MediaType.image,
                 path=self.images_dir.joinpath(metadata.file_name),
+                width=metadata.width,
+                height=metadata.height,
             ),
             features_path=self.features_dir.joinpath(f"{file_name_stem}.{self.feature_ext}"),
             caption_path=self.captions_dir.joinpath(f"{metadata.id}.json"),

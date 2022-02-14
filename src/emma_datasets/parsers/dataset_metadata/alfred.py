@@ -35,6 +35,9 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
         self.trajectories_dir = trajectories_dir
         self.features_dir = features_dir
 
+        self._width = 300
+        self._height = 300
+
     @overrides(check_signature=False)
     def convert_to_dataset_metadata(self, metadata: AlfredMetadata) -> Iterator[DatasetMetadata]:
         """Convert ALFRED metadata to DatasetMetadata."""
@@ -68,6 +71,8 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
             SourceMedia(
                 media_type=MediaType.image,
                 path=frames_dir.joinpath(image.image_name),
+                width=self._width,
+                height=self._height,
             )
             for image in metadata.images
             if image.high_idx == high_idx

@@ -52,6 +52,8 @@ class GqaMetadataParser(DatasetMetadataParser[GqaImageMetadata]):
             media=SourceMedia(
                 media_type=MediaType.image,
                 path=self.images_dir.joinpath(metadata.file_name),
+                width=metadata.width,
+                height=metadata.height,
             ),
             features_path=self.features_dir.joinpath(f"{metadata.id}.{self.feature_ext}"),
             scene_graph_path=self.scene_graphs_dir.joinpath(f"{metadata.id}.json"),

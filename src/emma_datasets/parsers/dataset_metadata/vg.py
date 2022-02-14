@@ -39,6 +39,8 @@ class VgMetadataParser(DatasetMetadataParser[VgImageMetadata]):
                 url=metadata.url,
                 media_type=MediaType.image,
                 path=self.images_dir.joinpath(f"{metadata.image_id}.jpg"),
+                width=metadata.width,
+                height=metadata.height,
             ),
             features_path=self.features_dir.joinpath(f"{metadata.image_id}.{self.feature_ext}"),
             regions_path=self.regions_dir.joinpath(f"{metadata.image_id}.json"),

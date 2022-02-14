@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any
+from typing import Any, NamedTuple
 
 from rich.progress import Progress
 
@@ -10,6 +10,13 @@ from emma_datasets.parsers.dataset_metadata.metadata_parser import (
     DataPathTuple,
     DatasetMetadataParser,
 )
+
+
+class ImageDimensions(NamedTuple):
+    """Resolution of a given video from the EK dataset."""
+
+    width: int
+    height: int
 
 
 class EpicKitchensMetadataParser(DatasetMetadataParser[EpicKitchensNarrationMetadata]):
@@ -25,6 +32,7 @@ class EpicKitchensMetadataParser(DatasetMetadataParser[EpicKitchensNarrationMeta
         frames_dir: Path,
         captions_dir: Path,
         features_dir: Path,
+        video_info_file: Path,
         progress: Progress,
     ) -> None:
         super().__init__(data_paths=data_paths, progress=progress)
@@ -32,6 +40,8 @@ class EpicKitchensMetadataParser(DatasetMetadataParser[EpicKitchensNarrationMeta
         self.frames_dir = frames_dir
         self.captions_dir = captions_dir
         self.features_dir = features_dir
+
+        self.video_dimensions = self._get_video_dimensions(video_info_file)
 
     def convert_to_dataset_metadata(
         self, metadata: EpicKitchensNarrationMetadata
@@ -67,6 +77,8 @@ class EpicKitchensMetadataParser(DatasetMetadataParser[EpicKitchensNarrationMeta
                 path=frames_for_video_dir.joinpath(
                     f"frame_{str(frame_number).zfill(max_padding_length)}.jpg"
                 ),
+                width=self.video_dimensions[metadata.video_id].width,
+                height=self.video_dimensions[metadata.video_id].height,
             )
             for frame_number in range(metadata.start_frame, metadata.stop_frame + 1)
         ]
@@ -74,3 +86,15 @@ class EpicKitchensMetadataParser(DatasetMetadataParser[EpicKitchensNarrationMeta
     def _read(self, path: Path) -> Any:
         """Read CSV data from the given path."""
         return read_csv(path)
+
+    def _get_video_dimensions(self, video_info_file: Path) -> dict[str, ImageDimensions]:
+        raw_data = self._read(video_info_file)
+
+        video_dimensions: dict[str, ImageDimensions] = {}
+
+        for instance in raw_data:
+            video_id = instance["video_id"]
+            width, height = instance["resolution"].split("x")
+            video_dimensions[video_id] = ImageDimensions(int(width), int(height))
+
+        return video_dimensions

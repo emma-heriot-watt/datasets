@@ -67,6 +67,7 @@ class MetadataParser:
             frames_dir=settings.paths.epic_kitchens_frames,
             captions_dir=settings.paths.captions,
             features_dir=settings.paths.epic_kitchens_features,
+            video_info_file=settings.paths.epic_kitchens.joinpath("EPIC_100_video_info.csv"),
             progress=self.progress,
         )
 

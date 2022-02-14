@@ -58,6 +58,7 @@ def paths() -> dict[str, Union[Path, list[Path]]]:
         "gqa_questions": [FIXTURES_PATH.joinpath("gqa_questions.json")],
         "ek_train": FIXTURES_PATH.joinpath("epic_kitchens.csv"),
         "ek_val": FIXTURES_PATH.joinpath("epic_kitchens.csv"),
+        "ek_video_info": FIXTURES_PATH.joinpath("EPIC_100_video_info.csv"),
         "alfred_train": list(get_paths_from_dir(FIXTURES_PATH.joinpath("alfred/train/"))),
         "alfred_valid_seen": list(
             get_paths_from_dir(FIXTURES_PATH.joinpath("alfred/valid_seen/"))
@@ -123,6 +124,7 @@ def epic_kitchens_metadata_parser(
         frames_dir=Path("frames"),
         captions_dir=Path("captions"),
         features_dir=Path("features"),
+        video_info_file=paths["ek_video_info"],
         progress=progress,
     )
 
