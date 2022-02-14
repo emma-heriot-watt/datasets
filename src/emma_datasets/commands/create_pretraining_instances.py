@@ -1,4 +1,3 @@
-from concurrent.futures import ThreadPoolExecutor
 from multiprocessing.pool import Pool
 from typing import Optional
 
@@ -38,7 +37,6 @@ def create_pretraining_instances(
 
         db = DatasetDb(instances_db_path, readonly=False, batch_size=BATCH_SIZE)
         process_pool = Pool(num_workers)
-        thread_pool = ThreadPoolExecutor()
 
         with db, process_pool, thread_pool:  # noqa: WPS316
             instances_iterator = instance_creator(metadata_groups, progress, process_pool)
