@@ -27,7 +27,7 @@ pydantic = { extras = ["dotenv"], version = "^1.8.2" }
 typer = "^0.4.0"
 rich = "^11.2.0"
 numpy = "^1.22.2"
-orjson = "^3.6.6"
+orjson = "^3.6.7"
 Pillow = "^9.0.1"
 torch = { version = "^1.10.2", optional = true }
 py7zr = "^0.17.4"
