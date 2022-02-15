@@ -12,4 +12,4 @@ from emma_datasets.datamodels.instance import Instance
 from emma_datasets.datamodels.region import Region
 from emma_datasets.datamodels.scene_graph import SceneGraph
 from emma_datasets.datamodels.text import Caption, QuestionAnswerPair, Text
-from emma_datasets.datamodels.trajectory import ActionTrajectory, GenericActionTrajectory
+from emma_datasets.datamodels.trajectory import GenericActionTrajectory

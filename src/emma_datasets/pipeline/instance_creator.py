@@ -6,7 +6,6 @@ from pydantic import parse_file_as
 from rich.progress import Progress
 
 from emma_datasets.datamodels import (
-    ActionTrajectory,
     AlfredHighAction,
     AlfredLowAction,
     Annotation,
@@ -19,6 +18,9 @@ from emma_datasets.datamodels import (
     Region,
     SceneGraph,
 )
+
+
+ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
 
 
 class InstanceCreator:
@@ -200,9 +202,7 @@ class InstanceCreator:
         if metadata.action_trajectory_path is None:
             raise ValueError("`metadata.action_trajectory_path` should not be `None`")
 
-        return GenericActionTrajectory[AlfredLowAction, AlfredHighAction].parse_file(
-            metadata.action_trajectory_path
-        )
+        return ActionTrajectory.parse_file(metadata.action_trajectory_path)
 
     def _get_captions(self, metadata_list: list[DatasetMetadata]) -> list[Caption]:
         """Get captions for instance."""

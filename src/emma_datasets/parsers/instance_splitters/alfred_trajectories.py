@@ -3,11 +3,18 @@ from typing import Any, Iterator
 
 from overrides import overrides
 
-from emma_datasets.datamodels import DatasetName
+from emma_datasets.datamodels import (
+    AlfredHighAction,
+    AlfredLowAction,
+    DatasetName,
+    GenericActionTrajectory,
+)
 from emma_datasets.datamodels.datasets import AlfredMetadata
-from emma_datasets.datamodels.trajectory import ActionTrajectory
 from emma_datasets.io import read_json
 from emma_datasets.parsers.instance_splitters.instance_splitter import InstanceSplitter
+
+
+ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
 
 
 class AlfredTrajectorySplitter(InstanceSplitter[ActionTrajectory]):

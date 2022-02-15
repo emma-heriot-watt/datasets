@@ -5,13 +5,16 @@ from typing import Optional, Union
 from emma_datasets.datamodels.base_model import BaseModel
 from emma_datasets.datamodels.constants import DatasetModalityMap, DatasetName, MediaType
 from emma_datasets.datamodels.dataset_metadata import DatasetMetadata
+from emma_datasets.datamodels.datasets import AlfredHighAction, AlfredLowAction
 from emma_datasets.datamodels.region import Region
 from emma_datasets.datamodels.scene_graph import SceneGraph
 from emma_datasets.datamodels.text import Caption, QuestionAnswerPair
-from emma_datasets.datamodels.trajectory import ActionTrajectory
+from emma_datasets.datamodels.trajectory import GenericActionTrajectory
 
 
 DatasetDict = dict[DatasetName, DatasetMetadata]
+
+ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
 
 
 def _get_language_data_from_scene_graph(scene_graph: SceneGraph) -> list[str]:

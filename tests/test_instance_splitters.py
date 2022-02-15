@@ -6,12 +6,13 @@ from pydantic import parse_file_as
 from rich.progress import Progress
 
 from emma_datasets.datamodels import (
-    ActionTrajectory,
     Caption,
+    GenericActionTrajectory,
     QuestionAnswerPair,
     Region,
     SceneGraph,
 )
+from emma_datasets.datamodels.datasets.alfred import AlfredHighAction, AlfredLowAction
 from emma_datasets.parsers.instance_splitters import (
     AlfredCaptionSplitter,
     AlfredTrajectorySplitter,
@@ -116,7 +117,8 @@ def test_alfred_trajectory_splitter_works(paths: dict[str, list[Path]], tmp_path
     split_instances(AlfredTrajectorySplitter, instance_paths, tmp_path)
 
     generated_trajectories = [
-        parse_file_as(ActionTrajectory, file_path) for file_path in tmp_path.iterdir()
+        parse_file_as(GenericActionTrajectory[AlfredLowAction, AlfredHighAction], file_path)
+        for file_path in tmp_path.iterdir()
     ]
 
     assert generated_trajectories
