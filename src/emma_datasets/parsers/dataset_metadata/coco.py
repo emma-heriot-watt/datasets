@@ -44,10 +44,10 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
 
     def convert_to_dataset_metadata(self, metadata: CocoImageMetadata) -> DatasetMetadata:
         """Convert single instance's metadata to the common datamodel."""
-        file_name_stem = Path(metadata.file_name).stem
-
+        image_id = metadata.id
+        feature_image_id = f"{int(metadata.id):02d}"
         return DatasetMetadata(
-            id=str(metadata.id),
+            id=image_id,
             name=self.dataset_name,
             split=metadata.dataset_split,
             media=SourceMedia(
@@ -57,7 +57,7 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
                 width=metadata.width,
                 height=metadata.height,
             ),
-            features_path=self.features_dir.joinpath(f"{file_name_stem}.{self.feature_ext}"),
+            features_path=self.features_dir.joinpath(f"{feature_image_id}.{self.feature_ext}"),
             caption_path=self.captions_dir.joinpath(f"{metadata.id}.json"),
         )
 

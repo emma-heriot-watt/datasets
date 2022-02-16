@@ -92,12 +92,7 @@ class DatasetDb:
     def close(self) -> None:
         """Closes the underlying connection with the SQLite database."""
         if self._is_open:
-            if self._write_count > 0:
-                with self._env:
-                    self._env.executemany(INSERT_DATA_TABLE_FORMAT, self._cache)
-                self._cache.clear()
-                self._write_count = 0
-
+            self.flush()
             self._env.close()
 
     def flush(self) -> None:
