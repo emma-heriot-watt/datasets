@@ -45,7 +45,7 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
     def convert_to_dataset_metadata(self, metadata: CocoImageMetadata) -> DatasetMetadata:
         """Convert single instance's metadata to the common datamodel."""
         image_id = metadata.id
-        feature_image_id = f"{int(metadata.id):02d}"
+        feature_image_id = f"{int(metadata.id):012d}"
         return DatasetMetadata(
             id=image_id,
             name=self.dataset_name,
