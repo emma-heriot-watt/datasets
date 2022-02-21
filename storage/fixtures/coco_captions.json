@@ -133,6 +133,201 @@
 	],
 	"annotations": [
 		{
+			"image_id": 87038,
+			"id": 647151,
+			"caption": "A person on a skateboard and bike at a skate park."
+		},
+		{
+			"image_id": 480985,
+			"id": 369673,
+			"caption": "The shiny motorcycle has been put on display."
+		},
+		{
+			"image_id": 480985,
+			"id": 372865,
+			"caption": "The new motorcycle on display is very shiny."
+		},
+		{
+			"image_id": 480985,
+			"id": 374665,
+			"caption": "A motorcycle is parked inside of a building."
+		},
+		{
+			"image_id": 480985,
+			"id": 377983,
+			"caption": "A brand new motorcycle on display at a show."
+		},
+		{
+			"image_id": 480985,
+			"id": 380866,
+			"caption": "The front end of a red motorcycle that is on display."
+		},
+		{
+			"image_id": 403385,
+			"id": 501985,
+			"caption": "A bathroom that has a broken wall in the shower."
+		},
+		{
+			"image_id": 6818,
+			"id": 576538,
+			"caption": "a couple of buckets in a white room"
+		},
+		{
+			"image_id": 6818,
+			"id": 582160,
+			"caption": "A bathroom with no toilets and a red and green bucket. "
+		},
+		{
+			"image_id": 6818,
+			"id": 585472,
+			"caption": "a shower room with two buckets, tolet paper holder and soap."
+		},
+		{
+			"image_id": 6818,
+			"id": 585544,
+			"caption": "A standing toilet in a bathroom next to a window."
+		},
+		{
+			"image_id": 6818,
+			"id": 586015,
+			"caption": "This picture looks like a janitors closet with buckets on the floor."
+		},
+		{
+			"image_id": 403385,
+			"id": 507367,
+			"caption": "A bathroom looks clean but is missing tile at the shower stall."
+		},
+		{
+			"image_id": 403385,
+			"id": 508369,
+			"caption": "A view of a bathroom that needs to be fixed up."
+		},
+		{
+			"image_id": 403385,
+			"id": 510313,
+			"caption": "a shower toilet and sink in a basement bathroom"
+		},
+		{
+			"image_id": 403385,
+			"id": 510664,
+			"caption": "A very big whit rest room with a shabby looking shower."
+		},
+		{
+			"image_id": 174482,
+			"id": 429740,
+			"caption": "a blue bike parked on a side walk "
+		},
+		{
+			"image_id": 174482,
+			"id": 430565,
+			"caption": "A bicycle is chained to a fixture on a city street"
+		},
+		{
+			"image_id": 174482,
+			"id": 430589,
+			"caption": "A blue bicycle sits on a sidewalk near a street."
+		},
+		{
+			"image_id": 174482,
+			"id": 431771,
+			"caption": "A bicycle is locked up to a post"
+		},
+		{
+			"image_id": 174482,
+			"id": 435809,
+			"caption": "a bike sits parked next to a street "
+		},
+		{
+			"image_id": 87038,
+			"id": 653244,
+			"caption": "A man on a skateboard performs a trick at the skate park"
+		},
+		{
+			"image_id": 87038,
+			"id": 653436,
+			"caption": "A skateboarder jumps into the air as he performs a skateboard trick."
+		},
+		{
+			"image_id": 87038,
+			"id": 654318,
+			"caption": "Athletes performing tricks on a BMX bicycle and a skateboard."
+		},
+		{
+			"image_id": 87038,
+			"id": 654543,
+			"caption": "a man falls off his skateboard in a skate park."
+		},
+		{
+			"image_id": 252219,
+			"id": 107395,
+			"caption": "a person with a shopping cart on a city street "
+		},
+		{
+			"image_id": 252219,
+			"id": 109132,
+			"caption": "City dwellers walk by as a homeless man begs for cash."
+		},
+		{
+			"image_id": 252219,
+			"id": 111433,
+			"caption": "People walking past a homeless man begging on a city street"
+		},
+		{
+			"image_id": 252219,
+			"id": 114199,
+			"caption": "a homeless man holding a cup and standing next to a shopping cart on a street"
+		},
+		{
+			"image_id": 252219,
+			"id": 114511,
+			"caption": "People are walking on the street by a homeless person."
+		},
+		{
+			"image_id": 37777,
+			"id": 597185,
+			"caption": "The dining table near the kitchen has a bowl of fruit on it."
+		},
+		{
+			"image_id": 37777,
+			"id": 598568,
+			"caption": "A small kitchen has various appliances and a table."
+		},
+		{
+			"image_id": 37777,
+			"id": 599939,
+			"caption": "The kitchen is clean and ready for us to see."
+		},
+		{
+			"image_id": 37777,
+			"id": 601877,
+			"caption": "A kitchen and dining area decorated in white."
+		},
+		{
+			"image_id": 37777,
+			"id": 603617,
+			"caption": "A kitchen that has a bowl of fruit on the table."
+		},
+		{
+			"image_id": 397133,
+			"id": 370584,
+			"caption": "Man in apron standing on front of oven with pans and bakeware"
+		},
+		{
+			"image_id": 397133,
+			"id": 370509,
+			"caption": "A man is in a kitchen making pizzas."
+		},
+		{
+			"image_id": 397133,
+			"id": 372252,
+			"caption": "A baker is working in the kitchen rolling dough."
+		},
+		{
+			"image_id": 397133,
+			"id": 372765,
+			"caption": "A person standing by a stove in a kitchen."
+		},
+		{
 			"image_id": 179765,
 			"id": 38,
 			"caption": "A black Honda motorcycle parked in front of a garage."

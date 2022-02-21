@@ -2,26 +2,10 @@ from multiprocessing.pool import Pool
 from typing import Any, Iterator
 
 import pytest
-from pytest_cases import fixture, fixture_ref, parametrize
 from rich.progress import Progress
 
 from emma_datasets.datamodels import DatasetMetadata
 from emma_datasets.parsers.dataset_metadata.metadata_parser import DatasetMetadataParser
-
-
-@fixture
-@parametrize(
-    "metadata_parser",
-    [
-        fixture_ref("coco_metadata_parser"),
-        fixture_ref("vg_metadata_parser"),
-        fixture_ref("gqa_metadata_parser"),
-        fixture_ref("epic_kitchens_metadata_parser"),
-        fixture_ref("alfred_metadata_parser"),
-    ],
-)
-def metadata_parser(metadata_parser):
-    return metadata_parser
 
 
 def test_metadata_parser_works(metadata_parser, progress):
