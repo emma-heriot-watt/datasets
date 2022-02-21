@@ -53,7 +53,7 @@ def handle_sigint(signum: int, frame: Any) -> None:
 signal.signal(signal.SIGINT, handle_sigint)
 
 TIME_STR = time.strftime("%Y%m%d-%H%M%S")
-LOG_NAME = f"downloader_{TIME_STR}.log"
+LOG_NAME = f"logs/downloader_{TIME_STR}.log"
 
 
 class DatasetDownloader:

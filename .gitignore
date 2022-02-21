@@ -248,7 +248,8 @@ Thumbs.db
 *.code-workspace
 
 # Lightning-Hydra-Template
-logs/
+logs/**/*
+!logs/.gitkeep
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,python,intellij+all
 
