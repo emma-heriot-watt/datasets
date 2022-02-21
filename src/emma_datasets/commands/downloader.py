@@ -194,4 +194,4 @@ def download(csv_file_path: str, storage_root: str, max_workers: Optional[int] =
 
 
 if __name__ == "__main__":
-    download("storage/dataset_downloads_copy.csv", "storage/datasets")
+    download("storage/dataset_downloads.csv", "storage/datasets")
