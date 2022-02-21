@@ -5,7 +5,7 @@ on:
       - main
 jobs:
   draft_release:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: release-drafter/release-drafter@v5.18.1
         env:
