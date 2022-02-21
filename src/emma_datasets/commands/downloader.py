@@ -3,6 +3,7 @@ import signal
 import time
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
+from http.client import HTTPResponse
 from pathlib import Path
 from threading import Event
 from typing import Any, Optional
@@ -83,6 +84,7 @@ class DatasetDownloader:
         output_dir.mkdir(parents=True, exist_ok=True)
 
         filename = url.split("/")[-1]
+        filename = filename.split("?")[0]
         dest_path = output_dir.joinpath(filename)
         task_id = progress.add_task(
             "download",
@@ -132,7 +134,7 @@ class DatasetDownloader:
         """Copy data from a url to a local file."""
         response = urlopen(url)  # noqa: S310
 
-        content_length = int(response.info()["Content-length"])
+        content_length = self._get_content_length_from_response(response)
 
         # This will break if the response doesn't contain content length
         progress.update(task_id, total=content_length)
@@ -163,6 +165,16 @@ class DatasetDownloader:
             console = Console(file=log_file)
             console.log(f"{verb} {path}")
 
+    def _get_content_length_from_response(self, response: HTTPResponse) -> int:
+        """Get content length from response."""
+        if response.info()["Content-length"] is not None:
+            return int(response.info()["Content-length"])
+
+        if response.info()["X-Dropbox-Content-Length"] is not None:
+            return int(response.info()["X-Dropbox-Content-Length"])
+
+        raise NotImplementedError
+
 
 def download(csv_file_path: str, storage_root: str, max_workers: Optional[int] = None) -> None:
     """Download the dataset files from the CSV file of urls."""
@@ -182,4 +194,4 @@ def download(csv_file_path: str, storage_root: str, max_workers: Optional[int] =
 
 
 if __name__ == "__main__":
-    download("dataset_downloads.csv", "storage/datasets")
+    download("storage/dataset_downloads_copy.csv", "storage/datasets")
