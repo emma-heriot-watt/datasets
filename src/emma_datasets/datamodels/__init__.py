@@ -7,7 +7,7 @@ from emma_datasets.datamodels.constants import (
     MediaType,
 )
 from emma_datasets.datamodels.dataset_metadata import DatasetMetadata, SourceMedia
-from emma_datasets.datamodels.datasets import AlfredHighAction, AlfredLowAction
+from emma_datasets.datamodels.datasets import AlfredHighAction, AlfredLowAction, TeachEdhInstance
 from emma_datasets.datamodels.instance import Instance
 from emma_datasets.datamodels.region import Region
 from emma_datasets.datamodels.scene_graph import SceneGraph
