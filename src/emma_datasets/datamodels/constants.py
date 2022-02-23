@@ -40,6 +40,8 @@ class DatasetSplit(Enum):
     train = "training"
     valid = "validation"
     test = "testing"
+    valid_seen = "valid_seen"
+    valid_unseen = "valid_unseen"
 
 
 DatasetModalityMap: dict[DatasetName, MediaType] = {

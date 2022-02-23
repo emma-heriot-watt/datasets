@@ -1,0 +1,1591 @@
+{
+	"dialog_history": [
+		["Driver", "what shall i do?"],
+		[
+			"Commander",
+			"please put the two newspapers from the self onto a single table"
+		]
+	],
+	"driver_action_history": [
+		{
+			"action_id": 100,
+			"action_idx": 33,
+			"obj_interaction_action": 0,
+			"action_name": "Text",
+			"time_start": 32.667542934417725,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 39.457191705703735,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 40.296117067337036,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 40.592448234558105,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 40.91995596885681,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 41.487531423568726,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 41.703988790512085,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 42.51232194900513,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 43.512290716171265,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 44.23218369483948,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 44.88882565498352,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 45.27382779121399,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 4,
+			"action_idx": 4,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Left",
+			"time_start": 48.80953621864319,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 51.47308611869812,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 53.528186559677124,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 54.16244578361511,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 54.3516845703125,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 54.88046622276306,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 55.55995297431946,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 4,
+			"action_idx": 4,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Left",
+			"time_start": 57.73670744895935,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 62.40000653266907,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 63.78436803817749,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 65.93734288215637,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 66.60893225669861,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 67.48279881477356,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 67.7599287033081,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 68.29523634910583,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 68.85527157783508,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 69.67185854911804,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 70.44685053825378,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 71.0462851524353,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 71.64205884933472,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 73.30417823791504,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 75.44033980369568,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 76.63097786903381,
+			"oid": null,
+			"x": null,
+			"y": null
+		}
+	],
+	"driver_image_history": [
+		"driver.frame.32.667542934417725.jpeg",
+		"driver.frame.39.457191705703735.jpeg",
+		"driver.frame.40.296117067337036.jpeg",
+		"driver.frame.40.592448234558105.jpeg",
+		"driver.frame.40.91995596885681.jpeg",
+		"driver.frame.41.487531423568726.jpeg",
+		"driver.frame.41.703988790512085.jpeg",
+		"driver.frame.42.51232194900513.jpeg",
+		"driver.frame.43.512290716171265.jpeg",
+		"driver.frame.44.23218369483948.jpeg",
+		"driver.frame.44.88882565498352.jpeg",
+		"driver.frame.45.27382779121399.jpeg",
+		"driver.frame.48.80953621864319.jpeg",
+		"driver.frame.51.47308611869812.jpeg",
+		"driver.frame.53.528186559677124.jpeg",
+		"driver.frame.54.16244578361511.jpeg",
+		"driver.frame.54.3516845703125.jpeg",
+		"driver.frame.54.88046622276306.jpeg",
+		"driver.frame.55.55995297431946.jpeg",
+		"driver.frame.57.73670744895935.jpeg",
+		"driver.frame.62.40000653266907.jpeg",
+		"driver.frame.63.78436803817749.jpeg",
+		"driver.frame.65.93734288215637.jpeg",
+		"driver.frame.66.60893225669861.jpeg",
+		"driver.frame.67.48279881477356.jpeg",
+		"driver.frame.67.7599287033081.jpeg",
+		"driver.frame.68.29523634910583.jpeg",
+		"driver.frame.68.85527157783508.jpeg",
+		"driver.frame.69.67185854911804.jpeg",
+		"driver.frame.70.44685053825378.jpeg",
+		"driver.frame.71.0462851524353.jpeg",
+		"driver.frame.71.64205884933472.jpeg",
+		"driver.frame.73.30417823791504.jpeg",
+		"driver.frame.75.44033980369568.jpeg",
+		"driver.frame.76.63097786903381.jpeg"
+	],
+	"driver_actions_future": [
+		{
+			"action_id": 200,
+			"action_idx": 15,
+			"obj_interaction_action": 1,
+			"action_name": "Pickup",
+			"time_start": 84.65615844726562,
+			"oid": "Newspaper|-00.40|+00.29|+05.26",
+			"x": 0.4942675159235669,
+			"y": 0.6229299363057325
+		},
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 86.1112892627716,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 201,
+			"action_idx": 16,
+			"obj_interaction_action": 1,
+			"action_name": "Place",
+			"time_start": 91.25710153579712,
+			"oid": "CoffeeTable|-02.65|+00.02|+04.06",
+			"x": 0.8140127388535032,
+			"y": 0.7770700636942676
+		},
+		{
+			"action_id": 4,
+			"action_idx": 4,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Left",
+			"time_start": 96.14441323280334,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 102.13517642021179,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 102.87037563323975,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 103.91903376579285,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 200,
+			"action_idx": 15,
+			"obj_interaction_action": 1,
+			"action_name": "Pickup",
+			"time_start": 107.49008536338806,
+			"oid": "Newspaper|-00.24|+00.29|+06.00",
+			"x": 0.33375796178343947,
+			"y": 0.7070063694267515
+		},
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 109.2546980381012,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 201,
+			"action_idx": 16,
+			"obj_interaction_action": 1,
+			"action_name": "Place",
+			"time_start": 114.91219568252563,
+			"oid": "CoffeeTable|-02.65|+00.02|+04.06",
+			"x": 0.9617834394904459,
+			"y": 0.7363057324840764
+		}
+	],
+	"driver_images_future": [
+		"driver.frame.84.65615844726562.jpeg",
+		"driver.frame.86.1112892627716.jpeg",
+		"driver.frame.91.25710153579712.jpeg",
+		"driver.frame.96.14441323280334.jpeg",
+		"driver.frame.102.13517642021179.jpeg",
+		"driver.frame.102.87037563323975.jpeg",
+		"driver.frame.103.91903376579285.jpeg",
+		"driver.frame.107.49008536338806.jpeg",
+		"driver.frame.109.2546980381012.jpeg",
+		"driver.frame.114.91219568252563.jpeg"
+	],
+	"interactions": [
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 23.3501033782959,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 26.252984285354614,
+			"duration": 1,
+			"success": 1,
+			"query": "Newspaper|-04.18|+00.50|+06.35",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 30.104750394821167,
+			"duration": 1,
+			"success": 1,
+			"query": "Newspaper|-04.18|+00.50|+06.35",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 1,
+			"action_id": 100,
+			"time_start": 32.667542934417725,
+			"duration": 1,
+			"success": 1,
+			"utterance": "what shall i do?",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "what shall i do?",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 0,
+			"action_id": 502,
+			"time_start": 36.178223848342896,
+			"duration": 1,
+			"success": 1,
+			"query": "newspaper",
+			"obj_interaction_action": 0,
+			"action_idx": 32
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 39.457191705703735,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [5.0, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 40.296117067337036,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [4.75, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 40.592448234558105,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [4.5, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 40.91995596885681,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [4.25, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 41.487531423568726,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [4.0, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 41.703988790512085,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [3.75, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 42.51232194900513,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [3.5, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 43.512290716171265,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [3.25, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 44.23218369483948,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [3.0, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 44.88882565498352,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [2.75, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 45.27382779121399,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [2.5, 3.5, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 4,
+			"time_start": 48.80953621864319,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, 90],
+			"pose": [
+				2.5, 3.5, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 4
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 51.47308611869812,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [
+				2.25, 3.5, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 53.528186559677124,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				2.25, 3.25, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 54.16244578361511,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				2.25, 3.0, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 54.3516845703125,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				2.25, 2.75, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 54.88046622276306,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				2.25, 2.5, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 55.55995297431946,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				2.25, 2.25, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 4,
+			"time_start": 57.73670744895935,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, 90],
+			"pose": [
+				2.25, 2.25, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 4
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 62.40000653266907,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [
+				2.25, 2.0, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 63.78436803817749,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [
+				2.25, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 65.93734288215637,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				2.5, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 66.60893225669861,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				2.75, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 67.48279881477356,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				3.0, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 67.7599287033081,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				3.25, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 68.29523634910583,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				3.5, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 68.85527157783508,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				3.75, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 69.67185854911804,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				4.0, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 70.44685053825378,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				4.25, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 71.0462851524353,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				4.5, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 71.64205884933472,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				4.75, 1.75, 0.9204399585723877, 0, 30.000003814697266,
+				-9.659346687840298e-6
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 73.30417823791504,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [
+				4.75, 1.75, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 75.44033980369568,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [
+				5.0, 1.75, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 76.63097786903381,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [
+				5.25, 1.75, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 76.8205623626709,
+			"duration": 1,
+			"success": 1,
+			"utterance": "please put the two newspapers from the self onto a single table",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "please put the two newspapers from the self onto a single table",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 84.65615844726562,
+			"duration": 1,
+			"success": 1,
+			"x": 0.4942675159235669,
+			"y": 0.6229299363057325,
+			"oid": "Newspaper|-00.40|+00.29|+05.26",
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		},
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 84.97711420059204,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 86.1112892627716,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [5.25, 1.75, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 86.3230459690094,
+			"duration": 1,
+			"success": 1,
+			"query": "Newspaper|-04.18|+00.50|+06.35",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 87.02912783622742,
+			"duration": 1,
+			"success": 1,
+			"query": "Newspaper|-04.18|+00.50|+06.35",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 1,
+			"action_id": 201,
+			"time_start": 91.25710153579712,
+			"duration": 1,
+			"success": 1,
+			"x": 0.8140127388535032,
+			"y": 0.7770700636942676,
+			"oid": "CoffeeTable|-02.65|+00.02|+04.06",
+			"obj_interaction_action": 1,
+			"action_idx": 16
+		},
+		{
+			"agent_id": 1,
+			"action_id": 4,
+			"time_start": 96.14441323280334,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, 90],
+			"pose": [
+				5.25, 1.75, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 4
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 102.13517642021179,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				5.25, 1.5, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 102.87037563323975,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [
+				5.25, 1.25, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 103.91903376579285,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [
+				5.5, 1.25, 0.9204399585723877, 0, 30.00000762939453, -90.00000762939453
+			],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 106.97728610038757,
+			"duration": 1,
+			"success": 1,
+			"query": "Newspaper|-00.40|+00.29|+05.26",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 107.49008536338806,
+			"duration": 1,
+			"success": 1,
+			"x": 0.33375796178343947,
+			"y": 0.7070063694267515,
+			"oid": "Newspaper|-00.24|+00.29|+06.00",
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 107.77043318748474,
+			"duration": 1,
+			"success": 1,
+			"query": "Newspaper|-00.40|+00.29|+05.26",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 109.2546980381012,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [5.5, 1.25, 0.9204399585723877, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 1,
+			"action_id": 201,
+			"time_start": 114.91219568252563,
+			"duration": 1,
+			"success": 1,
+			"x": 0.9617834394904459,
+			"y": 0.7363057324840764,
+			"oid": "CoffeeTable|-02.65|+00.02|+04.06",
+			"obj_interaction_action": 1,
+			"action_idx": 16
+		},
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 116.79023313522339,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		}
+	],
+	"game_id": "0a57fe74bb28dca3_c887",
+	"instance_id": "0a57fe74bb28dca3_c887.edh0",
+	"pred_start_idx": 40,
+	"init_state_diff": {
+		"agents": {},
+		"objects": {
+			"RemoteControl|-02.19|+00.54|+00.70": { "distance": 4.592 },
+			"KeyChain|-02.65|+00.47|+04.71": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 1.1402
+			},
+			"Newspaper|-00.40|+00.29|+05.26": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.4904
+			},
+			"WateringCan|-04.27|+00.49|+06.54": { "distance": 2.8592 },
+			"RemoteControl|-02.65|+00.47|+03.62": { "distance": 1.9153 },
+			"Newspaper|-04.18|+00.50|+06.35": { "distance": 2.7025 },
+			"Box|-02.89|+00.59|+03.62": {
+				"visible": false,
+				"obstructed": true,
+				"receptacleObjectIds": [
+					"RemoteControl|-02.90|+00.48|+03.81",
+					"CreditCard|-02.96|+00.47|+03.74"
+				],
+				"distance": 2.0185
+			},
+			"Floor|+00.00|+00.00|+00.00": {
+				"receptacleObjectIds": [
+					"CoffeeTable|-02.65|+00.02|+04.06",
+					"ArmChair|-04.45|+00.02|+06.45",
+					"Curtains|-02.19|+02.47|+00.04",
+					"SideTable|-00.59|+00.02|+00.84",
+					"Shelf|-00.59|+00.36|+00.84",
+					"Shelf|-00.59|+00.10|+00.84",
+					"Sofa|-02.49|+00.03|+00.73",
+					"Curtains|-02.83|+02.47|+00.04",
+					"FloorLamp|-04.51|+00.03|+00.66",
+					"Sofa|-04.36|+00.03|+02.93",
+					"Curtains|-00.05|+02.48|+02.63",
+					"GarbageCan|-00.53|-00.01|+02.82"
+				],
+				"distance": 5.61
+			},
+			"Curtains|-02.83|+02.47|+00.04": { "distance": 5.5421 },
+			"Curtains|-02.19|+02.47|+00.04": { "distance": 5.4538 },
+			"Curtains|-00.05|+02.48|+02.63": { "distance": 3.4883 },
+			"Plate|-04.10|+00.53|+02.33": { "distance": 3.7747 },
+			"Vase|-01.89|+00.54|+00.70": { "distance": 4.5729 },
+			"DeskLamp|-00.48|+00.61|+00.69": { "distance": 4.7411 },
+			"WateringCan|-04.52|+00.49|+06.44": { "distance": 3.0481 },
+			"Newspaper|-00.24|+00.29|+06.00": { "distance": 1.7988 },
+			"Vase|-00.59|+01.45|+06.43": { "distance": 1.7437 },
+			"Shelf|-00.39|+01.45|+05.95": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Statue|-00.60|+01.46|+06.79",
+					"Vase|-00.59|+01.45|+06.43",
+					"Statue|-00.52|+01.46|+05.35"
+				],
+				"distance": 1.6197
+			},
+			"Shelf|-00.40|+00.27|+05.96": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Newspaper|-00.40|+00.29|+05.26",
+					"Newspaper|-00.24|+00.29|+06.00",
+					"Statue|-00.46|+00.27|+05.70"
+				],
+				"distance": 1.6603
+			},
+			"KeyChain|-00.67|+00.62|+00.61": { "distance": 4.7747 },
+			"Pillow|-01.58|+00.59|+00.67": { "distance": 4.5977 },
+			"Television|-00.75|+01.66|+03.94": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.8097
+			},
+			"GarbageCan|-00.53|-00.01|+02.82": { "distance": 2.874 },
+			"RemoteControl|-02.90|+00.48|+03.81": { "distance": 1.8958 },
+			"Painting|-02.67|+01.57|+07.00": { "distance": 2.0832 },
+			"Bowl|-02.40|+00.46|+03.44": { "distance": 1.975 },
+			"CreditCard|-02.96|+00.47|+03.74": { "distance": 1.9872 },
+			"LightSwitch|-05.00|+01.25|+05.86": { "distance": 3.3225 },
+			"Laptop|-04.20|+00.54|+02.93": { "distance": 3.3951 },
+			"Window|-01.37|+01.57|+00.01": { "distance": 5.295 },
+			"Window|-00.01|+01.57|+01.50": { "distance": 4.1855 },
+			"Window|-03.73|+01.57|+00.01": { "distance": 5.6391 },
+			"FloorLamp|-04.51|+00.03|+00.66": { "distance": 5.4287 },
+			"HousePlant|-02.66|+00.47|+04.17": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 1.486
+			},
+			"Statue|-00.60|+01.46|+06.79": { "distance": 1.9993 },
+			"Shelf|-00.59|+00.10|+00.84": { "distance": 4.6296 },
+			"Shelf|-00.59|+00.36|+00.84": { "distance": 4.5915 },
+			"SideTable|-00.59|+00.02|+00.84": { "distance": 4.6455 },
+			"Statue|-00.46|+00.27|+05.70": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.5132
+			},
+			"Sofa|-04.36|+00.03|+02.93": {
+				"visible": false,
+				"obstructed": true,
+				"receptacleObjectIds": [
+					"Plate|-04.10|+00.53|+02.33",
+					"Laptop|-04.20|+00.54|+02.93"
+				],
+				"distance": 3.6048
+			},
+			"Sofa|-02.49|+00.03|+00.73": {
+				"receptacleObjectIds": [
+					"Pillow|-01.58|+00.59|+00.67",
+					"Vase|-01.89|+00.54|+00.70",
+					"RemoteControl|-02.19|+00.54|+00.70"
+				],
+				"distance": 4.6717
+			},
+			"CoffeeTable|-02.65|+00.02|+04.06": {
+				"visible": false,
+				"obstructed": true,
+				"receptacleObjectIds": [
+					"KeyChain|-02.65|+00.47|+04.71",
+					"Bowl|-02.40|+00.46|+03.44",
+					"HousePlant|-02.66|+00.47|+04.17",
+					"RemoteControl|-02.65|+00.47|+03.62",
+					"Box|-02.89|+00.59|+03.62",
+					"RemoteControl|-02.90|+00.48|+03.81",
+					"CreditCard|-02.96|+00.47|+03.74"
+				],
+				"distance": 1.7431
+			},
+			"Statue|-00.52|+01.46|+05.35": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.3422
+			},
+			"ArmChair|-04.45|+00.02|+06.45": {
+				"receptacleObjectIds": [
+					"WateringCan|-04.27|+00.49|+06.54",
+					"Newspaper|-04.18|+00.50|+06.35",
+					"WateringCan|-04.52|+00.49|+06.44"
+				],
+				"distance": 3.0868
+			}
+		}
+	},
+	"final_state_diff": {
+		"agents": {},
+		"objects": {
+			"RemoteControl|-02.19|+00.54|+00.70": { "distance": 4.911 },
+			"KeyChain|-02.65|+00.47|+04.71": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 1.667
+			},
+			"Newspaper|-00.40|+00.29|+05.26": {
+				"position": { "x": -2.5259, "y": 0.4681, "z": 4.4955 },
+				"rotation": { "x": 0.0006, "y": 180.0001, "z": 359.9406 },
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.6856,
+				"parentReceptacles": ["CoffeeTable|-02.65|+00.02|+04.06"],
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[-2.3618, 0.4963, 4.5896],
+						[-2.3618, 0.4963, 4.4127],
+						[-2.3618, 0.4658, 4.5896],
+						[-2.3618, 0.4658, 4.4127],
+						[-2.6899, 0.4963, 4.5896],
+						[-2.6899, 0.4963, 4.4127],
+						[-2.6899, 0.4658, 4.5896],
+						[-2.6899, 0.4658, 4.4127]
+					],
+					"center": { "x": -2.5259, "y": 0.481, "z": 4.5011 },
+					"size": { "x": 0.3282, "y": 0.0306, "z": 0.1769 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[-2.6899, 0.4658, 4.4127],
+						[-2.3618, 0.4661, 4.4127],
+						[-2.3618, 0.4661, 4.5896],
+						[-2.6899, 0.4658, 4.5896],
+						[-2.6899, 0.496, 4.4127],
+						[-2.3618, 0.4963, 4.4127],
+						[-2.3618, 0.4963, 4.5896],
+						[-2.6899, 0.496, 4.5896]
+					]
+				},
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "CoffeeTable|-02.65|+00.02|+04.06"
+			},
+			"WateringCan|-04.27|+00.49|+06.54": { "distance": 3.2189 },
+			"RemoteControl|-02.65|+00.47|+03.62": { "distance": 2.3863 },
+			"Newspaper|-04.18|+00.50|+06.35": { "distance": 3.0818 },
+			"Box|-02.89|+00.59|+03.62": {
+				"visible": false,
+				"obstructed": true,
+				"receptacleObjectIds": [
+					"RemoteControl|-02.90|+00.48|+03.81",
+					"CreditCard|-02.96|+00.47|+03.74"
+				],
+				"distance": 2.519
+			},
+			"Floor|+00.00|+00.00|+00.00": {
+				"receptacleObjectIds": [
+					"CoffeeTable|-02.65|+00.02|+04.06",
+					"ArmChair|-04.45|+00.02|+06.45",
+					"Curtains|-02.19|+02.47|+00.04",
+					"SideTable|-00.59|+00.02|+00.84",
+					"Shelf|-00.59|+00.36|+00.84",
+					"Shelf|-00.59|+00.10|+00.84",
+					"Sofa|-02.49|+00.03|+00.73",
+					"Curtains|-02.83|+02.47|+00.04",
+					"FloorLamp|-04.51|+00.03|+00.66",
+					"Sofa|-04.36|+00.03|+02.93",
+					"Curtains|-00.05|+02.48|+02.63",
+					"GarbageCan|-00.53|-00.01|+02.82"
+				],
+				"distance": 5.7149
+			},
+			"Curtains|-02.83|+02.47|+00.04": { "distance": 5.8914 },
+			"Curtains|-02.19|+02.47|+00.04": { "distance": 5.7529 },
+			"Curtains|-00.05|+02.48|+02.63": { "distance": 3.4763 },
+			"Plate|-04.10|+00.53|+02.33": { "distance": 4.2867 },
+			"Vase|-01.89|+00.54|+00.70": { "distance": 4.8622 },
+			"DeskLamp|-00.48|+00.61|+00.69": { "distance": 4.8789 },
+			"WateringCan|-04.52|+00.49|+06.44": { "distance": 3.4319 },
+			"Newspaper|-00.24|+00.29|+06.00": {
+				"position": { "x": -2.4033, "y": 0.5601, "z": 4.7143 },
+				"rotation": { "x": 270.0523, "y": 180.0594, "z": 0.0 },
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.4413,
+				"parentReceptacles": ["CoffeeTable|-02.65|+00.02|+04.06"],
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[-2.2391, 0.6431, 4.7423],
+						[-2.2391, 0.6431, 4.712],
+						[-2.2391, 0.4659, 4.7423],
+						[-2.2391, 0.4659, 4.712],
+						[-2.5675, 0.6431, 4.7423],
+						[-2.5675, 0.6431, 4.712],
+						[-2.5675, 0.4659, 4.7423],
+						[-2.5675, 0.4659, 4.712]
+					],
+					"center": { "x": -2.4033, "y": 0.5545, "z": 4.7272 },
+					"size": { "x": 0.3283, "y": 0.1772, "z": 0.0302 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[-2.5675, 0.6428, 4.712],
+						[-2.2393, 0.6431, 4.712],
+						[-2.2391, 0.4662, 4.712],
+						[-2.5673, 0.4659, 4.712],
+						[-2.5675, 0.6428, 4.7423],
+						[-2.2393, 0.6431, 4.7423],
+						[-2.2391, 0.4662, 4.7423],
+						[-2.5673, 0.4659, 4.7423]
+					]
+				},
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "CoffeeTable|-02.65|+00.02|+04.06"
+			},
+			"Vase|-00.59|+01.45|+06.43": { "distance": 1.2636 },
+			"Shelf|-00.39|+01.45|+05.95": {
+				"receptacleObjectIds": [
+					"Statue|-00.60|+01.46|+06.79",
+					"Vase|-00.59|+01.45|+06.43",
+					"Statue|-00.52|+01.46|+05.35"
+				],
+				"distance": 1.1072
+			},
+			"Shelf|-00.40|+00.27|+05.96": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": ["Statue|-00.46|+00.27|+05.70"],
+				"distance": 1.1667
+			},
+			"KeyChain|-00.67|+00.62|+00.61": { "distance": 4.935 },
+			"Pillow|-01.58|+00.59|+00.67": { "distance": 4.855 },
+			"Television|-00.75|+01.66|+03.94": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.8013
+			},
+			"GarbageCan|-00.53|-00.01|+02.82": { "distance": 2.926 },
+			"RemoteControl|-02.90|+00.48|+03.81": { "distance": 2.404 },
+			"Painting|-02.67|+01.57|+07.00": { "distance": 2.1672 },
+			"Bowl|-02.40|+00.46|+03.44": { "distance": 2.4017 },
+			"CreditCard|-02.96|+00.47|+03.74": { "distance": 2.4956 },
+			"LightSwitch|-05.00|+01.25|+05.86": { "distance": 3.7812 },
+			"Laptop|-04.20|+00.54|+02.93": { "distance": 3.9304 },
+			"Window|-01.37|+01.57|+00.01": { "distance": 5.5312 },
+			"Window|-00.01|+01.57|+01.50": { "distance": 4.2392 },
+			"Window|-03.73|+01.57|+00.01": { "distance": 6.0588 },
+			"FloorLamp|-04.51|+00.03|+00.66": { "distance": 5.9026 },
+			"HousePlant|-02.66|+00.47|+04.17": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 1.993
+			},
+			"Statue|-00.60|+01.46|+06.79": { "distance": 1.5448 },
+			"Shelf|-00.59|+00.10|+00.84": { "distance": 4.7743 },
+			"Shelf|-00.59|+00.36|+00.84": { "distance": 4.7373 },
+			"SideTable|-00.59|+00.02|+00.84": { "distance": 4.7897 },
+			"Statue|-00.46|+00.27|+05.70": { "distance": 1.0425 },
+			"Sofa|-04.36|+00.03|+02.93": {
+				"visible": false,
+				"obstructed": true,
+				"receptacleObjectIds": [
+					"Plate|-04.10|+00.53|+02.33",
+					"Laptop|-04.20|+00.54|+02.93"
+				],
+				"distance": 4.1326
+			},
+			"Sofa|-02.49|+00.03|+00.73": {
+				"receptacleObjectIds": [
+					"Pillow|-01.58|+00.59|+00.67",
+					"Vase|-01.89|+00.54|+00.70",
+					"RemoteControl|-02.19|+00.54|+00.70"
+				],
+				"distance": 5.0143
+			},
+			"CoffeeTable|-02.65|+00.02|+04.06": {
+				"receptacleObjectIds": [
+					"KeyChain|-02.65|+00.47|+04.71",
+					"Newspaper|-00.40|+00.29|+05.26",
+					"Bowl|-02.40|+00.46|+03.44",
+					"HousePlant|-02.66|+00.47|+04.17",
+					"RemoteControl|-02.65|+00.47|+03.62",
+					"Box|-02.89|+00.59|+03.62",
+					"RemoteControl|-02.90|+00.48|+03.81",
+					"CreditCard|-02.96|+00.47|+03.74",
+					"Newspaper|-00.24|+00.29|+06.00"
+				],
+				"distance": 2.2011,
+				"simbotIsReceptacleOf": [
+					"Newspaper|-00.40|+00.29|+05.26",
+					"Newspaper|-00.24|+00.29|+06.00"
+				]
+			},
+			"Statue|-00.52|+01.46|+05.35": { "distance": 0.9155 },
+			"ArmChair|-04.45|+00.02|+06.45": {
+				"receptacleObjectIds": [
+					"WateringCan|-04.27|+00.49|+06.54",
+					"Newspaper|-04.18|+00.50|+06.35",
+					"WateringCan|-04.52|+00.49|+06.44"
+				],
+				"distance": 3.4552
+			}
+		}
+	},
+	"state_changes": {
+		"agents": {},
+		"objects": {
+			"Newspaper|-00.40|+00.29|+05.26": {
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "CoffeeTable|-02.65|+00.02|+04.06"
+			},
+			"Newspaper|-00.24|+00.29|+06.00": {
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "CoffeeTable|-02.65|+00.02|+04.06"
+			}
+		}
+	},
+	"history_subgoals": [],
+	"future_subgoals": [
+		"Pickup",
+		"Newspaper",
+		"Navigate",
+		"CoffeeTable",
+		"Place",
+		"CoffeeTable",
+		"Navigate",
+		"Newspaper",
+		"Pickup",
+		"Newspaper",
+		"Navigate",
+		"CoffeeTable",
+		"Place",
+		"CoffeeTable"
+	],
+	"expected_init_goal_conditions_total": 8,
+	"expected_init_goal_conditions_satisfied": 4,
+	"dialog_history_cleaned": [
+		["Driver", "what shall i do?"],
+		[
+			"Commander",
+			"please put the two newspapers from the self onto a single table"
+		]
+	]
+}

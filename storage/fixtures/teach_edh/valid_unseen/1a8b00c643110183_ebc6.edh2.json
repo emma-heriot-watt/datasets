@@ -1,0 +1,1473 @@
+{
+	"dialog_history": [
+		["Commander", "pick baseball bat near the door"],
+		["Commander", "put it on a bed"],
+		["Commander", "pick bat near main door"],
+		["Driver", "hi"],
+		["Driver", "hi"],
+		["Driver", "ok"],
+		["Commander", "put it on a bed"]
+	],
+	"driver_action_history": [
+		{
+			"action_id": 100,
+			"action_idx": 33,
+			"obj_interaction_action": 0,
+			"action_name": "Text",
+			"time_start": 157.60223627090454,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 167.485830783844,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 168.84098625183105,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 169.04669070243835,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 169.2951238155365,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 169.52599716186523,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 169.92495965957642,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 170.2139995098114,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 170.41360998153687,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 171.21408224105835,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 172.96304726600647,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 173.1953103542328,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 173.5253667831421,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 173.74934911727905,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 174.13973379135132,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 4,
+			"action_idx": 4,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Left",
+			"time_start": 175.18735337257385,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 176.28323674201965,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 176.99916625022888,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 177.19542288780212,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 177.69218349456787,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 177.94111919403076,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 178.22743701934814,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 178.58939003944397,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 178.73284268379211,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 178.90071272850037,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 179.13361597061157,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 3,
+			"action_idx": 3,
+			"obj_interaction_action": 0,
+			"action_name": "Backward",
+			"time_start": 182.57557892799377,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 3,
+			"action_idx": 3,
+			"obj_interaction_action": 0,
+			"action_name": "Backward",
+			"time_start": 183.42270612716675,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 100,
+			"action_idx": 33,
+			"obj_interaction_action": 0,
+			"action_name": "Text",
+			"time_start": 188.70634818077087,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 100,
+			"action_idx": 33,
+			"obj_interaction_action": 0,
+			"action_name": "Text",
+			"time_start": 190.61124849319458,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 200,
+			"action_idx": 15,
+			"obj_interaction_action": 1,
+			"action_name": "Pickup",
+			"time_start": 193.72790503501892,
+			"oid": "BaseballBat|+01.96|+00.04|-00.89",
+			"x": 0.8985959438377535,
+			"y": 0.858034321372855
+		},
+		{
+			"action_id": 4,
+			"action_idx": 4,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Left",
+			"time_start": 194.99107003211975,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 4,
+			"action_idx": 4,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Left",
+			"time_start": 195.24125742912292,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 197.22394800186157,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 197.9461965560913,
+			"oid": null,
+			"x": null,
+			"y": null
+		}
+	],
+	"driver_image_history": [
+		"driver.frame.157.60223627090454.jpeg",
+		"driver.frame.167.485830783844.jpeg",
+		"driver.frame.168.84098625183105.jpeg",
+		"driver.frame.169.04669070243835.jpeg",
+		"driver.frame.169.2951238155365.jpeg",
+		"driver.frame.169.52599716186523.jpeg",
+		"driver.frame.169.92495965957642.jpeg",
+		"driver.frame.170.2139995098114.jpeg",
+		"driver.frame.170.41360998153687.jpeg",
+		"driver.frame.171.21408224105835.jpeg",
+		"driver.frame.172.96304726600647.jpeg",
+		"driver.frame.173.1953103542328.jpeg",
+		"driver.frame.173.5253667831421.jpeg",
+		"driver.frame.173.74934911727905.jpeg",
+		"driver.frame.174.13973379135132.jpeg",
+		"driver.frame.175.18735337257385.jpeg",
+		"driver.frame.176.28323674201965.jpeg",
+		"driver.frame.176.99916625022888.jpeg",
+		"driver.frame.177.19542288780212.jpeg",
+		"driver.frame.177.69218349456787.jpeg",
+		"driver.frame.177.94111919403076.jpeg",
+		"driver.frame.178.22743701934814.jpeg",
+		"driver.frame.178.58939003944397.jpeg",
+		"driver.frame.178.73284268379211.jpeg",
+		"driver.frame.178.90071272850037.jpeg",
+		"driver.frame.179.13361597061157.jpeg",
+		"driver.frame.182.57557892799377.jpeg",
+		"driver.frame.183.42270612716675.jpeg",
+		"driver.frame.188.70634818077087.jpeg",
+		"driver.frame.190.61124849319458.jpeg",
+		"driver.frame.193.72790503501892.jpeg",
+		"driver.frame.194.99107003211975.jpeg",
+		"driver.frame.195.24125742912292.jpeg",
+		"driver.frame.197.22394800186157.jpeg",
+		"driver.frame.197.9461965560913.jpeg"
+	],
+	"driver_actions_future": [
+		{
+			"action_id": 201,
+			"action_idx": 16,
+			"obj_interaction_action": 1,
+			"action_name": "Place",
+			"time_start": 199.93172764778137,
+			"oid": "Bed|+01.23|00.00|+01.66",
+			"x": 0.6973478939157566,
+			"y": 0.7269890795631825
+		}
+	],
+	"driver_images_future": ["driver.frame.199.93172764778137.jpeg"],
+	"interactions": [
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 24.69476556777954,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 32.01030445098877,
+			"duration": 1,
+			"success": 1,
+			"query": "BaseballBat|+01.96|+00.04|-00.89",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 0,
+			"action_id": 2,
+			"time_start": 43.64572334289551,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0, 0, 0, 0, 0, 0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 0,
+			"action_id": 8,
+			"time_start": 45.5081889629364,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [0, 0, 0, 0, 0, 0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 0,
+			"action_id": 4,
+			"time_start": 47.13291788101196,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, 90],
+			"pose": [0, 0, 0, 0, 0, 0],
+			"obj_interaction_action": 0,
+			"action_idx": 4
+		},
+		{
+			"agent_id": 0,
+			"action_id": 7,
+			"time_start": 50.2035231590271,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 30, 0],
+			"pose": [0, 0, 0, 0, 0, 0],
+			"obj_interaction_action": 0,
+			"action_idx": 7
+		},
+		{
+			"agent_id": 0,
+			"action_id": 3,
+			"time_start": 52.82153010368347,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [-0.25, 0, 0, 0, 0, 0],
+			"pose": [0, 0, 0, 0, 0, 0],
+			"obj_interaction_action": 0,
+			"action_idx": 3
+		},
+		{
+			"agent_id": 0,
+			"action_id": 3,
+			"time_start": 54.07491374015808,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [-0.25, 0, 0, 0, 0, 0],
+			"pose": [0, 0, 0, 0, 0, 0],
+			"obj_interaction_action": 0,
+			"action_idx": 3
+		},
+		{
+			"agent_id": 0,
+			"action_id": 9,
+			"time_start": 55.54887628555298,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0, 0, 0, 0, 0, 0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 57.556904315948486,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 85.2682421207428,
+			"duration": 1,
+			"success": 1,
+			"utterance": "pick baseball bat near the door",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "pick baseball bat near the door",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 96.88454818725586,
+			"duration": 1,
+			"success": 1,
+			"utterance": "put it on a bed",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "put it on a bed",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 104.93421602249146,
+			"duration": 1,
+			"success": 1,
+			"query": "BaseballBat|+01.96|+00.04|-00.89",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 0,
+			"action_id": 3,
+			"time_start": 121.00240540504456,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [-0.25, 0, 0, 0, 0, 0],
+			"pose": [0, 0, 0, 0, 0, 0],
+			"obj_interaction_action": 0,
+			"action_idx": 3
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 140.97695517539978,
+			"duration": 1,
+			"success": 1,
+			"utterance": "pick bat near main door",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "pick bat near main door",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 100,
+			"time_start": 157.60223627090454,
+			"duration": 1,
+			"success": 1,
+			"utterance": "hi",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "hi",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 0,
+			"action_id": 9,
+			"time_start": 165.83790516853333,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0, 0, 0, 0, 0, 0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 0,
+			"action_id": 9,
+			"time_start": 166.4359793663025,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0, 0, 0, 0, 0, 0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 167.485830783844,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [1.5, 2.0, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 168.84098625183105,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.5, 1.75, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 169.04669070243835,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.5, 1.5, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 169.2951238155365,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.5, 1.25, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 169.52599716186523,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.5, 1.0, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 169.92495965957642,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.5, 0.75, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 170.2139995098114,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.5, 0.5, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 170.41360998153687,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.5, 0.25, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 171.21408224105835,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [1.5, 0.25, 0.9009991884231567, 0, 30.000015258789062, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 172.96304726600647,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.25, 0.25, 0.9009991884231567, 0, 30.000015258789062, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 173.1953103542328,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, 0.25, 0.9009991884231567, 0, 30.000015258789062, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 173.5253667831421,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, 0.25, 0.9009991884231567, 0, 30.000015258789062, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 173.74934911727905,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, 0.25, 0.9009991884231567, 0, 30.000015258789062, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 174.13973379135132,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.25, 0.25, 0.9009991884231567, 0, 30.000015258789062, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 4,
+			"time_start": 175.18735337257385,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, 90],
+			"pose": [0.25, 0.25, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 4
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 176.28323674201965,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.25, -0.0, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 176.99916625022888,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [-0.0, 0.0, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 177.19542288780212,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [-0.25, 0.0, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 177.69218349456787,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -0.25, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 177.94111919403076,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -0.5, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 178.22743701934814,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -0.75, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 178.58939003944397,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -1.0, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 178.73284268379211,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -1.25, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 178.90071272850037,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -1.5, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 179.13361597061157,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -1.75, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 179.3346767425537,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -1.75, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 179.42543840408325,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -1.75, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 3,
+			"time_start": 182.57557892799377,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [-0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -1.5, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 3
+		},
+		{
+			"agent_id": 1,
+			"action_id": 3,
+			"time_start": 183.42270612716675,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [-0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -1.25, 0.9009991884231567, 0, 30.00002098083496, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 3
+		},
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 184.48645973205566,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 186.27219080924988,
+			"duration": 1,
+			"success": 0,
+			"x": 0.9235569422776911,
+			"y": 0.8658346333853354,
+			"oid": null,
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 186.4025809764862,
+			"duration": 1,
+			"success": 1,
+			"query": "BaseballBat|+01.96|+00.04|-00.89",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 1,
+			"action_id": 100,
+			"time_start": 188.70634818077087,
+			"duration": 1,
+			"success": 1,
+			"utterance": "hi",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "hi",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 100,
+			"time_start": 190.61124849319458,
+			"duration": 1,
+			"success": 1,
+			"utterance": "ok",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "ok",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 193.72790503501892,
+			"duration": 1,
+			"success": 1,
+			"x": 0.8985959438377535,
+			"y": 0.858034321372855,
+			"oid": "BaseballBat|+01.96|+00.04|-00.89",
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		},
+		{
+			"agent_id": 1,
+			"action_id": 4,
+			"time_start": 194.99107003211975,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, 90],
+			"pose": [-0.25, -1.25, 0.9009991884231567, 0, 30.000015258789062, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 4
+		},
+		{
+			"agent_id": 1,
+			"action_id": 4,
+			"time_start": 195.24125742912292,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, 90],
+			"pose": [-0.25, -1.25, 0.9009991884231567, 0, 30.00002098083496, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 4
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 197.22394800186157,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [-0.25, -1.25, 0.9009991884231567, 0, 30.000015258789062, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 197.9461965560913,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.0, -1.25, 0.9009991884231567, 0, 30.000015258789062, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 198.32518362998962,
+			"duration": 1,
+			"success": 1,
+			"utterance": "put it on a bed",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "put it on a bed",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 201,
+			"time_start": 199.93172764778137,
+			"duration": 1,
+			"success": 1,
+			"x": 0.6973478939157566,
+			"y": 0.7269890795631825,
+			"oid": "Bed|+01.23|00.00|+01.66",
+			"obj_interaction_action": 1,
+			"action_idx": 16
+		}
+	],
+	"game_id": "1a8b00c643110183_ebc6",
+	"instance_id": "1a8b00c643110183_ebc6.edh2",
+	"pred_start_idx": 58,
+	"init_state_diff": {
+		"agents": {},
+		"objects": {
+			"Mug|-00.07|+00.56|-01.64": { "distance": 2.1354 },
+			"Pencil|-02.08|+00.04|+02.42": { "distance": 4.2048 },
+			"CD|-00.54|+00.38|-00.86": { "distance": 2.0472 },
+			"Laptop|-00.73|+00.87|-00.83": { "distance": 2.1449 },
+			"Pen|-00.42|+00.39|-00.78": { "distance": 1.9136 },
+			"AlarmClock|-00.79|+00.22|-00.35": { "distance": 2.1744 },
+			"Book|-00.54|+00.10|-00.70": { "distance": 2.0774 },
+			"AlarmClock|-02.24|+00.04|+02.47": { "distance": 4.3611 },
+			"Pen|-02.18|+01.73|+00.54": { "distance": 3.5673 },
+			"Book|+01.82|+00.83|+00.78": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.9676
+			},
+			"Bed|+01.23|00.00|+01.66": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Book|+01.82|+00.83|+00.78",
+					"Pillow|+01.21|+00.95|+00.78",
+					"Laptop|+01.82|+00.83|+01.07"
+				],
+				"distance": 1.8941
+			},
+			"Floor|+00.00|+00.00|+00.00": {
+				"receptacleObjectIds": [
+					"Bed|+01.23|00.00|+01.66",
+					"LaundryHamper|+00.16|+00.00|+02.64",
+					"CreditCard|+00.28|+00.03|+02.64",
+					"Desk|-00.64|+00.01|-01.19",
+					"KeyChain|-00.67|+00.23|-00.24",
+					"Book|-00.54|+00.10|-00.70",
+					"Pencil|-00.38|+00.10|-00.94",
+					"BasketBall|+01.98|+00.12|+00.21",
+					"GarbageCan|-00.75|+00.01|-00.33",
+					"Drawer|-00.49|+00.20|-00.86",
+					"AlarmClock|-00.79|+00.22|-00.35",
+					"Chair|-00.14|+00.00|-01.59",
+					"Safe|-02.18|+00.00|+02.58",
+					"Mug|-02.08|+00.04|+02.58",
+					"AlarmClock|-02.24|+00.04|+02.63",
+					"Pencil|-02.08|+00.04|+02.42",
+					"AlarmClock|-02.24|+00.04|+02.47",
+					"Chair|-01.43|+00.01|+00.78",
+					"Desk|-01.73|+00.00|+00.58",
+					"Drawer|-02.06|+00.20|+00.74"
+				],
+				"distance": 1.5409
+			},
+			"LightSwitch|+02.15|+01.23|-00.52": { "distance": 1.0911 },
+			"AlarmClock|-02.24|+00.04|+02.63": { "distance": 4.4537 },
+			"BasketBall|+01.98|+00.12|+00.21": { "distance": 1.0872 },
+			"GarbageCan|-00.75|+00.01|-00.33": { "distance": 2.21 },
+			"Pen|-00.81|+00.88|-00.66": { "distance": 2.1632 },
+			"Laptop|+01.82|+00.83|+01.07": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.2137
+			},
+			"BaseballBat|+01.96|+00.04|-00.89": {
+				"position": { "x": 1.25, "y": 1.2474, "z": 0.2491 },
+				"rotation": { "x": -0.0, "y": 0.0, "z": 0.0 },
+				"visible": true,
+				"obstructed": false,
+				"isPickedUp": true,
+				"distance": 0.4267,
+				"parentReceptacles": null,
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[1.291, 1.5208, 0.2938],
+						[1.291, 1.5208, 0.2044],
+						[1.291, 0.562, 0.2938],
+						[1.291, 0.562, 0.2044],
+						[1.2102, 1.5208, 0.2938],
+						[1.2102, 1.5208, 0.2044],
+						[1.2102, 0.562, 0.2938],
+						[1.2102, 0.562, 0.2044]
+					],
+					"center": { "x": 1.2506, "y": 1.0414, "z": 0.2491 },
+					"size": { "x": 0.0808, "y": 0.9588, "z": 0.0895 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[1.291, 0.562, 0.2938],
+						[1.2102, 0.562, 0.2938],
+						[1.2102, 0.562, 0.2044],
+						[1.291, 0.562, 0.2044],
+						[1.291, 1.5208, 0.2938],
+						[1.2102, 1.5208, 0.2938],
+						[1.2102, 1.5208, 0.2044],
+						[1.291, 1.5208, 0.2044]
+					]
+				},
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": null
+			},
+			"Bowl|-00.76|+00.87|-01.62": { "distance": 2.5812 },
+			"Pillow|+01.21|+00.95|+00.78": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.7847
+			},
+			"KeyChain|-00.67|+00.23|-00.24": { "distance": 2.0518 },
+			"CreditCard|+00.28|+00.03|+02.64": { "distance": 2.9494 },
+			"CellPhone|-00.41|+00.87|-00.97": { "distance": 1.9199 },
+			"Mirror|-01.36|+01.43|+02.86": { "distance": 3.9033 },
+			"DeskLamp|-02.30|+00.86|+00.75": { "distance": 3.6249 },
+			"CD|-00.42|+00.38|-00.61": { "distance": 1.8556 },
+			"Window|-00.42|+01.53|-01.95": { "distance": 2.6427 },
+			"Window|+00.58|+01.53|-01.95": { "distance": 2.1544 },
+			"Pencil|-00.38|+00.10|-00.94": { "distance": 2.0456 },
+			"Mug|-02.08|+00.04|+02.58": { "distance": 4.2998 },
+			"Drawer|-00.49|+00.74|-00.86": { "distance": 1.9475 },
+			"Drawer|-00.49|+00.20|-00.86": { "distance": 2.0618 },
+			"Desk|-00.64|+00.01|-01.19": {
+				"receptacleObjectIds": [
+					"Bowl|-00.76|+00.87|-01.62",
+					"Pen|-00.81|+00.88|-00.66",
+					"CellPhone|-00.41|+00.87|-00.97",
+					"Laptop|-00.73|+00.87|-00.83"
+				],
+				"distance": 2.4035
+			},
+			"Drawer|-00.49|+00.49|-00.86": {
+				"receptacleObjectIds": [
+					"CD|-00.42|+00.38|-00.61",
+					"Pen|-00.42|+00.39|-00.78",
+					"CD|-00.54|+00.38|-00.86"
+				],
+				"distance": 1.9842
+			},
+			"Shelf|-01.97|+01.51|+00.42": { "distance": 3.3001 },
+			"Shelf|-01.97|+01.09|+00.42": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 3.2482
+			},
+			"Shelf|-01.31|+01.89|+00.42": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.7781
+			},
+			"Shelf|-01.97|+01.89|+00.42": { "distance": 3.3897 },
+			"Shelf|-01.31|+01.09|+00.42": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.6036
+			},
+			"Shelf|-01.31|+01.51|+00.42": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.668
+			},
+			"Blinds|+00.60|+02.16|-01.92": { "distance": 2.3839 },
+			"Blinds|-00.40|+02.16|-01.92": { "distance": 2.8274 },
+			"Desk|-01.73|+00.00|+00.58": {
+				"visible": false,
+				"obstructed": true,
+				"receptacleObjectIds": [
+					"Chair|-01.43|+00.01|+00.78",
+					"Shelf|-01.31|+01.09|+00.42",
+					"DeskLamp|-02.30|+00.86|+00.75",
+					"Shelf|-01.97|+01.09|+00.42"
+				],
+				"distance": 3.1626
+			},
+			"Drawer|-02.06|+00.73|+00.73": { "distance": 3.3934 },
+			"Drawer|-02.06|+00.48|+00.73": { "distance": 3.415 },
+			"Drawer|-02.06|+00.20|+00.74": { "distance": 3.4612 },
+			"Chair|-00.14|+00.00|-01.59": { "distance": 2.2928 },
+			"Safe|-02.18|+00.00|+02.58": {
+				"receptacleObjectIds": [
+					"Mug|-02.08|+00.04|+02.58",
+					"AlarmClock|-02.24|+00.04|+02.63",
+					"Pencil|-02.08|+00.04|+02.42",
+					"AlarmClock|-02.24|+00.04|+02.47"
+				],
+				"distance": 4.3858
+			},
+			"Chair|-01.43|+00.01|+00.78": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.9336
+			},
+			"LaundryHamper|+00.16|+00.00|+02.64": { "distance": 2.9886 }
+		}
+	},
+	"final_state_diff": {
+		"agents": {},
+		"objects": {
+			"Mug|-00.07|+00.56|-01.64": { "distance": 2.1354 },
+			"Pencil|-02.08|+00.04|+02.42": { "distance": 4.2048 },
+			"CD|-00.54|+00.38|-00.86": { "distance": 2.0472 },
+			"Laptop|-00.73|+00.87|-00.83": { "distance": 2.1449 },
+			"Pen|-00.42|+00.39|-00.78": { "distance": 1.9136 },
+			"AlarmClock|-00.79|+00.22|-00.35": { "distance": 2.1744 },
+			"Book|-00.54|+00.10|-00.70": { "distance": 2.0774 },
+			"AlarmClock|-02.24|+00.04|+02.47": { "distance": 4.3611 },
+			"Pen|-02.18|+01.73|+00.54": { "distance": 3.5673 },
+			"Book|+01.82|+00.83|+00.78": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.9676
+			},
+			"Bed|+01.23|00.00|+01.66": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Book|+01.82|+00.83|+00.78",
+					"Pillow|+01.21|+00.95|+00.78",
+					"Laptop|+01.82|+00.83|+01.07",
+					"BaseballBat|+01.96|+00.04|-00.89"
+				],
+				"distance": 1.8941,
+				"simbotIsReceptacleOf": ["BaseballBat|+01.96|+00.04|-00.89"]
+			},
+			"Floor|+00.00|+00.00|+00.00": {
+				"receptacleObjectIds": [
+					"Bed|+01.23|00.00|+01.66",
+					"LaundryHamper|+00.16|+00.00|+02.64",
+					"CreditCard|+00.28|+00.03|+02.64",
+					"Desk|-00.64|+00.01|-01.19",
+					"KeyChain|-00.67|+00.23|-00.24",
+					"Book|-00.54|+00.10|-00.70",
+					"Pencil|-00.38|+00.10|-00.94",
+					"BasketBall|+01.98|+00.12|+00.21",
+					"GarbageCan|-00.75|+00.01|-00.33",
+					"Drawer|-00.49|+00.20|-00.86",
+					"AlarmClock|-00.79|+00.22|-00.35",
+					"Chair|-00.14|+00.00|-01.59",
+					"Safe|-02.18|+00.00|+02.58",
+					"Mug|-02.08|+00.04|+02.58",
+					"AlarmClock|-02.24|+00.04|+02.63",
+					"Pencil|-02.08|+00.04|+02.42",
+					"AlarmClock|-02.24|+00.04|+02.47",
+					"Chair|-01.43|+00.01|+00.78",
+					"Desk|-01.73|+00.00|+00.58",
+					"Drawer|-02.06|+00.20|+00.74"
+				],
+				"distance": 1.5409
+			},
+			"LightSwitch|+02.15|+01.23|-00.52": { "distance": 1.0911 },
+			"AlarmClock|-02.24|+00.04|+02.63": { "distance": 4.4537 },
+			"BasketBall|+01.98|+00.12|+00.21": { "distance": 1.0872 },
+			"GarbageCan|-00.75|+00.01|-00.33": { "distance": 2.21 },
+			"Pen|-00.81|+00.88|-00.66": { "distance": 2.1632 },
+			"Laptop|+01.82|+00.83|+01.07": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.2137
+			},
+			"BaseballBat|+01.96|+00.04|-00.89": {
+				"position": { "x": 1.6127, "y": 1.516, "z": 0.7819 },
+				"rotation": { "x": 359.9834, "y": 359.9926, "z": -0.0018 },
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.0589,
+				"parentReceptacles": ["Bed|+01.23|00.00|+01.66"],
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[1.6538, 1.7894, 0.8268],
+						[1.6538, 1.7894, 0.7371],
+						[1.6538, 0.8306, 0.8268],
+						[1.6538, 0.8306, 0.7371],
+						[1.573, 1.7894, 0.8268],
+						[1.573, 1.7894, 0.7371],
+						[1.573, 0.8306, 0.8268],
+						[1.573, 0.8306, 0.7371]
+					],
+					"center": { "x": 1.6134, "y": 1.31, "z": 0.782 },
+					"size": { "x": 0.0808, "y": 0.9588, "z": 0.0898 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[1.6537, 0.8307, 0.8268],
+						[1.573, 0.8307, 0.8268],
+						[1.573, 0.8306, 0.7374],
+						[1.6537, 0.8306, 0.7374],
+						[1.6538, 1.7894, 0.8266],
+						[1.573, 1.7894, 0.8265],
+						[1.573, 1.7894, 0.7371],
+						[1.6538, 1.7894, 0.7371]
+					]
+				},
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "Bed|+01.23|00.00|+01.66"
+			},
+			"Bowl|-00.76|+00.87|-01.62": { "distance": 2.5812 },
+			"Pillow|+01.21|+00.95|+00.78": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.7847
+			},
+			"KeyChain|-00.67|+00.23|-00.24": { "distance": 2.0518 },
+			"CreditCard|+00.28|+00.03|+02.64": { "distance": 2.9494 },
+			"CellPhone|-00.41|+00.87|-00.97": { "distance": 1.9199 },
+			"Mirror|-01.36|+01.43|+02.86": { "distance": 3.9033 },
+			"DeskLamp|-02.30|+00.86|+00.75": { "distance": 3.6249 },
+			"CD|-00.42|+00.38|-00.61": { "distance": 1.8556 },
+			"Window|-00.42|+01.53|-01.95": { "distance": 2.6427 },
+			"Window|+00.58|+01.53|-01.95": { "distance": 2.1544 },
+			"Pencil|-00.38|+00.10|-00.94": { "distance": 2.0456 },
+			"Mug|-02.08|+00.04|+02.58": { "distance": 4.2998 },
+			"Drawer|-00.49|+00.74|-00.86": { "distance": 1.9475 },
+			"Drawer|-00.49|+00.20|-00.86": { "distance": 2.0618 },
+			"Desk|-00.64|+00.01|-01.19": {
+				"receptacleObjectIds": [
+					"Bowl|-00.76|+00.87|-01.62",
+					"Pen|-00.81|+00.88|-00.66",
+					"CellPhone|-00.41|+00.87|-00.97",
+					"Laptop|-00.73|+00.87|-00.83"
+				],
+				"distance": 2.4035
+			},
+			"Drawer|-00.49|+00.49|-00.86": {
+				"receptacleObjectIds": [
+					"CD|-00.42|+00.38|-00.61",
+					"Pen|-00.42|+00.39|-00.78",
+					"CD|-00.54|+00.38|-00.86"
+				],
+				"distance": 1.9842
+			},
+			"Shelf|-01.97|+01.51|+00.42": { "distance": 3.3001 },
+			"Shelf|-01.97|+01.09|+00.42": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 3.2482
+			},
+			"Shelf|-01.31|+01.89|+00.42": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.7781
+			},
+			"Shelf|-01.97|+01.89|+00.42": { "distance": 3.3897 },
+			"Shelf|-01.31|+01.09|+00.42": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.6036
+			},
+			"Shelf|-01.31|+01.51|+00.42": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.668
+			},
+			"Blinds|+00.60|+02.16|-01.92": { "distance": 2.3839 },
+			"Blinds|-00.40|+02.16|-01.92": { "distance": 2.8274 },
+			"Desk|-01.73|+00.00|+00.58": {
+				"visible": false,
+				"obstructed": true,
+				"receptacleObjectIds": [
+					"Chair|-01.43|+00.01|+00.78",
+					"Shelf|-01.31|+01.09|+00.42",
+					"DeskLamp|-02.30|+00.86|+00.75",
+					"Shelf|-01.97|+01.09|+00.42"
+				],
+				"distance": 3.1626
+			},
+			"Drawer|-02.06|+00.73|+00.73": { "distance": 3.3934 },
+			"Drawer|-02.06|+00.48|+00.73": { "distance": 3.415 },
+			"Drawer|-02.06|+00.20|+00.74": { "distance": 3.4612 },
+			"Chair|-00.14|+00.00|-01.59": { "distance": 2.2928 },
+			"Safe|-02.18|+00.00|+02.58": {
+				"receptacleObjectIds": [
+					"Mug|-02.08|+00.04|+02.58",
+					"AlarmClock|-02.24|+00.04|+02.63",
+					"Pencil|-02.08|+00.04|+02.42",
+					"AlarmClock|-02.24|+00.04|+02.47"
+				],
+				"distance": 4.3858
+			},
+			"Chair|-01.43|+00.01|+00.78": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.9336
+			},
+			"LaundryHamper|+00.16|+00.00|+02.64": { "distance": 2.9886 }
+		}
+	},
+	"state_changes": {
+		"agents": {},
+		"objects": {
+			"BaseballBat|+01.96|+00.04|-00.89": {
+				"simbotLastParentReceptacle": "Bed|+01.23|00.00|+01.66"
+			}
+		}
+	},
+	"history_subgoals": ["Navigate", "BaseballBat", "Pickup", "BaseballBat"],
+	"future_subgoals": ["Place", "Bed"],
+	"expected_init_goal_conditions_total": 2,
+	"expected_init_goal_conditions_satisfied": 1,
+	"dialog_history_cleaned": [
+		["Commander", "pick baseball bat near the door"],
+		["Commander", "put it on a bed"],
+		["Commander", "pick bat near main door"],
+		["Driver", "hi"],
+		["Driver", "hi"],
+		["Driver", "ok"],
+		["Commander", "put it on a bed"]
+	]
+}

@@ -45,6 +45,8 @@ class Paths:  # noqa: WPS230
         self.epic_kitchens_features = self.epic_kitchens.joinpath("frame_features/")
         self.alfred_features = self.alfred.joinpath("frame_features/")
 
+        self.teach_edh_instances = self.teach.joinpath("edh_instances/")
+
         # Databases for output
         self.databases = self.storage.joinpath("db/")
 

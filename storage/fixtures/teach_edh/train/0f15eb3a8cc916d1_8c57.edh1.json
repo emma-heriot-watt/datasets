@@ -1,0 +1,1436 @@
+{
+	"dialog_history": [
+		["Driver", "hello what can I do today?"],
+		["Commander", "hi"],
+		["Commander", "lets get two slices of tomato"],
+		["Commander", "there is a tomato on the island"]
+	],
+	"driver_action_history": [
+		{
+			"action_id": 100,
+			"action_idx": 33,
+			"obj_interaction_action": 0,
+			"action_name": "Text",
+			"time_start": 112.90613293647766,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 204,
+			"action_idx": 19,
+			"obj_interaction_action": 1,
+			"action_name": "ToggleOn",
+			"time_start": 120.15748476982117,
+			"oid": "LightSwitch|+00.11|+01.32|+02.75",
+			"x": 0.09951060358890701,
+			"y": 0.4274061990212072
+		},
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 124.20344710350037,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 131.07601523399353,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 152.9820430278778,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 153.43775177001953,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 155.54791164398193,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 156.89193487167358,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 157.17819094657898,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 157.71277737617493,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 157.97205638885498,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 159.34584522247314,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 160.24530863761902,
+			"oid": null,
+			"x": null,
+			"y": null
+		}
+	],
+	"driver_image_history": [
+		"driver.frame.112.90613293647766.jpeg",
+		"driver.frame.120.15748476982117.jpeg",
+		"driver.frame.124.20344710350037.jpeg",
+		"driver.frame.131.07601523399353.jpeg",
+		"driver.frame.152.9820430278778.jpeg",
+		"driver.frame.153.43775177001953.jpeg",
+		"driver.frame.155.54791164398193.jpeg",
+		"driver.frame.156.89193487167358.jpeg",
+		"driver.frame.157.17819094657898.jpeg",
+		"driver.frame.157.71277737617493.jpeg",
+		"driver.frame.157.97205638885498.jpeg",
+		"driver.frame.159.34584522247314.jpeg",
+		"driver.frame.160.24530863761902.jpeg"
+	],
+	"driver_actions_future": [
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 162.03621888160706,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 165.42385840415955,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 165.97351741790771,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 200,
+			"action_idx": 15,
+			"obj_interaction_action": 1,
+			"action_name": "Pickup",
+			"time_start": 171.65444087982178,
+			"oid": "Knife|-00.17|+00.95|-00.01",
+			"x": 0.33442088091353994,
+			"y": 0.4763458401305057
+		},
+		{
+			"action_id": 206,
+			"action_idx": 21,
+			"obj_interaction_action": 1,
+			"action_name": "Slice",
+			"time_start": 176.78926539421082,
+			"oid": "Tomato|+00.51|+00.98|+00.68",
+			"x": 0.6280587275693311,
+			"y": 0.66721044045677
+		}
+	],
+	"driver_images_future": [
+		"driver.frame.162.03621888160706.jpeg",
+		"driver.frame.165.42385840415955.jpeg",
+		"driver.frame.165.97351741790771.jpeg",
+		"driver.frame.171.65444087982178.jpeg",
+		"driver.frame.176.78926539421082.jpeg"
+	],
+	"interactions": [
+		{
+			"agent_id": 1,
+			"action_id": 100,
+			"time_start": 112.90613293647766,
+			"duration": 1,
+			"success": 1,
+			"utterance": "hello what can I do today?",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "hello what can I do today?",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 204,
+			"time_start": 120.15748476982117,
+			"duration": 1,
+			"success": 1,
+			"x": 0.09951060358890701,
+			"y": 0.4274061990212072,
+			"oid": "LightSwitch|+00.11|+01.32|+02.75",
+			"obj_interaction_action": 1,
+			"action_idx": 19
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 124.20344710350037,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [2.0, -0.75, 0.9009991884231567, 0, 30.00000762939453, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 131.07601523399353,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [2.0, -0.75, 0.9009991884231567, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 132.18776869773865,
+			"duration": 1,
+			"success": 1,
+			"utterance": "hi",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "hi",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 133.74138927459717,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 142.5251181125641,
+			"duration": 1,
+			"success": 1,
+			"utterance": "lets get two slices of tomato",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "let's get two slices of tomato",
+			"is_corrected": 1
+		},
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 144.80321669578552,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 146.08566093444824,
+			"duration": 1,
+			"success": 1,
+			"query": "Tomato|+00.51|+00.98|+00.68",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 152.9820430278778,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [2.0, -1.0, 0.9009991884231567, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 153.43775177001953,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [2.0, -1.25, 0.9009991884231567, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 155.54791164398193,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [2.0, -1.5, 0.9009991884231567, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 156.89193487167358,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.75, -1.5, 0.9009991884231567, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 157.17819094657898,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.5, -1.5, 0.9009991884231567, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 157.71277737617493,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.25, -1.5, 0.9009991884231567, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 157.97205638885498,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, -1.5, 0.9009991884231567, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 159.34584522247314,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, -1.5, 0.9009991884231567, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 160.24530863761902,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, -1.5, 0.9009991884231567, 0, 30.000003814697266, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 161.84099292755127,
+			"duration": 1,
+			"success": 1,
+			"utterance": "there is a tomato on the island",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "there is a tomato on the island",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 162.03621888160706,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [0.5, -1.5, 0.9009991884231567, 0, 30.00000762939453, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 165.42385840415955,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, -1.25, 0.9009991884231567, 0, 30.00000762939453, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 165.97351741790771,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, -1.0, 0.9009991884231567, 0, 30.00000762939453, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 166.38304018974304,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, -1.0, 0.9009991884231567, 0, 30.00000762939453, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 166.55387234687805,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, -1.0, 0.9009991884231567, 0, 30.00000762939453, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 166.95897316932678,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, -1.0, 0.9009991884231567, 0, 30.00000762939453, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 167.35497641563416,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, -1.0, 0.9009991884231567, 0, 30.00000762939453, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 167.6481373310089,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, -1.0, 0.9009991884231567, 0, 30.00000762939453, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 171.65444087982178,
+			"duration": 1,
+			"success": 1,
+			"x": 0.33442088091353994,
+			"y": 0.4763458401305057,
+			"oid": "Knife|-00.17|+00.95|-00.01",
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		},
+		{
+			"agent_id": 1,
+			"action_id": 206,
+			"time_start": 176.78926539421082,
+			"duration": 1,
+			"success": 1,
+			"x": 0.6280587275693311,
+			"y": 0.66721044045677,
+			"oid": "Tomato|+00.51|+00.98|+00.68",
+			"obj_interaction_action": 1,
+			"action_idx": 21
+		},
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 179.24859714508057,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		}
+	],
+	"game_id": "0f15eb3a8cc916d1_8c57",
+	"instance_id": "0f15eb3a8cc916d1_8c57.edh1",
+	"pred_start_idx": 19,
+	"init_state_diff": {
+		"agents": {},
+		"objects": {
+			"Spoon|-01.50|+01.18|-00.39": { "distance": 3.1385 },
+			"DishSponge|-01.00|+00.91|-02.15": { "distance": 3.6446 },
+			"Tomato|-00.06|+00.98|+00.45": { "distance": 1.559 },
+			"ButterKnife|+00.25|+00.54|+00.68": { "distance": 1.3111 },
+			"Pan|+00.17|+00.17|+00.46": { "distance": 1.5201 },
+			"Cup|+00.07|+00.56|+00.85": { "distance": 1.5166 },
+			"Pot|+00.09|+00.54|+00.87": { "distance": 1.5049 },
+			"Plate|-00.59|+00.77|+00.74": { "distance": 2.1128 },
+			"WineBottle|-00.82|+00.91|-02.17": { "distance": 3.5382 },
+			"Lettuce|-00.98|+00.21|-01.50": {
+				"temperature": "RoomTemp",
+				"distance": 3.265
+			},
+			"Bread|+00.17|+00.97|+01.37": { "distance": 1.5894 },
+			"Ladle|+01.85|+00.96|-02.17": { "distance": 2.6926 },
+			"SoapBottle|-01.16|+00.13|-01.54": { "distance": 3.4402 },
+			"Bowl|+01.75|+00.12|-01.20": { "distance": 1.8892 },
+			"Apple|-01.22|+01.09|-01.85": { "distance": 3.5966 },
+			"Lettuce|+01.65|+00.99|-01.56": {
+				"temperature": "RoomTemp",
+				"distance": 2.0709
+			},
+			"SoapBottle|+01.83|+00.91|-01.56": { "distance": 2.0896 },
+			"Tomato|+00.51|+00.98|+00.68": { "distance": 1.005 },
+			"Spoon|-00.51|+00.76|+01.01": { "distance": 2.0768 },
+			"WineBottle|-00.23|+00.91|-01.73": { "distance": 2.8191 },
+			"DishSponge|-01.32|+01.66|-01.54": { "distance": 3.5606 },
+			"Pan|+00.17|+00.17|+01.33": { "distance": 1.729 },
+			"StoveBurner|+01.85|+00.94|-00.36": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.9233
+			},
+			"StoveBurner|+01.57|+00.94|-00.76": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.26
+			},
+			"Cabinet|-01.15|+02.02|-01.98": { "distance": 3.798 },
+			"Cabinet|-01.15|+02.27|-00.83": { "distance": 3.2658 },
+			"Cabinet|-00.46|+02.27|-02.00": { "distance": 3.4572 },
+			"Cabinet|-01.10|+02.02|-02.00": { "distance": 3.7765 },
+			"Cabinet|+01.72|+02.02|-02.00": { "distance": 2.7478 },
+			"Cabinet|+01.18|+02.02|-02.00": { "distance": 2.7576 },
+			"Cabinet|+00.20|+02.02|-02.00": { "distance": 3.0319 },
+			"Cabinet|+01.75|+02.02|-01.40": { "distance": 2.2192 },
+			"Cabinet|+01.75|+02.02|-01.03": { "distance": 1.912 },
+			"Cabinet|+01.38|+00.47|-01.69": { "distance": 2.2352 },
+			"Cabinet|-00.82|+00.47|-01.69": { "distance": 3.2194 },
+			"Cabinet|+01.39|+00.47|-01.06": { "distance": 1.6222 },
+			"Cabinet|-00.84|+00.47|-01.67": { "distance": 3.2169 },
+			"StoveBurner|+01.57|+00.94|-00.36": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.859
+			},
+			"Floor|+00.00|+00.00|+00.00": {
+				"receptacleObjectIds": [
+					"ShelvingUnit|+01.60|+00.01|+02.48",
+					"Shelf|+01.60|+00.17|+02.48",
+					"Vase|+01.34|+00.18|+02.35",
+					"DiningTable|+00.17|+00.01|+00.68",
+					"GarbageCan|+01.86|-00.03|+00.14",
+					"Pan|+00.17|+00.17|+01.33",
+					"Lettuce|+00.37|+00.25|+00.89",
+					"Pan|+00.17|+00.17|+00.46",
+					"Cup|-00.14|+00.17|+01.11",
+					"Stool|-00.55|+00.00|+00.87",
+					"Shelf|+00.17|+00.16|+00.68",
+					"PepperShaker|+00.14|+00.18|+00.47",
+					"SoapBottle|+00.07|+00.17|+00.02",
+					"Fridge|-01.50|+00.00|-00.70"
+				],
+				"distance": 1.8198
+			},
+			"StoveBurner|+01.85|+00.94|-00.76": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.3047
+			},
+			"Sink|-00.11|+00.89|-02.01": { "distance": 2.982 },
+			"Drawer|-00.82|+00.75|-01.69": { "distance": 3.1939 },
+			"CounterTop|+00.23|+00.95|-02.00": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Ladle|+01.85|+00.96|-02.17",
+					"Toaster|+00.78|+00.90|-02.08",
+					"Fork|+00.45|+00.90|-01.89",
+					"Bowl|+01.85|+00.91|-01.83",
+					"SaltShaker|+01.63|+00.90|-01.85",
+					"CoffeeMachine|+01.37|+00.90|-02.11",
+					"Lettuce|+01.65|+00.99|-01.56",
+					"Ladle|+01.92|+00.96|-01.45",
+					"SoapBottle|+01.83|+00.91|-01.56",
+					"Vase|+01.83|+00.92|-01.10",
+					"Microwave|-01.23|+00.90|-01.68",
+					"WineBottle|-00.82|+00.91|-02.17",
+					"Spatula|-00.63|+00.91|-02.18",
+					"DishSponge|-01.00|+00.91|-02.15",
+					"WineBottle|-00.23|+00.91|-01.73"
+				],
+				"distance": 2.8049
+			},
+			"Apple|-00.14|+00.84|-02.12": { "distance": 3.0873 },
+			"GarbageCan|+01.86|-00.03|+00.14": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.0631
+			},
+			"Potato|+00.06|+00.95|-00.05": { "distance": 1.5389 },
+			"Vase|+01.83|+00.92|-01.10": { "distance": 1.6292 },
+			"Bowl|+01.85|+00.91|-01.83": { "distance": 2.361 },
+			"SoapBottle|+00.07|+00.17|+00.02": { "distance": 1.6785 },
+			"Toaster|+00.78|+00.90|-02.08": { "distance": 2.6794 },
+			"Fork|+00.45|+00.90|-01.89": { "distance": 2.6057 },
+			"LightSwitch|+00.11|+01.32|+02.75": {
+				"visible": false,
+				"obstructed": true,
+				"isToggled": true,
+				"distance": 2.678
+			},
+			"Ladle|+01.92|+00.96|-01.45": { "distance": 1.992 },
+			"Vase|+01.87|+01.66|-01.61": { "distance": 2.2703 },
+			"Microwave|-01.23|+00.90|-01.68": { "distance": 3.4972 },
+			"Bread|+00.40|+00.97|+00.45": { "distance": 1.1034 },
+			"Vase|+01.81|+00.56|+02.42": { "distance": 1.9744 },
+			"Fridge|-01.50|+00.00|-00.70": {
+				"receptacleObjectIds": [
+					"Egg|-01.35|+00.90|-00.84",
+					"Spoon|-01.32|+00.86|-01.01",
+					"Spoon|-01.50|+01.18|-00.39",
+					"Tomato|-01.50|+01.24|-00.50",
+					"Mug|-01.38|+01.18|-00.91",
+					"ButterKnife|-01.57|+01.50|-00.50"
+				],
+				"distance": 3.3515
+			},
+			"Lettuce|+00.37|+00.25|+00.89": {
+				"temperature": "RoomTemp",
+				"distance": 1.3595
+			},
+			"Window|+02.11|+01.50|+01.07": { "distance": 1.0287 },
+			"WineBottle|-00.66|+00.11|-01.83": { "distance": 3.2712 },
+			"Spatula|-00.63|+00.91|-02.18": { "distance": 3.4195 },
+			"Plate|+00.29|+00.93|-00.01": { "distance": 1.318 },
+			"CoffeeMachine|+01.37|+00.90|-02.11": { "distance": 2.616 },
+			"Vase|+01.34|+00.18|+02.35": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 1.991
+			},
+			"Sink|-00.11|+00.89|-02.01|SinkBasin": { "distance": 3.0201 },
+			"SaltShaker|+01.63|+00.90|-01.85": { "distance": 2.3508 },
+			"Pot|+00.01|+00.54|+00.48": { "distance": 1.5372 },
+			"Cup|-00.14|+00.17|+01.11": { "distance": 1.8934 },
+			"PepperShaker|+00.14|+00.18|+00.47": { "distance": 1.5354 },
+			"Pan|+00.01|+00.54|+01.27": { "distance": 1.72 },
+			"ButterKnife|-01.57|+01.50|-00.50": { "distance": 3.2856 },
+			"StoveKnob|+02.04|+01.09|-00.41": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.0694
+			},
+			"StoveKnob|+02.04|+01.09|-00.25": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.9427
+			},
+			"StoveKnob|+02.04|+01.09|-00.65": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.2834
+			},
+			"StoveKnob|+02.04|+01.09|-00.82": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.4331
+			},
+			"Tomato|-01.50|+01.24|-00.50": { "distance": 3.1745 },
+			"DishSponge|-00.06|+00.93|+00.91": { "distance": 1.6093 },
+			"Egg|-01.35|+00.90|-00.84": { "distance": 3.1518 },
+			"Spoon|-01.32|+00.86|-01.01": { "distance": 3.2036 },
+			"Knife|-00.17|+00.95|-00.01": { "distance": 1.7477 },
+			"Mug|-01.38|+01.18|-00.91": { "distance": 3.2192 },
+			"DiningTable|+00.17|+00.01|+00.68": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Tomato|+00.51|+00.98|+00.68",
+					"Bread|+00.40|+00.97|+00.45",
+					"Bread|+00.17|+00.97|+01.37",
+					"DishSponge|-00.06|+00.93|+00.91",
+					"Tomato|-00.06|+00.98|+00.45",
+					"Plate|+00.29|+00.93|-00.01",
+					"Potato|+00.06|+00.95|-00.05",
+					"Knife|-00.17|+00.95|-00.01"
+				],
+				"distance": 1.6131
+			},
+			"Shelf|+00.17|+00.16|+00.68": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Pan|+00.17|+00.17|+01.33",
+					"Lettuce|+00.37|+00.25|+00.89",
+					"Pan|+00.17|+00.17|+00.46",
+					"Cup|-00.14|+00.17|+01.11",
+					"PepperShaker|+00.14|+00.18|+00.47",
+					"SoapBottle|+00.07|+00.17|+00.02"
+				],
+				"distance": 1.535
+			},
+			"Shelf|+01.60|+00.17|+02.48": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.1128
+			},
+			"Shelf|+01.60|+00.55|+02.48": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.0136
+			},
+			"Shelf|+01.60|+00.88|+02.48": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 1.9827
+			},
+			"ShelvingUnit|+01.60|+00.01|+02.48": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.1751
+			},
+			"Faucet|-00.14|+01.03|-02.22": { "distance": 3.1837 },
+			"Stool|-00.55|+00.00|+00.87": {
+				"receptacleObjectIds": [
+					"Spoon|-00.51|+00.76|+01.01",
+					"Plate|-00.59|+00.77|+00.74"
+				],
+				"distance": 2.2733
+			},
+			"Shelf|+00.17|+00.53|+00.68": {
+				"receptacleObjectIds": [
+					"Pot|+00.09|+00.54|+00.87",
+					"Pan|+00.01|+00.54|+01.27",
+					"Pot|+00.01|+00.54|+00.48",
+					"Cup|+00.07|+00.56|+00.85",
+					"ButterKnife|+00.25|+00.54|+00.68"
+				],
+				"distance": 1.3925
+			}
+		}
+	},
+	"final_state_diff": {
+		"agents": {},
+		"objects": {
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_6": {
+				"name": "Tomato_20_Slice_7",
+				"position": { "x": 0.5142, "y": 0.9551, "z": 0.7482 },
+				"rotation": { "x": 0.0281, "y": 180.004, "z": 359.9925 },
+				"sliceable": false,
+				"mass": 0.01,
+				"distance": 0.5483,
+				"objectType": "TomatoSliced",
+				"objectId": "Tomato|+00.51|+00.98|+00.68|TomatoSliced_6",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.5591, 0.9933, 0.7564],
+						[0.5591, 0.9933, 0.7392],
+						[0.5591, 0.9175, 0.7564],
+						[0.5591, 0.9175, 0.7392],
+						[0.469, 0.9933, 0.7564],
+						[0.469, 0.9933, 0.7392],
+						[0.469, 0.9175, 0.7564],
+						[0.469, 0.9175, 0.7392]
+					],
+					"center": { "x": 0.5141, "y": 0.9554, "z": 0.7478 },
+					"size": { "x": 0.0901, "y": 0.0758, "z": 0.0172 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.469, 0.9175, 0.7393],
+						[0.5591, 0.9175, 0.7393],
+						[0.5591, 0.9175, 0.7564],
+						[0.469, 0.9175, 0.7564],
+						[0.469, 0.9933, 0.7392],
+						[0.5591, 0.9933, 0.7392],
+						[0.5591, 0.9933, 0.7564],
+						[0.469, 0.9933, 0.7564]
+					]
+				},
+				"simbotObjectClass": ["TomatoSliced", "Food", "Fruit"]
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_5": {
+				"name": "Tomato_20_Slice_6",
+				"position": { "x": 0.5145, "y": 0.9615, "z": 0.7321 },
+				"rotation": { "x": 0.0668, "y": 180.0026, "z": 359.9915 },
+				"visible": true,
+				"obstructed": false,
+				"sliceable": false,
+				"mass": 0.01,
+				"distance": 0.5415,
+				"objectType": "TomatoSliced",
+				"objectId": "Tomato|+00.51|+00.98|+00.68|TomatoSliced_5",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.5656, 1.0061, 0.7369],
+						[0.5656, 1.0061, 0.7268],
+						[0.5656, 0.9175, 0.7369],
+						[0.5656, 0.9175, 0.7268],
+						[0.4633, 1.0061, 0.7369],
+						[0.4633, 1.0061, 0.7268],
+						[0.4633, 0.9175, 0.7369],
+						[0.4633, 0.9175, 0.7268]
+					],
+					"center": { "x": 0.5144, "y": 0.9618, "z": 0.7318 },
+					"size": { "x": 0.1024, "y": 0.0886, "z": 0.0102 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.4633, 0.9175, 0.7268],
+						[0.5656, 0.9175, 0.7268],
+						[0.5656, 0.9175, 0.7369],
+						[0.4633, 0.9175, 0.7369],
+						[0.4633, 1.0061, 0.7268],
+						[0.5656, 1.0061, 0.7268],
+						[0.5656, 1.0061, 0.7368],
+						[0.4633, 1.0061, 0.7369]
+					]
+				},
+				"simbotObjectClass": ["TomatoSliced", "Food", "Fruit"]
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_4": {
+				"name": "Tomato_20_Slice_5",
+				"position": { "x": 0.5145, "y": 0.9649, "z": 0.7207 },
+				"rotation": { "x": 0.0701, "y": 180.0023, "z": 359.993 },
+				"visible": true,
+				"obstructed": false,
+				"sliceable": false,
+				"mass": 0.01,
+				"distance": 0.5371,
+				"objectType": "TomatoSliced",
+				"objectId": "Tomato|+00.51|+00.98|+00.68|TomatoSliced_4",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.5691, 1.0131, 0.7248],
+						[0.5691, 1.0131, 0.716],
+						[0.5691, 0.9175, 0.7248],
+						[0.5691, 0.9175, 0.716],
+						[0.4598, 1.0131, 0.7248],
+						[0.4598, 1.0131, 0.716],
+						[0.4598, 0.9175, 0.7248],
+						[0.4598, 0.9175, 0.716]
+					],
+					"center": { "x": 0.5144, "y": 0.9653, "z": 0.7204 },
+					"size": { "x": 0.1093, "y": 0.0956, "z": 0.0088 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.4598, 0.9175, 0.7162],
+						[0.5691, 0.9175, 0.7162],
+						[0.5691, 0.9175, 0.7248],
+						[0.4598, 0.9175, 0.7248],
+						[0.4598, 1.013, 0.716],
+						[0.5691, 1.0131, 0.716],
+						[0.5691, 1.0131, 0.7246],
+						[0.4598, 1.0131, 0.7246]
+					]
+				},
+				"simbotObjectClass": ["TomatoSliced", "Food", "Fruit"]
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_3": {
+				"name": "Tomato_20_Slice_4",
+				"position": { "x": 0.5145, "y": 0.9666, "z": 0.7092 },
+				"rotation": { "x": 0.0659, "y": 180.0026, "z": 359.9928 },
+				"visible": true,
+				"obstructed": false,
+				"sliceable": false,
+				"mass": 0.01,
+				"distance": 0.5327,
+				"objectType": "TomatoSliced",
+				"objectId": "Tomato|+00.51|+00.98|+00.68|TomatoSliced_3",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.5725, 1.0165, 0.714],
+						[0.5725, 1.0165, 0.7039],
+						[0.5725, 0.9175, 0.714],
+						[0.5725, 0.9175, 0.7039],
+						[0.4564, 1.0165, 0.714],
+						[0.4564, 1.0165, 0.7039],
+						[0.4564, 0.9175, 0.714],
+						[0.4564, 0.9175, 0.7039]
+					],
+					"center": { "x": 0.5144, "y": 0.967, "z": 0.7089 },
+					"size": { "x": 0.1161, "y": 0.099, "z": 0.0101 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.4564, 0.9175, 0.704],
+						[0.5725, 0.9175, 0.704],
+						[0.5725, 0.9175, 0.714],
+						[0.4564, 0.9175, 0.714],
+						[0.4564, 1.0164, 0.7039],
+						[0.5725, 1.0165, 0.7039],
+						[0.5725, 1.0165, 0.7139],
+						[0.4564, 1.0165, 0.7139]
+					]
+				},
+				"simbotObjectClass": ["TomatoSliced", "Food", "Fruit"]
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_2": {
+				"name": "Tomato_20_Slice_3",
+				"position": { "x": 0.5146, "y": 0.9677, "z": 0.6969 },
+				"rotation": { "x": 359.9625, "y": 180.0013, "z": 0.0017 },
+				"visible": true,
+				"obstructed": false,
+				"sliceable": false,
+				"mass": 0.01,
+				"distance": 0.5281,
+				"objectType": "TomatoSliced",
+				"objectId": "Tomato|+00.51|+00.98|+00.68|TomatoSliced_2",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.5735, 1.0186, 0.7015],
+						[0.5735, 1.0186, 0.692],
+						[0.5735, 0.9175, 0.7015],
+						[0.5735, 0.9175, 0.692],
+						[0.4555, 1.0186, 0.7015],
+						[0.4555, 1.0186, 0.692],
+						[0.4555, 0.9175, 0.7015],
+						[0.4555, 0.9175, 0.692]
+					],
+					"center": { "x": 0.5145, "y": 0.9681, "z": 0.6967 },
+					"size": { "x": 0.118, "y": 0.1011, "z": 0.0095 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.4555, 0.9175, 0.692],
+						[0.5735, 0.9175, 0.692],
+						[0.5735, 0.9175, 0.7014],
+						[0.4555, 0.9175, 0.7014],
+						[0.4555, 1.0186, 0.6921],
+						[0.5735, 1.0186, 0.6921],
+						[0.5735, 1.0186, 0.7015],
+						[0.4555, 1.0186, 0.7015]
+					]
+				},
+				"simbotObjectClass": ["TomatoSliced", "Food", "Fruit"]
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_1": {
+				"name": "Tomato_20_Slice_2",
+				"position": { "x": 0.5142, "y": 0.9691, "z": 0.6848 },
+				"rotation": { "x": 0.0292, "y": 180.0009, "z": -0.0027 },
+				"visible": true,
+				"obstructed": false,
+				"sliceable": false,
+				"mass": 0.01,
+				"distance": 0.5242,
+				"objectType": "TomatoSliced",
+				"objectId": "Tomato|+00.51|+00.98|+00.68|TomatoSliced_1",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.5733, 1.0212, 0.6896],
+						[0.5733, 1.0212, 0.6797],
+						[0.5733, 0.9175, 0.6896],
+						[0.5733, 0.9175, 0.6797],
+						[0.4549, 1.0212, 0.6896],
+						[0.4549, 1.0212, 0.6797],
+						[0.4549, 0.9175, 0.6896],
+						[0.4549, 0.9175, 0.6797]
+					],
+					"center": { "x": 0.5141, "y": 0.9693, "z": 0.6847 },
+					"size": { "x": 0.1184, "y": 0.1037, "z": 0.01 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.4549, 0.9175, 0.6797],
+						[0.5733, 0.9175, 0.6797],
+						[0.5733, 0.9175, 0.6895],
+						[0.4549, 0.9175, 0.6895],
+						[0.4549, 1.0212, 0.6798],
+						[0.5733, 1.0212, 0.6798],
+						[0.5733, 1.0211, 0.6896],
+						[0.4549, 1.0212, 0.6896]
+					]
+				},
+				"simbotObjectClass": ["TomatoSliced", "Food", "Fruit"]
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_0": {
+				"name": "Tomato_20_Slice_1",
+				"position": { "x": 0.514, "y": 0.9699, "z": 0.6457 },
+				"rotation": { "x": 0.002, "y": 180.0048, "z": -0.0018 },
+				"visible": true,
+				"obstructed": false,
+				"sliceable": false,
+				"mass": 0.06,
+				"distance": 0.5121,
+				"objectType": "TomatoSliced",
+				"objectId": "Tomato|+00.51|+00.98|+00.68|TomatoSliced_0",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.5733, 1.0223, 0.6784],
+						[0.5733, 1.0223, 0.6131],
+						[0.5733, 0.9175, 0.6784],
+						[0.5733, 0.9175, 0.6131],
+						[0.4546, 1.0223, 0.6784],
+						[0.4546, 1.0223, 0.6131],
+						[0.4546, 0.9175, 0.6784],
+						[0.4546, 0.9175, 0.6131]
+					],
+					"center": { "x": 0.5139, "y": 0.9699, "z": 0.6458 },
+					"size": { "x": 0.1186, "y": 0.1048, "z": 0.0653 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.4546, 0.9175, 0.6131],
+						[0.5733, 0.9175, 0.6131],
+						[0.5733, 0.9175, 0.6784],
+						[0.4546, 0.9175, 0.6784],
+						[0.4546, 1.0223, 0.6131],
+						[0.5733, 1.0223, 0.6131],
+						[0.5733, 1.0223, 0.6784],
+						[0.4546, 1.0223, 0.6784]
+					]
+				},
+				"simbotObjectClass": ["TomatoSliced", "Food", "Fruit"]
+			},
+			"Spoon|-01.50|+01.18|-00.39": { "distance": 2.6655 },
+			"DishSponge|-01.00|+00.91|-02.15": { "distance": 3.3216 },
+			"Tomato|-00.06|+00.98|+00.45": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.0603
+			},
+			"ButterKnife|+00.25|+00.54|+00.68": { "distance": 0.849 },
+			"Pan|+00.17|+00.17|+00.46": { "distance": 1.1093 },
+			"Cup|+00.07|+00.56|+00.85": { "distance": 1.0563 },
+			"Pot|+00.09|+00.54|+00.87": { "distance": 1.0502 },
+			"Plate|-00.59|+00.77|+00.74": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.6184
+			},
+			"WineBottle|-00.82|+00.91|-02.17": { "distance": 3.2318 },
+			"Lettuce|-00.98|+00.21|-01.50": {
+				"temperature": "RoomTemp",
+				"distance": 2.9027
+			},
+			"Bread|+00.17|+00.97|+01.37": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.2035
+			},
+			"Ladle|+01.85|+00.96|-02.17": { "distance": 2.8018 },
+			"SoapBottle|-01.16|+00.13|-01.54": { "distance": 3.0699 },
+			"Bowl|+01.75|+00.12|-01.20": { "distance": 2.0169 },
+			"Apple|-01.22|+01.09|-01.85": { "distance": 3.2351 },
+			"Lettuce|+01.65|+00.99|-01.56": {
+				"temperature": "RoomTemp",
+				"distance": 2.1648
+			},
+			"SoapBottle|+01.83|+00.91|-01.56": { "distance": 2.2237 },
+			"Tomato|+00.51|+00.98|+00.68": {
+				"isSliced": true,
+				"distance": 0.5236,
+				"parentReceptacles": null,
+				"axisAlignedBoundingBox": {
+					"cornerPoints": null,
+					"center": { "x": 0.0, "y": 0.0, "z": 0.0 },
+					"size": { "x": 0.0, "y": 0.0, "z": 0.0 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.4586, 0.9267, 0.6168],
+						[0.5698, 0.9267, 0.6168],
+						[0.5698, 0.9267, 0.7417],
+						[0.4586, 0.9267, 0.7417],
+						[0.4586, 1.0257, 0.6168],
+						[0.5698, 1.0257, 0.6168],
+						[0.5698, 1.0257, 0.7417],
+						[0.4586, 1.0257, 0.7417]
+					]
+				}
+			},
+			"Spoon|-00.51|+00.76|+01.01": { "distance": 1.5981 },
+			"WineBottle|-00.23|+00.91|-01.73": { "distance": 2.5431 },
+			"DishSponge|-01.32|+01.66|-01.54": { "distance": 3.1799 },
+			"Pan|+00.17|+00.17|+01.33": { "distance": 1.3818 },
+			"StoveBurner|+01.85|+00.94|-00.36": { "distance": 1.2031 },
+			"StoveBurner|+01.57|+00.94|-00.76": { "distance": 1.3803 },
+			"Cabinet|-01.15|+02.02|-01.98": { "distance": 3.4677 },
+			"Cabinet|-01.15|+02.27|-00.83": { "distance": 2.8749 },
+			"Cabinet|-00.46|+02.27|-02.00": { "distance": 3.2003 },
+			"Cabinet|-01.10|+02.02|-02.00": { "distance": 3.4514 },
+			"Cabinet|+01.72|+02.02|-02.00": { "distance": 2.8321 },
+			"Cabinet|+01.18|+02.02|-02.00": { "distance": 2.7449 },
+			"Cabinet|+00.20|+02.02|-02.00": { "distance": 2.8534 },
+			"Cabinet|+01.75|+02.02|-01.40": { "distance": 2.3291 },
+			"Cabinet|+01.75|+02.02|-01.03": { "distance": 2.0385 },
+			"Cabinet|+01.38|+00.47|-01.69": { "distance": 2.2641 },
+			"Cabinet|-00.82|+00.47|-01.69": { "distance": 2.88 },
+			"Cabinet|+01.39|+00.47|-01.06": { "distance": 1.6648 },
+			"Cabinet|-00.84|+00.47|-01.67": { "distance": 2.8738 },
+			"StoveBurner|+01.57|+00.94|-00.36": { "distance": 1.0273 },
+			"Floor|+00.00|+00.00|+00.00": {
+				"receptacleObjectIds": [
+					"ShelvingUnit|+01.60|+00.01|+02.48",
+					"Shelf|+01.60|+00.17|+02.48",
+					"Vase|+01.34|+00.18|+02.35",
+					"DiningTable|+00.17|+00.01|+00.68",
+					"GarbageCan|+01.86|-00.03|+00.14",
+					"Pan|+00.17|+00.17|+01.33",
+					"Lettuce|+00.37|+00.25|+00.89",
+					"Pan|+00.17|+00.17|+00.46",
+					"Cup|-00.14|+00.17|+01.11",
+					"Stool|-00.55|+00.00|+00.87",
+					"Shelf|+00.17|+00.16|+00.68",
+					"PepperShaker|+00.14|+00.18|+00.47",
+					"SoapBottle|+00.07|+00.17|+00.02",
+					"Fridge|-01.50|+00.00|-00.70"
+				],
+				"distance": 1.4359
+			},
+			"StoveBurner|+01.85|+00.94|-00.76": { "distance": 1.5157 },
+			"Sink|-00.11|+00.89|-02.01": { "distance": 2.7445 },
+			"Drawer|-00.82|+00.75|-01.69": { "distance": 2.8515 },
+			"CounterTop|+00.23|+00.95|-02.00": {
+				"receptacleObjectIds": [
+					"Ladle|+01.85|+00.96|-02.17",
+					"Toaster|+00.78|+00.90|-02.08",
+					"Fork|+00.45|+00.90|-01.89",
+					"Bowl|+01.85|+00.91|-01.83",
+					"SaltShaker|+01.63|+00.90|-01.85",
+					"CoffeeMachine|+01.37|+00.90|-02.11",
+					"Lettuce|+01.65|+00.99|-01.56",
+					"Ladle|+01.92|+00.96|-01.45",
+					"SoapBottle|+01.83|+00.91|-01.56",
+					"Vase|+01.83|+00.92|-01.10",
+					"Microwave|-01.23|+00.90|-01.68",
+					"WineBottle|-00.82|+00.91|-02.17",
+					"Spatula|-00.63|+00.91|-02.18",
+					"DishSponge|-01.00|+00.91|-02.15",
+					"WineBottle|-00.23|+00.91|-01.73"
+				],
+				"distance": 2.6174
+			},
+			"Apple|-00.14|+00.84|-02.12": { "distance": 2.8537 },
+			"GarbageCan|+01.86|-00.03|+00.14": { "distance": 1.3173 },
+			"Potato|+00.06|+00.95|-00.05": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.0868
+			},
+			"Vase|+01.83|+00.92|-01.10": { "distance": 1.7981 },
+			"Bowl|+01.85|+00.91|-01.83": { "distance": 2.4849 },
+			"SoapBottle|+00.07|+00.17|+00.02": { "distance": 1.2789 },
+			"Toaster|+00.78|+00.90|-02.08": { "distance": 2.5902 },
+			"Fork|+00.45|+00.90|-01.89": { "distance": 2.4484 },
+			"LightSwitch|+00.11|+01.32|+02.75": {
+				"visible": false,
+				"obstructed": true,
+				"isToggled": true,
+				"distance": 2.4555
+			},
+			"Ladle|+01.92|+00.96|-01.45": { "distance": 2.1534 },
+			"Vase|+01.87|+01.66|-01.61": { "distance": 2.4033 },
+			"Microwave|-01.23|+00.90|-01.68": { "distance": 3.1219 },
+			"Bread|+00.40|+00.97|+00.45": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.6063
+			},
+			"Vase|+01.81|+00.56|+02.42": { "distance": 2.1115 },
+			"Fridge|-01.50|+00.00|-00.70": {
+				"receptacleObjectIds": [
+					"Egg|-01.35|+00.90|-00.84",
+					"Spoon|-01.32|+00.86|-01.01",
+					"Spoon|-01.50|+01.18|-00.39",
+					"Tomato|-01.50|+01.24|-00.50",
+					"Mug|-01.38|+01.18|-00.91",
+					"ButterKnife|-01.57|+01.50|-00.50"
+				],
+				"distance": 2.9132
+			},
+			"Lettuce|+00.37|+00.25|+00.89": {
+				"temperature": "RoomTemp",
+				"distance": 0.9859
+			},
+			"Window|+02.11|+01.50|+01.07": { "distance": 1.3864 },
+			"WineBottle|-00.66|+00.11|-01.83": { "distance": 2.9654 },
+			"Spatula|-00.63|+00.91|-02.18": { "distance": 3.1331 },
+			"Plate|+00.29|+00.93|-00.01": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.8793
+			},
+			"CoffeeMachine|+01.37|+00.90|-02.11": { "distance": 2.6396 },
+			"Vase|+01.34|+00.18|+02.35": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.0129
+			},
+			"Sink|-00.11|+00.89|-02.01|SinkBasin": { "distance": 2.779 },
+			"SaltShaker|+01.63|+00.90|-01.85": { "distance": 2.4311 },
+			"Pot|+00.01|+00.54|+00.48": { "distance": 1.058 },
+			"Cup|-00.14|+00.17|+01.11": { "distance": 1.4829 },
+			"PepperShaker|+00.14|+00.18|+00.47": { "distance": 1.119 },
+			"Pan|+00.01|+00.54|+01.27": { "distance": 1.3096 },
+			"ButterKnife|-01.57|+01.50|-00.50": { "distance": 2.8237 },
+			"StoveKnob|+02.04|+01.09|-00.41": { "distance": 1.3897 },
+			"StoveKnob|+02.04|+01.09|-00.25": { "distance": 1.2948 },
+			"StoveKnob|+02.04|+01.09|-00.65": { "distance": 1.5604 },
+			"StoveKnob|+02.04|+01.09|-00.82": { "distance": 1.6857 },
+			"Tomato|-01.50|+01.24|-00.50": { "distance": 2.7077 },
+			"DishSponge|-00.06|+00.93|+00.91": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.133
+			},
+			"Egg|-01.35|+00.90|-00.84": { "distance": 2.7074 },
+			"Spoon|-01.32|+00.86|-01.01": { "distance": 2.773 },
+			"Knife|-00.17|+00.95|-00.01": {
+				"position": { "x": 0.7509, "y": 1.2474, "z": 0.5 },
+				"visible": true,
+				"obstructed": false,
+				"isPickedUp": true,
+				"distance": 0.4267,
+				"parentReceptacles": null,
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.7579, 1.2679, 0.6198],
+						[0.7579, 1.2679, 0.292],
+						[0.7579, 1.2226, 0.6198],
+						[0.7579, 1.2226, 0.292],
+						[0.7439, 1.2679, 0.6198],
+						[0.7439, 1.2679, 0.292],
+						[0.7439, 1.2226, 0.6198],
+						[0.7439, 1.2226, 0.292]
+					],
+					"center": { "x": 0.7509, "y": 1.2453, "z": 0.4559 },
+					"size": { "x": 0.014, "y": 0.0453, "z": 0.3278 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7439, 1.2226, 0.6198],
+						[0.7439, 1.2226, 0.292],
+						[0.7579, 1.2226, 0.292],
+						[0.7579, 1.2226, 0.6198],
+						[0.7439, 1.2679, 0.6198],
+						[0.7439, 1.2679, 0.292],
+						[0.7579, 1.2679, 0.292],
+						[0.7579, 1.2679, 0.6198]
+					]
+				},
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": null
+			},
+			"Mug|-01.38|+01.18|-00.91": { "distance": 2.7808 },
+			"DiningTable|+00.17|+00.01|+00.68": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Bread|+00.40|+00.97|+00.45",
+					"Bread|+00.17|+00.97|+01.37",
+					"DishSponge|-00.06|+00.93|+00.91",
+					"Tomato|-00.06|+00.98|+00.45",
+					"Plate|+00.29|+00.93|-00.01",
+					"Potato|+00.06|+00.95|-00.05",
+					"Tomato|+00.51|+00.98|+00.68|TomatoSliced_6",
+					"Tomato|+00.51|+00.98|+00.68|TomatoSliced_5",
+					"Tomato|+00.51|+00.98|+00.68|TomatoSliced_4",
+					"Tomato|+00.51|+00.98|+00.68|TomatoSliced_3",
+					"Tomato|+00.51|+00.98|+00.68|TomatoSliced_2",
+					"Tomato|+00.51|+00.98|+00.68|TomatoSliced_1",
+					"Tomato|+00.51|+00.98|+00.68|TomatoSliced_0"
+				],
+				"distance": 1.2338
+			},
+			"Shelf|+00.17|+00.16|+00.68": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Pan|+00.17|+00.17|+01.33",
+					"Lettuce|+00.37|+00.25|+00.89",
+					"Pan|+00.17|+00.17|+00.46",
+					"Cup|-00.14|+00.17|+01.11",
+					"PepperShaker|+00.14|+00.18|+00.47",
+					"SoapBottle|+00.07|+00.17|+00.02"
+				],
+				"distance": 1.1296
+			},
+			"Shelf|+01.60|+00.17|+02.48": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.1952
+			},
+			"Shelf|+01.60|+00.55|+02.48": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.0999
+			},
+			"Shelf|+01.60|+00.88|+02.48": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.0703
+			},
+			"ShelvingUnit|+01.60|+00.01|+02.48": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.2552
+			},
+			"Faucet|-00.14|+01.03|-02.22": { "distance": 2.9568 },
+			"Stool|-00.55|+00.00|+00.87": {
+				"receptacleObjectIds": [
+					"Spoon|-00.51|+00.76|+01.01",
+					"Plate|-00.59|+00.77|+00.74"
+				],
+				"distance": 1.8341
+			},
+			"Shelf|+00.17|+00.53|+00.68": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Pot|+00.09|+00.54|+00.87",
+					"Pan|+00.01|+00.54|+01.27",
+					"Pot|+00.01|+00.54|+00.48",
+					"Cup|+00.07|+00.56|+00.85",
+					"ButterKnife|+00.25|+00.54|+00.68"
+				],
+				"distance": 0.9268
+			}
+		}
+	},
+	"state_changes": {
+		"agents": {},
+		"objects": {
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_6": {
+				"objectType": "TomatoSliced"
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_5": {
+				"objectType": "TomatoSliced"
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_4": {
+				"objectType": "TomatoSliced"
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_3": {
+				"objectType": "TomatoSliced"
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_2": {
+				"objectType": "TomatoSliced"
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_1": {
+				"objectType": "TomatoSliced"
+			},
+			"Tomato|+00.51|+00.98|+00.68|TomatoSliced_0": {
+				"objectType": "TomatoSliced"
+			},
+			"Knife|-00.17|+00.95|-00.01": {
+				"isPickedUp": true,
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": null
+			}
+		}
+	},
+	"history_subgoals": ["Navigate", "LightSwitch", "ToggleOn", "LightSwitch"],
+	"future_subgoals": [
+		"Navigate",
+		"Knife",
+		"Pickup",
+		"Knife",
+		"Slice",
+		"Tomato"
+	],
+	"expected_init_goal_conditions_total": 11,
+	"expected_init_goal_conditions_satisfied": 2,
+	"dialog_history_cleaned": [
+		["Driver", "hello what can I do today?"],
+		["Commander", "hi"],
+		["Commander", "let's get two slices of tomato"],
+		["Commander", "there is a tomato on the island"]
+	]
+}
