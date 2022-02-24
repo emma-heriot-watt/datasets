@@ -82,20 +82,27 @@ def alfred_valid_seen_data_path(fixtures_root: Path) -> list[Path]:
 
 
 @fixture(scope="session")
-def teach_edh_train_data_paths(fixtures_root: Path) -> list[Path]:
-    train_data_root = fixtures_root.joinpath("teach_edh", "train")
-    return list(train_data_root.iterdir())
+def teach_edh_instance_path(fixtures_root: Path) -> Path:
+    path = fixtures_root.joinpath("teach_edh")
+    assert path.is_dir()
+    return path
 
 
 @fixture(scope="session")
-def teach_edh_valid_seen_data_paths(fixtures_root: Path) -> list[Path]:
-    root = fixtures_root.joinpath("teach_edh", "valid_seen")
+def teach_edh_train_data_paths(teach_edh_instance_path: Path) -> list[Path]:
+    root = teach_edh_instance_path.joinpath("train")
     return list(root.iterdir())
 
 
 @fixture(scope="session")
-def teach_edh_valid_unseen_data_paths(fixtures_root: Path) -> list[Path]:
-    root = fixtures_root.joinpath("teach_edh", "valid_unseen")
+def teach_edh_valid_seen_data_paths(teach_edh_instance_path: Path) -> list[Path]:
+    root = teach_edh_instance_path.joinpath("valid_seen")
+    return list(root.iterdir())
+
+
+@fixture(scope="session")
+def teach_edh_valid_unseen_data_paths(teach_edh_instance_path: Path) -> list[Path]:
+    root = teach_edh_instance_path.joinpath("valid_unseen")
     return list(root.iterdir())
 
 
