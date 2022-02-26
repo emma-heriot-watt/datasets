@@ -31,7 +31,7 @@ orjson = "^3.6.7"
 Pillow = "^9.0.1"
 torch = { version = "^1.10.2", optional = true }
 py7zr = "^0.17.4"
-boto3 = "^1.21.3"
+boto3 = "^1.21.7"
 overrides = "^6.1.0"
 
 
