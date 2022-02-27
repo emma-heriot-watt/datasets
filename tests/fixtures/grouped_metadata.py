@@ -18,11 +18,14 @@ def vg_coco_gqa_grouped_metadata(
     progress: Progress,
 ) -> Iterator[list[DatasetMetadata]]:
     align_multiple_datasets = AlignMultipleDatasets(DatasetName.visual_genome, progress)
+
     aligned_metadata_iterable = [
-        dataset_aligner.get_aligned_metadata()
-        for dataset_aligner in (vg_coco_aligner, gqa_vg_aligner)
+        vg_coco_aligner.get_aligned_metadata(),
+        gqa_vg_aligner.get_aligned_metadata(),
     ]
+
     all_metadata_groups = align_multiple_datasets(*aligned_metadata_iterable)
+
     return all_metadata_groups
 
 

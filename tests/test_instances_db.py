@@ -1,9 +1,6 @@
-from emma_datasets.datamodels import (
-    AlfredHighAction,
-    AlfredLowAction,
-    GenericActionTrajectory,
-    Instance,
-)
+from pydantic import BaseModel
+
+from emma_datasets.datamodels import GenericActionTrajectory, Instance
 from emma_datasets.db import DatasetDb
 
 
@@ -19,9 +16,8 @@ def test_alfred_instance_trajectory_is_correct_object(alfred_instance: Instance)
     assert alfred_instance
 
     if alfred_instance.trajectory is not None:
-        assert isinstance(
-            alfred_instance.trajectory, GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
-        )
+        assert isinstance(alfred_instance.trajectory, BaseModel)
+        assert isinstance(alfred_instance.trajectory, GenericActionTrajectory)
 
 
 def test_can_access_built_pretraining_instances_without_error(

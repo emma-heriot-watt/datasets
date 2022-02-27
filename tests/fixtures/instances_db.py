@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterator
+from typing import Iterator, Optional
 
 from pytest_cases import fixture
 from rich.progress import Progress
@@ -35,12 +35,11 @@ def subset_instances_db(
     if not cached_instances_db_path.exists():
         create_subset_instances_db(cached_instances_db_path, all_grouped_metadata, progress)
 
-    with DatasetDb(cached_instances_db_path, readonly=True) as db:
-        yield db
+    return DatasetDb(cached_instances_db_path, readonly=True)
 
 
 @fixture
-def alfred_instance(subset_instances_db: DatasetDb) -> Instance:
+def alfred_instance(subset_instances_db: DatasetDb) -> Optional[Instance]:
     for (_, _, instance_str) in subset_instances_db:
         instance = Instance.parse_raw(instance_str)
 
@@ -52,5 +51,4 @@ def alfred_instance(subset_instances_db: DatasetDb) -> Instance:
 
 @fixture
 def instances_db(pretrain_instances_db_path: Path) -> DatasetDb:
-    with DatasetDb(pretrain_instances_db_path) as db:
-        yield db
+    return DatasetDb(pretrain_instances_db_path)
