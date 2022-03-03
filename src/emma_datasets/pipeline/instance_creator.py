@@ -57,15 +57,30 @@ class InstanceCreator:
             iterator = pool.imap_unordered(self.create_instances_from_metadata, grouped_metadata)
             for instances in iterator:
                 progress.advance(self.task_id, advance=len(instances))
-                yield from itertools.chain(self._compress_instances_if_desired(instances))
+                yield from itertools.chain(instances)
 
         else:
             for scene in grouped_metadata:
                 scene_instances = self.create_instances_from_metadata(scene)
                 progress.advance(self.task_id, advance=len(scene_instances))
-                yield from itertools.chain(self._compress_instances_if_desired(scene_instances))
+                yield from itertools.chain(scene_instances)
 
     def create_instances_from_metadata(
+        self, metadata_group: list[DatasetMetadata]
+    ) -> Union[list[Instance], list[bytes]]:
+        """Create all the possible instances from a single group of metadata.
+
+        If desired, also compress the instance into the bytes representation to faciliate drastic
+        speed increases in writing to the DB.
+        """
+        instances = self._create_instances_from_metadata(metadata_group)
+
+        if self._should_compress:
+            return [self._storage.compress(instance) for instance in instances]
+
+        return instances
+
+    def _create_instances_from_metadata(
         self, metadata_group: list[DatasetMetadata]
     ) -> list[Instance]:
         """Create all the possible instances from a single group of metadata.
@@ -259,12 +274,3 @@ class InstanceCreator:
             for metadata in metadata_list
             if metadata.name in AnnotationDatasetMap[annotation]
         ]
-
-    def _compress_instances_if_desired(
-        self, instances: list[Instance]
-    ) -> Union[list[bytes], list[Instance]]:
-        """Compress the instances if desired, else do nothing to them."""
-        if self._should_compress:
-            return [self._storage.compress(instance) for instance in instances]
-
-        return instances
