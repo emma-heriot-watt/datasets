@@ -1,6 +1,6 @@
 import itertools
 from multiprocessing.pool import Pool
-from typing import Iterable, Iterator, Optional
+from typing import Iterable, Iterator, Optional, Union
 
 from pydantic import parse_file_as
 from rich.progress import Progress
@@ -18,6 +18,7 @@ from emma_datasets.datamodels import (
     Region,
     SceneGraph,
 )
+from emma_datasets.db import DataStorage, JsonStorage
 
 
 ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
@@ -26,7 +27,12 @@ ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
 class InstanceCreator:
     """Create instances from groups of metadata from all the datasets."""
 
-    def __init__(self, progress: Progress) -> None:
+    def __init__(
+        self,
+        progress: Progress,
+        data_storage: DataStorage = JsonStorage(),  # noqa: WPS404
+        should_compress: bool = False,
+    ) -> None:
         self.task_id = progress.add_task(
             "Creating instances",
             visible=False,
@@ -35,12 +41,15 @@ class InstanceCreator:
             comment="",
         )
 
+        self._should_compress = should_compress
+        self._storage = data_storage
+
     def __call__(
         self,
         grouped_metadata: Iterable[list[DatasetMetadata]],
         progress: Progress,
         pool: Optional[Pool] = None,
-    ) -> Iterator[Instance]:
+    ) -> Union[Iterator[Instance], Iterator[bytes]]:
         """Create instances from list of groups of metadata."""
         progress.reset(self.task_id, start=True, visible=True)
 
@@ -48,13 +57,13 @@ class InstanceCreator:
             iterator = pool.imap_unordered(self.create_instances_from_metadata, grouped_metadata)
             for instances in iterator:
                 progress.advance(self.task_id, advance=len(instances))
-                yield from itertools.chain(instances)
+                yield from itertools.chain(self._compress_instances_if_desired(instances))
 
         else:
             for scene in grouped_metadata:
                 scene_instances = self.create_instances_from_metadata(scene)
                 progress.advance(self.task_id, advance=len(scene_instances))
-                yield from itertools.chain(scene_instances)
+                yield from itertools.chain(self._compress_instances_if_desired(scene_instances))
 
     def create_instances_from_metadata(
         self, metadata_group: list[DatasetMetadata]
@@ -250,3 +259,12 @@ class InstanceCreator:
             for metadata in metadata_list
             if metadata.name in AnnotationDatasetMap[annotation]
         ]
+
+    def _compress_instances_if_desired(
+        self, instances: list[Instance]
+    ) -> Union[list[bytes], list[Instance]]:
+        """Compress the instances if desired, else do nothing to them."""
+        if self._should_compress:
+            return [self._storage.compress(instance) for instance in instances]
+
+        return instances

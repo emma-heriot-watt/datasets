@@ -31,7 +31,7 @@ def create_pretraining_instances(
 
     with progress:
         metadata_parser = MetadataParser(progress)
-        instance_creator = InstanceCreator(progress)
+        instance_creator = InstanceCreator(progress, should_compress=True)
 
         metadata_groups = metadata_parser.get_all_metadata_groups()
 
