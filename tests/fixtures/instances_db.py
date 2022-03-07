@@ -6,7 +6,7 @@ from rich.progress import Progress
 
 from emma_datasets.datamodels import DatasetMetadata, DatasetName, Instance
 from emma_datasets.db import DatasetDb
-from emma_datasets.pipeline import InstanceCreator
+from emma_datasets.parsers.instance_creators import PretrainInstanceCreator
 
 
 def create_subset_instances_db(
@@ -14,7 +14,7 @@ def create_subset_instances_db(
     all_grouped_metadata: Iterator[list[DatasetMetadata]],
     progress: Progress,
 ) -> bool:
-    creator = InstanceCreator(progress)
+    creator = PretrainInstanceCreator(progress)
     all_instances = list(creator(all_grouped_metadata, progress))
 
     with DatasetDb(cached_instances_db_path, readonly=False) as write_db:

@@ -10,7 +10,8 @@ from emma_datasets.common import (
     use_rich_for_tracebacks,
 )
 from emma_datasets.db import DatasetDb
-from emma_datasets.pipeline import InstanceCreator, MetadataParser
+from emma_datasets.parsers.instance_creators import PretrainInstanceCreator
+from emma_datasets.pipeline import MetadataParser
 
 
 BATCH_SIZE = 4096
@@ -31,7 +32,7 @@ def create_pretraining_instances(
 
     with progress:
         metadata_parser = MetadataParser(progress)
-        instance_creator = InstanceCreator(progress, should_compress=True)
+        instance_creator = PretrainInstanceCreator(progress, should_compress=True)
 
         metadata_groups = metadata_parser.get_all_metadata_groups()
 
