@@ -2,6 +2,8 @@ from pathlib import Path
 
 from pydantic import BaseSettings
 
+from emma_datasets.constants import constants_absolute_path
+
 
 BASE_DIR = Path("storage/")
 
@@ -49,6 +51,8 @@ class Paths:  # noqa: WPS230
 
         # Databases for output
         self.databases = self.storage.joinpath("db/")
+
+        self.constants = constants_absolute_path
 
     def create_dirs(self) -> None:  # noqa: WPS213
         """Create directories for files if they do not exist."""

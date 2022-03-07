@@ -176,7 +176,7 @@ class DatasetDownloader:
         raise NotImplementedError
 
 
-def download(csv_file_path: str, storage_root: str, max_workers: Optional[int] = None) -> None:
+def download(csv_file_path: Path, storage_root: Path, max_workers: Optional[int] = None) -> None:
     """Download the dataset files from the CSV file of urls."""
     downloader = DatasetDownloader()
     data_dicts = read_csv(csv_file_path)
@@ -194,4 +194,4 @@ def download(csv_file_path: str, storage_root: str, max_workers: Optional[int] =
 
 
 if __name__ == "__main__":
-    download("storage/constants/dataset_downloads.csv", "storage/datasets")
+    download(settings.paths.constants.joinpath("dataset_downloads.csv"), settings.paths.datasets)

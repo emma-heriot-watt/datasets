@@ -30,3 +30,20 @@ def test_exported_parsed_edh_instance_is_identical_to_input(
 
         # If the comparison dict is empty, then they are identical
         assert not comparison
+
+
+def test_teach_edh_instance_has_custom_attributes(teach_edh_all_data_paths: list[Path]) -> None:
+    for edh_instance_path in teach_edh_all_data_paths:
+        assert edh_instance_path.exists()
+
+        parsed_instance = TeachEdhInstance.parse_file(edh_instance_path)
+
+        for interaction in parsed_instance.interactions:
+            assert isinstance(interaction.action_name, str)
+            assert len(interaction.action_name)
+
+            assert isinstance(interaction.frame_path, str)
+            assert len(interaction.frame_path)
+
+            assert isinstance(interaction.features_path, str)
+            assert len(interaction.features_path)
