@@ -48,7 +48,9 @@ class DatasetMetadataParser(ABC, Generic[T]):
         structured_data_iterators: list[Iterator[T]] = []
 
         for path, dataset_split in self.data_paths:
-            progress.update(self.task_id, visible=True, comment=f"Reading data from [u]{path}[/]")
+            progress.update(
+                self.task_id, visible=True, comment=f"Reading data from [u]{path.parts[-2:]}[/]"
+            )
             raw_data = self._read(path)
 
             structured_data = self._structure_raw_metadata(raw_data, dataset_split, progress, pool)
@@ -86,6 +88,8 @@ class DatasetMetadataParser(ABC, Generic[T]):
             for raw_instance in raw_data:
                 progress.advance(self.task_id)
                 yield self.metadata_model.parse_obj(raw_instance)
+
+        progress.update(self.task_id, comment="Done!")
 
     @abstractmethod
     def _read(self, path: Path) -> Any:
