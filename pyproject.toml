@@ -28,7 +28,7 @@ numpy = "^1.22.3"
 orjson = "^3.6.7"
 Pillow = "^9.0.1"
 torch = { version = "^1.10.2", optional = true }
-py7zr = "^0.17.4"
+py7zr = "^0.18.0"
 boto3 = "^1.21.14"
 overrides = "^6.1.0"
 
