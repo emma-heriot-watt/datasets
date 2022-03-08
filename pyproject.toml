@@ -24,7 +24,7 @@ test = { cmd = "pytest --cov=src -m 'not slow'", help = "Run fast Python tests" 
 python = "^3.9"
 pydantic = { extras = ["dotenv"], version = "^1.8.2" }
 rich = "^11.2.0"
-numpy = "^1.22.2"
+numpy = "^1.22.3"
 orjson = "^3.6.7"
 Pillow = "^9.0.1"
 torch = { version = "^1.10.2", optional = true }
