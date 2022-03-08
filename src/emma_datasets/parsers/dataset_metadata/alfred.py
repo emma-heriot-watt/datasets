@@ -55,7 +55,7 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
                 split=metadata.dataset_split,
                 media=self.get_all_source_media_for_subgoal(metadata, frames_dir, high_idx),
                 features_path=self.features_dir.joinpath(
-                    f"{metadata.task_id}_{high_idx}.{self.feature_ext}"
+                    f"{metadata.task_id}_{metadata.scene.scene_num}_{high_idx}.{self.feature_ext}"
                 ),
                 caption_path=self.captions_dir.joinpath(f"{metadata.task_id}_{high_idx}.json"),
                 action_trajectory_path=self.trajectories_dir.joinpath(
