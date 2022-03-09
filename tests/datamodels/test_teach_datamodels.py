@@ -47,3 +47,6 @@ def test_teach_edh_instance_has_custom_attributes(teach_edh_all_data_paths: list
 
             assert isinstance(interaction.features_path, str)
             assert len(interaction.features_path)
+
+            assert isinstance(interaction.agent_name, str)
+            assert len(interaction.agent_name)

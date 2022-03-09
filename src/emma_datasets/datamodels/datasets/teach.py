@@ -1,7 +1,7 @@
 from functools import lru_cache
 from typing import Any, Optional
 
-from pydantic import BaseModel, Field, PrivateAttr
+from pydantic import BaseModel, Field
 
 from emma_datasets.common import Settings
 from emma_datasets.io import read_json
@@ -81,54 +81,31 @@ class TeachInteraction(BaseModel):
     end_y: Optional[float] = None
     oid: Optional[str] = None
 
-    # Custom added attributes
-    _action_name: str = PrivateAttr()
-    _frame_path: str = PrivateAttr()
-    _features_path: str = PrivateAttr()
-
-    def __init__(self, **data: Any) -> None:
-        super().__init__(**data)
-
-        self._action_name = self._get_action_name_from_action_idx()  # noqa: WPS601
-        self._frame_path = self._get_frame_path()  # noqa: WPS601
-        self._features_path = self._get_features_path()  # noqa: WPS601
+    @property
+    def agent_name(self) -> str:
+        """Get the name of the agent."""
+        agent_id_to_name_map = get_agent_id_to_name_map()
+        agent_name = agent_id_to_name_map[self.agent_id].lower()
+        return agent_name
 
     @property
     def action_name(self) -> str:
-        """Get the action name for the interaction."""
-        return self._action_name
-
-    @property
-    def frame_path(self) -> str:
-        """Get the path to the image frame."""
-        return self._frame_path
-
-    @property
-    def features_path(self) -> str:
-        """Get the path to the image frame."""
-        return self._features_path
-
-    def _get_action_name_from_action_idx(self) -> str:
         """Convert the action idx to the action name."""
         action_idx_to_name_map = get_action_idx_to_action_name_map()
         return action_idx_to_name_map[self.action_idx]
 
-    def _get_frame_path(self) -> str:
+    @property
+    def frame_path(self) -> str:
         """Convert the interaction into the path to the image frame."""
-        agent_id_to_name_map = get_agent_id_to_name_map()
-        agent_name = agent_id_to_name_map[self.agent_id].lower()
-
         return TEACH_FRAME_NAME_TEMPLATE.format(
-            agent_name=agent_name, time_start=self.time_start, suffix=TEACH_FRAME_SUFFIX
+            agent_name=self.agent_name, time_start=self.time_start, suffix=TEACH_FRAME_SUFFIX
         )
 
-    def _get_features_path(self) -> str:
+    @property
+    def features_path(self) -> str:
         """Convert the interaction into a path to the features file."""
-        agent_id_to_name_map = get_agent_id_to_name_map()
-        agent_name = agent_id_to_name_map[self.agent_id].lower()
-
         return TEACH_FRAME_NAME_TEMPLATE.format(
-            agent_name=agent_name, time_start=self.time_start, suffix="pt"
+            agent_name=self.agent_name, time_start=self.time_start, suffix="pt"
         )
 
 
