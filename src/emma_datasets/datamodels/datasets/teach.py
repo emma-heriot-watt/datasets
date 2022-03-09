@@ -152,3 +152,30 @@ class TeachEdhInstance(BaseModel):
     init_state_diff: Any
     final_state_diff: Any
     state_changes: Any
+
+    @property
+    def interactions_history(self) -> list[TeachInteraction]:
+        """All interactions that happened in the past."""
+        return [
+            interaction
+            for interaction in self.interactions
+            if not self._is_interaction_in_future(interaction)
+        ]
+
+    @property
+    def interactions_future(self) -> list[TeachInteraction]:
+        """All interactions that 'happen' in the future."""
+        return [
+            interaction
+            for interaction in self.interactions
+            if self._is_interaction_in_future(interaction)
+        ]
+
+    def _is_interaction_in_future(self, interaction: TeachInteraction) -> bool:
+        """Returns True if the given interaction is 'in' the future."""
+        return interaction.time_start > self._last_action_time
+
+    @property
+    def _last_action_time(self) -> float:
+        """Get the last time, after which all interactions will be be in the future."""
+        return self.driver_action_history[-1].time_start

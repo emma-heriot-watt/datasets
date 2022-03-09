@@ -3,7 +3,7 @@ from pathlib import Path
 
 from deepdiff import DeepDiff
 
-from emma_datasets.datamodels.datasets.teach import TeachEdhInstance
+from emma_datasets.datamodels.datasets.teach import TeachEdhInstance, TeachInteraction
 
 
 def test_exported_parsed_edh_instance_is_identical_to_input(
@@ -50,3 +50,18 @@ def test_teach_edh_instance_has_custom_attributes(teach_edh_all_data_paths: list
 
             assert isinstance(interaction.agent_name, str)
             assert len(interaction.agent_name)
+
+
+def test_teach_edh_instance_has_history_and_future_interactions(
+    teach_edh_all_data_paths: list[Path],
+) -> None:
+    for edh_instance_path in teach_edh_all_data_paths:
+        assert edh_instance_path.exists()
+
+        parsed_instance = TeachEdhInstance.parse_file(edh_instance_path)
+
+        for past_interaction in parsed_instance.interactions_history:
+            assert isinstance(past_interaction, TeachInteraction)
+
+        for future_interaction in parsed_instance.interactions_future:
+            assert isinstance(future_interaction, TeachInteraction)
