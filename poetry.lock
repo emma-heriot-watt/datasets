@@ -175,14 +175,14 @@ webencodings = "*"
 
 [[package]]
 name = "boto3"
-version = "1.21.15"
+version = "1.21.16"
 description = "The AWS SDK for Python"
 category = "main"
 optional = false
 python-versions = ">= 3.6"
 
 [package.dependencies]
-botocore = ">=1.24.15,<1.25.0"
+botocore = ">=1.24.16,<1.25.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.5.0,<0.6.0"
 
@@ -191,7 +191,7 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.24.15"
+version = "1.24.16"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = false
@@ -1956,7 +1956,7 @@ torch = ["torch"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "f242f19c2fa9a39a1d4f288388fd4dfd27d350e845d78ad0ab0bcdc9e5416128"
+content-hash = "35e69c74942a1da959bc58fc8f0f161eb8c443e14c3dd36457a7cf3374f6b00e"
 
 [metadata.files]
 anyio = [
@@ -2052,12 +2052,12 @@ bleach = [
     {file = "bleach-4.1.0.tar.gz", hash = "sha256:0900d8b37eba61a802ee40ac0061f8c2b5dee29c1927dd1d233e075ebf5a71da"},
 ]
 boto3 = [
-    {file = "boto3-1.21.15-py3-none-any.whl", hash = "sha256:30394729b38d5ce2f845440428a55161c6d45478044e553a12ca1acf56d7278a"},
-    {file = "boto3-1.21.15.tar.gz", hash = "sha256:895489900eb882777124c3b64a13df49785cf77f7bd1504e783464fb3b4c8163"},
+    {file = "boto3-1.21.16-py3-none-any.whl", hash = "sha256:15fa6d1acac422d2d34f7811e02acfc7ac222cea24db3f463d5c52f2f87baa52"},
+    {file = "boto3-1.21.16.tar.gz", hash = "sha256:c974a7fa781c500b7067441f9883ed939cf8c80bcd74c88b11965b336cabb4b6"},
 ]
 botocore = [
-    {file = "botocore-1.24.15-py3-none-any.whl", hash = "sha256:405082f92a9e524e1aee96cbc90134668026d7da3c12f86990c91a12620ca28b"},
-    {file = "botocore-1.24.15.tar.gz", hash = "sha256:fa4816e94e72111a9341204061e760bcbde74ca5d900d3f2206c2c2e8e4b56e4"},
+    {file = "botocore-1.24.16-py3-none-any.whl", hash = "sha256:0a809efb821d81dc29f2e6c404ed123176b8d2eb43103758f31d89b291af2a8b"},
+    {file = "botocore-1.24.16.tar.gz", hash = "sha256:dcff7f9b5fea98701d0b520eba99385c538825f10e6d1cab1e7da213293d141e"},
 ]
 brotli = [
     {file = "Brotli-1.0.9-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:268fe94547ba25b58ebc724680609c8ee3e5a843202e9a381f6f9c5e8bdb5c70"},
