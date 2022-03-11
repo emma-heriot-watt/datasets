@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 from typing import Optional, Union
 
-from emma_datasets.datamodels.base_model import BaseModel
+from emma_datasets.datamodels.base_model import BaseInstance
 from emma_datasets.datamodels.constants import DatasetModalityMap, DatasetName, MediaType
 from emma_datasets.datamodels.dataset_metadata import DatasetMetadata
 from emma_datasets.datamodels.datasets import AlfredHighAction, AlfredLowAction
@@ -89,7 +89,7 @@ def get_language_data(attribute_value: AnnotationType) -> list[str]:
     return _get_language_data_from_trajectory(attribute_value)
 
 
-class Instance(BaseModel):
+class Instance(BaseInstance):
     """Instance within the dataset."""
 
     # id: str

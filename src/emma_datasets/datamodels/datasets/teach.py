@@ -1,9 +1,12 @@
 from functools import lru_cache
+from pathlib import Path
 from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
 from emma_datasets.common import Settings
+from emma_datasets.datamodels.base_model import BaseInstance
+from emma_datasets.datamodels.constants import MediaType
 from emma_datasets.io import read_json
 
 
@@ -118,7 +121,7 @@ class TeachUtterance(BaseModel):
     __root__: list[str] = Field(..., min_items=2, max_items=2)
 
 
-class TeachEdhInstance(BaseModel):
+class TeachEdhInstance(BaseInstance):
     """TEACh EDH Instance."""
 
     game_id: str
@@ -152,6 +155,16 @@ class TeachEdhInstance(BaseModel):
     init_state_diff: Any
     final_state_diff: Any
     state_changes: Any
+
+    @property
+    def modality(self) -> MediaType:
+        """Get the modality of the instance."""
+        return MediaType.video
+
+    @property
+    def features_path(self) -> Path:
+        """Get the path to the features for this instance."""
+        raise NotImplementedError
 
     @property
     def interactions_history(self) -> list[TeachInteraction]:
