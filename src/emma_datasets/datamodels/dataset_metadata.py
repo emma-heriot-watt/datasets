@@ -7,7 +7,7 @@ from emma_datasets.datamodels.base_model import BaseModel
 from emma_datasets.datamodels.constants import DatasetName, DatasetSplit, MediaType
 
 
-class SourceMedia(BaseModel):
+class SourceMedia(BaseModel, frozen=True):
     """Source media from dataset."""
 
     url: Optional[HttpUrl]
@@ -17,7 +17,7 @@ class SourceMedia(BaseModel):
     height: int
 
 
-class DatasetMetadata(BaseModel):
+class DatasetMetadata(BaseModel, frozen=True):
     """Source dataset metadata per instance."""
 
     id: str

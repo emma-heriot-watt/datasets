@@ -206,21 +206,5 @@
 		"image_id": 26,
 		"coco_id": null,
 		"flickr_id": null
-	},
-	{
-		"width": 500,
-		"url": "https://cs.stanford.edu/people/rak248/VG_100K/2353884.jpg",
-		"height": 281,
-		"image_id": 2353884,
-		"coco_id": null,
-		"flickr_id": 456450662
-	},
-	{
-		"width": 331,
-		"url": "https://cs.stanford.edu/people/rak248/VG_100K/2320168.jpg",
-		"height": 500,
-		"image_id": 2320168,
-		"coco_id": 402381,
-		"flickr_id": 8462055276
 	}
 ]

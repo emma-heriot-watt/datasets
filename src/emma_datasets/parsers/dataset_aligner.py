@@ -151,9 +151,9 @@ class DatasetAligner(Generic[S, T]):
         self, aligned: list[dict[DatasetName, DatasetMetadata]], source_metadata: list[S]
     ) -> list[dict[DatasetName, DatasetMetadata]]:
         """Get instances from the source dataset which are not aligned to the target dataset."""
-        aligned_from_source = [
+        aligned_from_source = {
             metadata[self.source_metadata_parser.dataset_name] for metadata in aligned
-        ]
+        }
 
         self.progress.update(
             self.task_id,
@@ -167,9 +167,7 @@ class DatasetAligner(Generic[S, T]):
             )
             self.progress.advance(self.task_id)
 
-        non_aligned_from_source = (
-            metadata for metadata in source_dataset_metadata if metadata not in aligned_from_source
-        )
+        non_aligned_from_source = set(source_dataset_metadata) - aligned_from_source
 
         return [{metadata.name: metadata} for metadata in non_aligned_from_source]
 

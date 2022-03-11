@@ -8,31 +8,7 @@ from emma_datasets.parsers.align_multiple_datasets import AlignMultipleDatasets
 from emma_datasets.parsers.dataset_aligner import DatasetAligner
 
 
-def test_dataset_aligner_does_not_duplicate_metadata(
-    dataset_aligner: DatasetAligner[Any, Any], progress: Progress
-) -> None:
-    aligned_metadata = dataset_aligner.get_aligned_metadata()
-
-    source_metadata = [
-        dataset_aligner.source_metadata_parser.convert_to_dataset_metadata(metadata)
-        for metadata in list(dataset_aligner.source_metadata_parser.get_metadata(progress))
-    ]
-    target_metadata = [
-        dataset_aligner.target_metadata_parser.convert_to_dataset_metadata(metadata)
-        for metadata in list(dataset_aligner.target_metadata_parser.get_metadata(progress))
-    ]
-
-    input_metadata = list(itertools.chain(source_metadata, target_metadata))
-
-    input_metadata_count = len(input_metadata)
-    aligned_metadata_count = len(aligned_metadata.non_aligned) + sum(
-        len(aligned_list) for aligned_list in aligned_metadata.aligned
-    )
-
-    assert input_metadata_count == aligned_metadata_count
-
-
-def test_dataset_aligner_does_not_lose_metadata(
+def test_dataset_aligner_works(
     dataset_aligner: DatasetAligner[Any, Any], progress: Progress
 ) -> None:
     aligned_metadata = dataset_aligner.get_aligned_metadata()
@@ -55,11 +31,7 @@ def test_dataset_aligner_does_not_lose_metadata(
             assert metadata in input_metadata
 
 
-def test_multiple_dataset_aligner_does_not_lose_metadata(
-    vg_coco_aligner: DatasetAligner[Any, Any],
-    gqa_vg_aligner: DatasetAligner[Any, Any],
-    progress: Progress,
-) -> None:
+def test_multiple_dataset_aligner_works(vg_coco_aligner, gqa_vg_aligner, progress):
     align_multiple_datasets = AlignMultipleDatasets(DatasetName.visual_genome, progress)
 
     aligned_metadata_iterable = [
