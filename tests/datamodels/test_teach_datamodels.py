@@ -3,7 +3,11 @@ from pathlib import Path
 
 from deepdiff import DeepDiff
 
-from emma_datasets.datamodels.datasets.teach import TeachEdhInstance, TeachInteraction
+from emma_datasets.datamodels.datasets.teach import (
+    ExtendedTeachDriverAction,
+    TeachEdhInstance,
+    TeachInteraction,
+)
 
 
 def test_exported_parsed_edh_instance_is_identical_to_input(
@@ -32,7 +36,9 @@ def test_exported_parsed_edh_instance_is_identical_to_input(
         assert not comparison
 
 
-def test_teach_edh_instance_has_custom_attributes(teach_edh_all_data_paths: list[Path]) -> None:
+def test_teach_edh_instance_interaction_has_custom_attributes(
+    teach_edh_all_data_paths: list[Path],
+) -> None:
     for edh_instance_path in teach_edh_all_data_paths:
         assert edh_instance_path.exists()
 
@@ -55,13 +61,31 @@ def test_teach_edh_instance_has_custom_attributes(teach_edh_all_data_paths: list
 def test_teach_edh_instance_has_history_and_future_interactions(
     teach_edh_all_data_paths: list[Path],
 ) -> None:
+
     for edh_instance_path in teach_edh_all_data_paths:
         assert edh_instance_path.exists()
 
-        parsed_instance = TeachEdhInstance.parse_file(edh_instance_path)
+        instance = TeachEdhInstance.parse_file(edh_instance_path)
 
-        for past_interaction in parsed_instance.interactions_history:
+        for past_interaction in instance.interaction_history:
             assert isinstance(past_interaction, TeachInteraction)
 
-        for future_interaction in parsed_instance.interactions_future:
+        for future_interaction in instance.interactions_future:
             assert isinstance(future_interaction, TeachInteraction)
+
+
+def test_teach_edh_instance_has_extended_driver_action_history(
+    teach_edh_all_data_paths: list[Path],
+) -> None:
+    for edh_instance_path in teach_edh_all_data_paths:
+        assert edh_instance_path.exists()
+
+        instance = TeachEdhInstance.parse_file(edh_instance_path)
+
+        assert instance.extended_driver_action_history
+
+        for action in instance.extended_driver_action_history:
+            assert isinstance(action, ExtendedTeachDriverAction)
+
+            if action.action_id == 100:
+                assert action.utterance is not None

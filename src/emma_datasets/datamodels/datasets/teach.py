@@ -1,6 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Literal, Optional, cast
 
 from pydantic import BaseModel, Field
 
@@ -58,6 +58,12 @@ class TeachDriverAction(BaseModel):
     oid: Optional[str] = None
     x: Optional[float]
     y: Optional[float]
+
+
+class ExtendedTeachDriverAction(TeachDriverAction):
+    """Extended version of the driver action with utterance."""
+
+    utterance: Optional[str] = None
 
 
 class TeachInteraction(BaseModel):
@@ -120,13 +126,27 @@ class TeachUtterance(BaseModel):
 
     __root__: list[str] = Field(..., min_items=2, max_items=2)
 
+    @property
+    def speaker(self) -> Literal["Driver", "Commander"]:
+        """Get the speaker for the utterance."""
+        speaker = self.__root__[0]
+
+        if speaker in {"Driver", "Commander"}:
+            return cast(Literal["Driver", "Commander"], speaker)
+
+        raise ValueError("Value for speaker is not either 'Driver' or 'Commander'.")
+
+    @property
+    def utterance(self) -> str:
+        """Get the utterance itself."""
+        return self.__root__[1]
+
 
 class TeachEdhInstance(BaseInstance):
     """TEACh EDH Instance."""
 
     game_id: str
     instance_id: str
-
     pred_start_idx: int
 
     # Dialogue
@@ -144,14 +164,14 @@ class TeachEdhInstance(BaseInstance):
     driver_action_history: list[TeachDriverAction]
     driver_actions_future: list[TeachDriverAction]
 
-    expected_init_goal_conditions_total: int
-    expected_init_goal_conditions_satisfied: int
-
     # Subgoals
     history_subgoals: list[str]
     future_subgoals: list[str]
 
     # State
+    expected_init_goal_conditions_satisfied: int
+    expected_init_goal_conditions_total: int
+
     init_state_diff: Any
     final_state_diff: Any
     state_changes: Any
@@ -167,8 +187,47 @@ class TeachEdhInstance(BaseInstance):
         raise NotImplementedError
 
     @property
-    def interactions_history(self) -> list[TeachInteraction]:
-        """All interactions that happened in the past."""
+    def driver_dialog_history(self) -> list[str]:
+        """Get the dialog history of only the driver."""
+        return [
+            utterance.utterance
+            for utterance in self.dialog_history
+            if utterance.speaker == "Driver"
+        ]
+
+    @property
+    def driver_dialog_history_cleaned(self) -> list[str]:
+        """Get the cleaned dialog history of only the driver."""
+        return [
+            utterance.utterance
+            for utterance in self.dialog_history_cleaned
+            if utterance.speaker == "Driver"
+        ]
+
+    @property
+    def extended_driver_action_history(self) -> list[ExtendedTeachDriverAction]:
+        """Get extended driver action history using the cleaned dialog history.
+
+        We need to have a counter of every `Text` action that has happened to be sure to get the
+        correct utterance for the action.
+        """
+        action_history: list[ExtendedTeachDriverAction] = []
+        utterance_counter = 0
+
+        for action in self.driver_action_history:
+            action_dict = action.dict()
+
+            if action.action_id == 100:
+                action_dict["utterance"] = self.driver_dialog_history_cleaned[utterance_counter]
+                utterance_counter += 1
+
+            action_history.append(ExtendedTeachDriverAction(**action_dict))
+
+        return action_history
+
+    @property
+    def interaction_history(self) -> list[TeachInteraction]:
+        """Get all interactions that happened in the past."""
         return [
             interaction
             for interaction in self.interactions
@@ -177,15 +236,15 @@ class TeachEdhInstance(BaseInstance):
 
     @property
     def interactions_future(self) -> list[TeachInteraction]:
-        """All interactions that 'happen' in the future."""
+        """Get all interactions which happened 'in the future'."""
         return [
             interaction
             for interaction in self.interactions
-            if self._is_interaction_in_future(interaction)
+            if not self._is_interaction_in_future(interaction)
         ]
 
     def _is_interaction_in_future(self, interaction: TeachInteraction) -> bool:
-        """Returns True if the given interaction is 'in' the future."""
+        """Returns True if the given interaction is 'in the future'."""
         return interaction.time_start > self._last_action_time
 
     @property
