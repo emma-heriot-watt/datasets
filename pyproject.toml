@@ -48,7 +48,7 @@ pytest-cov = "^3.0.0"
 jupyterlab = "^3.3.1"
 isort = "^5.10.1"
 black = { extras = ["jupyter"], version = "^22.1" }
-pytest-cases = "^3.6.9"
+pytest-cases = "^3.6.10"
 deepdiff = "^5.7.0"
 
 [tool.black]
