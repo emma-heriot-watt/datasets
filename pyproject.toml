@@ -37,7 +37,7 @@ overrides = "^6.1.0"
 torch = ["torch"]
 
 [tool.poetry.dev-dependencies]
-wemake-python-styleguide = "^0.16.0"
+wemake-python-styleguide = "^0.16.1"
 flake8 = "^4.0"
 mypy = "^0.931"
 pytest = "^7.0.1"
