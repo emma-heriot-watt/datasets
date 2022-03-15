@@ -2,7 +2,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Literal, Optional, cast
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, PrivateAttr
 
 from emma_datasets.common import Settings
 from emma_datasets.datamodels.base_model import BaseInstance
@@ -176,6 +176,15 @@ class TeachEdhInstance(BaseInstance):
     final_state_diff: Any
     state_changes: Any
 
+    _features_path: Path = PrivateAttr()
+
+    def __init__(self, **data: Any) -> None:
+        super().__init__(**data)
+
+        self._features_path = settings.paths.teach_edh_features.joinpath(  # noqa: WPS601
+            f"{self.instance_id}.history.pt"
+        )
+
     @property
     def modality(self) -> MediaType:
         """Get the modality of the instance."""
@@ -184,7 +193,7 @@ class TeachEdhInstance(BaseInstance):
     @property
     def features_path(self) -> Path:
         """Get the path to the features for this instance."""
-        return settings.paths.teach_edh_features.joinpath(f"{self.instance_id}.history.pt")
+        return self._features_path
 
     @property
     def driver_dialog_history(self) -> list[str]:
