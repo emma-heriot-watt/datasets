@@ -1,3 +1,4 @@
+import argparse
 from multiprocessing.pool import Pool
 from pathlib import Path
 from typing import Iterable, Optional
@@ -114,4 +115,20 @@ def create_teach_edh_instances(
 
 
 if __name__ == "__main__":
-    create_teach_edh_instances()
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--teach-edh-instances-path",
+        help="Path to the folder containing the splits of instances",
+        type=Path,
+        default=settings.paths.teach_edh_instances,
+    )
+    parser.add_argument(
+        "--output-dir",
+        help="Path to the output directory",
+        type=Path,
+        default=settings.paths.databases,
+    )
+
+    args = parser.parse_args()
+    create_teach_edh_instances(args.teach_edh_instances_path, args.output_dir)
