@@ -184,7 +184,7 @@ class TeachEdhInstance(BaseInstance):
     @property
     def features_path(self) -> Path:
         """Get the path to the features for this instance."""
-        raise NotImplementedError
+        return settings.paths.teach_edh_features.joinpath(f"{self.instance_id}.history.pt")
 
     @property
     def driver_dialog_history(self) -> list[str]:

@@ -40,14 +40,14 @@ class Paths:  # noqa: WPS230
         self.gqa_scene_graphs = self.gqa.joinpath("scene_graphs/")
         self.epic_kitchens_frames = self.epic_kitchens.joinpath("frames/")
         self.alfred_data = self.alfred.joinpath("full_2.1.0/")
+        self.teach_edh_instances = self.teach.joinpath("edh_instances/")
 
         self.coco_features = self.coco.joinpath("image_features/")
         self.visual_genome_features = self.visual_genome.joinpath("image_features/")
         self.gqa_features = self.gqa.joinpath("image_features/")
         self.epic_kitchens_features = self.epic_kitchens.joinpath("frame_features/")
         self.alfred_features = self.alfred.joinpath("frame_features/")
-
-        self.teach_edh_instances = self.teach.joinpath("edh_instances/")
+        self.teach_edh_features = self.teach.joinpath("frame_features/")
 
         # Databases for output
         self.databases = self.storage.joinpath("db/")
