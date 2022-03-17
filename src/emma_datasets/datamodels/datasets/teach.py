@@ -202,11 +202,6 @@ class TeachEdhInstance(BaseInstance):
         We need to have a counter of every `Text` action that has happened to be sure to get the
         correct utterance for the action.
         """
-        driver_dialog_history = [
-            utterance.utterance
-            for utterance in self.dialog_history
-            if utterance.speaker == "Driver"
-        ]
         action_history: list[ExtendedTeachDriverAction] = []
         utterance_counter = 0
 
@@ -214,7 +209,7 @@ class TeachEdhInstance(BaseInstance):
             action_dict = action.dict()
 
             if action.action_id == 100:
-                action_dict["utterance"] = driver_dialog_history[utterance_counter]
+                action_dict["utterance"] = self._driver_dialog_history[utterance_counter]
                 utterance_counter += 1
 
             action_history.append(ExtendedTeachDriverAction(**action_dict))
@@ -247,3 +242,12 @@ class TeachEdhInstance(BaseInstance):
     def _last_action_time(self) -> float:
         """Get the last time, after which all interactions will be be in the future."""
         return self.driver_action_history[-1].time_start
+
+    @property
+    def _driver_dialog_history(self) -> list[str]:
+        """Get the dialog history of only the driver."""
+        return [
+            utterance.utterance
+            for utterance in self.dialog_history
+            if utterance.speaker == "Driver"
+        ]
