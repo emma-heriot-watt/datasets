@@ -196,30 +196,17 @@ class TeachEdhInstance(BaseInstance):
         return self._features_path
 
     @property
-    def driver_dialog_history(self) -> list[str]:
-        """Get the dialog history of only the driver."""
-        return [
-            utterance.utterance
-            for utterance in self.dialog_history
-            if utterance.speaker == "Driver"
-        ]
-
-    @property
-    def driver_dialog_history_cleaned(self) -> list[str]:
-        """Get the cleaned dialog history of only the driver."""
-        return [
-            utterance.utterance
-            for utterance in self.dialog_history_cleaned
-            if utterance.speaker == "Driver"
-        ]
-
-    @property
     def extended_driver_action_history(self) -> list[ExtendedTeachDriverAction]:
         """Get extended driver action history using the cleaned dialog history.
 
         We need to have a counter of every `Text` action that has happened to be sure to get the
         correct utterance for the action.
         """
+        driver_dialog_history = [
+            utterance.utterance
+            for utterance in self.dialog_history
+            if utterance.speaker == "Driver"
+        ]
         action_history: list[ExtendedTeachDriverAction] = []
         utterance_counter = 0
 
@@ -227,7 +214,7 @@ class TeachEdhInstance(BaseInstance):
             action_dict = action.dict()
 
             if action.action_id == 100:
-                action_dict["utterance"] = self.driver_dialog_history_cleaned[utterance_counter]
+                action_dict["utterance"] = driver_dialog_history[utterance_counter]
                 utterance_counter += 1
 
             action_history.append(ExtendedTeachDriverAction(**action_dict))

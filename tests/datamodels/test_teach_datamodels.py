@@ -88,4 +88,4 @@ def test_teach_edh_instance_has_extended_driver_action_history(
             assert isinstance(action, ExtendedTeachDriverAction)
 
             if action.action_id == 100:
-                assert action.utterance is not None
+                assert action.utterance
