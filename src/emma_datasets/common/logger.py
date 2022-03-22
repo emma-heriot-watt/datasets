@@ -13,7 +13,6 @@ def use_rich_for_tracebacks() -> None:
 def use_rich_for_logging() -> None:
     """Use Rich as the main logger."""
     logging.basicConfig(
-        level="NOTSET",
         format="%(message)s",  # noqa: WPS323
         datefmt="[%X]",  # noqa: WPS323
         handlers=[RichHandler(markup=True, rich_tracebacks=True, tracebacks_show_locals=True)],
