@@ -177,12 +177,16 @@ class TeachEdhInstance(BaseInstance):
     state_changes: Any
 
     _features_path: Path = PrivateAttr()
+    _future_features_path: Path = PrivateAttr()
 
     def __init__(self, **data: Any) -> None:
         super().__init__(**data)
 
         self._features_path = settings.paths.teach_edh_features.joinpath(  # noqa: WPS601
             f"{self.instance_id}.history.pt"
+        )
+        self._future_features_path = settings.paths.teach_edh_features.joinpath(  # noqa: WPS601
+            f"{self.instance_id}.future.pt"
         )
 
     @property
@@ -194,6 +198,11 @@ class TeachEdhInstance(BaseInstance):
     def features_path(self) -> Path:
         """Get the path to the features for this instance."""
         return self._features_path
+
+    @property
+    def future_features_path(self) -> Path:
+        """Get the path to the features from future driver actions for this instance."""
+        return self._future_features_path
 
     @property
     def extended_driver_action_history(self) -> list[ExtendedTeachDriverAction]:
