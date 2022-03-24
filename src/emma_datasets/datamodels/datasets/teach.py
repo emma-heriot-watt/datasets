@@ -59,6 +59,18 @@ class TeachDriverAction(BaseModel):
     x: Optional[float]
     y: Optional[float]
 
+    @property
+    def object_name(self) -> Optional[str]:
+        """Get the object name that the agent is interacting with.
+
+        The `oid` is in the form `CoffeeMachine|-02.94|+00.93|+03.61`, and we only want the first
+        part of it.
+        """
+        if self.oid is None:
+            return None
+
+        return self.oid.split("|")[0]
+
 
 class ExtendedTeachDriverAction(TeachDriverAction):
     """Extended version of the driver action with utterance."""
@@ -116,6 +128,18 @@ class TeachInteraction(BaseModel):
         return TEACH_FRAME_NAME_TEMPLATE.format(
             agent_name=self.agent_name, time_start=self.time_start, suffix="pt"
         )
+
+    @property
+    def object_name(self) -> Optional[str]:
+        """Get the object name that the agent is interacting with.
+
+        The `oid` is in the form `CoffeeMachine|-02.94|+00.93|+03.61`, and we only want the first
+        part of it.
+        """
+        if self.oid is None:
+            return None
+
+        return self.oid.split("|")[0]
 
 
 class TeachUtterance(BaseModel):

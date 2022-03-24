@@ -57,6 +57,9 @@ def test_teach_edh_instance_interaction_has_custom_attributes(
             assert isinstance(interaction.agent_name, str)
             assert len(interaction.agent_name)
 
+            if interaction.oid is not None:
+                assert interaction.object_name
+
 
 def test_teach_edh_instance_has_history_and_future_interactions(
     teach_edh_all_data_paths: list[Path],
@@ -89,3 +92,6 @@ def test_teach_edh_instance_has_extended_driver_action_history(
 
             if action.action_id == 100:
                 assert action.utterance
+
+            if action.oid is not None:
+                assert action.object_name
