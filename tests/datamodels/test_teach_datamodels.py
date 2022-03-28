@@ -7,6 +7,7 @@ from emma_datasets.datamodels.datasets.teach import (
     ExtendedTeachDriverAction,
     TeachEdhInstance,
     TeachInteraction,
+    get_all_action_names,
 )
 
 
@@ -95,3 +96,9 @@ def test_teach_edh_instance_has_extended_driver_action_history(
 
             if action.oid is not None:
                 assert action.object_name
+
+
+def test_can_get_all_action_names() -> None:
+    """Ensure all the action names can be retrieved."""
+    all_action_names = get_all_action_names()
+    assert all_action_names

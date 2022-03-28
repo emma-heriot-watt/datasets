@@ -17,6 +17,19 @@ TEACH_FRAME_NAME_TEMPLATE = "{agent_name}.frame.{time_start}.{suffix}"
 
 
 @lru_cache(maxsize=1)
+def get_all_action_names() -> set[str]:
+    """Get a list of all possible action names that are possible for TEACh."""
+    default_definitions_path = settings.paths.constants.joinpath(
+        "teach", "default_definitions.json"
+    )
+    definitions_dict = read_json(default_definitions_path)
+    action_definitions_list: list[dict[str, Any]] = definitions_dict["definitions"]["actions"]
+
+    all_action_names = {action["action_name"] for action in action_definitions_list}
+    return all_action_names
+
+
+@lru_cache(maxsize=1)
 def get_action_idx_to_action_name_map() -> dict[int, str]:
     """Load the mapping from the constants file and cache the results."""
     action_idx_to_action_name_path = settings.paths.constants.joinpath(
