@@ -30,11 +30,11 @@ envfile = ".env"
 
 		[tool.poe.tasks.test]
 		help = "Run the fast Python tests"
-		cmd = "pytest --cov=src -m 'not slow'"
+		cmd = "pytest -v --cov=src -m 'not slow' -n 2"
 
 		[tool.poe.tasks.test-everything]
 		help = "Run all the tests and get the coverage"
-		cmd = "pytest -v --junitxml=pytest.xml --cov=src -m 'not slow and not multiprocessing'"
+		cmd = "pytest -v --durations=40 --color=yes --junitxml=pytest.xml --cov=src -n 2"
 
 		[tool.poe.tasks.update-torch-cuda]
 		## See https://github.com/python-poetry/poetry/issues/2543
@@ -79,6 +79,7 @@ isort = "^5.10.1"
 black = { extras = ["jupyter"], version = "^22.1" }
 pytest-cases = "^3.6.11"
 deepdiff = "^5.7.0"
+pytest-xdist = "^2.5.0"
 
 [tool.black]
 line-length = 99
