@@ -1,7 +1,7 @@
 import logging
 import signal
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import Future, ThreadPoolExecutor, wait
 from functools import partial
 from http.client import HTTPResponse
 from pathlib import Path
@@ -91,10 +91,15 @@ class Downloader:
 
         with self._display_progress():
             with ThreadPoolExecutor(max_workers=max_workers) as thread_pool:
-                for url in urls:
+                file_futures = [
                     self.download_file(url=url, output_dir=output_dir, pool=thread_pool)
+                    for url in urls
+                ]
 
-    def download_file(self, url: str, output_dir: Path, pool: ThreadPoolExecutor) -> None:
+                # Wait for all the files to be downloaded
+                wait(file_futures)
+
+    def download_file(self, url: str, output_dir: Path, pool: ThreadPoolExecutor) -> Future[None]:
         """Download the file to the specified directory.
 
         It will create the output directory if it does not exist.
@@ -116,7 +121,7 @@ class Downloader:
         else:
             download_func = self.download_from_url
 
-        pool.submit(download_func, task_id, url, dest_path)
+        return pool.submit(download_func, task_id, url, dest_path)
 
     def download_from_s3(self, task_id: TaskID, url: str, path: Path) -> None:
         """Download file from a s3 bucket."""
@@ -124,16 +129,22 @@ class Downloader:
         bucket_name = parsed_url.netloc
         object_key = parsed_url.path.lstrip("/")
 
-        s3 = boto3.resource("s3")
-        file_object = s3.Object(bucket_name, object_key)
+        s3 = boto3.client("s3")
+        file_size: int = s3.get_object_attributes(
+            Bucket=bucket_name,
+            Key=object_key,
+            ObjectAttributes=["ObjectSize"],
+        )["ObjectSize"]
 
-        job_progress.update(task_id, total=file_object.content_length)
+        job_progress.update(task_id, total=file_size)
 
-        if not path.exists() or path.stat().st_size < file_object.content_length:
+        if not path.exists() or path.stat().st_size < file_size:
             job_progress.start_task(task_id)
             job_progress.update(task_id, visible=True)
 
             s3.download_file(
+                Bucket=bucket_name,
+                Key=object_key,
                 Filename=path.as_posix(),
                 Callback=lambda x: job_progress.update(task_id, advance=x),
             )
