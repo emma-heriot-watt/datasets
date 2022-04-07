@@ -20,7 +20,7 @@ ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
 def _get_language_data_from_scene_graph(scene_graph: SceneGraph) -> list[str]:
     annotations = []
 
-    for _, scene_obj in scene_graph.objects.items():
+    for scene_obj in scene_graph.objects.values():
         if scene_obj.attributes:
             for attr in scene_obj.attributes:
                 annotations.append(f"{scene_obj.name} has attribute {attr}")
@@ -54,14 +54,14 @@ def _get_language_data_from_trajectory(trajectory: ActionTrajectory) -> list[str
     return [trajectory_str]
 
 
-def _get_language_data_from_caption(caption: Caption) -> list[str]:
+def _get_language_data_from_captions(captions: list[Caption]) -> list[str]:
     """Returns the caption text."""
-    return [caption.text]
+    return [caption.text for caption in captions]
 
 
-def _get_language_data_from_qa(qa: QuestionAnswerPair) -> list[str]:
+def _get_language_data_from_qas(qas: list[QuestionAnswerPair]) -> list[str]:
     """Returns a formatted string containing both the question and the answer."""
-    return [f"{qa.question} {qa.answer}"]
+    return [f"{qa.question} {qa.answer}" for qa in qas]
 
 
 def _get_language_data_from_regions(regions: list[Region]) -> list[str]:
@@ -69,33 +69,12 @@ def _get_language_data_from_regions(regions: list[Region]) -> list[str]:
     return [region.caption for region in regions]
 
 
-AnnotationType = Union[Caption, SceneGraph, list[Region], QuestionAnswerPair, ActionTrajectory]
-
-
-def get_language_data(attribute_value: AnnotationType) -> list[str]:
-    """Returns the language annotations associated with a given attribute."""
-    if isinstance(attribute_value, Caption):
-        return _get_language_data_from_caption(attribute_value)
-
-    if isinstance(attribute_value, QuestionAnswerPair):
-        return _get_language_data_from_qa(attribute_value)
-
-    if isinstance(attribute_value, list) and isinstance(attribute_value[0], Region):
-        return _get_language_data_from_regions(attribute_value)
-
-    if isinstance(attribute_value, SceneGraph):
-        return _get_language_data_from_scene_graph(attribute_value)
-
-    return _get_language_data_from_trajectory(attribute_value)
-
-
 class Instance(BaseInstance):
     """Instance within the dataset."""
 
-    # id: str
     dataset: DatasetDict
-    caption: Optional[Caption]
-    qa: Optional[QuestionAnswerPair]
+    captions: Optional[list[Caption]]
+    qas: Optional[list[QuestionAnswerPair]]
     regions: Optional[list[Region]]
     scene_graph: Optional[SceneGraph]
     trajectory: Optional[ActionTrajectory]
@@ -117,12 +96,20 @@ class Instance(BaseInstance):
         """Derives all the language annotations associated with a given instance."""
         lang_data_iterable = []
 
-        # iterates over the attributes of the class
-        for attribute_name, attribute_value in self:
-            # if the current attribute is available and it's not the `dataset` name
-            if attribute_name != "dataset" and attribute_value is not None:
-                lang_data = get_language_data(attribute_value)
-                lang_data_iterable.extend(lang_data)
+        if self.captions is not None:
+            lang_data_iterable.extend(_get_language_data_from_captions(self.captions))
+
+        if self.qas is not None:
+            lang_data_iterable.extend(_get_language_data_from_qas(self.qas))
+
+        if self.regions is not None:
+            lang_data_iterable.extend(_get_language_data_from_regions(self.regions))
+
+        if self.scene_graph is not None:
+            lang_data_iterable.extend(_get_language_data_from_scene_graph(self.scene_graph))
+
+        if self.trajectory is not None:
+            lang_data_iterable.extend(_get_language_data_from_trajectory(self.trajectory))
 
         return lang_data_iterable
 

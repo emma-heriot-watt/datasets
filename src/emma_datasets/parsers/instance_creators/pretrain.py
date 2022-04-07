@@ -1,5 +1,4 @@
-import itertools
-from typing import Iterator, Optional
+from typing import Optional
 
 from pydantic import parse_file_as
 
@@ -25,95 +24,18 @@ ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
 class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Instance]):
     """Create instances from groups of metadata from all the datasets."""
 
-    def _create_instances(self, input_data: list[DatasetMetadata]) -> list[Instance]:
-        """Create all the possible instances from a single group of metadata.
-
-        If there are no text aspects (e.g. captions or qa pairs), then the instance is returned
-        without one.
-        """
+    def _create_instance(self, input_data: list[DatasetMetadata]) -> Instance:
+        """Create instance from a single group of metadata."""
         regions = self._get_regions(input_data)
         scene_graph = self._get_scene_graph(input_data)
         trajectory = self._get_action_trajectory(input_data)
         captions = self._get_captions(input_data)
         qa_pairs = self._get_qa_pairs(input_data)
 
-        caption_instances = (
-            self._instances_from_captions(input_data, captions, regions, scene_graph, trajectory)
-            if captions
-            else None
-        )
-
-        qa_pair_instances = (
-            self._instances_from_qa_pairs(input_data, qa_pairs, regions, scene_graph, trajectory)
-            if qa_pairs
-            else None
-        )
-
-        instance_iterators = [
-            iterator for iterator in (caption_instances, qa_pair_instances) if iterator is not None
-        ]
-
-        # If there are no instances with text, return without
-        if not instance_iterators:
-            return [self._instance_without_text(input_data, scene_graph, regions, trajectory)]
-
-        return list(itertools.chain.from_iterable(instance_iterators))
-
-    def _instances_from_qa_pairs(
-        self,
-        metadata_list: list[DatasetMetadata],
-        qa_pairs: list[QuestionAnswerPair],
-        regions: Optional[list[Region]],
-        scene_graph: Optional[SceneGraph],
-        trajectory: Optional[ActionTrajectory],
-    ) -> Iterator[Instance]:
-        """Create instances from provided QA-pairs."""
-        return (
-            Instance(
-                dataset={metadata.name: metadata for metadata in metadata_list},
-                qa=qa_pair,
-                regions=regions,
-                scene_graph=scene_graph,
-                trajectory=trajectory,
-            )
-            for qa_pair in qa_pairs
-        )
-
-    def _instances_from_captions(
-        self,
-        metadata_list: list[DatasetMetadata],
-        captions: list[Caption],
-        regions: Optional[list[Region]],
-        scene_graph: Optional[SceneGraph],
-        trajectory: Optional[ActionTrajectory],
-    ) -> Iterator[Instance]:
-        """Get all instances from a list of captions."""
-        return (
-            Instance(
-                dataset={metadata.name: metadata for metadata in metadata_list},
-                caption=text,
-                regions=regions,
-                scene_graph=scene_graph,
-                trajectory=trajectory,
-            )
-            for text in captions
-        )
-
-    def _instance_without_text(
-        self,
-        metadata_list: list[DatasetMetadata],
-        scene_graph: Optional[SceneGraph],
-        regions: Optional[list[Region]],
-        trajectory: Optional[ActionTrajectory],
-    ) -> Instance:
-        """Return instance from a scene without any text."""
-        if not regions or not len(regions):
-            raise ValueError(
-                "There are [b]no captions nor any QA pairs nor regions[/] for the current scene. Is this right?",
-            )
-
         return Instance(
-            dataset={metadata.name: metadata for metadata in metadata_list},
+            dataset={metadata.name: metadata for metadata in input_data},
+            captions=captions,
+            qa_pairs=qa_pairs,
             regions=regions,
             scene_graph=scene_graph,
             trajectory=trajectory,

@@ -1,4 +1,3 @@
-import itertools
 from abc import ABC, abstractmethod
 from multiprocessing.pool import Pool
 from typing import Generic, Iterable, Iterator, Optional, TypeVar, Union
@@ -43,32 +42,31 @@ class GenericInstanceCreator(ABC, Generic[InputType, OutputType]):
         """Create instances from a list of input data."""
         progress.reset(self.task_id, start=True, visible=True)
 
+        iterator: Iterator[Union[OutputType, bytes]]
+
         if pool is not None:
-            iterator = pool.imap_unordered(self.create_instances, input_data)
-            for instances in iterator:
-                progress.advance(self.task_id, advance=len(instances))
-                yield from itertools.chain(instances)
-
+            iterator = pool.imap_unordered(self.create_instance, input_data)
         else:
-            for scene in input_data:
-                scene_instances = self.create_instances(scene)
-                progress.advance(self.task_id, advance=len(scene_instances))
-                yield from itertools.chain(scene_instances)
+            iterator = (self.create_instance(instance) for instance in input_data)
 
-    def create_instances(self, input_data: InputType) -> Union[list[OutputType], list[bytes]]:
-        """Create all the possible instances from a single piece of input data.
+        for instance in iterator:
+            progress.advance(self.task_id)
+            yield instance
+
+    def create_instance(self, input_data: InputType) -> Union[OutputType, bytes]:
+        """Create the instance from a single piece of input data.
 
         If desired, also compress the instance into the bytes representation to faciliate drastic
         speed increases in writing to the DB.
         """
-        instances = self._create_instances(input_data)
+        instance = self._create_instance(input_data)
 
         if self._should_compress:
-            return [self._storage.compress(instance) for instance in instances]
+            return self._storage.compress(instance)
 
-        return instances
+        return instance
 
     @abstractmethod
-    def _create_instances(self, input_data: InputType) -> list[OutputType]:
+    def _create_instance(self, input_data: InputType) -> OutputType:
         """The main logic for creating the instance goes here."""
         raise NotImplementedError
