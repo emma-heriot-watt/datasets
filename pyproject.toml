@@ -74,7 +74,7 @@ ipykernel = "^6.12.1"
 pre-commit = "^2.18.1"
 poethepoet = "^0.13.1"
 pytest-cov = "^3.0.0"
-jupyterlab = "^3.3.2"
+jupyterlab = "^3.3.3"
 isort = "^5.10.1"
 black = { extras = ["jupyter"], version = "^22.3" }
 pytest-cases = "^3.6.11"
