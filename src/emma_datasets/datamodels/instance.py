@@ -69,15 +69,10 @@ def _get_language_data_from_regions(regions: list[Region]) -> list[str]:
     return [region.caption for region in regions]
 
 
-class Instance(BaseInstance):
-    """Instance within the dataset."""
+class MultiSourceInstanceMixin(BaseInstance):
+    """Mixin class exposing functionalities useful for instances based on multiple datasets."""
 
     dataset: DatasetDict
-    captions: Optional[list[Caption]]
-    qas: Optional[list[QuestionAnswerPair]]
-    regions: Optional[list[Region]]
-    scene_graph: Optional[SceneGraph]
-    trajectory: Optional[ActionTrajectory]
 
     @property
     def modality(self) -> MediaType:
@@ -90,6 +85,35 @@ class Instance(BaseInstance):
             return max(instance_modalities)
 
         return next(iter(instance_modalities))
+
+    @property
+    def source_paths(self) -> Union[Path, list[Path], None]:
+        """Get source paths for this instance.
+
+        Since an instance can be mapped to more than one dataset, we assume that the source media
+        is going to be identical across them. Therefore, it doesn't matter which dataset's image
+        file we use since they should be identical.
+        """
+        return next(iter(self.dataset.values())).paths
+
+    @property
+    def features_path(self) -> Path:
+        """Get the path to the features for this instance.
+
+        If the instance is connected to more than one dataset, just get any one feature file.
+        """
+        all_feature_paths = (metadata.features_path for metadata in self.dataset.values())
+        return next(all_feature_paths)
+
+
+class Instance(MultiSourceInstanceMixin):
+    """Instance within the dataset."""
+
+    captions: Optional[list[Caption]]
+    qas: Optional[list[QuestionAnswerPair]]
+    regions: Optional[list[Region]]
+    scene_graph: Optional[SceneGraph]
+    trajectory: Optional[ActionTrajectory]
 
     @property
     def language_annotations(self) -> list[str]:
@@ -112,22 +136,3 @@ class Instance(BaseInstance):
             lang_data_iterable.extend(_get_language_data_from_trajectory(self.trajectory))
 
         return lang_data_iterable
-
-    @property
-    def source_paths(self) -> Union[Path, list[Path], None]:
-        """Get source paths for this instance.
-
-        Since an instance can be mapped to more than one dataset, we assume that the source media
-        is going to be identical across them. Therefore, it doesn't matter which dataset's image
-        file we use since they should be identical.
-        """
-        return next(iter(self.dataset.values())).paths
-
-    @property
-    def features_path(self) -> Path:
-        """Get the path to the features for this instance.
-
-        If the instance is connected to more than one dataset, just get any one feature file.
-        """
-        all_feature_paths = (metadata.features_path for metadata in self.dataset.values())
-        return next(all_feature_paths)

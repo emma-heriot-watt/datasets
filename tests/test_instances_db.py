@@ -26,3 +26,11 @@ def test_can_access_built_pretraining_instances_without_error(
     for _, _, instance_str in subset_instances_db:
         new_instance = Instance.parse_raw(instance_str)
         assert isinstance(new_instance, Instance)
+
+
+def test_access_to_instance_attributes_without_error(subset_instances_db: DatasetDb) -> None:
+    for _, _, instance_str in subset_instances_db:
+        new_instance = Instance.parse_raw(instance_str)
+        assert new_instance.modality
+        assert new_instance.features_path
+        assert new_instance.source_paths
