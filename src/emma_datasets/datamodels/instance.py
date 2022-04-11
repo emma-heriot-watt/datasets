@@ -59,9 +59,9 @@ def _get_language_data_from_captions(captions: list[Caption]) -> list[str]:
     return [caption.text for caption in captions]
 
 
-def _get_language_data_from_qas(qas: list[QuestionAnswerPair]) -> list[str]:
+def _get_language_data_from_qa_pairs(qa_pairs: list[QuestionAnswerPair]) -> list[str]:
     """Returns a formatted string containing both the question and the answer."""
-    return [f"{qa.question} {qa.answer}" for qa in qas]
+    return [f"{qa.question} {qa.answer}" for qa in qa_pairs]
 
 
 def _get_language_data_from_regions(regions: list[Region]) -> list[str]:
@@ -73,6 +73,11 @@ class MultiSourceInstanceMixin(BaseInstance):
     """Mixin class exposing functionalities useful for instances based on multiple datasets."""
 
     dataset: DatasetDict
+    captions: Optional[list[Caption]]
+    qa_pairs: Optional[list[QuestionAnswerPair]]
+    regions: Optional[list[Region]]
+    scene_graph: Optional[SceneGraph]
+    trajectory: Optional[ActionTrajectory]
 
     @property
     def modality(self) -> MediaType:
@@ -123,8 +128,8 @@ class Instance(MultiSourceInstanceMixin):
         if self.captions is not None:
             lang_data_iterable.extend(_get_language_data_from_captions(self.captions))
 
-        if self.qas is not None:
-            lang_data_iterable.extend(_get_language_data_from_qas(self.qas))
+        if self.qa_pairs is not None:
+            lang_data_iterable.extend(_get_language_data_from_qa_pairs(self.qa_pairs))
 
         if self.regions is not None:
             lang_data_iterable.extend(_get_language_data_from_regions(self.regions))
