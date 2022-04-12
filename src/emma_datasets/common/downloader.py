@@ -64,8 +64,6 @@ def handle_sigint(signum: int, frame: Any) -> None:
     done_event.set()
 
 
-signal.signal(signal.SIGINT, handle_sigint)
-
 TIME_STR = time.strftime("%Y%m%d-%H%M%S")
 LOG_NAME = f"logs/downloader_{TIME_STR}.log"
 
@@ -78,6 +76,8 @@ class Downloader:
         self._chunk_size = chunk_size
 
         self._create_log_file()
+
+        signal.signal(signal.SIGINT, handle_sigint)
 
     def download(
         self, urls: list[str], output_dir: Path, max_workers: Optional[int] = None
