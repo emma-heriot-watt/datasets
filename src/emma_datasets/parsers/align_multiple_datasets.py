@@ -99,8 +99,6 @@ class AlignMultipleDatasets:
         existing_common_dataset_ids = set() | non_common_ids
 
         for non_aligned in itertools.chain.from_iterable(non_aligned_metadata):
-            self.progress.advance(self.task_id)
-
             if self.common_dataset in non_aligned:
                 metadata_id = non_aligned[self.common_dataset].id  # noqa: WPS529
 
@@ -109,6 +107,7 @@ class AlignMultipleDatasets:
 
                 existing_common_dataset_ids.add(metadata_id)
 
+            self.progress.advance(self.task_id)
             yield list(non_aligned.values())
 
     def get_common_aligned_ids(
