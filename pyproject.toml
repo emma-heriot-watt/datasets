@@ -78,7 +78,7 @@ jupyterlab = "^3.3.3"
 isort = "^5.10.1"
 black = { extras = ["jupyter"], version = "^22.3" }
 pytest-cases = "^3.6.11"
-deepdiff = "^5.7.0"
+deepdiff = "^5.8.0"
 
 [tool.black]
 line-length = 99
