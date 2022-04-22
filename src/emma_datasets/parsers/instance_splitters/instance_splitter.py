@@ -129,9 +129,9 @@ class InstanceSplitter(ABC, Generic[Annotation]):
         filepath = self.output_dir.joinpath(f"{filename}.{ext}")
 
         features_dict = (
-            [feature.dict() for feature in features]
+            [feature.dict(by_alias=True) for feature in features]
             if isinstance(features, Iterable) and not isinstance(features, BaseModel)
-            else features.dict()
+            else features.dict(by_alias=True)
         )
 
         write_json(filepath, features_dict)
