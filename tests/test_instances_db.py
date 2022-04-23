@@ -18,6 +18,14 @@ def test_alfred_instance_trajectory_is_correct_object(alfred_instance: Instance)
     if alfred_instance.trajectory is not None:
         assert isinstance(alfred_instance.trajectory, BaseModel)
         assert isinstance(alfred_instance.trajectory, GenericActionTrajectory)
+        high_level_actions = alfred_instance.trajectory.high_level_actions
+        if high_level_actions is not None:
+            planner_action = high_level_actions[0].planner_action
+            if planner_action.action == "PickupObject":
+                # if we have a pickup object, we are expecting a non-empty field for object/receptacle
+                assert planner_action.object_id is not None
+                assert planner_action.coordinate_object_id is not None
+                assert planner_action.coordinate_receptable_object_id is not None
 
 
 def test_can_access_built_pretraining_instances_without_error(

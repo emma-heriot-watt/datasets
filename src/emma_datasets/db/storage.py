@@ -71,7 +71,7 @@ class JsonStorage(DataStorage):
 
     def _serialize_custom_types(self, custom_obj: Any) -> Any:
         if isinstance(custom_obj, BaseModel):
-            return custom_obj.json()
+            return custom_obj.json(by_alias=True)
 
         raise TypeError
 

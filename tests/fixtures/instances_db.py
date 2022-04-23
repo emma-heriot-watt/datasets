@@ -43,8 +43,12 @@ def alfred_instance(subset_instances_db: DatasetDb) -> Optional[Instance]:
     for (_, _, instance_str) in subset_instances_db:
         instance = Instance.parse_raw(instance_str)
 
-        if DatasetName.alfred in instance.dataset:
-            return instance
+        if DatasetName.alfred in instance.dataset and instance.trajectory is not None:
+            high_level_actions = instance.trajectory.high_level_actions
+            if high_level_actions is not None:
+                planner_action = high_level_actions[0].planner_action
+                if planner_action.action == "PickupObject":
+                    return instance
 
     return None
 
