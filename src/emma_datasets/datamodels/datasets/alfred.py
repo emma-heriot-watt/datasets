@@ -62,6 +62,7 @@ class AlfredApiAction(Action):
     """Represents an AI2Thor action that can be executed on the simulartor."""
 
     object_id: Optional[str] = Field(None, alias="objectId")
+    receptacle_object_id: Optional[str] = Field(None, alias="receptacleObjectId")
     force_action: Optional[bool] = Field(None, alias="forceAction")
     move_magnitude: Optional[float] = Field(None, alias="moveMagnitude")
 
