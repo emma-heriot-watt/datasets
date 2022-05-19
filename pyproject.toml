@@ -54,7 +54,7 @@ python = "^3.9"
 pydantic = { extras = ["dotenv"], version = "^1.8.2" }
 rich = "^12.2.0"
 numpy = "^1.22.3"
-orjson = "^3.6.7"
+orjson = "^3.6.8"
 Pillow = "^9.1.0"
 torch = { version = "^1.11.0", optional = true }
 py7zr = "^0.18.6"
