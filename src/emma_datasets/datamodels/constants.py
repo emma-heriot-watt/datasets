@@ -27,9 +27,8 @@ class DatasetName(Enum):
 
     alfred = "ALFRED"
     coco = "COCO"
-    epic_kitchens = "Epic Kitchens"
+    epic_kitchens = "EPIC-KITCHENS"
     gqa = "GQA"
-    open_images = "OpenImages"
     visual_genome = "Visual Genome"
     teach = "TEACh"
 
@@ -49,7 +48,6 @@ DatasetModalityMap: dict[DatasetName, MediaType] = {
     DatasetName.gqa: MediaType.image,
     DatasetName.visual_genome: MediaType.image,
     DatasetName.epic_kitchens: MediaType.video,
-    DatasetName.open_images: MediaType.image,
     DatasetName.alfred: MediaType.video,
 }
 
