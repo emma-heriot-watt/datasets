@@ -1,3 +1,4 @@
+import logging
 import tarfile
 from pathlib import Path
 from typing import Iterator, Optional, TypeVar
@@ -6,6 +7,8 @@ from zipfile import ZipFile, ZipInfo
 from py7zr import SevenZipFile
 from rich.progress import Progress, TaskID
 
+
+logger = logging.getLogger(__name__)
 
 T = TypeVar("T", tarfile.TarInfo, ZipInfo)
 
@@ -36,6 +39,8 @@ class ExtractArchive:
             move_files_to_output_dir (bool): Whether to move files to the output
                 directory, therefore removing any folder structure. Defaults to False.
         """
+        self._verify_path_exists(path)
+
         output_dir = output_dir if output_dir is not None else path.parent
         output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -188,6 +193,11 @@ class ExtractArchive:
             visible=True,
             total=progress._tasks[task_id].total + updated_total,  # noqa: WPS437
         )
+
+    def _verify_path_exists(self, path: Path) -> None:
+        """Verify the file path exists, and warn if it doesn't."""
+        if not path.exists():
+            logger.warning(f"File [u]{path}[/] does not exist.")
 
 
 extract_archive = ExtractArchive().__call__  # noqa: WPS609

@@ -88,7 +88,7 @@ class InstanceSplitter(ABC, Generic[Annotation]):
 
     @abstractmethod
     def convert(self, raw_feature: Any) -> Union[Annotation, Iterable[Annotation]]:
-        """Convert a RawAnnotation into a Annotation."""
+        """Convert a raw annotation into a Annotation."""
         raise NotImplementedError()
 
     @abstractmethod
