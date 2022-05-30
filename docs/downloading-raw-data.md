@@ -9,7 +9,7 @@ There is a single CSV file which contains a link to every file which needs to be
 You can automatically download all the files by running:
 
 ```bash
-python -m emma_datasets download
+python -m emma_datasets download datasets
 ```
 
 ### Downloading specific datasets
@@ -17,7 +17,7 @@ python -m emma_datasets download
 If you want to download specific datasets, you can provide the dataset name to the command. For example, to download just COCO and GQA, run:
 
 ```bash
-python -m emma_datasets download coco gqa
+python -m emma_datasets download datasets coco gqa
 ```
 
 ## Organising the raw data
