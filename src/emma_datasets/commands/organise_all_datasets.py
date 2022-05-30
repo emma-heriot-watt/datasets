@@ -1,17 +1,20 @@
+import logging
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Optional
+from typing import Callable, Optional
 
+import typer
 from rich.progress import BarColumn, Progress, TextColumn
 
-from emma_datasets.common import Settings, use_rich_for_logging, use_rich_for_tracebacks
+from emma_datasets.common import Settings, use_rich_for_logging
 from emma_datasets.common.progress import BatchesProcessedColumn, CustomTimeColumn
 from emma_datasets.datamodels import DatasetName
 from emma_datasets.io import extract_archive
 
 
 use_rich_for_logging()
-use_rich_for_tracebacks()
+logger = logging.getLogger(__name__)
+
 settings = Settings()
 settings.paths.create_dirs()
 
@@ -145,6 +148,10 @@ def organise_alfred(pool: ThreadPoolExecutor, progress: Progress) -> None:
     """Extract and organise files from ALFRED."""
     organise_dataset = OrganiseDataset(settings.paths.alfred, DatasetName.alfred)
 
+    alfred_warning = """Raw data from ALFRED comes as one giant 7z file, which cannot be efficiently extracted using this CLI. This is a known issue and unfortunately you will need to extract this one file separately using your shell. Sorry about that.
+    """
+    logger.warning(alfred_warning)
+
     organise_dataset.submit(
         description="Extracting metadata",
         file_names=["json_2.1.0.7z"],
@@ -195,13 +202,26 @@ def organise_teach(pool: ThreadPoolExecutor, progress: Progress) -> None:
     )
 
 
-def organise_all_datasets() -> None:
-    """Organise all the datasets in the storage folder.
+def organise_datasets(
+    datasets: Optional[list[DatasetName]] = typer.Argument(  # noqa: WPS404
+        None, case_sensitive=False, show_default=False
+    )
+) -> None:
+    """Organise the datasets in the storage folder.
 
-    This is going to take a while because of how many files there are, the size of them, and the fact that we're limited to using multithreading instead of multiprocessing.
-
-    If using an instance on a cloud server, ThreadPoolExecutor maxes out at 32 workers, so no need to have more cores than that.
+    This is going to take a while because of how many files there are, the size of them, and the
+    fact that we're limited to using multithreading instead of multiprocessing. This uses all the
+    possible threads available on your system, up to a maximum of 32 threads.
     """
+    switcher: dict[DatasetName, Callable[[ThreadPoolExecutor, Progress], None]] = {
+        DatasetName.coco: organise_coco,
+        DatasetName.visual_genome: organise_visual_genome,
+        DatasetName.gqa: organise_gqa,
+        DatasetName.epic_kitchens: organise_epic_kitchens,
+        DatasetName.alfred: organise_alfred,
+        DatasetName.teach: organise_teach,
+    }
+
     progress_bar = Progress(
         TextColumn("[white]{task.fields[dataset_name]}", justify="left"),
         TextColumn("[bold yellow][progress.description]{task.description}", justify="right"),
@@ -211,15 +231,15 @@ def organise_all_datasets() -> None:
         TextColumn("[bright_black i]{task.fields[comment]}[/]"),
     )
 
+    if not datasets:
+        progress_bar.console.log("No datasets provided, therefore organising all datasets...")
+        datasets = list(DatasetName)
+
     with progress_bar:
         with ThreadPoolExecutor() as pool:
-            organise_coco(pool, progress_bar)
-            organise_visual_genome(pool, progress_bar)
-            organise_gqa(pool, progress_bar)
-            organise_epic_kitchens(pool, progress_bar)
-            organise_alfred(pool, progress_bar)
-            organise_teach(pool, progress_bar)
+            for dataset_name in datasets:
+                switcher[dataset_name](pool, progress_bar)
 
 
 if __name__ == "__main__":
-    organise_all_datasets()
+    organise_datasets()

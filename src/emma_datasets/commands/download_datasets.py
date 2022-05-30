@@ -1,47 +1,48 @@
-import argparse
+import logging
 from pathlib import Path
+from typing import Optional
+
+import typer
 
 from emma_datasets.common import Downloader, Settings
+from emma_datasets.datamodels import DatasetName
 from emma_datasets.io import read_csv
 
 
+logger = logging.getLogger(__name__)
+
 settings = Settings()
 
+DEFAULT_CSV_PATH = settings.paths.constants.joinpath("dataset_downloads.csv")
 
-def download_datasets(csv_file_path: Path, storage_root: Path, max_workers: int) -> None:
-    """Download the dataset files from the CSV file of urls."""
+
+def download_datasets(
+    datasets: Optional[list[DatasetName]] = typer.Argument(  # noqa: WPS404
+        None, case_sensitive=False, show_default=False
+    ),
+    csv_file_path: Path = DEFAULT_CSV_PATH,
+    output_dir: Path = settings.paths.datasets,
+    max_concurrent_downloads: int = 1,
+) -> None:
+    """Download the dataset files from the CSV file.
+
+    If none are specified, download all of them.
+    """
+    if not datasets:
+        logger.info("No datasets provided, therefore downloading all datasets...")
+        datasets = list(DatasetName)
+
     downloader = Downloader()
     data_dicts = read_csv(csv_file_path)
 
     all_urls = []
     for file_dict in data_dicts:
         dataset, url = file_dict.values()
-        all_urls.append(url)
+        if DatasetName[dataset] in datasets:
+            all_urls.append(url)
 
-    downloader.download(all_urls, storage_root.joinpath(dataset), max_workers)
+    downloader.download(all_urls, output_dir.joinpath(dataset), max_concurrent_downloads)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        "--csv-file-path",
-        help="Path to the CSV file of dataset files to download",
-        type=Path,
-        default=settings.paths.constants.joinpath("dataset_downloads.csv"),
-    )
-    parser.add_argument(
-        "--output-dir",
-        help="Path to the datasets directory",
-        type=Path,
-        default=settings.paths.datasets,
-    )
-    parser.add_argument(
-        "--max-workers",
-        help="Maximum number of concurrent downloads at any one time",
-        type=int,
-        default=1,
-    )
-    args = parser.parse_args()
-
-    download_datasets(args.csv_file_path, args.output_dir, args.max_workers)
+    download_datasets()

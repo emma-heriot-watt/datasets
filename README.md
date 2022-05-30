@@ -50,6 +50,8 @@ If you are using Poetry, this command will currently install from the main branc
 
 ## Writing code and running things
 
+When running commands for `emma_datasets`, you can append `--help` to get more information on the commands and any arguments available to you.
+
 ### Project structure
 
 This is organised in very similarly to structure from the [Lightning-Hydra-Template](https://github.com/ashleve/lightning-hydra-template#project-structure) to facilitate reproducible research code.
@@ -60,6 +62,9 @@ This is organised in very similarly to structure from the [Lightning-Hydra-Templ
 - `tests` — [pytest](https://docs.pytest.org/en/) scripts to verify the code
 - `src/emma_datasets` — where the main code lives
 
-### Downloading the data
+### How-to guides
 
-There is a single CSV file which contains a link to every file which needs to be downloaded to create the full dataset.
+For more detail on how to use this library, check out the following specific pages on:
+
+- [Installing and preparing your developer environment](https://github.com/emma-simbot/datasets/blob/main/CONTRIBUTING.md)
+- [Downloading and organising the raw datasets](https://github.com/emma-simbot/datasets/)
