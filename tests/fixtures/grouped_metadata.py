@@ -58,9 +58,9 @@ def all_grouped_metadata(
     vg_coco_gqa_grouped_metadata: Iterator[list[DatasetMetadata]],
     epic_kitchens_grouped_metadata: Iterator[list[DatasetMetadata]],
     alfred_grouped_metadata: Iterator[list[DatasetMetadata]],
-    all_split_instances: bool,
+    all_extracted_annotations: bool,
 ) -> Iterator[list[DatasetMetadata]]:
-    assert all_split_instances
+    assert all_extracted_annotations
     return itertools.chain(
         vg_coco_gqa_grouped_metadata, epic_kitchens_grouped_metadata, alfred_grouped_metadata
     )

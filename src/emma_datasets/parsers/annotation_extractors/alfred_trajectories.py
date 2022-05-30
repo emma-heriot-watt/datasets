@@ -11,13 +11,13 @@ from emma_datasets.datamodels import (
 )
 from emma_datasets.datamodels.datasets import AlfredMetadata
 from emma_datasets.io import read_json
-from emma_datasets.parsers.instance_splitters.instance_splitter import InstanceSplitter
+from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 
 
 ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
 
 
-class AlfredTrajectorySplitter(InstanceSplitter[ActionTrajectory]):
+class AlfredSubgoalTrajectoryExtractor(AnnotationExtractor[ActionTrajectory]):
     """Split subgoal trajectories for ALFRED into multiple files."""
 
     progress_bar_description = f"[b]Trajectories[/] from [u]{DatasetName.alfred.value}[/]"

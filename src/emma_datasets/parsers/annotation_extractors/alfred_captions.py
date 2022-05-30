@@ -5,10 +5,10 @@ from overrides import overrides
 from emma_datasets.datamodels import Caption, DatasetName
 from emma_datasets.datamodels.datasets import AlfredMetadata
 from emma_datasets.io import read_json
-from emma_datasets.parsers.instance_splitters.instance_splitter import InstanceSplitter
+from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 
 
-class AlfredCaptionSplitter(InstanceSplitter[Caption]):
+class AlfredCaptionExtractor(AnnotationExtractor[Caption]):
     """Split subgoal descriptions for ALFRED into multiple files."""
 
     progress_bar_description = f"[b]Captions[/] from [u]{DatasetName.alfred.value}[/]"

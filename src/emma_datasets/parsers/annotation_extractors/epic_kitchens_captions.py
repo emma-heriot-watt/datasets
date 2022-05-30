@@ -3,10 +3,10 @@ from typing import Any
 from emma_datasets.datamodels import Caption, DatasetName
 from emma_datasets.datamodels.datasets import EpicKitchensNarrationMetadata
 from emma_datasets.io import read_csv
-from emma_datasets.parsers.instance_splitters.instance_splitter import InstanceSplitter
+from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 
 
-class EpicKitchensCaptionSplitter(InstanceSplitter[Caption]):
+class EpicKitchensCaptionExtractor(AnnotationExtractor[Caption]):
     """Split captions for EpicKitchens into multiple files."""
 
     progress_bar_description = f"[b]Captions[/] from [u]{DatasetName.epic_kitchens.value}[/]"

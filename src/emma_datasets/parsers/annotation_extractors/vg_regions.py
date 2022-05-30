@@ -4,13 +4,13 @@ import numpy
 
 from emma_datasets.datamodels import Region
 from emma_datasets.datamodels.datasets import VgImageRegions
-from emma_datasets.parsers.instance_splitters.instance_splitter import InstanceSplitter
+from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 
 
-class VgRegionsSplitter(InstanceSplitter[Region]):
+class VgRegionsExtractor(AnnotationExtractor[Region]):
     """Split Regions per VG instance into multiple files."""
 
-    progress_bar_description = "Splitting regions for [u]Visual Genome[/]"
+    progress_bar_description = "[b]Regions[/] from [u]Visual Genome[/]"
 
     def convert(self, raw_feature: VgImageRegions) -> Iterator[Region]:
         """Convert raw region description to a Region instance."""

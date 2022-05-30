@@ -2,16 +2,16 @@ import itertools
 from typing import Any, Iterator
 
 from emma_datasets.datamodels import QuestionAnswerPair
-from emma_datasets.parsers.instance_splitters.instance_splitter import InstanceSplitter
+from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 
 
 RawInstanceType = tuple[str, list[dict[str, Any]]]
 
 
-class GqaQaPairSplitter(InstanceSplitter[QuestionAnswerPair]):
+class GqaQaPairExtractor(AnnotationExtractor[QuestionAnswerPair]):
     """Split QA pairs from GQA into multiple files."""
 
-    progress_bar_description = "Splitting QA pairs for [u]GQA[/]"
+    progress_bar_description = "[b]QA pairs[/] from [u]GQA[/]"
 
     def process_raw_file_return(self, raw_data: Any) -> Iterator[dict[str, Any]]:
         """Add image ID to each question data dictionary."""

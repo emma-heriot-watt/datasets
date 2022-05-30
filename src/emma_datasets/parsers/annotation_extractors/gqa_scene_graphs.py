@@ -2,13 +2,13 @@ from typing import Any
 
 from emma_datasets.datamodels import SceneGraph
 from emma_datasets.datamodels.datasets import GqaSceneGraph
-from emma_datasets.parsers.instance_splitters.instance_splitter import InstanceSplitter
+from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 
 
-class GqaSceneGraphSplitter(InstanceSplitter[SceneGraph]):
+class GqaSceneGraphExtractor(AnnotationExtractor[SceneGraph]):
     """Split scene graphs from GQA into multiple files."""
 
-    progress_bar_description = "Spliting scene graphs for [u]GQA[/]"
+    progress_bar_description = "[b]Scene graphs[/] from [u]GQA[/]"
 
     def process_raw_file_return(self, raw_data: Any) -> Any:
         """Get scene graph and image id as items."""

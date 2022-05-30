@@ -13,10 +13,10 @@ from emma_datasets.io import get_all_file_paths, read_json, write_json
 Annotation = TypeVar("Annotation", bound=BaseModel)
 
 
-class InstanceSplitter(ABC, Generic[Annotation]):
-    """Split annotations from instances into multiple files for easier loading."""
+class AnnotationExtractor(ABC, Generic[Annotation]):
+    """Extract annotations from the raw dataset into multiple files for easier loading."""
 
-    progress_bar_description = "Splitting annotations"
+    progress_bar_description = "Extracting annotations"
     file_ext: str = "json"
 
     def __init__(

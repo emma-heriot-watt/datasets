@@ -120,7 +120,7 @@ def teach_edh_all_data_paths(
 
 
 @fixture(scope="session")
-def split_instances_paths(request: Any) -> dict[str, Path]:
+def extracted_annotations_paths(request: Any) -> dict[str, Path]:
     annotation_folders = [
         "ek_captions",
         "coco_captions",
@@ -131,12 +131,12 @@ def split_instances_paths(request: Any) -> dict[str, Path]:
         "qa_pairs",
     ]
 
-    split_instances_paths = {}
+    paths = {}
 
     for name in annotation_folders:
-        split_instances_paths[name] = Path(request.config.cache.makedir(name))
+        paths[name] = Path(request.config.cache.makedir(name))
 
-    return split_instances_paths
+    return paths
 
 
 @fixture(scope="session")
