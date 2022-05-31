@@ -1,4 +1,7 @@
 ﻿dataset,url
+sbu_captions,hf://sbu_captions?key=image_url&split=train
+conceptual_captions,hf://conceptual_captions?key=image_url&split=train
+conceptual_captions,hf://conceptual_captions?key=image_url&split=validation
 coco,http://images.cocodataset.org/zips/train2017.zip
 coco,http://images.cocodataset.org/zips/val2017.zip
 coco,http://images.cocodataset.org/annotations/annotations_trainval2017.zip

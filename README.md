@@ -67,4 +67,4 @@ This is organised in very similarly to structure from the [Lightning-Hydra-Templ
 For more detail on how to use this library, check out the following specific pages on:
 
 - [Installing and preparing your developer environment](https://github.com/emma-simbot/datasets/blob/main/CONTRIBUTING.md)
-- [Downloading and organising the raw datasets](https://github.com/emma-simbot/datasets/)
+- [Downloading and organising the raw datasets](docs/downloading-raw-data.md)

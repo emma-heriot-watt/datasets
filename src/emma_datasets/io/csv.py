@@ -10,7 +10,7 @@ def read_csv(path: Union[str, Path]) -> list[dict[str, str]]:
     convert it to a python object, you'll need to parse it or use `ast.literal_eval`. That is why
     the return type annotation is the way it is.
     """
-    with open(path) as csvfile:
+    with open(path, encoding="utf-8-sig") as csvfile:
         reader = csv.DictReader(csvfile)
         data = list(reader)
 

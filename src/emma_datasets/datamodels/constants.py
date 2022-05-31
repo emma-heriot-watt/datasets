@@ -31,6 +31,8 @@ class DatasetName(Enum):
     gqa = "GQA"
     visual_genome = "Visual Genome"
     teach = "TEACh"
+    conceptual_captions = "Conceptual Captions"
+    sbu_captions = "SBU Captions"
 
 
 class DatasetSplit(Enum):

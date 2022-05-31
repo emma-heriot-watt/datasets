@@ -1,10 +1,11 @@
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Optional, cast
 
 from rich_click import typer
 
 from emma_datasets.common import Downloader, Settings
+from emma_datasets.common.downloader import DataDict
 from emma_datasets.datamodels import DatasetName
 from emma_datasets.io import read_csv
 
@@ -41,14 +42,13 @@ def download_datasets(
 
     downloader = Downloader()
     data_dicts = read_csv(csv_file_path)
+    filtered_data_dicts = [
+        cast(DataDict, file_dict)
+        for file_dict in data_dicts
+        if DatasetName[file_dict["dataset"]] in datasets
+    ]
 
-    all_urls = []
-    for file_dict in data_dicts:
-        dataset, url = file_dict.values()
-        if DatasetName[dataset] in datasets:
-            all_urls.append(url)
-
-    downloader.download(all_urls, output_dir.joinpath(dataset), max_concurrent_downloads)
+    downloader.download(filtered_data_dicts, output_dir, max_concurrent_downloads)
 
 
 if __name__ == "__main__":
