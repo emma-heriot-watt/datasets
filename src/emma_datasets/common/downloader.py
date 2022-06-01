@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from threading import Event
 from typing import Any, Iterable, Iterator, Optional, Sized, TypedDict, Union, cast
-from urllib.error import HTTPError, URLError
 from urllib.parse import ParseResult, parse_qs, urlparse
 
 import boto3
@@ -186,7 +185,9 @@ class Downloader:
             return
 
         try:
-            with requests.get(url, headers={"User-Agent": USER_AGENT}) as response:
+            with requests.get(
+                url, headers={"User-Agent": USER_AGENT}, allow_redirects=True, timeout=5
+            ) as response:
                 content_length = self._get_content_length_from_response(response)
                 content_type = self._get_content_type_from_response(response)
                 if not path.suffix and content_type == "image/jpeg":
@@ -198,8 +199,18 @@ class Downloader:
                     self._store_data(response, path, task_id)
 
             self._complete_download(task_id, path.name)
-        except (HTTPError, URLError):
-            self._log_file.write_text(f"Unable to download data from URL: {url}")
+        except requests.exceptions.Timeout:
+            self._log_file.write_text(
+                f"[Timeout]: Unable to download data from URL because timed out after 5 seconds: {url}"
+            )
+        except requests.exceptions.TooManyRedirects:
+            self._log_file.write_text(
+                f"[TooManyRedirects]: Unable to download data from URL: {url}"
+            )
+        except requests.exceptions.RequestException:
+            self._log_file.write_text(
+                f"[RequestException]: Unable to download data from URL: {url}"
+            )
 
     def _store_data(self, response: requests.Response, path: Path, task_id: TaskID) -> None:
         """Stores the data returned with an HTTP response."""
