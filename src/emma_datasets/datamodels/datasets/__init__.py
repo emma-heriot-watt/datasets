@@ -1,6 +1,7 @@
 from emma_datasets.datamodels.datasets.alfred import (
     AlfredAnnotation,
     AlfredHighAction,
+    AlfredImageMetadata,
     AlfredLowAction,
     AlfredMetadata,
     AlfredScene,

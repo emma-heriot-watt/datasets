@@ -122,3 +122,12 @@ def alfred_metadata_parser(
 )
 def metadata_parser(metadata_parser):
     return metadata_parser
+
+
+@fixture
+def alfred_annotations(fixtures_root: Path) -> dict[str, Path]:
+    alfred_dir = fixtures_root.joinpath("alfred/")
+    annotations_dict = {}
+    for annotation_file in alfred_dir.rglob("*.json"):
+        annotations_dict[annotation_file.parts[-2]] = annotation_file
+    return annotations_dict
