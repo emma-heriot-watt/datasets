@@ -4,13 +4,12 @@ from pathlib import Path
 from pydantic import parse_file_as
 
 from emma_datasets.datamodels import (
+    ActionTrajectory,
     Caption,
-    GenericActionTrajectory,
     QuestionAnswerPair,
     Region,
     SceneGraph,
 )
-from emma_datasets.datamodels.datasets.alfred import AlfredHighAction, AlfredLowAction
 
 
 def test_coco_caption_extractor_works(
@@ -102,7 +101,7 @@ def test_alfred_subgoal_trajectory_extractor_works(
     assert extract_alfred_subgoal_trajectories
 
     generated_trajectories = [
-        parse_file_as(GenericActionTrajectory[AlfredLowAction, AlfredHighAction], file_path)
+        parse_file_as(ActionTrajectory, file_path)
         for file_path in extracted_annotations_paths["trajectories"].iterdir()
     ]
 

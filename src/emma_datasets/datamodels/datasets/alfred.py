@@ -2,8 +2,9 @@ from typing import Any, Optional
 
 from pydantic import BaseModel, Field, root_validator
 
+from emma_datasets.datamodels.common import Action, Coordinate
 from emma_datasets.datamodels.constants import DatasetSplit
-from emma_datasets.datamodels.trajectory import Action, Coordinate, GenericActionTrajectory
+from emma_datasets.datamodels.generics import GenericActionTrajectory
 
 
 class AlfredImageMetadata(BaseModel):

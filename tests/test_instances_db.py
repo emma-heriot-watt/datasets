@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 from pydantic import BaseModel
 
-from emma_datasets.datamodels import GenericActionTrajectory, Instance
+from emma_datasets.datamodels import ActionTrajectory, Instance
 from emma_datasets.datamodels.datasets import AlfredImageMetadata, AlfredMetadata
 from emma_datasets.db import DatasetDb
 from emma_datasets.io import read_json
@@ -21,7 +21,7 @@ def test_alfred_instance_trajectory_is_correct_object(alfred_instance: Instance)
     assert alfred_instance
     if alfred_instance.trajectory is not None:
         assert isinstance(alfred_instance.trajectory, BaseModel)
-        assert isinstance(alfred_instance.trajectory, GenericActionTrajectory)
+        assert isinstance(alfred_instance.trajectory, ActionTrajectory)
         high_level_actions = alfred_instance.trajectory.high_level_actions
         if high_level_actions is not None:
             planner_action = high_level_actions[0].planner_action

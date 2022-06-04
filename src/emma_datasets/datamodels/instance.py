@@ -1,72 +1,19 @@
-import re
 from pathlib import Path
 from typing import Optional, Union
 
+from emma_datasets.datamodels.annotations import (
+    ActionTrajectory,
+    Caption,
+    QuestionAnswerPair,
+    Region,
+    SceneGraph,
+)
 from emma_datasets.datamodels.base_model import BaseInstance
 from emma_datasets.datamodels.constants import DatasetModalityMap, DatasetName, MediaType
 from emma_datasets.datamodels.dataset_metadata import DatasetMetadata
-from emma_datasets.datamodels.datasets import AlfredHighAction, AlfredLowAction
-from emma_datasets.datamodels.region import Region
-from emma_datasets.datamodels.scene_graph import SceneGraph
-from emma_datasets.datamodels.text import Caption, QuestionAnswerPair
-from emma_datasets.datamodels.trajectory import GenericActionTrajectory
 
 
 DatasetDict = dict[DatasetName, DatasetMetadata]
-
-ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
-
-
-def _get_language_data_from_scene_graph(scene_graph: SceneGraph) -> list[str]:
-    annotations = []
-
-    for scene_obj in scene_graph.objects.values():
-        if scene_obj.attributes:
-            for attr in scene_obj.attributes:
-                annotations.append(f"{scene_obj.name} has attribute {attr}")
-
-        if scene_obj.relations:
-            for rel in scene_obj.relations:
-                rel_object = scene_graph.objects[rel.object]
-                annotations.append(f"{scene_obj.name} {rel.name} {rel_object.name}")
-
-    return annotations
-
-
-def get_action_string(action_name: str) -> str:
-    """Returns a phrase associated with the action API name.
-
-    API action names are in camelcase format: MoveAhead_25
-    """
-    parts: list[str] = []
-
-    for x in re.findall("[A-Z][^A-Z]*", action_name):
-        parts.extend(xi for xi in x.split("_"))
-
-    return " ".join(parts)
-
-
-def _get_language_data_from_trajectory(trajectory: ActionTrajectory) -> list[str]:
-    trajectory_str = " ".join(
-        get_action_string(low_action.discrete_action.action)
-        for low_action in trajectory.low_level_actions
-    )
-    return [trajectory_str]
-
-
-def _get_language_data_from_captions(captions: list[Caption]) -> list[str]:
-    """Returns the caption text."""
-    return [caption.text for caption in captions]
-
-
-def _get_language_data_from_qa_pairs(qa_pairs: list[QuestionAnswerPair]) -> list[str]:
-    """Returns a formatted string containing both the question and the answer."""
-    return [f"{qa.question} {qa.answer}" for qa in qa_pairs]
-
-
-def _get_language_data_from_regions(regions: list[Region]) -> list[str]:
-    """Returns the region descriptions for each region of the image."""
-    return [region.caption for region in regions]
 
 
 class MultiSourceInstanceMixin(BaseInstance):
@@ -115,7 +62,7 @@ class Instance(MultiSourceInstanceMixin):
     """Instance within the dataset."""
 
     captions: Optional[list[Caption]]
-    qas: Optional[list[QuestionAnswerPair]]
+    qa_pairs: Optional[list[QuestionAnswerPair]]
     regions: Optional[list[Region]]
     scene_graph: Optional[SceneGraph]
     trajectory: Optional[ActionTrajectory]
@@ -126,18 +73,18 @@ class Instance(MultiSourceInstanceMixin):
         lang_data_iterable = []
 
         if self.captions is not None:
-            lang_data_iterable.extend(_get_language_data_from_captions(self.captions))
+            lang_data_iterable.extend([caption.get_language_data() for caption in self.captions])
 
         if self.qa_pairs is not None:
-            lang_data_iterable.extend(_get_language_data_from_qa_pairs(self.qa_pairs))
+            lang_data_iterable.extend([qa_pair.get_language_data() for qa_pair in self.qa_pairs])
 
         if self.regions is not None:
-            lang_data_iterable.extend(_get_language_data_from_regions(self.regions))
+            lang_data_iterable.extend([region.get_language_data() for region in self.regions])
 
         if self.scene_graph is not None:
-            lang_data_iterable.extend(_get_language_data_from_scene_graph(self.scene_graph))
+            lang_data_iterable.extend(self.scene_graph.get_language_data())
 
         if self.trajectory is not None:
-            lang_data_iterable.extend(_get_language_data_from_trajectory(self.trajectory))
+            lang_data_iterable.extend(self.trajectory.get_language_data())
 
         return lang_data_iterable

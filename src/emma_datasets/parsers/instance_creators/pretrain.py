@@ -3,22 +3,17 @@ from typing import Optional
 from pydantic import parse_file_as
 
 from emma_datasets.datamodels import (
-    AlfredHighAction,
-    AlfredLowAction,
+    ActionTrajectory,
     AnnotationDatasetMap,
     AnnotationType,
     Caption,
     DatasetMetadata,
-    GenericActionTrajectory,
     Instance,
     QuestionAnswerPair,
     Region,
     SceneGraph,
 )
 from emma_datasets.parsers.instance_creators.generic import GenericInstanceCreator
-
-
-ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
 
 
 class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Instance]):

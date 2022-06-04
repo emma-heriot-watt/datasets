@@ -3,19 +3,10 @@ from typing import Any, Iterator
 
 from overrides import overrides
 
-from emma_datasets.datamodels import (
-    AlfredHighAction,
-    AlfredLowAction,
-    AnnotationType,
-    DatasetName,
-    GenericActionTrajectory,
-)
+from emma_datasets.datamodels import ActionTrajectory, AnnotationType, DatasetName
 from emma_datasets.datamodels.datasets import AlfredMetadata
 from emma_datasets.io import read_json
 from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
-
-
-ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
 
 
 class AlfredSubgoalTrajectoryExtractor(AnnotationExtractor[ActionTrajectory]):
