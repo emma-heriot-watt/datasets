@@ -1,6 +1,6 @@
 from typing import Any
 
-from emma_datasets.datamodels import SceneGraph
+from emma_datasets.datamodels import AnnotationType, DatasetName, SceneGraph
 from emma_datasets.datamodels.datasets import GqaSceneGraph
 from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 
@@ -8,7 +8,15 @@ from emma_datasets.parsers.annotation_extractors.annotation_extractor import Ann
 class GqaSceneGraphExtractor(AnnotationExtractor[SceneGraph]):
     """Split scene graphs from GQA into multiple files."""
 
-    progress_bar_description = "[b]Scene graphs[/] from [u]GQA[/]"
+    @property
+    def annotation_type(self) -> AnnotationType:
+        """The type of annotation extracted from the dataset."""
+        return AnnotationType.scene_graph
+
+    @property
+    def dataset_name(self) -> DatasetName:
+        """The name of the dataset extracted."""
+        return DatasetName.gqa
 
     def process_raw_file_return(self, raw_data: Any) -> Any:
         """Get scene graph and image id as items."""

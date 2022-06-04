@@ -1,7 +1,7 @@
 from emma_datasets.datamodels.base_model import BaseInstance
 from emma_datasets.datamodels.constants import (
-    Annotation,
     AnnotationDatasetMap,
+    AnnotationType,
     DatasetModalityMap,
     DatasetName,
     DatasetSplit,

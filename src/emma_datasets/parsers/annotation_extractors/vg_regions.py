@@ -2,7 +2,7 @@ from typing import Any, Iterator
 
 import numpy
 
-from emma_datasets.datamodels import Region
+from emma_datasets.datamodels import AnnotationType, DatasetName, Region
 from emma_datasets.datamodels.datasets import VgImageRegions
 from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 
@@ -10,7 +10,15 @@ from emma_datasets.parsers.annotation_extractors.annotation_extractor import Ann
 class VgRegionsExtractor(AnnotationExtractor[Region]):
     """Split Regions per VG instance into multiple files."""
 
-    progress_bar_description = "[b]Regions[/] from [u]Visual Genome[/]"
+    @property
+    def annotation_type(self) -> AnnotationType:
+        """The type of annotation extracted from the dataset."""
+        return AnnotationType.region
+
+    @property
+    def dataset_name(self) -> DatasetName:
+        """The name of the dataset extracted."""
+        return DatasetName.visual_genome
 
     def convert(self, raw_feature: VgImageRegions) -> Iterator[Region]:
         """Convert raw region description to a Region instance."""

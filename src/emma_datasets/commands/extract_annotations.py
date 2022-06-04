@@ -1,10 +1,15 @@
 from multiprocessing.pool import Pool
-from typing import Optional
+from typing import Any, Callable, Optional
 
-from emma_datasets.common import Settings, get_progress, use_rich_for_logging
+from rich.progress import Progress
+from rich_click import typer
+
+from emma_datasets.common import Settings, get_progress
+from emma_datasets.datamodels import AnnotationType, DatasetName
 from emma_datasets.parsers.annotation_extractors import (
     AlfredCaptionExtractor,
     AlfredSubgoalTrajectoryExtractor,
+    AnnotationExtractor,
     CocoCaptionExtractor,
     EpicKitchensCaptionExtractor,
     GqaQaPairExtractor,
@@ -13,86 +18,156 @@ from emma_datasets.parsers.annotation_extractors import (
 )
 
 
-use_rich_for_logging()
+app = typer.Typer(
+    add_completion=False,
+    no_args_is_help=True,
+    short_help="Extract annotations from datasets.",
+)
+
 
 settings = Settings()
 settings.paths.create_dirs()
 
 
-def extract_annotations(num_workers: Optional[int] = None) -> None:
-    """Extract annotations from all the datasets into multiple files for faster processing."""
+def extract_coco_captions(progress: Progress) -> CocoCaptionExtractor:
+    """Extract captions from COCO."""
+    return CocoCaptionExtractor(
+        [
+            settings.paths.coco.joinpath("captions_train2017.json"),
+            settings.paths.coco.joinpath("captions_val2017.json"),
+        ],
+        settings.paths.captions,
+        progress,
+    )
+
+
+def extract_gqa_qa_pairs(progress: Progress) -> GqaQaPairExtractor:
+    """Extract QA Pairs from GQA."""
+    return GqaQaPairExtractor(
+        [
+            settings.paths.gqa_questions.joinpath("val_balanced_questions.json"),
+            settings.paths.gqa_questions.joinpath("train_balanced_questions.json"),
+        ],
+        settings.paths.qa_pairs,
+        progress,
+    )
+
+
+def extract_gqa_scene_graphs(progress: Progress) -> GqaSceneGraphExtractor:
+    """Extract scene graphs from GQA."""
+    return GqaSceneGraphExtractor(
+        [
+            settings.paths.gqa_scene_graphs.joinpath("train_sceneGraphs.json"),
+            settings.paths.gqa_scene_graphs.joinpath("val_sceneGraphs.json"),
+        ],
+        settings.paths.scene_graphs,
+        progress,
+    )
+
+
+def extract_vg_regions(progress: Progress) -> VgRegionsExtractor:
+    """Extract regions from VisualGenome."""
+    return VgRegionsExtractor(
+        settings.paths.visual_genome.joinpath("region_descriptions.json"),
+        settings.paths.regions,
+        progress,
+    )
+
+
+def extract_epic_kitchen_captions(progress: Progress) -> EpicKitchensCaptionExtractor:
+    """Extract captions from EPIC-KITCHENS."""
+    return EpicKitchensCaptionExtractor(
+        [
+            settings.paths.epic_kitchens.joinpath("EPIC_100_train.csv"),
+            settings.paths.epic_kitchens.joinpath("EPIC_100_validation.csv"),
+        ],
+        settings.paths.captions,
+        progress,
+    )
+
+
+def extract_alfred_captions(progress: Progress) -> AlfredCaptionExtractor:
+    """Extract captions from ALFRED."""
+    return AlfredCaptionExtractor(
+        [
+            settings.paths.alfred_data.joinpath("train/"),
+            settings.paths.alfred_data.joinpath("valid_seen/"),
+        ],
+        settings.paths.captions,
+        progress,
+    )
+
+
+def extract_alfred_subgoal_trajectories(progress: Progress) -> AlfredSubgoalTrajectoryExtractor:
+    """Extract subgoal trajectories from ALFRED."""
+    return AlfredSubgoalTrajectoryExtractor(
+        [
+            settings.paths.alfred_data.joinpath("train/"),
+            settings.paths.alfred_data.joinpath("valid_seen/"),
+        ],
+        settings.paths.trajectories,
+        progress,
+    )
+
+
+all_extractor_callables: list[Callable[[Progress], AnnotationExtractor[Any]]] = [
+    extract_coco_captions,
+    extract_gqa_qa_pairs,
+    extract_gqa_scene_graphs,
+    extract_vg_regions,
+    extract_epic_kitchen_captions,
+    extract_alfred_captions,
+    extract_alfred_subgoal_trajectories,
+]
+
+
+@app.command("annotations")
+def extract_annotation_by_type(
+    annotations: Optional[list[AnnotationType]] = typer.Option(  # noqa: WPS404
+        None,
+        case_sensitive=False,
+        help="Optionally, specify which annotation types to extract from the various datasets.",
+    ),
+    datasets: Optional[list[DatasetName]] = typer.Option(  # noqa: WPS404
+        None,
+        case_sensitive=False,
+        help="Optionally, specify which datasets to extract annotations from.",
+    ),
+    num_workers: Optional[int] = typer.Option(  # noqa: WPS404
+        None, show_default=False, help="Use maximum available workers by default."
+    ),
+) -> None:
+    """Extract annotations from various datasets.
+
+    By default, all annotations across all datasets are extracted, using the maximum available
+    workers.
+    """
     progress = get_progress()
 
+    extractors = [extractor(progress) for extractor in all_extractor_callables]
+
+    # Remove any extractors that do not extract the specified annotation types
+    if annotations:
+        extractors = [
+            extractor for extractor in extractors if extractor.annotation_type in annotations
+        ]
+
+    # Remove any extractors that do not support the specified datasets
+    if datasets:
+        extractors = [extractor for extractor in extractors if extractor.dataset_name in datasets]
+
+    # Error if there are no extractors left
+    if not extractors:
+        progress.console.log(
+            "[b red]ERROR:[/] No extractors are available for the given datasets and annotation types."
+        )
+        raise typer.Abort()
+
     with progress:
-        coco_captions = CocoCaptionExtractor(
-            [
-                settings.paths.coco.joinpath("captions_train2017.json"),
-                settings.paths.coco.joinpath("captions_val2017.json"),
-            ],
-            settings.paths.captions,
-            progress,
-        )
-
-        gqa_qa_pairs = GqaQaPairExtractor(
-            [
-                settings.paths.gqa_questions.joinpath("val_balanced_questions.json"),
-                settings.paths.gqa_questions.joinpath("train_balanced_questions.json"),
-            ],
-            settings.paths.qa_pairs,
-            progress,
-        )
-
-        gqa_scene_graph = GqaSceneGraphExtractor(
-            [
-                settings.paths.gqa_scene_graphs.joinpath("train_sceneGraphs.json"),
-                settings.paths.gqa_scene_graphs.joinpath("val_sceneGraphs.json"),
-            ],
-            settings.paths.scene_graphs,
-            progress,
-        )
-
-        vg_regions = VgRegionsExtractor(
-            settings.paths.visual_genome.joinpath("region_descriptions.json"),
-            settings.paths.regions,
-            progress,
-        )
-
-        ek_captions = EpicKitchensCaptionExtractor(
-            [
-                settings.paths.epic_kitchens.joinpath("EPIC_100_train.csv"),
-                settings.paths.epic_kitchens.joinpath("EPIC_100_validation.csv"),
-            ],
-            settings.paths.captions,
-            progress,
-        )
-
-        alfred_captions = AlfredCaptionExtractor(
-            [
-                settings.paths.alfred_data.joinpath("train/"),
-                settings.paths.alfred_data.joinpath("valid_seen/"),
-            ],
-            settings.paths.captions,
-            progress,
-        )
-
-        alfred_subgoal_trajectories = AlfredSubgoalTrajectoryExtractor(
-            [
-                settings.paths.alfred_data.joinpath("train/"),
-                settings.paths.alfred_data.joinpath("valid_seen/"),
-            ],
-            settings.paths.trajectories,
-            progress,
-        )
-
         with Pool(num_workers) as pool:
-            coco_captions.run(progress, pool)
-            gqa_qa_pairs.run(progress, pool)
-            gqa_scene_graph.run(progress, pool)
-            vg_regions.run(progress, pool)
-            ek_captions.run(progress, pool)
-            alfred_captions.run(progress, pool)
-            alfred_subgoal_trajectories.run(progress, pool)
+            for extractor in extractors:
+                extractor.run(progress, pool)
 
 
 if __name__ == "__main__":
-    extract_annotations()
+    app()

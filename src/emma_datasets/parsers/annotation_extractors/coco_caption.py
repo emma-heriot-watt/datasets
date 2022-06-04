@@ -3,7 +3,7 @@ from typing import Any, Iterator
 
 from pydantic import parse_obj_as
 
-from emma_datasets.datamodels import Caption
+from emma_datasets.datamodels import AnnotationType, Caption, DatasetName
 from emma_datasets.datamodels.datasets import CocoCaption
 from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 
@@ -11,7 +11,15 @@ from emma_datasets.parsers.annotation_extractors.annotation_extractor import Ann
 class CocoCaptionExtractor(AnnotationExtractor[Caption]):
     """Split COCO captions into multiple files."""
 
-    progress_bar_description = "[b]Captions[/] from [u]COCO[/]"
+    @property
+    def annotation_type(self) -> AnnotationType:
+        """The type of annotation extracted from the dataset."""
+        return AnnotationType.caption
+
+    @property
+    def dataset_name(self) -> DatasetName:
+        """The name of the dataset extracted."""
+        return DatasetName.coco
 
     def process_raw_file_return(self, raw_data: Any) -> Any:
         """Only get the captions from the raw file."""

@@ -1,14 +1,20 @@
-from enum import Enum, IntEnum, auto
+from enum import Enum, IntEnum
+
+from emma_datasets.common.helpers import flip_list_map_elements
 
 
-class Annotation(Enum):
-    """Possible annotations available from a dataset."""
+class AnnotationType(Enum):
+    """Possible annotations available from a dataset.
 
-    qa_pair = auto()
-    caption = auto()
-    region = auto()
-    scene_graph = auto()
-    action_trajectory = auto()
+    The values for these enums are used for automatically providing clear and consistent feedback
+    to users. Ensure that any new annotations are formatted similarly to maintain consistency.
+    """
+
+    qa_pair = "QA Pair"
+    caption = "Caption"
+    region = "Region"
+    scene_graph = "Scene Graph"
+    action_trajectory = "Action Trajectory"
 
 
 class MediaType(IntEnum):
@@ -53,10 +59,13 @@ DatasetModalityMap: dict[DatasetName, MediaType] = {
     DatasetName.alfred: MediaType.video,
 }
 
-AnnotationDatasetMap: dict[Annotation, list[DatasetName]] = {
-    Annotation.qa_pair: [DatasetName.gqa],
-    Annotation.caption: [DatasetName.coco, DatasetName.epic_kitchens, DatasetName.alfred],
-    Annotation.region: [DatasetName.visual_genome],
-    Annotation.scene_graph: [DatasetName.gqa],
-    Annotation.action_trajectory: [DatasetName.alfred],
+AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
+    AnnotationType.qa_pair: [DatasetName.gqa],
+    AnnotationType.caption: [DatasetName.coco, DatasetName.epic_kitchens, DatasetName.alfred],
+    AnnotationType.region: [DatasetName.visual_genome],
+    AnnotationType.scene_graph: [DatasetName.gqa],
+    AnnotationType.action_trajectory: [DatasetName.alfred],
 }
+
+
+DatasetAnnotationMap = flip_list_map_elements(AnnotationDatasetMap)

@@ -5,8 +5,8 @@ from pydantic import parse_file_as
 from emma_datasets.datamodels import (
     AlfredHighAction,
     AlfredLowAction,
-    Annotation,
     AnnotationDatasetMap,
+    AnnotationType,
     Caption,
     DatasetMetadata,
     GenericActionTrajectory,
@@ -43,7 +43,7 @@ class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Inst
 
     def _get_regions(self, metadata_list: list[DatasetMetadata]) -> Optional[list[Region]]:
         """Get regions for instance from given path in dataset metadata."""
-        filtered_metadata_list = self._filter_metadata_list(metadata_list, Annotation.region)
+        filtered_metadata_list = self._filter_metadata_list(metadata_list, AnnotationType.region)
 
         if not filtered_metadata_list:
             return None
@@ -58,7 +58,9 @@ class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Inst
 
     def _get_scene_graph(self, metadata_list: list[DatasetMetadata]) -> Optional[SceneGraph]:
         """Get scene graph for scene from given path."""
-        filtered_metadata_list = self._filter_metadata_list(metadata_list, Annotation.scene_graph)
+        filtered_metadata_list = self._filter_metadata_list(
+            metadata_list, AnnotationType.scene_graph
+        )
 
         if not filtered_metadata_list:
             return None
@@ -75,7 +77,7 @@ class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Inst
         self, metadata_list: list[DatasetMetadata]
     ) -> Optional[ActionTrajectory]:
         filtered_metadata_list = self._filter_metadata_list(
-            metadata_list, Annotation.action_trajectory
+            metadata_list, AnnotationType.action_trajectory
         )
 
         if not filtered_metadata_list:
@@ -91,7 +93,7 @@ class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Inst
 
     def _get_captions(self, metadata_list: list[DatasetMetadata]) -> list[Caption]:
         """Get captions for instance."""
-        filtered_metadata_list = self._filter_metadata_list(metadata_list, Annotation.caption)
+        filtered_metadata_list = self._filter_metadata_list(metadata_list, AnnotationType.caption)
 
         if not filtered_metadata_list:
             return []
@@ -108,7 +110,7 @@ class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Inst
 
     def _get_qa_pairs(self, metadata_list: list[DatasetMetadata]) -> list[QuestionAnswerPair]:
         """Get question answer pairs for instance."""
-        filtered_metadata_list = self._filter_metadata_list(metadata_list, Annotation.qa_pair)
+        filtered_metadata_list = self._filter_metadata_list(metadata_list, AnnotationType.qa_pair)
 
         if not filtered_metadata_list:
             return []
@@ -128,7 +130,7 @@ class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Inst
         return qa_pairs
 
     def _filter_metadata_list(
-        self, metadata_list: list[DatasetMetadata], annotation: Annotation
+        self, metadata_list: list[DatasetMetadata], annotation: AnnotationType
     ) -> list[DatasetMetadata]:
         return [
             metadata

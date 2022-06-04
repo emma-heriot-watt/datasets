@@ -121,6 +121,11 @@ def teach_edh_all_data_paths(
 
 @fixture(scope="session")
 def extracted_annotations_paths(request: Any) -> dict[str, Path]:
+    """Create cached folders for the extracted annotations.
+
+    To create a separate folder to cache the annotations, just add a new entry to the
+    `annotation_folders` list.
+    """
     annotation_folders = [
         "ek_captions",
         "coco_captions",

@@ -2,7 +2,7 @@ from typing import Any, Iterator
 
 from overrides import overrides
 
-from emma_datasets.datamodels import Caption, DatasetName
+from emma_datasets.datamodels import AnnotationType, Caption, DatasetName
 from emma_datasets.datamodels.datasets import AlfredMetadata
 from emma_datasets.io import read_json
 from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
@@ -11,7 +11,15 @@ from emma_datasets.parsers.annotation_extractors.annotation_extractor import Ann
 class AlfredCaptionExtractor(AnnotationExtractor[Caption]):
     """Split subgoal descriptions for ALFRED into multiple files."""
 
-    progress_bar_description = f"[b]Captions[/] from [u]{DatasetName.alfred.value}[/]"
+    @property
+    def annotation_type(self) -> AnnotationType:
+        """The type of annotation extracted from the dataset."""
+        return AnnotationType.caption
+
+    @property
+    def dataset_name(self) -> DatasetName:
+        """The name of the dataset extracted."""
+        return DatasetName.alfred
 
     def read(self, file_path: Any) -> list[dict[str, Any]]:
         """Read ALFRED metadata file."""

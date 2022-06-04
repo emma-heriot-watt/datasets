@@ -6,6 +6,7 @@ from overrides import overrides
 from emma_datasets.datamodels import (
     AlfredHighAction,
     AlfredLowAction,
+    AnnotationType,
     DatasetName,
     GenericActionTrajectory,
 )
@@ -20,7 +21,15 @@ ActionTrajectory = GenericActionTrajectory[AlfredLowAction, AlfredHighAction]
 class AlfredSubgoalTrajectoryExtractor(AnnotationExtractor[ActionTrajectory]):
     """Split subgoal trajectories for ALFRED into multiple files."""
 
-    progress_bar_description = f"[b]Trajectories[/] from [u]{DatasetName.alfred.value}[/]"
+    @property
+    def annotation_type(self) -> AnnotationType:
+        """The type of annotation extracted from the dataset."""
+        return AnnotationType.action_trajectory
+
+    @property
+    def dataset_name(self) -> DatasetName:
+        """The name of the dataset extracted."""
+        return DatasetName.alfred
 
     def read(self, file_path: Any) -> dict[str, Any]:
         """Read ALFRED Metadata file."""

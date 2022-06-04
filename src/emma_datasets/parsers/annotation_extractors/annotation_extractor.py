@@ -7,6 +7,7 @@ from typing import Any, Generic, Iterable, Iterator, Optional, TypeVar, Union, o
 from pydantic import BaseModel
 from rich.progress import Progress
 
+from emma_datasets.datamodels.constants import AnnotationType, DatasetName
 from emma_datasets.io import get_all_file_paths, read_json, write_json
 
 
@@ -14,10 +15,25 @@ Annotation = TypeVar("Annotation", bound=BaseModel)
 
 
 class AnnotationExtractor(ABC, Generic[Annotation]):
-    """Extract annotations from the raw dataset into multiple files for easier loading."""
+    """Extract annotations from the raw dataset into multiple files for easier loading.
 
-    progress_bar_description = "Extracting annotations"
-    file_ext: str = "json"
+    For speed, we need to extract all the annotations from every instance of the dataset in
+    advance, as a type of `Annotation` class. We use these `Annotation`s when we are creating the
+    new instances. This way, it allows for easy importing of data that will also be validated,
+    since `Annotation` inherits from Pydantic.
+
+    This class also uses a provided Rich progress bar to provide feedback to the user.
+
+    This is purely an abstract base class. All concrete subclasses must provide implementations of
+    the following methods/properties:
+
+        - `annotation_type` denotes the type of annotation that is being extracted.
+        - `dataset_name` denotes the name of the dataset that is being processed
+        - `convert()` implements the logic to convert the annotations from the raw dataset into the
+          consistent returned class.
+        - `process_single_instance()` which processes the raw instance from the dataset, calling
+          the convert method and then writing the result to a file.
+    """
 
     def __init__(
         self,
@@ -26,20 +42,34 @@ class AnnotationExtractor(ABC, Generic[Annotation]):
         progress: Progress,
     ) -> None:
         self.task_id = progress.add_task(
-            self.progress_bar_description,
+            self._progress_bar_description,
             start=False,
-            visible=True,
+            visible=False,
             total=float("inf"),
             comment="",
         )
 
-        progress.update(self.task_id, comment="Getting paths to raw files")
-        self.file_paths = [
-            path for path in get_all_file_paths(paths) if path.suffix.endswith(self.file_ext)
-        ]
+        self._paths = paths
+        self.file_paths: list[Path] = []
+
         self.output_dir = Path(output_dir)
 
         progress.update(self.task_id, comment="Waiting for turn...")
+
+    @property
+    def annotation_type(self) -> AnnotationType:
+        """The type of annotation extracted from the dataset."""
+        raise NotImplementedError()
+
+    @property
+    def dataset_name(self) -> DatasetName:
+        """The name of the dataset extracted."""
+        raise NotImplementedError()
+
+    @property
+    def file_ext(self) -> str:
+        """The file extension of the raw data files."""
+        return "json"
 
     @overload
     def run(self, progress: Progress, pool: Pool) -> None:
@@ -56,10 +86,13 @@ class AnnotationExtractor(ABC, Generic[Annotation]):
             progress (Progress): Rich Progress Bar
             pool (Pool, optional): Pool for multiprocessing. Defaults to None.
         """
+        self._start_progress(progress)
+
+        progress.update(self.task_id, comment="Getting paths to raw files")
+        self._get_all_file_paths()
+
         progress.update(self.task_id, comment="Reading all raw data")
         raw_data = self._read()
-
-        self._start_progress(progress)
 
         progress.update(self.task_id, comment="Processing data")
         if pool is not None:
@@ -88,7 +121,14 @@ class AnnotationExtractor(ABC, Generic[Annotation]):
 
     @abstractmethod
     def convert(self, raw_feature: Any) -> Union[Annotation, Iterable[Annotation]]:
-        """Convert a raw annotation into a Annotation."""
+        """Convert a raw annotation into a Annotation.
+
+        This method converts some raw annotation (likely a class used when constructing the raw
+        dataset metadata in `emma_datasets.datamodels.datasets`) into a consistent `Annotation`
+        form.
+
+        This method must be implemented by subclasses.
+        """
         raise NotImplementedError()
 
     @abstractmethod
@@ -136,6 +176,13 @@ class AnnotationExtractor(ABC, Generic[Annotation]):
 
         write_json(filepath, features_dict)
 
+    @property
+    def _progress_bar_description(self) -> str:
+        """Get the task description for the progress bar."""
+        return (
+            f"[b]{self.annotation_type.value}[/] annotations from [u]{self.dataset_name.value}[/]"
+        )
+
     def _start_progress(self, progress: Progress) -> None:
         """Start the task on the progress bar."""
         progress.reset(self.task_id, start=True, visible=True)
@@ -151,3 +198,9 @@ class AnnotationExtractor(ABC, Generic[Annotation]):
             self.task_id, visible=True, total=completed, completed=completed, comment="Done!"
         )
         progress.stop_task(self.task_id)
+
+    def _get_all_file_paths(self) -> None:
+        """Get all the file paths for the dataset and store in state."""
+        self.file_paths = [
+            path for path in get_all_file_paths(self._paths) if path.suffix.endswith(self.file_ext)
+        ]

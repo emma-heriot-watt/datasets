@@ -1,6 +1,6 @@
 from typing import Any
 
-from emma_datasets.datamodels import Caption, DatasetName
+from emma_datasets.datamodels import AnnotationType, Caption, DatasetName
 from emma_datasets.datamodels.datasets import EpicKitchensNarrationMetadata
 from emma_datasets.io import read_csv
 from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
@@ -9,8 +9,20 @@ from emma_datasets.parsers.annotation_extractors.annotation_extractor import Ann
 class EpicKitchensCaptionExtractor(AnnotationExtractor[Caption]):
     """Split captions for EpicKitchens into multiple files."""
 
-    progress_bar_description = f"[b]Captions[/] from [u]{DatasetName.epic_kitchens.value}[/]"
-    file_ext = "csv"
+    @property
+    def annotation_type(self) -> AnnotationType:
+        """The type of annotation extracted from the dataset."""
+        return AnnotationType.caption
+
+    @property
+    def dataset_name(self) -> DatasetName:
+        """The name of the dataset extracted."""
+        return DatasetName.epic_kitchens
+
+    @property
+    def file_ext(self) -> str:
+        """The file extension of the raw data files."""
+        return "csv"
 
     def read(self, file_path: Any) -> list[dict[str, Any]]:
         """Read Epic Kitchen CSV file."""
