@@ -7,7 +7,8 @@ from pydantic import validator
 
 from emma_datasets.datamodels.base_model import BaseModel
 from emma_datasets.datamodels.constants import AnnotationType
-from emma_datasets.datamodels.datasets import AlfredHighAction, AlfredLowAction, GqaObject
+from emma_datasets.datamodels.datasets.alfred import AlfredHighAction, AlfredLowAction
+from emma_datasets.datamodels.datasets.gqa import GqaObject
 from emma_datasets.datamodels.generics import GenericActionTrajectory
 
 

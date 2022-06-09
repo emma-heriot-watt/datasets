@@ -30,11 +30,11 @@ To prepare, you need to do the following:
 
 That's it for now! We'll come back to using these files later in the guide.
 
-## Processing raw dataset metadata
+## Processing the raw dataset
 
-Each instance of the dataset has metadata. We need to easily parse every single instance and validate them to ensure that everything in the raw data is as you expect it!
+We need to easily parse every single instance and validate them to ensure that everything in the raw data is as you expect it!
 
-### Creating the dataset metadata model
+### Creating a model for the metadata
 
 Create a new metadata file for your dataset in `src/emma_datasets/datamodels/datasets/`.
 
@@ -42,9 +42,11 @@ Using the other files in that directory as inspiration, create a "`Metadata`" mo
 
 Using [Pydantic's parsing methods](https://pydantic-docs.helpmanual.io/usage/models/#helper-functions), your raw data will be loaded from this file directly, and it will be validated to the schema of this model. This way, we can also verify that every single instance of the model is what you expect it to be, and you can deal with any weird data issues if they get flagged. If this happens, it will error.
 
-### Modifying the data on load
+### Modifying the data on load, automatically
 
-If you need to consistently modify every single instance of the raw model, you can do that too! Use Pydantic's [`root_validator`](https://pydantic-docs.helpmanual.io/usage/validators/#root-validators) to take in the example and return a fix. For examples, see [`AlfredMetadata`](https://github.com/emma-simbot/datasets/blob/4ea83c492cdab331ab7c722422f48ee8ee181659/src/emma_datasets/datamodels/datasets/alfred.py#L136-L144) and [`EpicKitchensNarrationMetdata`](https://github.com/emma-simbot/datasets/blob/4ea83c492cdab331ab7c722422f48ee8ee181659/src/emma_datasets/datamodels/datasets/epic_kitchens.py#L48-L56) to see how the raw data is modified on import.
+If you need to consistently modify every single instance of the raw model, you can do that too! Use Pydantic's [`root_validator`](https://pydantic-docs.helpmanual.io/usage/validators/#root-validators) to take in the example and return what you want.
+
+For examples, see [`AlfredMetadata`](https://github.com/emma-simbot/datasets/blob/4ea83c492cdab331ab7c722422f48ee8ee181659/src/emma_datasets/datamodels/datasets/alfred.py#L136-L144) and [`EpicKitchensNarrationMetdata`](https://github.com/emma-simbot/datasets/blob/4ea83c492cdab331ab7c722422f48ee8ee181659/src/emma_datasets/datamodels/datasets/epic_kitchens.py#L48-L56) to see how the raw data is modified on import.
 
 #### Customizing the instance _without modifying the file_
 

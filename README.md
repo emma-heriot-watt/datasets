@@ -39,7 +39,11 @@ To use this package in your project, you can install it by running
 poetry add git+https://github.com/emma-simbot/datasets#main
 ```
 
-To use it, just import from `emma_datasets` and you should be good to go!
+You can then just import from `emma_datasets` or run commands using the CLI with
+
+```bash
+python -m emma_datasets
+```
 
 <details>
   <summary> Why does this install the main branch and not the most-stable version?</summary>
@@ -66,5 +70,6 @@ This is organised in very similarly to structure from the [Lightning-Hydra-Templ
 
 For more detail on how to use this library, check out the following specific pages on:
 
-- [Installing and preparing your developer environment](https://github.com/emma-simbot/datasets/blob/main/CONTRIBUTING.md)
+- [Installing and preparing your developer environment](CONTRIBUTING.md)
 - [Downloading and organising the raw datasets](docs/downloading-raw-data.md)
+- [Adding a new downstream dataset](docs/how-to-add-a-new-downstream-dataset.md)

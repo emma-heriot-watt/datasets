@@ -101,7 +101,7 @@ class BatchesProcessedColumn(ProgressColumn):
     def render(self, task: Task) -> RenderableType:
         """Render number of processed instances."""
         total = "--" if task.total == float("inf") else task.total
-        return Text(f"{int(task.completed)}/{total}", style="progress.elapsed")
+        return Text(f"{int(task.completed)}/{total}", style="progress.download")
 
 
 class ProcessingSpeedColumn(ProgressColumn):

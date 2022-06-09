@@ -17,5 +17,4 @@ from emma_datasets.datamodels.constants import (
     MediaType,
 )
 from emma_datasets.datamodels.dataset_metadata import DatasetMetadata, SourceMedia
-from emma_datasets.datamodels.datasets import AlfredHighAction, AlfredLowAction, TeachEdhInstance
 from emma_datasets.datamodels.instance import Instance

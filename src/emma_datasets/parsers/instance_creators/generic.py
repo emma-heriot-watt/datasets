@@ -40,7 +40,8 @@ class GenericInstanceCreator(ABC, Generic[InputType, OutputType]):
         pool: Optional[Pool] = None,
     ) -> Union[Iterator[OutputType], Iterator[bytes]]:
         """Create instances from a list of input data."""
-        progress.reset(self.task_id, start=True, visible=True)
+        progress.start_task(self.task_id)
+        progress.update(self.task_id, visible=True)
 
         iterator: Iterator[Union[OutputType, bytes]]
 
