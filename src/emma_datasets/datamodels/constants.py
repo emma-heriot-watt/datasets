@@ -40,6 +40,7 @@ class DatasetName(Enum):
     teach = "TEACh"
     conceptual_captions = "Conceptual Captions"
     sbu_captions = "SBU Captions"
+    nlvr = "NLVR^2"
 
 
 class DatasetSplit(Enum):
@@ -61,6 +62,7 @@ DatasetModalityMap: dict[DatasetName, MediaType] = {
     DatasetName.conceptual_captions: MediaType.image,
     DatasetName.sbu_captions: MediaType.image,
     DatasetName.teach: MediaType.video,
+    DatasetName.nlvr: MediaType.video,
 }
 
 AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
@@ -71,6 +73,7 @@ AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
         DatasetName.alfred,
         DatasetName.conceptual_captions,
         DatasetName.sbu_captions,
+        DatasetName.nlvr,
     ],
     AnnotationType.region: [DatasetName.visual_genome],
     AnnotationType.scene_graph: [DatasetName.gqa],

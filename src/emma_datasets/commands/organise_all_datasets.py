@@ -202,6 +202,25 @@ def organise_teach(pool: ThreadPoolExecutor, progress: Progress) -> None:
     )
 
 
+def organise_nlvr(pool: ThreadPoolExecutor, progress: Progress) -> None:
+    """Extract and organise the files from NLVR."""
+    organise_dataset = OrganiseDataset(settings.paths.nlvr, DatasetName.nlvr)
+
+    # NLVR^2 data are defined as JSONL. The file extension is JSON...
+    for path in settings.paths.nlvr.iterdir():
+        new_extension_path = Path(str(path).replace("json", "jsonl"))
+        path.rename(new_extension_path)
+
+    organise_dataset.submit(
+        description="Extracting images",
+        file_names=["train_img.zip", "dev_img.zip", "test1_img.zip"],
+        output_dir=settings.paths.nlvr_images,
+        pool=pool,
+        progress=progress,
+        move_files_to_output_dir=True,
+    )
+
+
 def organise_datasets(
     datasets: Optional[list[DatasetName]] = typer.Argument(  # noqa: WPS404
         None, case_sensitive=False, show_default=False
@@ -223,6 +242,7 @@ def organise_datasets(
         DatasetName.epic_kitchens: organise_epic_kitchens,
         DatasetName.alfred: organise_alfred,
         DatasetName.teach: organise_teach,
+        DatasetName.nlvr: organise_nlvr,
     }
 
     progress_bar = Progress(

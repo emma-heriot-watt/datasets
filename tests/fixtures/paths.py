@@ -107,6 +107,11 @@ def teach_edh_valid_unseen_data_paths(teach_edh_instance_path: Path) -> list[Pat
 
 
 @fixture(scope="session")
+def nlvr_instances_path(fixtures_root: Path) -> Path:
+    return fixtures_root.joinpath("nlvr.jsonl")
+
+
+@fixture(scope="session")
 def teach_edh_all_data_paths(
     teach_edh_train_data_paths: list[Path],
     teach_edh_valid_seen_data_paths: list[Path],

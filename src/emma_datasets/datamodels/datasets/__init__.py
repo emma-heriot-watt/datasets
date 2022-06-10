@@ -14,6 +14,7 @@ from emma_datasets.datamodels.datasets.gqa import (
     GqaRelation,
     GqaSceneGraph,
 )
+from emma_datasets.datamodels.datasets.nlvr import NlvrInstance
 from emma_datasets.datamodels.datasets.teach import TeachEdhInstance, TeachInteraction
 from emma_datasets.datamodels.datasets.visual_genome import (
     VgImageMetadata,

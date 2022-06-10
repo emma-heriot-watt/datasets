@@ -2,6 +2,12 @@
 sbu_captions,hf://sbu_captions?key=image_url&split=train
 conceptual_captions,hf://conceptual_captions?key=image_url&split=train
 conceptual_captions,hf://conceptual_captions?key=image_url&split=validation
+nlvr,https://github.com/lil-lab/nlvr/raw/master/nlvr2/data/train.json
+nlvr,https://github.com/lil-lab/nlvr/raw/master/nlvr2/data/balanced/balanced_dev.json
+nlvr,https://github.com/lil-lab/nlvr/raw/master/nlvr2/data/balanced/balanced_test1.json
+nlvr,https://lil.nlp.cornell.edu/resources/NLVR2/train_img.zip
+nlvr,https://lil.nlp.cornell.edu/resources/NLVR2/dev_img.zip
+nlvr,https://lil.nlp.cornell.edu/resources/NLVR2/test1_img.zip
 coco,http://images.cocodataset.org/zips/train2017.zip
 coco,http://images.cocodataset.org/zips/val2017.zip
 coco,http://images.cocodataset.org/annotations/annotations_trainval2017.zip
