@@ -1,3 +1,4 @@
+import itertools
 from pathlib import Path
 from typing import Any, Iterator
 
@@ -27,6 +28,7 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
         captions_dir: Path,
         trajectories_dir: Path,
         features_dir: Path,
+        task_descriptions_dir: Path,
     ) -> None:
         super().__init__(data_paths=data_paths, progress=progress)
 
@@ -34,6 +36,7 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
         self.captions_dir = captions_dir
         self.trajectories_dir = trajectories_dir
         self.features_dir = features_dir
+        self.task_descriptions_dir = task_descriptions_dir
 
         self._width = 300
         self._height = 300
@@ -48,20 +51,41 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
         )
         frames_dir = next(iter(path_to_frames)).joinpath("raw_images")
 
+        subgoal_source_media = self.get_all_source_media_for_task(
+            metadata, frames_dir, num_subgoals
+        )
+
+        metadata_paths = self._prepare_subgoal_paths(
+            num_subgoals=num_subgoals,
+            task_id=metadata.task_id,
+            scene_id=metadata.scene.scene_num,
+        )
+
+        trajectory_metadata_paths = self._prepare_trajectory_paths(
+            task_id=metadata.task_id,
+        )
         for high_idx in range(num_subgoals):  # noqa: WPS526
             yield DatasetMetadata(
                 id=metadata.task_id,
                 name=self.dataset_name,
                 split=metadata.dataset_split,
-                media=self.get_all_source_media_for_subgoal(metadata, frames_dir, high_idx),
-                features_path=self.features_dir.joinpath(
-                    f"{metadata.task_id}_{metadata.scene.scene_num}_{high_idx}.{self.feature_ext}"
-                ),
-                caption_path=self.captions_dir.joinpath(f"{metadata.task_id}_{high_idx}.json"),
-                action_trajectory_path=self.trajectories_dir.joinpath(
-                    f"{metadata.task_id}_{high_idx}.json"
-                ),
+                media=subgoal_source_media[high_idx],
+                features_path=metadata_paths["features"][high_idx],
+                caption_path=metadata_paths["captions"][high_idx],
+                action_trajectory_path=metadata_paths["actions"][high_idx],
+                task_description_path=trajectory_metadata_paths["task_descriptions"],
             )
+
+        yield DatasetMetadata(
+            id=metadata.task_id,
+            name=self.dataset_name,
+            split=metadata.dataset_split,
+            media=list(itertools.chain.from_iterable(subgoal_source_media)),
+            features_path=metadata_paths["features"],
+            caption_path=trajectory_metadata_paths["captions"],
+            action_trajectory_path=trajectory_metadata_paths["actions"],
+            task_description_path=trajectory_metadata_paths["task_descriptions"],
+        )
 
     def get_all_source_media_for_subgoal(
         self, metadata: AlfredMetadata, frames_dir: Path, high_idx: int
@@ -79,6 +103,48 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
             )
             for image in subgoal_images
         ]
+
+    def get_all_source_media_for_task(
+        self, metadata: AlfredMetadata, frames_dir: Path, num_subgoals: int
+    ) -> list[list[SourceMedia]]:
+        """Get images for the entire trajectory."""
+        return [
+            self.get_all_source_media_for_subgoal(metadata, frames_dir, high_idx)
+            for high_idx in range(num_subgoals)
+        ]
+
+    def _prepare_subgoal_paths(
+        self,
+        task_id: str,
+        num_subgoals: int,
+        scene_id: int,
+    ) -> dict[str, list[Path]]:
+        """Prepare the actions, captions and features paths for each subgoal."""
+        return {
+            "actions": [
+                self.trajectories_dir.joinpath(f"{task_id}_{high_idx}.json")
+                for high_idx in range(num_subgoals)
+            ],
+            "captions": [
+                self.captions_dir.joinpath(f"{task_id}_{high_idx}.json")
+                for high_idx in range(num_subgoals)
+            ],
+            "features": [
+                self.features_dir.joinpath(f"{task_id}_{scene_id}_{high_idx}.{self.feature_ext}")
+                for high_idx in range(num_subgoals)
+            ],
+        }
+
+    def _prepare_trajectory_paths(
+        self,
+        task_id: str,
+    ) -> dict[str, Path]:
+        """Prepare the actions, captions and features paths for the full trajectory."""
+        return {
+            "actions": self.trajectories_dir.joinpath(f"{task_id}.json"),
+            "captions": self.captions_dir.joinpath(f"{task_id}.json"),
+            "task_descriptions": self.task_descriptions_dir.joinpath(f"{task_id}.json"),
+        }
 
     def _get_last_frame_of_low_level_action(
         self, images: list[AlfredImageMetadata]

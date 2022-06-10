@@ -80,6 +80,7 @@ class MetadataParser:
             captions_dir=settings.paths.captions,
             trajectories_dir=settings.paths.trajectories,
             features_dir=settings.paths.alfred_features,
+            task_descriptions_dir=settings.paths.task_descriptions,
             progress=self.progress,
         )
 

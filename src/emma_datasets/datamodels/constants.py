@@ -15,6 +15,7 @@ class AnnotationType(Enum):
     region = "Region"
     scene_graph = "Scene Graph"
     action_trajectory = "Action Trajectory"
+    task_description = "Task Description"
 
 
 class MediaType(IntEnum):
@@ -74,6 +75,7 @@ AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
     AnnotationType.region: [DatasetName.visual_genome],
     AnnotationType.scene_graph: [DatasetName.gqa],
     AnnotationType.action_trajectory: [DatasetName.alfred, DatasetName.teach],
+    AnnotationType.task_description: [DatasetName.alfred],
 }
 
 

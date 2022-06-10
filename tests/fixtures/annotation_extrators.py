@@ -7,7 +7,8 @@ from pytest_cases import fixture
 from emma_datasets.common import get_progress
 from emma_datasets.parsers.annotation_extractors import (
     AlfredCaptionExtractor,
-    AlfredSubgoalTrajectoryExtractor,
+    AlfredTaskDescriptionExtractor,
+    AlfredTrajectoryExtractor,
     CocoCaptionExtractor,
     EpicKitchensCaptionExtractor,
     GqaQaPairExtractor,
@@ -101,6 +102,22 @@ def extract_alfred_captions(
 
 
 @fixture
+def extract_alfred_task_descriptions(
+    alfred_train_data_path: list[Path],
+    alfred_valid_seen_data_path: list[Path],
+    extracted_annotations_paths: dict[str, Path],
+) -> bool:
+    instance_paths = list(itertools.chain(alfred_train_data_path, alfred_valid_seen_data_path))
+
+    extracted_annotations(
+        AlfredTaskDescriptionExtractor,
+        instance_paths,
+        extracted_annotations_paths["task_descriptions"],
+    )
+    return True
+
+
+@fixture
 def extract_alfred_subgoal_trajectories(
     alfred_train_data_path: list[Path],
     alfred_valid_seen_data_path: list[Path],
@@ -109,7 +126,7 @@ def extract_alfred_subgoal_trajectories(
     instance_paths = list(itertools.chain(alfred_train_data_path, alfred_valid_seen_data_path))
 
     extracted_annotations(
-        AlfredSubgoalTrajectoryExtractor,
+        AlfredTrajectoryExtractor,
         instance_paths,
         extracted_annotations_paths["trajectories"],
     )
@@ -124,6 +141,7 @@ def all_extracted_annotations(
     extract_gqa_scene_graphs: bool,
     extract_epic_kitchen_captions: bool,
     extract_alfred_captions: bool,
+    extract_alfred_task_descriptions: bool,
     extract_alfred_subgoal_trajectories: bool,
 ) -> bool:
     assert extract_coco_captions
@@ -132,6 +150,7 @@ def all_extracted_annotations(
     assert extract_gqa_scene_graphs
     assert extract_epic_kitchen_captions
     assert extract_alfred_captions
+    assert extract_alfred_task_descriptions
     assert extract_alfred_subgoal_trajectories
 
     return True

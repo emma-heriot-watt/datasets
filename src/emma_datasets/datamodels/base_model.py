@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
+from typing import Union
 
 import orjson
 from pydantic import BaseModel as PydanticBaseModel
@@ -30,6 +31,6 @@ class BaseInstance(BaseModel, ABC):
 
     @property
     @abstractmethod
-    def features_path(self) -> Path:
+    def features_path(self) -> Union[Path, list[Path]]:
         """Get the path to the features for this instance."""
         raise NotImplementedError

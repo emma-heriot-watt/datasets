@@ -22,6 +22,7 @@ class Paths:  # noqa: WPS230
         self.scene_graphs = self.temp.joinpath("scene_graphs/")
         self.regions = self.temp.joinpath("regions/")
         self.trajectories = self.temp.joinpath("trajectories/")
+        self.task_descriptions = self.temp.joinpath("task_descriptions/")
 
         # Dataset source files
         self.datasets = self.storage.joinpath("datasets/")
@@ -63,6 +64,7 @@ class Paths:  # noqa: WPS230
         self.scene_graphs.mkdir(parents=True, exist_ok=True)
         self.regions.mkdir(parents=True, exist_ok=True)
         self.trajectories.mkdir(parents=True, exist_ok=True)
+        self.task_descriptions.mkdir(parents=True, exist_ok=True)
 
         self.datasets.mkdir(parents=True, exist_ok=True)
 

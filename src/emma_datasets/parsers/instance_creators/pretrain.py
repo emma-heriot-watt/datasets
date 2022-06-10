@@ -12,6 +12,7 @@ from emma_datasets.datamodels import (
     QuestionAnswerPair,
     Region,
     SceneGraph,
+    TaskDescription,
 )
 from emma_datasets.parsers.instance_creators.generic import GenericInstanceCreator
 
@@ -26,6 +27,7 @@ class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Inst
         trajectory = self._get_action_trajectory(input_data)
         captions = self._get_captions(input_data)
         qa_pairs = self._get_qa_pairs(input_data)
+        task_description = self._get_task_description(input_data)
 
         return Instance(
             dataset={metadata.name: metadata for metadata in input_data},
@@ -34,6 +36,7 @@ class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Inst
             regions=regions,
             scene_graph=scene_graph,
             trajectory=trajectory,
+            task_description=task_description,
         )
 
     def _get_regions(self, metadata_list: list[DatasetMetadata]) -> Optional[list[Region]]:
@@ -85,6 +88,23 @@ class PretrainInstanceCreator(GenericInstanceCreator[list[DatasetMetadata], Inst
             raise ValueError("`metadata.action_trajectory_path` should not be `None`")
 
         return ActionTrajectory.parse_file(metadata.action_trajectory_path)
+
+    def _get_task_description(
+        self, metadata_list: list[DatasetMetadata]
+    ) -> Optional[list[TaskDescription]]:
+        filtered_metadata_list = self._filter_metadata_list(
+            metadata_list, AnnotationType.task_description
+        )
+
+        if not filtered_metadata_list:
+            return None
+
+        # If not None, assume only ONE trajectory in the list
+        metadata = filtered_metadata_list[0]
+        if metadata.task_description_path is None:
+            raise ValueError("`metadata.task_description_path` should not be `None`")
+
+        return parse_file_as(list[TaskDescription], metadata.task_description_path)
 
     def _get_captions(self, metadata_list: list[DatasetMetadata]) -> list[Caption]:
         """Get captions for instance."""

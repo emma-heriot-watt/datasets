@@ -134,6 +134,7 @@ def extracted_annotations_paths(request: Any) -> dict[str, Path]:
         "trajectories",
         "regions",
         "qa_pairs",
+        "task_descriptions",
     ]
 
     paths = {}

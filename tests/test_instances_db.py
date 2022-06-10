@@ -48,7 +48,7 @@ def test_alfred_instance_metadata_media_and_actions_match(
 
         annotation_file = alfred_annotations[metadata.id]
         images = AlfredMetadata.parse_obj(read_json(annotation_file)).images
-        for high_level_action in alfred_instance.trajectory.high_level_actions:  # type: ignore[union-attr]
+        for high_level_action in alfred_instance.trajectory.high_level_actions:
             test_alfred_last_frame_per_actions(
                 high_idx=high_level_action.high_idx, images=images, frames=frames
             )

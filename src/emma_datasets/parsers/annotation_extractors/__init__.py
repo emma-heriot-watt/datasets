@@ -1,6 +1,9 @@
 from emma_datasets.parsers.annotation_extractors.alfred_captions import AlfredCaptionExtractor
+from emma_datasets.parsers.annotation_extractors.alfred_task_descriptions import (
+    AlfredTaskDescriptionExtractor,
+)
 from emma_datasets.parsers.annotation_extractors.alfred_trajectories import (
-    AlfredSubgoalTrajectoryExtractor,
+    AlfredTrajectoryExtractor,
 )
 from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 from emma_datasets.parsers.annotation_extractors.coco_caption import CocoCaptionExtractor

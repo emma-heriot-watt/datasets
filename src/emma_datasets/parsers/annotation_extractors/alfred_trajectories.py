@@ -9,7 +9,7 @@ from emma_datasets.io import read_json
 from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 
 
-class AlfredSubgoalTrajectoryExtractor(AnnotationExtractor[ActionTrajectory]):
+class AlfredTrajectoryExtractor(AnnotationExtractor[ActionTrajectory]):
     """Split subgoal trajectories for ALFRED into multiple files."""
 
     @property
@@ -76,9 +76,50 @@ class AlfredSubgoalTrajectoryExtractor(AnnotationExtractor[ActionTrajectory]):
         """Process raw instance and write to file."""
         structured_instance = AlfredMetadata.parse_obj(raw_instance)
         trajectories = self.convert(structured_instance)
+        self._process_subgoal_instances(
+            task_id=structured_instance.task_id, trajectories=trajectories
+        )
+        self._process_trajectory_instance(
+            task_id=structured_instance.task_id, trajectories=trajectories
+        )
+
+    def _process_subgoal_instances(
+        self,
+        task_id: str,
+        trajectories: list[tuple[int, ActionTrajectory]],
+    ) -> None:
+        """Process subgoals."""
         for high_idx, trajectory in trajectories:
-            traj_id = f"{structured_instance.task_id}_{high_idx}"
+            traj_id = f"{task_id}_{high_idx}"
             self._write(trajectory, traj_id)
+
+    def _process_trajectory_instance(
+        self,
+        task_id: str,
+        trajectories: list[tuple[int, ActionTrajectory]],
+    ) -> None:
+        """Process full trajectory."""
+        full_trajectory = self._merge_trajectories(trajectories)
+        self._write(full_trajectory, f"{task_id}")
+
+    def _merge_trajectories(
+        self, trajectories: list[tuple[int, ActionTrajectory]]
+    ) -> ActionTrajectory:
+        """Merge trajectories for a full task."""
+        high_indices = len(trajectories)
+        traj_dict = dict(trajectories)
+        low_level_actions = itertools.chain(
+            *[traj_dict[high_idx].low_level_actions for high_idx in range(high_indices)]
+        )
+
+        high_level_actions = itertools.chain(
+            *[traj_dict[high_idx].high_level_actions for high_idx in range(high_indices)]
+        )
+
+        return ActionTrajectory(
+            low_level_actions=list(low_level_actions),
+            high_level_actions=list(high_level_actions),
+        )
 
     def _read(self) -> Iterator[Any]:
         """Reads all the trajectory metadata from the train and valid_seen data paths.

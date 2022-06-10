@@ -36,7 +36,7 @@ class AlfredCaptionExtractor(AnnotationExtractor[Caption]):
             subgoal_captions = []
 
             for ann in raw_feature.turk_annotations["anns"]:
-                subgoal_captions.append(Caption(text=ann.high_descs[high_idx]))
+                subgoal_captions.append(Caption(text=self._prep_caption(ann.high_descs[high_idx])))
 
             captions.append((high_idx, subgoal_captions))
 
@@ -45,10 +45,40 @@ class AlfredCaptionExtractor(AnnotationExtractor[Caption]):
     def process_single_instance(self, raw_instance: dict[str, Any]) -> None:
         """Process raw instance and write to file."""
         structured_instance = AlfredMetadata.parse_obj(raw_instance)
+        self._process_subgoal_instances(structured_instance)
+        self._process_trajectory_instance(structured_instance)
+
+    def _process_subgoal_instances(self, structured_instance: AlfredMetadata) -> None:
+        """Process descriptions for each subgoal and write to file."""
         captions = self.convert(structured_instance)
         for high_idx, subgoal_captions in captions:
             caption_id = f"{structured_instance.task_id}_{high_idx}"
             self._write(subgoal_captions, caption_id)
+
+    def _process_trajectory_instance(self, structured_instance: AlfredMetadata) -> None:
+        """Merge descrptions for all subgoals and write to file."""
+        captions = self._merge_high_descs(structured_instance)
+        self._write(captions, f"{structured_instance.task_id}")
+
+    def _prep_caption(self, caption: str) -> str:
+        """Make sure captions end with full stop.
+
+        This is so that we can mask full sentences for pretraining.
+        """
+        caption = caption.rstrip()
+        if not caption.endswith("."):
+            caption = f"{caption}."
+        return caption
+
+    def _merge_high_descs(self, raw_feature: AlfredMetadata) -> list[Caption]:
+        """Merge high level descriptions in a single caption."""
+        captions = []
+
+        for ann in raw_feature.turk_annotations["anns"]:
+            ann_captions = [self._prep_caption(caption) for caption in ann.high_descs]
+            captions.append(Caption(text=" ".join(ann_captions)))
+
+        return captions
 
     def _read(self) -> Iterator[Any]:
         """Reads all the trajectory metadata from the train and valid_seen data paths.

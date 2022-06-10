@@ -169,3 +169,15 @@ class ActionTrajectory(GenericActionTrajectory[AlfredLowAction, AlfredHighAction
             parts.extend(xi for xi in x.split("_"))
 
         return " ".join(parts)
+
+
+class TaskDescription(Annotation):
+    """Text caption for the image."""
+
+    _annotation_type = AnnotationType.task_description
+
+    text: str
+
+    def get_language_data(self) -> str:
+        """Get the language data from a TaskDescription."""
+        return self.text

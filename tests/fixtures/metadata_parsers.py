@@ -104,6 +104,7 @@ def alfred_metadata_parser(
         alfred_dir=fixtures_root.joinpath("alfred/"),
         captions_dir=extracted_annotations_paths["alfred_captions"],
         trajectories_dir=extracted_annotations_paths["trajectories"],
+        task_descriptions_dir=extracted_annotations_paths["task_descriptions"],
         features_dir=settings.paths.alfred_features,
         progress=progress,
     )

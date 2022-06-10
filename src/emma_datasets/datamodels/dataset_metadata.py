@@ -24,7 +24,7 @@ class DatasetMetadata(BaseModel, frozen=True):
     name: DatasetName
     split: Optional[DatasetSplit] = None
     media: Union[SourceMedia, list[SourceMedia]]
-    features_path: Path
+    features_path: Union[Path, list[Path]]
 
     # From splitters
     scene_graph_path: Optional[Path] = None
@@ -32,6 +32,7 @@ class DatasetMetadata(BaseModel, frozen=True):
     caption_path: Optional[Path] = None
     qa_pairs_path: Optional[Path] = None
     action_trajectory_path: Optional[Path] = None
+    task_description_path: Optional[Path] = None
 
     @property
     def paths(self) -> Union[Path, list[Path], None]:

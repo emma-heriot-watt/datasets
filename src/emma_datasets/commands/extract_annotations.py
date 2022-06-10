@@ -8,7 +8,7 @@ from emma_datasets.common import Settings, get_progress
 from emma_datasets.datamodels import AnnotationType, DatasetName
 from emma_datasets.parsers.annotation_extractors import (
     AlfredCaptionExtractor,
-    AlfredSubgoalTrajectoryExtractor,
+    AlfredTrajectoryExtractor,
     AnnotationExtractor,
     CocoCaptionExtractor,
     EpicKitchensCaptionExtractor,
@@ -98,9 +98,9 @@ def extract_alfred_captions(progress: Progress) -> AlfredCaptionExtractor:
     )
 
 
-def extract_alfred_subgoal_trajectories(progress: Progress) -> AlfredSubgoalTrajectoryExtractor:
+def extract_alfred_subgoal_trajectories(progress: Progress) -> AlfredTrajectoryExtractor:
     """Extract subgoal trajectories from ALFRED."""
-    return AlfredSubgoalTrajectoryExtractor(
+    return AlfredTrajectoryExtractor(
         [
             settings.paths.alfred_data.joinpath("train/"),
             settings.paths.alfred_data.joinpath("valid_seen/"),

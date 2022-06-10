@@ -5,6 +5,7 @@ from emma_datasets.datamodels.annotations import (
     QuestionAnswerPair,
     Region,
     SceneGraph,
+    TaskDescription,
     Text,
 )
 from emma_datasets.datamodels.base_model import BaseInstance

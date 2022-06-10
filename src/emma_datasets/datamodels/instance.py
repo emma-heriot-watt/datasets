@@ -7,6 +7,7 @@ from emma_datasets.datamodels.annotations import (
     QuestionAnswerPair,
     Region,
     SceneGraph,
+    TaskDescription,
 )
 from emma_datasets.datamodels.base_model import BaseInstance
 from emma_datasets.datamodels.constants import DatasetModalityMap, DatasetName, MediaType
@@ -25,6 +26,7 @@ class MultiSourceInstanceMixin(BaseInstance):
     regions: Optional[list[Region]]
     scene_graph: Optional[SceneGraph]
     trajectory: Optional[ActionTrajectory]
+    task_description: Optional[list[TaskDescription]]
 
     @property
     def modality(self) -> MediaType:
@@ -49,7 +51,7 @@ class MultiSourceInstanceMixin(BaseInstance):
         return next(iter(self.dataset.values())).paths
 
     @property
-    def features_path(self) -> Path:
+    def features_path(self) -> Union[Path, list[Path]]:
         """Get the path to the features for this instance.
 
         If the instance is connected to more than one dataset, just get any one feature file.
@@ -66,6 +68,7 @@ class Instance(MultiSourceInstanceMixin):
     regions: Optional[list[Region]]
     scene_graph: Optional[SceneGraph]
     trajectory: Optional[ActionTrajectory]
+    task_description: Optional[list[TaskDescription]]
 
     @property
     def language_annotations(self) -> list[str]:
@@ -86,5 +89,8 @@ class Instance(MultiSourceInstanceMixin):
 
         if self.trajectory is not None:
             lang_data_iterable.extend(self.trajectory.get_language_data())
+
+        if self.task_description is not None:
+            lang_data_iterable.extend([desc.get_language_data() for desc in self.task_description])
 
         return lang_data_iterable
