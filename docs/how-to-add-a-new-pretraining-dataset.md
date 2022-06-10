@@ -1,15 +1,33 @@
-# How to add a new dataset
+# How to add a new pretraining dataset
 
-Yay! New dataset!
+A **pretraining dataset** is specific used for pretraining the model and not for downstream fine-tuning or evaluating of the model. That means that each DB will **combine multiple datasets into one form**.
+
+For model pretraining, we are making the assumption that we want to merge examples from multiple datasets into a single representation (an `Instance`).
+
+At a high-level, these are the steps:
+
+1. [Update the constants](#updating-the-constants)
+2. [Create a subset of the full dataset for automated testing](#preparing-to-create-tests-for-the-new-dataset)
+3. Processing a raw instance from the dataset
+4. Extracting annotations from the dataset
 
 ## Things to note
 
+### Pydantic
+
 We use everything [Pydantic](https://pydantic-docs.helpmanual.io) has to offer: [Fields](https://pydantic-docs.helpmanual.io/usage/types/), [validators](https://pydantic-docs.helpmanual.io/usage/validators/), all of it!
+
+### pytest
 
 This guide assumes you have prior experience with [`pytest`](https://docs.pytest.org/) and unit-testing in general. To learn more about fantastic fixtures and how to use them, check out the following links:
 
 - [About fixtures (from `pytest`)](https://docs.pytest.org/en/stable/explanation/fixtures.html#about-fixtures)
-- [How to use fixtures (from `pytest`)](https://docs.pytest.org/en/stable/how-to/fixtures.html#how-to-fixtures)
+- [How to use fixtures (from
+  `pytest`)](https://docs.pytest.org/en/stable/how-to/fixtures.html#how-to-fixtures)
+
+### Typer
+
+We also use [Typer](https://typer.tiangolo.com) for creating and testing the various CLI apps.
 
 ## Updating the constants
 
@@ -26,21 +44,28 @@ Datasets are huge and there might be edge cases you probably didn't consider. To
 To prepare, you need to do the following:
 
 1. Download a subset of instances and include the file(s) in `storage/fixtures/` — if you have multiple files, store them in a folder.
-2. Create a fixture in `tests/fixtures/paths.py` which can point to the source data file/folder. Be sure to use `fixtures_root`.
+1. Create a fixture in `tests/fixtures/paths.py` which can point to the source data file/folder. Be sure to use `fixtures_root`.
 
 That's it for now! We'll come back to using these files later in the guide.
 
-## Processing the raw dataset
+## Creating models for the raw dataset
 
-We need to easily parse every single instance and validate them to ensure that everything in the raw data is as you expect it!
-
-### Creating a model for the metadata
-
-Create a new metadata file for your dataset in `src/emma_datasets/datamodels/datasets/`.
-
-Using the other files in that directory as inspiration, create a "`Metadata`" model for your dataset based on the raw data structure. For example, if your raw data is a list of JSON objects, each object should correspond to one of the new "`Metadata`" models. Inherit `BaseModel` from `emma_datasets.datamodels.base_model` and start filling it out.
+We need to easily parse every single instance and validate them to ensure that everything in the raw data is as you expect it! These classes are what get exported and stored within the DB file, and can be imported straight from the DB within your model.
 
 Using [Pydantic's parsing methods](https://pydantic-docs.helpmanual.io/usage/models/#helper-functions), your raw data will be loaded from this file directly, and it will be validated to the schema of this model. This way, we can also verify that every single instance of the model is what you expect it to be, and you can deal with any weird data issues if they get flagged. If this happens, it will error.
+
+The best example for what you are capable of doing is `TeachEdhInstance` (in `emma_datasets.datamodels.datasets.teach`). Each instance is represented by a single `TeachEdhInstance` and is used to import. It's made of multiple models, and Pydantic automatically parses all the nested models for you!
+
+We advocate that the model for your dataset instance is as detailed as possible, using additional validators and properties where possible to ease usage downstream and ensure _every single instance_ is as expected.
+
+### Creating an instance for your dataset
+
+1. Create a new file for your dataset in `src/emma_datasets/datamodels/datasets/`.
+1. Import `BaseModel` from `emma_datasets.datamodels.base_model`
+1. Create a class for your instance, inheriting from `BaseInstance`. For consistency, please ensure that the name of your class is in pascal case.
+1. Import your new instance into `emma_datasets/datamodels/datasets/__init__.py` to ensure it is easily accessible like the others.
+
+_Note: We used Pascal case because we made some typos and we don't want to rename every single class throughout the library, so it's just staying that way for now._
 
 ### Modifying the data on load, automatically
 
@@ -48,25 +73,17 @@ If you need to consistently modify every single instance of the raw model, you c
 
 For examples, see [`AlfredMetadata`](https://github.com/emma-simbot/datasets/blob/4ea83c492cdab331ab7c722422f48ee8ee181659/src/emma_datasets/datamodels/datasets/alfred.py#L136-L144) and [`EpicKitchensNarrationMetdata`](https://github.com/emma-simbot/datasets/blob/4ea83c492cdab331ab7c722422f48ee8ee181659/src/emma_datasets/datamodels/datasets/epic_kitchens.py#L48-L56) to see how the raw data is modified on import.
 
-#### Customizing the instance _without modifying the file_
+#### What if the raw data is not in `snake_case`?
 
-If you want to be able to export the model without exporting any modifications, you can do that!
+If the keys in the raw data are not in snake case, you can use the `alias` key in `Field`. Check out [the example here](https://pydantic-docs.helpmanual.io/usage/model_config/#alias-precedence) or in ALFRED-related models (in `src/emma_datasets/datamodels/datasets/alfred.py`)
 
-With the power of Pydantic, it is possible to extend the instance without actually affecting the raw data file. You can do this using `@property` methods within the class. When you export the model to a `dict` or JSON, these additional properties **will not be exported**.
+### Testing your model works on the raw dataset
 
-For a working example, check out `TeachEdhInstance` in `src/emma_datasets/datamodels/datasets/teach.py`.
+We want to verify that your data can be imported and parsed by your instance correctly. As shown by `tests/datamodels/test_teach_datamodels.py`, you can verify that your model is working on your raw data correctly without needing to run the entire pipeline.
 
-### Testing the datamodel works for the raw data
+Using your [previously created fixture paths](#preparing-to-create-tests-for-the-new-dataset), create a new module for your dataset within `tests/datamodels` and add your tests to it.
 
-As shown by `tests/datamodels/test_teach_datamodels.py`, you can verify that your model is working on your raw data correctly without needing to run the entire pipeline.
-
-Using your [previously created fixture paths](#preparing-to-create-tests-for-the-new-dataset), create a new module within `tests/datamodels` and add your tests to it.
-
-### Importing the entire instance
-
-If you would like to go further and import the entire instance (and not just the metadata), then you can create a model that represents your instance.
-
-Just create a new class that inherits from `BaseInstance` (in `emma_datasets.datamodels.base_model`) and go full Pydantic on it!
+If you are unsure what tests to include, check out other tests within the same directory. If you include `@property`'s in your instance, then you'll also want to test them too as they should be present for all instances.
 
 ## Extracting annotations
 
@@ -106,42 +123,35 @@ To verify that your annotation extractor works and continues to do so, you need 
 4. Like the other fixtures, call the `extracted_annotations()` function, providing it with the necessary arguments to run
 5. Include your annotation extractor fixture in the `all_extracted_annotations()` fixture — updating both the function arguments and adding a new assert statement for it.
 
-#### Testing your annotation extractor
+#### Creating the actual test for the annotation extractor
 
 1. Create a test within `tests/test_annotation_extractors.py` for your annotation extractor, using your [previously created fixture](#creating-a-fixture-for-your-annotation-extractor)
 2. Run the test to verify it is all working.
 
-## Creating a `DatasetDb` for your dataset
+## Converting your dataset to a `DatasetMetadata`
 
-We have made it as easy and speedy as we can to create instances from one or more datasets, and then exporting them all together into a single `.db` file.
+Each instance is converted into a `DatasetMetadata` to be easily processed and merged into the single `Instance` format. The `DatasetMetadata` model provides a consistent way to store the metadata and access the annotations.
 
-There are two main choices for your dataset:
+### Creating a dataset metadata parser
 
-- Export the instances as they are — this is useful for compressing a single dataset
-- Convert the instances into a consistent format — this is more useful for pretraining, but you can use it for whatever you want to!
+1. Create a new module for your metadata parser in `src/emma_datasets/parsers/dataset_metadata/`
+2. Create your class, inheriting the base `DatasetMetadataParser` from `emma_datasets.parsers.dataset_metadata.metadata_parser`. `DatasetMetadataParser` is a generic class, meaning the model for the metadata of the raw dataset should be provided with it. For example, the `AlfredMetadataParser` inherits from `DatasetMetadataParser[AlfredMetadata]`
+3. Update the class variables for `metadata_model` and `dataset_name`
+4. Implement the private `_read()` method, which will read in the data for each path provided to `self.data_paths` within the `__init__()`
+5. Implement the `convert_to_dataset_metadata` class method, to convert a single instance from the raw dataset into instances of `DatasetMetadata`
 
-### Creating instances for a _single_ dataset
+If you are unsure how this is implemented, use the other modules as examples.
 
-If you want to create a `db` file for a single dataset and do not want to merge multiple datasets together, then look no further! We have the `GenericInstanceCreator` for this purpose.
+#### When a single raw instance becomes multiple instances of `DatasetMetadata`
 
-1. Create a new file in `src/emma_datasets/parsers/instance_creators/` for your dataset, naming it after your dataset.
-2. Import the `GenericInstanceCreator` (from `emma_datasets.parsers.instance_creators.generic`) and
-3. Create a new class inheriting `GenericInstanceCreator` (from `emma_datasets.parsers.instance_creators.generic`)[^generics].
-4. Implement the `_create_instance()` method to convert your input into your output instance.
+As was the case with ALFRED, each raw example is split by subgoals into multiple pretraining instances, and therefore needed to return multiple `DatasetMetadata`. Checkout how that was handled there.
 
-Your input can be whatever you choose. For example, [`TeachEdhInstanceCreator`](https://github.com/emma-simbot/datasets/blob/455b64961ce179c7dd23d994b237a21def260ecc/src/emma_datasets/parsers/instance_creators/teach_edh.py#L7-L12) converts a `pathlib.Path` into a `TeachEdhInstance`.
+## Aligning datasets: When datasets overlap
 
-### Standardizing your dataset to the common interface
-
-We have made it so that it is easy to merge all the datasets into a single datamodel, which can then get used downstream.
-
-### Aligning multiple datasets together
+When you want to use multiple datasets but they overlap and come from common sources, it can be incredibly difficult to use them and handle these duplicates. This was the case for COCO, VisualGenome, GQA: VisualGenome and GQA used COCO, and GQA also used VisualGenome, and we wanted to use _all_ of them!
 
 TBA.
 
 ## Exporting instances
 
 TBA.
-Stuff on running the command goes here.
-
-[^generics]: Because this is a generic, you will need to specify the class for the input and output types. For more on generics, check out https://mypy.readthedocs.io/en/stable/generics.html

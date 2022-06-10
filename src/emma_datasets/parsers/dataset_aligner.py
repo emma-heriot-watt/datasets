@@ -1,5 +1,4 @@
-from multiprocessing.pool import Pool
-from typing import Generic, Iterable, NamedTuple, Optional, TypeVar
+from typing import Generic, Iterable, NamedTuple, TypeVar
 
 from pydantic import BaseModel
 from rich.progress import Progress
@@ -55,10 +54,10 @@ class DatasetAligner(Generic[S, T]):
             comment="",
         )
 
-    def get_aligned_metadata(self, pool: Optional[Pool] = None) -> DatasetAlignerReturn:
+    def get_aligned_metadata(self) -> DatasetAlignerReturn:
         """Align and return the metadata for the two datasets."""
-        source_metadata = list(self.source_metadata_parser.get_metadata(self.progress, pool))
-        target_metadata = list(self.target_metadata_parser.get_metadata(self.progress, pool))
+        source_metadata = list(self.source_metadata_parser.get_metadata(self.progress))
+        target_metadata = list(self.target_metadata_parser.get_metadata(self.progress))
 
         self._source_dataset_size = len(source_metadata)
         self._target_dataset_size = len(target_metadata)

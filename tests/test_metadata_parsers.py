@@ -1,7 +1,5 @@
-from multiprocessing.pool import Pool
 from typing import Any, Iterator
 
-import pytest
 from rich.progress import Progress
 
 from emma_datasets.datamodels import DatasetMetadata
@@ -10,17 +8,6 @@ from emma_datasets.parsers.dataset_metadata.metadata_parser import DatasetMetada
 
 def test_metadata_parser_works(metadata_parser, progress):
     metadata = list(metadata_parser.get_metadata(progress))
-
-    assert metadata
-
-    for instance in metadata:
-        assert isinstance(instance, metadata_parser.metadata_model)
-
-
-@pytest.mark.multiprocessing
-def test_metadata_parser_works_with_multiprocessing(metadata_parser, progress):
-    with Pool(2) as pool:
-        metadata = list(metadata_parser.get_metadata(progress, pool))
 
     assert metadata
 

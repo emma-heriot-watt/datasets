@@ -1,6 +1,5 @@
 import itertools
-from multiprocessing.pool import Pool
-from typing import Iterator, Optional
+from typing import Iterator
 
 from rich.progress import Progress
 
@@ -104,29 +103,27 @@ class MetadataParser:
             DatasetName.visual_genome, self.progress, "Merging VG, COCO and GQA where possible"
         )
 
-    def get_all_metadata_groups(
-        self, pool: Optional[Pool] = None
-    ) -> Iterator[list[DatasetMetadata]]:
+    def get_all_metadata_groups(self) -> Iterator[list[DatasetMetadata]]:
         """Get all dataset metadata from the input datasets."""
         return itertools.chain(
-            self.coco_vg_gqa(pool),
-            self.epic_kitchens(pool),
-            self.alfred(pool),
+            self.coco_vg_gqa(),
+            self.epic_kitchens(),
+            self.alfred(),
         )
 
-    def coco_vg_gqa(self, pool: Optional[Pool] = None) -> Iterator[list[DatasetMetadata]]:
+    def coco_vg_gqa(self) -> Iterator[list[DatasetMetadata]]:
         """Get groups of aligned dataset metadata from COCO, VG, and GQA."""
-        aligned_vg_coco_metadata = self._vg_coco_aligner.get_aligned_metadata(pool)
-        aligned_gqa_vg_metadata = self._gqa_vg_aligner.get_aligned_metadata(pool)
+        aligned_vg_coco_metadata = self._vg_coco_aligner.get_aligned_metadata()
+        aligned_gqa_vg_metadata = self._gqa_vg_aligner.get_aligned_metadata()
 
         dataset_metadata = self._align_coco_gqa_with_vg(
             aligned_vg_coco_metadata, aligned_gqa_vg_metadata
         )
         return dataset_metadata
 
-    def epic_kitchens(self, pool: Optional[Pool] = None) -> Iterator[list[DatasetMetadata]]:
+    def epic_kitchens(self) -> Iterator[list[DatasetMetadata]]:
         """Get dataset metadata from the EPIC-KITCHENS dataset."""
-        narration_metadata = self._epic_kitchens.get_metadata(self.progress, pool)
+        narration_metadata = self._epic_kitchens.get_metadata(self.progress)
         dataset_metadata = (
             [self._epic_kitchens.convert_to_dataset_metadata(metadata)]
             for metadata in narration_metadata
@@ -134,9 +131,9 @@ class MetadataParser:
 
         return dataset_metadata
 
-    def alfred(self, pool: Optional[Pool] = None) -> Iterator[list[DatasetMetadata]]:
+    def alfred(self) -> Iterator[list[DatasetMetadata]]:
         """Get dataset metadata from the ALFRED dataset."""
-        alfred_metadata = self._alfred.get_metadata(self.progress, pool)
+        alfred_metadata = self._alfred.get_metadata(self.progress)
         dataset_metadata_iterator = itertools.chain.from_iterable(
             self._alfred.convert_to_dataset_metadata(metadata) for metadata in alfred_metadata
         )

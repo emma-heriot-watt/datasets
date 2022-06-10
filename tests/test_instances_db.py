@@ -42,7 +42,7 @@ def test_alfred_instance_metadata_media_and_actions_match(
     # metadata are from only from alfred dataset
     metadata = list(alfred_instance.dataset.values())[0]
     if isinstance(metadata.media, list):
-        frames = [frame.path.name for frame in metadata.media]  # type: ignore[union-attr]
+        frames = [frame.path.name for frame in metadata.media]
 
         assert len(frames) == num_actions
 

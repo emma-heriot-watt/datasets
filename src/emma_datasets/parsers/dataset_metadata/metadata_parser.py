@@ -1,6 +1,5 @@
 import itertools
 from abc import ABC, abstractmethod
-from multiprocessing.pool import Pool
 from pathlib import Path
 from typing import Any, Generic, Iterator, Optional, TypeVar
 
@@ -17,7 +16,9 @@ DataPathTuple = tuple[Path, Optional[DatasetSplit]]
 
 
 class DatasetMetadataParser(ABC, Generic[T]):
-    """Parse dataset metadata and optionally account for splits.
+    """Convert the metadata from raw dataset instances into the standardized `DatasetMetadata`.
+
+    This class facilitates converting the metadata per instnace
 
     Subclasses should provide the class variables for `metadata_model` and `dataset_name`.
     """
@@ -43,7 +44,7 @@ class DatasetMetadataParser(ABC, Generic[T]):
         """Convert a single instance of metadata model to the common DatasetMetadata."""
         raise NotImplementedError()
 
-    def get_metadata(self, progress: Progress, pool: Optional[Pool] = None) -> Iterator[T]:
+    def get_metadata(self, progress: Progress) -> Iterator[T]:
         """Get all the raw metadata for this dataset."""
         structured_data_iterators: list[Iterator[T]] = []
 
@@ -53,7 +54,7 @@ class DatasetMetadataParser(ABC, Generic[T]):
             )
             raw_data = self._read(path)
 
-            structured_data = self._structure_raw_metadata(raw_data, dataset_split, progress, pool)
+            structured_data = self._structure_raw_metadata(raw_data, dataset_split, progress)
             structured_data_iterators.append(structured_data)
 
         return itertools.chain.from_iterable(structured_data_iterators)
@@ -63,7 +64,6 @@ class DatasetMetadataParser(ABC, Generic[T]):
         raw_metadata: list[dict[str, Any]],
         dataset_split: Optional[DatasetSplit],
         progress: Progress,
-        pool: Optional[Pool],
     ) -> Iterator[T]:
         """Structure raw metadata into a Pydantic model.
 
@@ -79,15 +79,9 @@ class DatasetMetadataParser(ABC, Generic[T]):
         )
         progress.start_task(self.task_id)
 
-        if pool is not None:
-            for parsed_model in pool.imap_unordered(self.metadata_model.parse_obj, raw_data):
-                progress.advance(self.task_id)
-                yield parsed_model
-
-        else:
-            for raw_instance in raw_data:
-                progress.advance(self.task_id)
-                yield self.metadata_model.parse_obj(raw_instance)
+        for raw_instance in raw_data:
+            progress.advance(self.task_id)
+            yield self.metadata_model.parse_obj(raw_instance)
 
         progress.update(self.task_id, comment="Done!")
 
