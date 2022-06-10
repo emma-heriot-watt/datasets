@@ -205,13 +205,16 @@ def organise_teach(pool: ThreadPoolExecutor, progress: Progress) -> None:
 def organise_datasets(
     datasets: Optional[list[DatasetName]] = typer.Argument(  # noqa: WPS404
         None, case_sensitive=False, show_default=False
-    )
+    ),
+    num_threads: Optional[int] = typer.Option(  # noqa: WPS404
+        None,
+        help="Number of threads to use for parallel processing. This default to `min(32, os.cpu_count() + 4).",
+    ),
 ) -> None:
     """Organise the datasets in the storage folder.
 
     This is going to take a while because of how many files there are, the size of them, and the
-    fact that we're limited to using multithreading instead of multiprocessing. This uses all the
-    possible threads available on your system, up to a maximum of 32 threads.
+    fact that we're limited to using multithreading instead of multiprocessing.
     """
     switcher: dict[DatasetName, Callable[[ThreadPoolExecutor, Progress], None]] = {
         DatasetName.coco: organise_coco,
@@ -236,7 +239,7 @@ def organise_datasets(
         datasets = list(DatasetName)
 
     with progress_bar:
-        with ThreadPoolExecutor() as pool:
+        with ThreadPoolExecutor(max_workers=num_threads) as pool:
             for dataset_name in datasets:
                 switcher[dataset_name](pool, progress_bar)
 

@@ -23,24 +23,30 @@ settings = Settings()
 DEFAULT_CSV_PATH = settings.paths.constants.joinpath("dataset_downloads.csv")
 
 
-@app.command(name="datasets")
+@app.command()
 def download_datasets(
-    datasets: Optional[list[DatasetName]] = typer.Option(  # noqa: WPS404
+    datasets: Optional[list[DatasetName]] = typer.Argument(  # noqa: WPS404
         None,
         case_sensitive=False,
-        show_default=False,
-        help="Optionally, specify which datasets to download.",
+        help="Specify which datasets to download. Download all if none specified.",
     ),
-    csv_file_path: Path = DEFAULT_CSV_PATH,
-    output_dir: Path = settings.paths.datasets,
-    max_concurrent_downloads: int = 1,
+    csv_file_path: Path = typer.Option(  # noqa: WPS404
+        DEFAULT_CSV_PATH,
+        help="Location of the CSV file which contians all the download locations.",
+    ),
+    output_dir: Path = typer.Option(  # noqa: WPS404
+        settings.paths.datasets, help="Output directory for the files"
+    ),
+    max_concurrent_downloads: Optional[int] = typer.Option(  # noqa: WPS404
+        None,
+        help="Number of threads to use for parallel processing. This default to `min(32, os.cpu_count() + 4).",
+    ),
 ) -> None:
     """Download the dataset files from the CSV file.
 
     If none are specified, download all of them.
     """
     if not datasets:
-        logger.info("No datasets provided, therefore downloading all datasets...")
         datasets = list(DatasetName)
 
     downloader = Downloader()

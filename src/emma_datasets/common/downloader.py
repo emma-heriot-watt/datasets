@@ -186,7 +186,11 @@ class Downloader:
 
         try:
             with requests.get(
-                url, headers={"User-Agent": USER_AGENT}, allow_redirects=True, timeout=5
+                url,
+                headers={"User-Agent": USER_AGENT},
+                allow_redirects=True,
+                timeout=5,
+                stream=True,
             ) as response:
                 content_length = self._get_content_length_from_response(response)
                 content_type = self._get_content_type_from_response(response)
@@ -199,6 +203,7 @@ class Downloader:
                     self._store_data(response, path, task_id)
 
             self._complete_download(task_id, path.name)
+
         except requests.exceptions.Timeout:
             self._log_file.write_text(
                 f"[Timeout]: Unable to download data from URL because timed out after 5 seconds: {url}"
