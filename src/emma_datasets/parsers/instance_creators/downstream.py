@@ -32,10 +32,10 @@ class DownstreamInstanceCreator(GenericInstanceCreator[Union[Path, str], Instanc
 
     def _create_instance(self, input_data: Union[Path, str]) -> InstanceModelType:
         """Parse the instance from the file and return it."""
-        if isinstance(input_data, Path) or Path(input_data).exists():
+        if isinstance(input_data, Path):
             return self.instance_model_type.parse_file(input_data)
 
-        if isinstance(input_data, str) and not Path(input_data).exists():
+        if isinstance(input_data, str):
             return self.instance_model_type.parse_raw(input_data)
 
         raise NotImplementedError("Input data type is not supported.")

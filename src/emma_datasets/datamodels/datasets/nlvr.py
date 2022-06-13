@@ -16,7 +16,6 @@ class NlvrInstance(BaseInstance):
     synset: str
     left_url: str
     right_url: str
-    query: str
     identifier: str
 
     @property
