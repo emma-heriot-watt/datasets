@@ -34,7 +34,7 @@ class DatasetName(Enum):
 
     alfred = "ALFRED"
     coco = "COCO"
-    epic_kitchens = "EPIC-KITCHENS"
+    epic_kitchens = "Epic Kitchens"
     gqa = "GQA"
     visual_genome = "Visual Genome"
     teach = "TEACh"
