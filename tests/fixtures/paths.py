@@ -125,6 +125,11 @@ def teach_edh_all_data_paths(
 
 
 @fixture(scope="session")
+def coco_instances_path(fixtures_root: Path) -> Path:
+    return fixtures_root.joinpath("coco", "coco_captions_tiny.json")
+
+
+@fixture(scope="session")
 def extracted_annotations_paths(request: Any) -> dict[str, Path]:
     """Create cached folders for the extracted annotations.
 

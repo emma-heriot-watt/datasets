@@ -1,9 +1,15 @@
 from datetime import datetime
-from typing import Optional
+from pathlib import Path
+from typing import Any, Optional
 
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, HttpUrl, PrivateAttr
 
-from emma_datasets.datamodels.constants import DatasetSplit
+from emma_datasets.common import Settings
+from emma_datasets.datamodels.base_model import BaseInstance
+from emma_datasets.datamodels.constants import DatasetSplit, MediaType
+
+
+settings = Settings()
 
 
 class CocoImageMetadata(BaseModel, frozen=True):
@@ -40,3 +46,29 @@ class CocoCaption(BaseModel):
     id: str
     image_id: str
     caption: str
+
+
+class CocoInstance(BaseInstance):
+    """COCO Instance."""
+
+    image_id: str
+    captions_id: list[str]
+    captions: list[str]
+    _features_path: Path = PrivateAttr()
+
+    def __init__(self, **data: Any) -> None:
+        super().__init__(**data)
+
+        self._features_path = settings.paths.coco_features.joinpath(  # noqa: WPS601
+            f"{self.image_id}.pt"
+        )
+
+    @property
+    def modality(self) -> MediaType:
+        """Get the modality of the instance."""
+        return MediaType.image
+
+    @property
+    def features_path(self) -> Path:
+        """Get the path to the features for this instance."""
+        return self._features_path

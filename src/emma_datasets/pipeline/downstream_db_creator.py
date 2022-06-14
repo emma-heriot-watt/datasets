@@ -1,6 +1,6 @@
 from multiprocessing.pool import Pool
 from pathlib import Path
-from typing import Generic, Iterable, Optional, TypeVar, Union
+from typing import Any, Generic, Iterable, Optional, TypeVar, Union
 
 from rich.progress import Progress, TaskID, TimeElapsedColumn
 
@@ -19,7 +19,7 @@ from emma_datasets.parsers.instance_creators import DownstreamInstanceCreator
 settings = Settings()
 
 
-DatasetSplitPathType = TypeVar("DatasetSplitPathType", Path, list[Path])
+DatasetSplitPathType = TypeVar("DatasetSplitPathType", Path, list[Path], list[dict[Any, Any]])
 InstanceModelType = TypeVar("InstanceModelType", bound=BaseInstance)
 
 
@@ -96,6 +96,35 @@ class DownstreamDbCreator(Generic[DatasetSplitPathType, InstanceModelType]):
         return db_creator
 
     @classmethod
+    def from_one_instance_per_dict(
+        cls,
+        dataset_name: DatasetName,
+        paths_per_split: dict[DatasetSplit, list[dict[Any, Any]]],
+        instance_model_type: type[InstanceModelType],
+        output_dir: Path = settings.paths.databases,
+    ) -> "DownstreamDbCreator[list[dict[Any, Any]], InstanceModelType]":
+        """Instantiate the Db creator when the input data is separated across JSON files.
+
+        Each JSON file must have one instance.
+        """
+        progress = create_downstream_rich_progress()
+
+        instance_creator = DownstreamInstanceCreator(
+            instance_model_type=instance_model_type,
+            progress=progress,
+            task_description=f"Creating {dataset_name.value} instances",
+        )
+
+        db_creator = DownstreamDbCreator[list[dict[Any, Any]], InstanceModelType](
+            dataset_name=dataset_name,
+            paths_per_split=paths_per_split,
+            output_dir=output_dir,
+            instance_creator=instance_creator,
+            progress=progress,
+        )
+        return db_creator
+
+    @classmethod
     def from_one_instance_per_json(
         cls,
         dataset_name: DatasetName,
@@ -138,7 +167,7 @@ class DownstreamDbCreator(Generic[DatasetSplitPathType, InstanceModelType]):
 
     def run_for_split(
         self,
-        iterable_input_data: Union[Iterable[str], Iterable[Path]],
+        iterable_input_data: Union[Iterable[str], Iterable[Path], Iterable[dict[Any, Any]]],
         dataset_split: DatasetSplit,
         pool: Optional[Pool] = None,
     ) -> None:
@@ -148,7 +177,6 @@ class DownstreamDbCreator(Generic[DatasetSplitPathType, InstanceModelType]):
         instance_iterator = self.instance_creator(iterable_input_data, self.progress, pool)
 
         self.progress.reset(task_id, start=True, visible=True)
-
         with DatasetDb(self._get_db_path(dataset_split), readonly=False) as db:
             for idx, instance in enumerate(instance_iterator):
                 dataset_idx = f"{self.dataset_name.name}_{dataset_split.name}_{idx}"
@@ -187,7 +215,7 @@ class DownstreamDbCreator(Generic[DatasetSplitPathType, InstanceModelType]):
 
     def _prepare_input_data_for_instance_creator(
         self, data_for_dataset_split: DatasetSplitPathType
-    ) -> Union[Iterable[str], Iterable[Path]]:
+    ) -> Union[Iterable[str], Iterable[Path], Iterable[dict[Any, Any]]]:
         """Convert the path data for a dataset split into a supported form."""
         if isinstance(data_for_dataset_split, Path) and data_for_dataset_split.exists():
             with data_for_dataset_split.open() as split_data_file:
@@ -195,6 +223,8 @@ class DownstreamDbCreator(Generic[DatasetSplitPathType, InstanceModelType]):
 
         if isinstance(data_for_dataset_split, Iterable):
             if all(isinstance(element, Path) for element in data_for_dataset_split):
+                return data_for_dataset_split
+            elif all(isinstance(element, dict) for element in data_for_dataset_split):
                 return data_for_dataset_split
 
         raise NotImplementedError

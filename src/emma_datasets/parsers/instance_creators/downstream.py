@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import TypeVar, Union
+from typing import Any, TypeVar, Union
 
 from rich.progress import Progress
 
@@ -10,7 +10,9 @@ from emma_datasets.parsers.instance_creators.generic import GenericInstanceCreat
 InstanceModelType = TypeVar("InstanceModelType", bound=BaseInstance)
 
 
-class DownstreamInstanceCreator(GenericInstanceCreator[Union[Path, str], InstanceModelType]):
+class DownstreamInstanceCreator(
+    GenericInstanceCreator[Union[Path, str, dict[Any, Any]], InstanceModelType]
+):
     """Create instances for downstream datasets.
 
     We assume that downstream datasets are either a Path to a file, or a string which can be parsed
@@ -30,12 +32,15 @@ class DownstreamInstanceCreator(GenericInstanceCreator[Union[Path, str], Instanc
 
         self.instance_model_type = instance_model_type
 
-    def _create_instance(self, input_data: Union[Path, str]) -> InstanceModelType:
+    def _create_instance(self, input_data: Union[Path, str, dict[Any, Any]]) -> InstanceModelType:
         """Parse the instance from the file and return it."""
         if isinstance(input_data, Path):
             return self.instance_model_type.parse_file(input_data)
 
         if isinstance(input_data, str):
             return self.instance_model_type.parse_raw(input_data)
+
+        if isinstance(input_data, dict):
+            return self.instance_model_type.parse_obj(input_data)
 
         raise NotImplementedError("Input data type is not supported.")
