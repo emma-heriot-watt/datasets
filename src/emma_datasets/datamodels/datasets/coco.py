@@ -60,7 +60,7 @@ class CocoInstance(BaseInstance):
         super().__init__(**data)
 
         self._features_path = settings.paths.coco_features.joinpath(  # noqa: WPS601
-            f"{self.image_id}.pt"
+            f"{self.image_id.zfill(12)}.pt"  # noqa: WPS432
         )
 
     @property
