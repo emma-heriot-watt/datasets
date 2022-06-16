@@ -59,6 +59,13 @@ class MultiSourceInstanceMixin(BaseInstance):
         all_feature_paths = (metadata.features_path for metadata in self.dataset.values())
         return next(all_feature_paths)
 
+    @property
+    def is_full_trajectory(self) -> bool:
+        """Whether the instance corresponds to a trajectory of multiple subgoals."""
+        if self.modality == MediaType.image:
+            return False
+        return isinstance(self.features_path, list) and len(self.features_path) > 1
+
 
 class Instance(MultiSourceInstanceMixin):
     """Instance within the dataset."""
