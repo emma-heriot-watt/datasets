@@ -1,0 +1,188 @@
+{
+	"info": {
+		"description": "This is v2.0 of the VQA dataset.",
+		"url": "http://visualqa.org",
+		"version": "2.0",
+		"year": 2017,
+		"contributor": "VQA Team",
+		"date_created": "2017-04-26 17:07:13"
+	},
+	"license": {
+		"url": "http://creativecommons.org/licenses/by/4.0/",
+		"name": "Creative Commons Attribution 4.0 International License"
+	},
+	"data_subtype": "train2014",
+	"annotations": [
+		{
+			"question_type": "what color is the",
+			"multiple_choice_answer": "white",
+			"answers": [
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 262146,
+			"answer_type": "other",
+			"question_id": 262146000
+		},
+		{
+			"question_type": "what is the person",
+			"multiple_choice_answer": "skiing",
+			"answers": [
+				{ "answer": "skiing", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "skiing", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "skiing", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "skiing", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "skiing", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "skiing", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "skiing", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "skiing", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "skiing", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "skiing", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 262146,
+			"answer_type": "other",
+			"question_id": 262146001
+		},
+		{
+			"question_type": "what color is the",
+			"multiple_choice_answer": "red",
+			"answers": [
+				{ "answer": "red", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "red", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "red & white", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "black", "answer_confidence": "no", "answer_id": 4 },
+				{ "answer": "red", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "red", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "red", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "red", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "red", "answer_confidence": "yes", "answer_id": 9 },
+				{
+					"answer": "red and white",
+					"answer_confidence": "yes",
+					"answer_id": 10
+				}
+			],
+			"image_id": 262146,
+			"answer_type": "other",
+			"question_id": 262146002
+		},
+		{
+			"question_type": "none of the above",
+			"multiple_choice_answer": "market",
+			"answers": [
+				{ "answer": "market", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "market", "answer_confidence": "yes", "answer_id": 2 },
+				{
+					"answer": "farmers market",
+					"answer_confidence": "yes",
+					"answer_id": 3
+				},
+				{
+					"answer": "outdoor market",
+					"answer_confidence": "maybe",
+					"answer_id": 4
+				},
+				{ "answer": "market", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "outside", "answer_confidence": "yes", "answer_id": 6 },
+				{
+					"answer": "farmers market",
+					"answer_confidence": "yes",
+					"answer_id": 7
+				},
+				{ "answer": "at market", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "market", "answer_confidence": "yes", "answer_id": 9 },
+				{
+					"answer": "farmers market",
+					"answer_confidence": "yes",
+					"answer_id": 10
+				}
+			],
+			"image_id": 262145,
+			"answer_type": "other",
+			"question_id": 262145000
+		},
+		{
+			"question_type": "is this a",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 262145,
+			"answer_type": "yes/no",
+			"question_id": 262145001
+		},
+		{
+			"question_type": "what",
+			"multiple_choice_answer": "carrots and potatoes",
+			"answers": [
+				{
+					"answer": "carrots, potatoes, cucumbers",
+					"answer_confidence": "maybe",
+					"answer_id": 1
+				},
+				{
+					"answer": "carrots and potatoes",
+					"answer_confidence": "yes",
+					"answer_id": 2
+				},
+				{
+					"answer": "potatoes carrots",
+					"answer_confidence": "maybe",
+					"answer_id": 3
+				},
+				{
+					"answer": "carrots and potatoes",
+					"answer_confidence": "yes",
+					"answer_id": 4
+				},
+				{ "answer": "potatoes", "answer_confidence": "yes", "answer_id": 5 },
+				{
+					"answer": "potatoes, carrots and green beans",
+					"answer_confidence": "maybe",
+					"answer_id": 6
+				},
+				{
+					"answer": "carrots asparagus and potatoes",
+					"answer_confidence": "maybe",
+					"answer_id": 7
+				},
+				{
+					"answer": "carrots,potatoes,cucumbers",
+					"answer_confidence": "maybe",
+					"answer_id": 8
+				},
+				{
+					"answer": "carrots potatoes",
+					"answer_confidence": "yes",
+					"answer_id": 9
+				},
+				{
+					"answer": "carrots and potatoes",
+					"answer_confidence": "yes",
+					"answer_id": 10
+				}
+			],
+			"image_id": 262145,
+			"answer_type": "other",
+			"question_id": 262145002
+		}
+	],
+	"data_type": "mscoco"
+}

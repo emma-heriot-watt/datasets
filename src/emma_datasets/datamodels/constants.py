@@ -41,6 +41,7 @@ class DatasetName(Enum):
     conceptual_captions = "Conceptual Captions"
     sbu_captions = "SBU Captions"
     nlvr = "NLVR^2"
+    vqa_v2 = "VQA v2"
 
 
 class DatasetSplit(Enum):
@@ -52,6 +53,7 @@ class DatasetSplit(Enum):
     valid_seen = "valid_seen"
     valid_unseen = "valid_unseen"
     restval = "rest_val"
+    test_dev = "test_dev"
 
 
 DatasetModalityMap: dict[DatasetName, MediaType] = {
@@ -64,10 +66,14 @@ DatasetModalityMap: dict[DatasetName, MediaType] = {
     DatasetName.sbu_captions: MediaType.image,
     DatasetName.teach: MediaType.video,
     DatasetName.nlvr: MediaType.video,
+    DatasetName.vqa_v2: MediaType.image,
 }
 
 AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
-    AnnotationType.qa_pair: [DatasetName.gqa],
+    AnnotationType.qa_pair: [
+        DatasetName.gqa,
+        DatasetName.vqa_v2,
+    ],
     AnnotationType.caption: [
         DatasetName.coco,
         DatasetName.epic_kitchens,

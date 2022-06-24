@@ -98,9 +98,10 @@ Your new function/command should be listed as a possible command, and you should
 
 ### Adding the DB creator to your new command
 
-You can use the `DownstreamDbCreator` to easily process all the files for all the dataset splits. There are two `@classmethod`s that you can use to simplify the entire process:
+You can use the `DownstreamDbCreator` to easily process all the files for all the dataset splits. There are three `@classmethod`s that you can use to simplify the entire process:
 
 - `DownstreamDbCreator.from_one_instance_per_json()`: for when each instance is within a separate JSON file
+- `DownstreamDbCreator.from_one_instance_per_dict()`: for when all instances are preprocessed into a dictionary
 - `DownstreamDbCreator.from_jsonl()`: for when all instances are contained within a single JSONL file
 
 For each class method, the process is mostly identical.

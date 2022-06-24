@@ -727,3 +727,8 @@ teach,s3://teach-dataset/all_games.tar.gz
 teach,s3://teach-dataset/edh_instances.tar.gz
 teach,s3://teach-dataset/experiment_games.tar.gz
 teach,s3://teach-dataset/images_and_states.tar.gz
+vqa_v2,https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Questions_Train_mscoco.zip
+vqa_v2,https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Annotations_Train_mscoco.zip
+vqa_v2,https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Questions_Val_mscoco.zip
+vqa_v2,https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Annotations_Val_mscoco.zip
+vqa_v2,https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Questions_Test_mscoco.zip

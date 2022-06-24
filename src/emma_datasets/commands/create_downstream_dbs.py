@@ -7,8 +7,12 @@ from rich_click import typer
 
 from emma_datasets.common import Settings
 from emma_datasets.datamodels import DatasetName, DatasetSplit
-from emma_datasets.datamodels.datasets import CocoInstance, TeachEdhInstance
+from emma_datasets.datamodels.datasets import CocoInstance, TeachEdhInstance, VQAv2Instance
 from emma_datasets.datamodels.datasets.nlvr import NlvrInstance
+from emma_datasets.datamodels.datasets.vqa_v2 import (
+    get_vqa_v2_annotation_paths,
+    load_vqa_v2_annotations,
+)
 from emma_datasets.io import read_json
 from emma_datasets.pipeline import DownstreamDbCreator
 
@@ -157,6 +161,29 @@ def create_nlvr_instances(
         dataset_name=DatasetName.nlvr,
         paths_per_split=nlvr_dir_paths,
         instance_model_type=NlvrInstance,
+        output_dir=output_dir,
+    ).run(num_workers)
+
+
+@app.command("vqa-v2")
+def create_vqa_v2_instances(
+    vqa_v2_instances_base_dir: Path = settings.paths.vqa_v2,
+    output_dir: Path = settings.paths.databases,
+    num_workers: Optional[int] = None,
+) -> None:
+    """Create DB files for VQA-v2."""
+    vqa_v2_dir_paths = get_vqa_v2_annotation_paths(vqa_v2_instances_base_dir)
+
+    paths_per_split = {}
+    for split_paths in vqa_v2_dir_paths:
+        paths_per_split[split_paths.split] = load_vqa_v2_annotations(
+            questions_path=split_paths.questions_path, answers_path=split_paths.answers_path
+        )
+
+    DownstreamDbCreator.from_one_instance_per_dict(
+        dataset_name=DatasetName.vqa_v2,
+        paths_per_split=paths_per_split,
+        instance_model_type=VQAv2Instance,
         output_dir=output_dir,
     ).run(num_workers)
 

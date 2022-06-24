@@ -1,0 +1,533 @@
+{
+	"info": {
+		"description": "This is v2.0 of the VQA dataset.",
+		"url": "http://visualqa.org",
+		"version": "2.0",
+		"year": 2017,
+		"contributor": "VQA Team",
+		"date_created": "2017-04-26 17:00:44"
+	},
+	"license": {
+		"url": "http://creativecommons.org/licenses/by/4.0/",
+		"name": "Creative Commons Attribution 4.0 International License"
+	},
+	"data_subtype": "val2014",
+	"annotations": [
+		{
+			"question_type": "none of the above",
+			"multiple_choice_answer": "down",
+			"answers": [
+				{ "answer": "down", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "down", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "at table", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "skateboard", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "down", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "table", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "down", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "down", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "down", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "down", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 262148,
+			"answer_type": "other",
+			"question_id": 262148000
+		},
+		{
+			"question_type": "what are the",
+			"multiple_choice_answer": "watching",
+			"answers": [
+				{ "answer": "spectating", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "watching", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "watching", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "watching", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "watching", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "watching", "answer_confidence": "maybe", "answer_id": 6 },
+				{ "answer": "watching", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "watching", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "watching", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "watching", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 262148,
+			"answer_type": "other",
+			"question_id": 262148001
+		},
+		{
+			"question_type": "what is",
+			"multiple_choice_answer": "picnic table",
+			"answers": [
+				{ "answer": "table", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "table", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "table", "answer_confidence": "yes", "answer_id": 3 },
+				{
+					"answer": "picnic table",
+					"answer_confidence": "yes",
+					"answer_id": 4
+				},
+				{
+					"answer": "picnic table",
+					"answer_confidence": "yes",
+					"answer_id": 5
+				},
+				{
+					"answer": "picnic table",
+					"answer_confidence": "yes",
+					"answer_id": 6
+				},
+				{
+					"answer": "picnic table",
+					"answer_confidence": "yes",
+					"answer_id": 7
+				},
+				{
+					"answer": "picnic table",
+					"answer_confidence": "yes",
+					"answer_id": 8
+				},
+				{ "answer": "skateboard", "answer_confidence": "yes", "answer_id": 9 },
+				{
+					"answer": "picnic table",
+					"answer_confidence": "yes",
+					"answer_id": 10
+				}
+			],
+			"image_id": 262148,
+			"answer_type": "other",
+			"question_id": 262148002
+		},
+		{
+			"question_type": "what",
+			"multiple_choice_answer": "foodiebakercom",
+			"answers": [
+				{
+					"answer": "foodiebakercom",
+					"answer_confidence": "yes",
+					"answer_id": 1
+				},
+				{
+					"answer": "foodiebakercom",
+					"answer_confidence": "yes",
+					"answer_id": 2
+				},
+				{ "answer": "foodiebaker", "answer_confidence": "yes", "answer_id": 3 },
+				{
+					"answer": "foodiebakercom",
+					"answer_confidence": "yes",
+					"answer_id": 4
+				},
+				{
+					"answer": "foodiebakercom",
+					"answer_confidence": "yes",
+					"answer_id": 5
+				},
+				{
+					"answer": "http://foodiebakercom",
+					"answer_confidence": "yes",
+					"answer_id": 6
+				},
+				{
+					"answer": "foodiebakercom",
+					"answer_confidence": "yes",
+					"answer_id": 7
+				},
+				{
+					"answer": "foodiebakercom",
+					"answer_confidence": "yes",
+					"answer_id": 8
+				},
+				{
+					"answer": "foodiebakercom",
+					"answer_confidence": "yes",
+					"answer_id": 9
+				},
+				{ "answer": "foodiebaker", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 393225,
+			"answer_type": "other",
+			"question_id": 393225000
+		},
+		{
+			"answer_type": "yes/no",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 393225,
+			"question_type": "is this a",
+			"question_id": 393225001
+		},
+		{
+			"question_type": "is this",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 10 }
+			],
+			"image_id": 393225,
+			"answer_type": "yes/no",
+			"question_id": 393225002
+		},
+		{
+			"question_type": "what is",
+			"multiple_choice_answer": "chopsticks",
+			"answers": [
+				{ "answer": "chopsticks", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "chopsticks", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "chopsticks", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "chopsticks", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "chopsticks", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "shrimp", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "chopsticks", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "chopsticks", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "chopsticks", "answer_confidence": "yes", "answer_id": 9 },
+				{
+					"answer": "chopsticks spoon",
+					"answer_confidence": "maybe",
+					"answer_id": 10
+				}
+			],
+			"image_id": 393225,
+			"answer_type": "other",
+			"question_id": 393225003
+		},
+		{
+			"question_type": "what is the man",
+			"multiple_choice_answer": "walking",
+			"answers": [
+				{ "answer": "crossing it", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "walking", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "walking", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "crossing", "answer_confidence": "yes", "answer_id": 4 },
+				{
+					"answer": "crossing road",
+					"answer_confidence": "yes",
+					"answer_id": 5
+				},
+				{ "answer": "walking", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "crossing", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "walking", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "crossing", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "walking", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 393226,
+			"answer_type": "other",
+			"question_id": 393226000
+		},
+		{
+			"question_type": "how many",
+			"multiple_choice_answer": "1",
+			"answers": [
+				{ "answer": "1", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "4", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "1", "answer_confidence": "maybe", "answer_id": 10 }
+			],
+			"image_id": 393226,
+			"answer_type": "number",
+			"question_id": 393226001
+		},
+		{
+			"question_type": "what does the",
+			"multiple_choice_answer": "ice cream",
+			"answers": [
+				{ "answer": "ice cream", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "ice cream", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "ice cream", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "ice cream", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "ice cream", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "ice cream", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "ice cream", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "ice cream", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "ice cream", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "ice cream", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 393226,
+			"answer_type": "other",
+			"question_id": 393226002
+		},
+		{
+			"question_type": "none of the above",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 393243,
+			"answer_type": "yes/no",
+			"question_id": 393243000
+		},
+		{
+			"question_type": "what is the",
+			"multiple_choice_answer": "donut",
+			"answers": [
+				{ "answer": "donut", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "donut", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "donut", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "doughnut", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "donut", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "donut", "answer_confidence": "maybe", "answer_id": 6 },
+				{ "answer": "donut", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "donut hole", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "donut", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "donut", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 393243,
+			"answer_type": "other",
+			"question_id": 393243001
+		},
+		{
+			"answer_type": "yes/no",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 393243,
+			"question_type": "is this person",
+			"question_id": 393243002
+		},
+		{
+			"question_type": "what color is the",
+			"multiple_choice_answer": "blonde",
+			"answers": [
+				{ "answer": "blonde", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "blonde", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "blonde", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "blonde", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "blonde", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "blonde", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "blonde", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "blonde", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "blonde", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "blonde", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 393243,
+			"answer_type": "other",
+			"question_id": 393243003
+		},
+		{
+			"question_type": "how many people are",
+			"multiple_choice_answer": "1",
+			"answers": [
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "1", "answer_confidence": "maybe", "answer_id": 10 }
+			],
+			"image_id": 458755,
+			"answer_type": "number",
+			"question_id": 458755000
+		},
+		{
+			"question_type": "what is the",
+			"multiple_choice_answer": "sheep",
+			"answers": [
+				{ "answer": "sheep", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "sheep", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "sheep", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "sheep", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "sheep", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "sheep", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "sheep", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "lamb", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "sheep", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "sheep", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 458755,
+			"answer_type": "other",
+			"question_id": 458755001
+		},
+		{
+			"question_type": "why",
+			"multiple_choice_answer": "petting zoo",
+			"answers": [
+				{ "answer": "play", "answer_confidence": "yes", "answer_id": 1 },
+				{
+					"answer": "they like them and are at petting zoo",
+					"answer_confidence": "yes",
+					"answer_id": 2
+				},
+				{ "answer": "petting zoo", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "comfort", "answer_confidence": "maybe", "answer_id": 4 },
+				{ "answer": "petting zoo", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "affection", "answer_confidence": "yes", "answer_id": 6 },
+				{
+					"answer": "they are soft",
+					"answer_confidence": "yes",
+					"answer_id": 7
+				},
+				{
+					"answer": "they're cute",
+					"answer_confidence": "yes",
+					"answer_id": 8
+				},
+				{
+					"answer": "petting zoo",
+					"answer_confidence": "maybe",
+					"answer_id": 9
+				},
+				{ "answer": "enjoyment", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 458755,
+			"answer_type": "other",
+			"question_id": 458755002
+		},
+		{
+			"answer_type": "other",
+			"multiple_choice_answer": "keep balls in",
+			"answers": [
+				{
+					"answer": "ball does not go away",
+					"answer_confidence": "maybe",
+					"answer_id": 1
+				},
+				{
+					"answer": "for sporting enclosure",
+					"answer_confidence": "yes",
+					"answer_id": 2
+				},
+				{
+					"answer": "protect ball",
+					"answer_confidence": "yes",
+					"answer_id": 3
+				},
+				{
+					"answer": "to keep ball inside",
+					"answer_confidence": "maybe",
+					"answer_id": 4
+				},
+				{
+					"answer": "keep balls in",
+					"answer_confidence": "yes",
+					"answer_id": 5
+				},
+				{
+					"answer": "keep balls in",
+					"answer_confidence": "maybe",
+					"answer_id": 6
+				},
+				{
+					"answer": "keep balls in",
+					"answer_confidence": "yes",
+					"answer_id": 7
+				},
+				{
+					"answer": "to keep ball in",
+					"answer_confidence": "maybe",
+					"answer_id": 8
+				},
+				{ "answer": "barrier", "answer_confidence": "maybe", "answer_id": 9 },
+				{
+					"answer": "to keep tennis balls in court",
+					"answer_confidence": "yes",
+					"answer_id": 10
+				}
+			],
+			"image_id": 327701,
+			"question_type": "why",
+			"question_id": 327701000
+		},
+		{
+			"question_type": "how many",
+			"multiple_choice_answer": "2",
+			"answers": [
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "2", "answer_confidence": "maybe", "answer_id": 2 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 327701,
+			"answer_type": "number",
+			"question_id": 327701001
+		},
+		{
+			"question_type": "is",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 327701,
+			"answer_type": "yes/no",
+			"question_id": 327701002
+		},
+		{
+			"question_type": "what sport is",
+			"multiple_choice_answer": "tennis",
+			"answers": [
+				{ "answer": "tennis", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "tennis", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "tennis", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "tennis", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "tennis", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "tennis", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "tennis", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "tennis", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "tennis", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "tennis", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 327701,
+			"answer_type": "other",
+			"question_id": 327701003
+		}
+	],
+	"data_type": "mscoco"
+}

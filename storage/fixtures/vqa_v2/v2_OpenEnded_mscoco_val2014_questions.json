@@ -1,0 +1,124 @@
+{
+	"info": {
+		"description": "This is v2.0 of the VQA dataset.",
+		"url": "http://visualqa.org",
+		"version": "2.0",
+		"year": 2017,
+		"contributor": "VQA Team",
+		"date_created": "2017-04-26 17:00:44"
+	},
+	"task_type": "Open-Ended",
+	"data_type": "mscoco",
+	"license": {
+		"url": "http://creativecommons.org/licenses/by/4.0/",
+		"name": "Creative Commons Attribution 4.0 International License"
+	},
+	"data_subtype": "val2014",
+	"questions": [
+		{
+			"image_id": 262148,
+			"question": "Where is he looking?",
+			"question_id": 262148000
+		},
+		{
+			"image_id": 262148,
+			"question": "What are the people in the background doing?",
+			"question_id": 262148001
+		},
+		{
+			"image_id": 262148,
+			"question": "What is he on top of?",
+			"question_id": 262148002
+		},
+		{
+			"image_id": 393225,
+			"question": "What website copyrighted the picture?",
+			"question_id": 393225000
+		},
+		{
+			"image_id": 393225,
+			"question": "Is this a creamy soup?",
+			"question_id": 393225001
+		},
+		{
+			"image_id": 393225,
+			"question": "Is this rice noodle soup?",
+			"question_id": 393225002
+		},
+		{
+			"image_id": 393225,
+			"question": "What is to the right of the soup?",
+			"question_id": 393225003
+		},
+		{
+			"image_id": 393226,
+			"question": "What is the man doing in the street?",
+			"question_id": 393226000
+		},
+		{
+			"image_id": 393226,
+			"question": "How many photo's can you see?",
+			"question_id": 393226001
+		},
+		{
+			"image_id": 393226,
+			"question": "What does the truck on the left sell?",
+			"question_id": 393226002
+		},
+		{
+			"image_id": 393243,
+			"question": "Will this kid leave the powdered sugar on his face?",
+			"question_id": 393243000
+		},
+		{
+			"image_id": 393243,
+			"question": "What is the child eating?",
+			"question_id": 393243001
+		},
+		{
+			"image_id": 393243,
+			"question": "Is this person wearing a tie?",
+			"question_id": 393243002
+		},
+		{
+			"image_id": 393243,
+			"question": "What color is the kids hair?",
+			"question_id": 393243003
+		},
+		{
+			"image_id": 458755,
+			"question": "How many people are touching a sheep?",
+			"question_id": 458755000
+		},
+		{
+			"image_id": 458755,
+			"question": "What is the boy petting?",
+			"question_id": 458755001
+		},
+		{
+			"image_id": 458755,
+			"question": "Why are the people petting the sheep?",
+			"question_id": 458755002
+		},
+		{
+			"image_id": 327701,
+			"question": "Why is there a fence up?",
+			"question_id": 327701000
+		},
+		{
+			"image_id": 327701,
+			"question": "How many kids are in the picture?",
+			"question_id": 327701001
+		},
+		{
+			"image_id": 327701,
+			"question": "Is she a mom?",
+			"question_id": 327701002
+		},
+		{
+			"image_id": 327701,
+			"question": "What sport is this?",
+			"question_id": 327701003
+		}
+	]
+}

@@ -221,6 +221,34 @@ def organise_nlvr(pool: ThreadPoolExecutor, progress: Progress) -> None:
     )
 
 
+def organise_vqa_v2(pool: ThreadPoolExecutor, progress: Progress) -> None:
+    """Extract and organise the annotation files from VQA-v2."""
+    organise_dataset = OrganiseDataset(settings.paths.vqa_v2, DatasetName.vqa_v2)
+
+    organise_dataset.submit(
+        description="Extracting metadata",
+        file_names=[
+            "v2_Questions_Train_mscoco.zip",
+            "v2_Questions_Val_mscoco.zip",
+            "v2_Questions_Test_mscoco.zip",
+            "v2_Annotations_Train_mscoco.zip",
+            "v2_Annotations_Val_mscoco.zip",
+        ],
+        pool=pool,
+        progress=progress,
+        move_files_to_output_dir=True,
+    )
+
+    organise_dataset.submit(
+        description="Extracting images",
+        file_names=["train2017.zip", "val2017.zip", "test2017.zip"],
+        output_dir=settings.paths.vqa_v2_images,
+        pool=pool,
+        progress=progress,
+        move_files_to_output_dir=True,
+    )
+
+
 def organise_datasets(
     datasets: Optional[list[DatasetName]] = typer.Argument(  # noqa: WPS404
         None, case_sensitive=False, show_default=False
@@ -243,6 +271,7 @@ def organise_datasets(
         DatasetName.alfred: organise_alfred,
         DatasetName.teach: organise_teach,
         DatasetName.nlvr: organise_nlvr,
+        DatasetName.vqa_v2: organise_vqa_v2,
     }
 
     progress_bar = Progress(

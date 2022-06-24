@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 from pytest_cases import fixture
 
@@ -127,6 +127,51 @@ def teach_edh_all_data_paths(
 @fixture(scope="session")
 def coco_instances_path(fixtures_root: Path) -> Path:
     return fixtures_root.joinpath("coco", "coco_captions_tiny.json")
+
+
+@fixture(scope="session")
+def vqa_v2_instance_path(fixtures_root: Path) -> Path:
+    path = fixtures_root.joinpath("vqa_v2")
+    assert path.is_dir()
+    return path
+
+
+@fixture(scope="session")
+def vqa_v2_train_data_path(fixtures_root: Path) -> tuple[Path, Path]:
+    split_path = fixtures_root.joinpath("vqa_v2/")
+    questions_paths = split_path.joinpath("v2_OpenEnded_mscoco_train2014_questions.json")
+    annotations_paths = split_path.joinpath("v2_mscoco_train2014_annotations.json")
+    return (questions_paths, annotations_paths)
+
+
+@fixture(scope="session")
+def vqa_v2_valid_data_path(fixtures_root: Path) -> tuple[Path, Path]:
+    split_path = fixtures_root.joinpath("vqa_v2/")
+
+    questions_paths = split_path.joinpath("v2_OpenEnded_mscoco_val2014_questions.json")
+    annotations_paths = split_path.joinpath("v2_mscoco_val2014_annotations.json")
+    return (questions_paths, annotations_paths)
+
+
+@fixture(scope="session")
+def vqa_v2_test_data_path(fixtures_root: Path) -> tuple[Path, None]:
+    questions_paths = fixtures_root.joinpath(
+        "vqa_v2/v2_OpenEnded_mscoco_test-dev2015_questions.json"
+    )
+    return (questions_paths, None)
+
+
+@fixture(scope="session")
+def vqa_v2_all_data_paths(
+    vqa_v2_train_data_path: tuple[Path, Path],
+    vqa_v2_valid_data_path: tuple[Path, Path],
+    vqa_v2_test_data_path: tuple[Path, None],
+) -> list[tuple[Path, Optional[Path]]]:
+    return [
+        vqa_v2_train_data_path,
+        vqa_v2_valid_data_path,
+        vqa_v2_test_data_path,
+    ]
 
 
 @fixture(scope="session")

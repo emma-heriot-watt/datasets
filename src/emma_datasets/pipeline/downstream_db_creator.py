@@ -103,9 +103,9 @@ class DownstreamDbCreator(Generic[DatasetSplitPathType, InstanceModelType]):
         instance_model_type: type[InstanceModelType],
         output_dir: Path = settings.paths.databases,
     ) -> "DownstreamDbCreator[list[dict[Any, Any]], InstanceModelType]":
-        """Instantiate the Db creator when the input data is separated across JSON files.
+        """Instantiate the Db creator when the input data is loaded and processed in a dictionary.
 
-        Each JSON file must have one instance.
+        Each dictionary element is a list of all instances for a dataset split.
         """
         progress = create_downstream_rich_progress()
 

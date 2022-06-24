@@ -34,6 +34,7 @@ class Paths:  # noqa: WPS230
         self.alfred = self.datasets.joinpath("alfred/")
         self.teach = self.datasets.joinpath("teach/")
         self.nlvr = self.datasets.joinpath("nlvr/")
+        self.vqa_v2 = self.datasets.joinpath("vqa_v2/")
 
         self.coco_images = self.coco.joinpath("images/")
         self.visual_genome_images = self.visual_genome.joinpath("images/")
@@ -44,6 +45,7 @@ class Paths:  # noqa: WPS230
         self.alfred_data = self.alfred.joinpath("full_2.1.0/")
         self.teach_edh_instances = self.teach.joinpath("edh_instances/")
         self.nlvr_images = self.nlvr.joinpath("images/")
+        self.vqa_v2_images = self.coco_images
 
         self.coco_features = self.coco.joinpath("image_features/")
         self.visual_genome_features = self.visual_genome.joinpath("image_features/")
@@ -52,6 +54,7 @@ class Paths:  # noqa: WPS230
         self.alfred_features = self.alfred.joinpath("frame_features/")
         self.teach_edh_features = self.teach.joinpath("frame_features/")
         self.nlvr_features = self.nlvr.joinpath("image_features/")
+        self.vqa_v2_features = self.coco_features
 
         # Databases for output
         self.databases = self.storage.joinpath("db/")
@@ -78,6 +81,7 @@ class Paths:  # noqa: WPS230
         self.alfred.mkdir(parents=True, exist_ok=True)
         self.teach.mkdir(parents=True, exist_ok=True)
         self.nlvr.mkdir(parents=True, exist_ok=True)
+        self.vqa_v2.mkdir(parents=True, exist_ok=True)
 
         self.coco_images.mkdir(parents=True, exist_ok=True)
         self.visual_genome_images.mkdir(parents=True, exist_ok=True)
