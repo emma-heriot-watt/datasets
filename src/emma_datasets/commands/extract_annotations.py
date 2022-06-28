@@ -8,6 +8,7 @@ from emma_datasets.common import Settings, get_progress
 from emma_datasets.datamodels import AnnotationType, DatasetName
 from emma_datasets.parsers.annotation_extractors import (
     AlfredCaptionExtractor,
+    AlfredTaskDescriptionExtractor,
     AlfredTrajectoryExtractor,
     AnnotationExtractor,
     CocoCaptionExtractor,
@@ -110,6 +111,18 @@ def extract_alfred_subgoal_trajectories(progress: Progress) -> AlfredTrajectoryE
     )
 
 
+def extract_alfred_task_descriptions(progress: Progress) -> AlfredTaskDescriptionExtractor:
+    """Extract task descriptions from ALFRED."""
+    return AlfredTaskDescriptionExtractor(
+        [
+            settings.paths.alfred_data.joinpath("train"),
+            settings.paths.alfred_data.joinpath("valid_seen"),
+        ],
+        settings.paths.task_descriptions,
+        progress,
+    )
+
+
 all_extractor_callables: list[Callable[[Progress], AnnotationExtractor[Any]]] = [
     extract_coco_captions,
     extract_gqa_qa_pairs,
@@ -118,6 +131,7 @@ all_extractor_callables: list[Callable[[Progress], AnnotationExtractor[Any]]] = 
     extract_epic_kitchen_captions,
     extract_alfred_captions,
     extract_alfred_subgoal_trajectories,
+    extract_alfred_task_descriptions,
 ]
 
 
