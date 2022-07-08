@@ -3,12 +3,7 @@ from typing import Optional
 
 from rich.progress import Progress
 
-from emma_datasets.common import (
-    Settings,
-    get_progress,
-    use_rich_for_logging,
-    use_rich_for_tracebacks,
-)
+from emma_datasets.common import Settings, get_progress, use_rich_for_logging
 from emma_datasets.db import DatasetDb
 from emma_datasets.parsers.instance_creators import PretrainInstanceCreator
 from emma_datasets.pipeline import MetadataParser
@@ -16,7 +11,6 @@ from emma_datasets.pipeline import MetadataParser
 
 BATCH_SIZE = 4096
 use_rich_for_logging()
-use_rich_for_tracebacks()
 settings = Settings()
 settings.paths.create_dirs()
 

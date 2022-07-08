@@ -154,9 +154,10 @@ class DatasetAligner(Generic[S, T]):
             metadata[self.source_metadata_parser.dataset_name] for metadata in aligned
         }
 
+        task_total = self.progress.tasks[self.task_id].total
         self.progress.update(
             self.task_id,
-            total=self.progress._tasks[self.task_id].total + len(source_metadata),  # noqa: WPS437
+            total=task_total + len(source_metadata) if task_total is not None else None,
         )
 
         source_dataset_metadata: list[DatasetMetadata] = []

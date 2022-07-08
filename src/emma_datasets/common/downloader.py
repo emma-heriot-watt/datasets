@@ -26,7 +26,7 @@ from rich.progress import (
 
 from datasets import load_dataset
 from datasets.utils.file_utils import get_datasets_user_agent
-from emma_datasets.common.progress import CustomBarColumn, CustomProgress, CustomTimeColumn
+from emma_datasets.common.progress import CustomTimeColumn
 from emma_datasets.common.settings import Settings
 
 
@@ -41,9 +41,9 @@ overall_progress = Progress(
 
 overall_task = overall_progress.add_task("Download files")
 
-job_progress = CustomProgress(
+job_progress = Progress(
     TextColumn("[bold blue]{task.fields[filename]}", justify="left"),
-    CustomBarColumn(),
+    BarColumn(),
     "[progress.percentage]{task.percentage:>3.1f}%",
     DownloadColumn(),
     TransferSpeedColumn(),

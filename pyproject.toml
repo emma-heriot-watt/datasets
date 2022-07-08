@@ -52,7 +52,7 @@ envfile = ".env"
 [tool.poetry.dependencies]
 python = "^3.9"
 pydantic = { extras = ["dotenv"], version = "^1.8.2" }
-rich = "^12.2.0"
+rich = "^12.4.4"
 numpy = "^1.22.3"
 orjson = "^3.6.8"
 Pillow = "^9.1.1"

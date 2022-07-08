@@ -71,10 +71,13 @@ class DatasetMetadataParser(ABC, Generic[T]):
         """
         raw_data = ({**metadata, "dataset_split": dataset_split} for metadata in raw_metadata)
 
+        current_task_total = progress.tasks[self.task_id].total
         progress.update(
             self.task_id,
             visible=True,
-            total=progress._tasks[self.task_id].total + len(raw_metadata),  # noqa: WPS437
+            total=current_task_total + len(raw_metadata)
+            if current_task_total is not None
+            else None,
             comment="Structuring raw metadata",
         )
         progress.start_task(self.task_id)

@@ -2,15 +2,10 @@ from multiprocessing.pool import Pool
 from pathlib import Path
 from typing import Any, Generic, Iterable, Optional, TypeVar, Union
 
-from rich.progress import Progress, TaskID, TimeElapsedColumn
+from rich.progress import BarColumn, Progress, TaskID, TimeElapsedColumn
 
 from emma_datasets.common import Settings
-from emma_datasets.common.progress import (
-    BatchesProcessedColumn,
-    CustomBarColumn,
-    CustomProgress,
-    ProcessingSpeedColumn,
-)
+from emma_datasets.common.progress import BatchesProcessedColumn, ProcessingSpeedColumn
 from emma_datasets.datamodels import BaseInstance, DatasetName, DatasetSplit
 from emma_datasets.db import DatasetDb
 from emma_datasets.parsers.instance_creators import DownstreamInstanceCreator
@@ -25,9 +20,9 @@ InstanceModelType = TypeVar("InstanceModelType", bound=BaseInstance)
 
 def create_downstream_rich_progress() -> Progress:
     """Create a Rich Progress tracker for the creator."""
-    return CustomProgress(
+    return Progress(
         "[progress.description]{task.description}",
-        CustomBarColumn(),
+        BarColumn(),
         BatchesProcessedColumn(),
         TimeElapsedColumn(),
         ProcessingSpeedColumn(),
@@ -196,6 +191,7 @@ class DownstreamDbCreator(Generic[DatasetSplitPathType, InstanceModelType]):
                 total=float("inf"),
                 start=False,
                 visible=False,
+                comment="",
             )
             for dataset_split in dataset_splits
         }

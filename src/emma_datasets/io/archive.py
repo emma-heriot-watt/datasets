@@ -145,7 +145,10 @@ class ExtractArchive:
 
             for file_info in all_file_info:
                 all_files.append(file_info.filename)
-                progress.update(task_id, total=progress.tasks[task_id].total + 1)
+
+                current_task_total = progress.tasks[task_id].total
+                if current_task_total is not None:
+                    progress.update(task_id, total=current_task_total + 1)
 
             progress.start_task(task_id)
 
@@ -188,10 +191,11 @@ class ExtractArchive:
 
     def _start_progress(self, progress: Progress, task_id: TaskID, updated_total: int) -> None:
         progress.start_task(task_id)
+        current_task_total = progress.tasks[task_id].total
         progress.update(
             task_id,
             visible=True,
-            total=progress._tasks[task_id].total + updated_total,  # noqa: WPS437
+            total=current_task_total + updated_total if current_task_total is not None else None,
         )
 
     def _verify_path_exists(self, path: Path) -> None:
