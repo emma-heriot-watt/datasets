@@ -175,6 +175,11 @@ def vqa_v2_all_data_paths(
 
 
 @fixture(scope="session")
+def refcoco_data_path(fixtures_root: Path) -> Path:
+    return fixtures_root.joinpath("refcoco")
+
+
+@fixture(scope="session")
 def extracted_annotations_paths(request: Any) -> dict[str, Path]:
     """Create cached folders for the extracted annotations.
 

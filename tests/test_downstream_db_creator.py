@@ -1,7 +1,8 @@
 from pathlib import Path
 
 from emma_datasets.datamodels import DatasetName, DatasetSplit
-from emma_datasets.datamodels.datasets import TeachEdhInstance, VQAv2Instance
+from emma_datasets.datamodels.datasets import RefCocoInstance, TeachEdhInstance, VQAv2Instance
+from emma_datasets.datamodels.datasets.refcoco import load_refcoco_annotations
 from emma_datasets.datamodels.datasets.vqa_v2 import load_vqa_v2_annotations
 from emma_datasets.db import DatasetDb
 from emma_datasets.pipeline import DownstreamDbCreator
@@ -70,3 +71,28 @@ def test_downstream_db_creator_works_with_vqa_v2(
             for _, _, instance_str in read_db:
                 new_instance = VQAv2Instance.parse_raw(instance_str)
                 assert isinstance(new_instance, VQAv2Instance)
+
+
+def test_downstream_db_creator_works_with_refcoco(
+    refcoco_data_path: Path,
+    tmp_path: Path,
+) -> None:
+
+    paths_per_split = load_refcoco_annotations(refcoco_data_path)
+
+    creator = DownstreamDbCreator.from_one_instance_per_dict(
+        dataset_name=DatasetName.refcoco,
+        paths_per_split=paths_per_split,
+        instance_model_type=RefCocoInstance,
+        output_dir=tmp_path,
+    )
+
+    creator.run(num_workers=1)
+
+    for dataset_split in paths_per_split.keys():
+        with DatasetDb(creator._get_db_path(dataset_split), readonly=True) as read_db:
+            assert len(read_db)
+
+            for _, _, instance_str in read_db:
+                new_instance = RefCocoInstance.parse_raw(instance_str)
+                assert isinstance(new_instance, RefCocoInstance)

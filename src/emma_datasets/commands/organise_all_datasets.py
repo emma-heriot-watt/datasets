@@ -249,6 +249,21 @@ def organise_vqa_v2(pool: ThreadPoolExecutor, progress: Progress) -> None:
     )
 
 
+def organise_refcoco(pool: ThreadPoolExecutor, progress: Progress) -> None:
+    """Extract and organise the annotation files from RefCOCOg."""
+    organise_dataset = OrganiseDataset(settings.paths.refcoco, DatasetName.refcoco)
+
+    organise_dataset.submit(
+        description="Extracting metadata",
+        file_names=[
+            "refcocog.zip",
+        ],
+        pool=pool,
+        progress=progress,
+        move_files_to_output_dir=True,
+    )
+
+
 def organise_datasets(
     datasets: Optional[list[DatasetName]] = typer.Argument(  # noqa: WPS404
         None, case_sensitive=False, show_default=False
@@ -272,6 +287,7 @@ def organise_datasets(
         DatasetName.teach: organise_teach,
         DatasetName.nlvr: organise_nlvr,
         DatasetName.vqa_v2: organise_vqa_v2,
+        DatasetName.refcoco: organise_refcoco,
     }
 
     progress_bar = Progress(

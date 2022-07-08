@@ -42,6 +42,7 @@ class DatasetName(Enum):
     sbu_captions = "SBU Captions"
     nlvr = "NLVR^2"
     vqa_v2 = "VQA v2"
+    refcoco = "Referring Expressions"
 
 
 class DatasetSplit(Enum):
@@ -67,6 +68,7 @@ DatasetModalityMap: dict[DatasetName, MediaType] = {
     DatasetName.teach: MediaType.video,
     DatasetName.nlvr: MediaType.video,
     DatasetName.vqa_v2: MediaType.image,
+    DatasetName.refcoco: MediaType.image,
 }
 
 AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
@@ -82,7 +84,7 @@ AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
         DatasetName.sbu_captions,
         DatasetName.nlvr,
     ],
-    AnnotationType.region: [DatasetName.visual_genome],
+    AnnotationType.region: [DatasetName.visual_genome, DatasetName.refcoco],
     AnnotationType.scene_graph: [DatasetName.gqa],
     AnnotationType.action_trajectory: [DatasetName.alfred, DatasetName.teach],
     AnnotationType.task_description: [DatasetName.alfred],

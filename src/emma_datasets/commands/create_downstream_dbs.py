@@ -9,6 +9,7 @@ from emma_datasets.common import Settings
 from emma_datasets.datamodels import DatasetName, DatasetSplit
 from emma_datasets.datamodels.datasets import CocoInstance, TeachEdhInstance, VQAv2Instance
 from emma_datasets.datamodels.datasets.nlvr import NlvrInstance
+from emma_datasets.datamodels.datasets.refcoco import RefCocoInstance, load_refcoco_annotations
 from emma_datasets.datamodels.datasets.vqa_v2 import (
     get_vqa_v2_annotation_paths,
     load_vqa_v2_annotations,
@@ -184,6 +185,23 @@ def create_vqa_v2_instances(
         dataset_name=DatasetName.vqa_v2,
         paths_per_split=paths_per_split,
         instance_model_type=VQAv2Instance,
+        output_dir=output_dir,
+    ).run(num_workers)
+
+
+@app.command("refcoco")
+def create_refcoco_instances(
+    refcoco_instances_base_dir: Path = settings.paths.refcoco,
+    output_dir: Path = settings.paths.databases,
+    num_workers: Optional[int] = None,
+) -> None:
+    """Create DB files for RefCOCOg (UMD)."""
+    paths_per_split = load_refcoco_annotations(refcoco_instances_base_dir)
+
+    DownstreamDbCreator.from_one_instance_per_dict(
+        dataset_name=DatasetName.refcoco,
+        paths_per_split=paths_per_split,
+        instance_model_type=RefCocoInstance,
         output_dir=output_dir,
     ).run(num_workers)
 
