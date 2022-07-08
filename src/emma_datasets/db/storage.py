@@ -34,6 +34,8 @@ class DataStorage(ABC):
     Data are by default stored as BLOB type in the database.
     """
 
+    storage_type: StorageType
+
     @abstractmethod
     def decompress(self, data_buf: bytes) -> Any:
         """Given a byte representation of an object, returns the original object representation."""
@@ -47,6 +49,8 @@ class DataStorage(ABC):
 
 class JsonStorage(DataStorage):
     """Uses orjson serialisation to convert Python object to bytes."""
+
+    storage_type: StorageType = StorageType.json
 
     def decompress(self, data_buf: bytes) -> Any:
         """Decompress using LZMA and then loads the underlying bytes using orjson."""
@@ -78,6 +82,8 @@ class JsonStorage(DataStorage):
 
 class TorchStorage(DataStorage):
     """Data storage that uses the PyTorch Pickle format for serialising Python objects."""
+
+    storage_type: StorageType = StorageType.torch
 
     def decompress(self, data_buf: bytes) -> Any:
         """Loads an object from a pytorch-pickle representation."""

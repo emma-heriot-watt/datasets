@@ -7,7 +7,12 @@ from rich_click import typer
 
 from emma_datasets.common import Settings
 from emma_datasets.datamodels import DatasetName, DatasetSplit
-from emma_datasets.datamodels.datasets import CocoInstance, TeachEdhInstance, VQAv2Instance
+from emma_datasets.datamodels.datasets import (
+    CocoInstance,
+    TeachEdhInstance,
+    VQAv2Instance,
+    WinogroundInstance,
+)
 from emma_datasets.datamodels.datasets.nlvr import NlvrInstance
 from emma_datasets.datamodels.datasets.refcoco import RefCocoInstance, load_refcoco_annotations
 from emma_datasets.datamodels.datasets.vqa_v2 import (
@@ -57,7 +62,7 @@ def create_teach_edh_instances(
 
     DownstreamDbCreator.from_one_instance_per_json(
         dataset_name=DatasetName.teach,
-        paths_per_split=edh_instance_dir_paths,
+        source_per_split=edh_instance_dir_paths,
         instance_model_type=TeachEdhInstance,
         output_dir=output_dir,
     ).run(num_workers)
@@ -139,7 +144,7 @@ def create_coco_captioning_instances(
 
     DownstreamDbCreator.from_one_instance_per_dict(
         dataset_name=DatasetName.coco,
-        paths_per_split=coco_captioning_splits,
+        source_per_split=coco_captioning_splits,
         instance_model_type=CocoInstance,
         output_dir=output_dir,
     ).run(num_workers)
@@ -160,7 +165,7 @@ def create_nlvr_instances(
 
     DownstreamDbCreator.from_jsonl(
         dataset_name=DatasetName.nlvr,
-        paths_per_split=nlvr_dir_paths,
+        source_per_split=nlvr_dir_paths,
         instance_model_type=NlvrInstance,
         output_dir=output_dir,
     ).run(num_workers)
@@ -175,18 +180,38 @@ def create_vqa_v2_instances(
     """Create DB files for VQA-v2."""
     vqa_v2_dir_paths = get_vqa_v2_annotation_paths(vqa_v2_instances_base_dir)
 
-    paths_per_split = {}
+    source_per_split = {}
     for split_paths in vqa_v2_dir_paths:
-        paths_per_split[split_paths.split] = load_vqa_v2_annotations(
+        source_per_split[split_paths.split] = load_vqa_v2_annotations(
             questions_path=split_paths.questions_path, answers_path=split_paths.answers_path
         )
 
     DownstreamDbCreator.from_one_instance_per_dict(
         dataset_name=DatasetName.vqa_v2,
-        paths_per_split=paths_per_split,
+        source_per_split=source_per_split,
         instance_model_type=VQAv2Instance,
         output_dir=output_dir,
     ).run(num_workers)
+
+
+@app.command("winoground")
+def create_winoground_instances(
+    hf_auth_token: Optional[str] = typer.Option(  # noqa: WPS404
+        None,
+        envvar="HF_AUTH_TOKEN",
+        help="Hugging Face authentication token. You can also specify this using the `HF_AUTH_TOKEN` environment variable.",
+    ),
+    output_dir: Path = settings.paths.databases,
+    num_workers: Optional[int] = None,
+) -> None:
+    """Creates instances db for the Winoground benchmark."""
+    DownstreamDbCreator.from_huggingface(
+        huggingface_dataset_identifier="facebook/winoground",
+        dataset_name=DatasetName.winoground,
+        instance_model_type=WinogroundInstance,
+        output_dir=output_dir,
+        hf_auth_token=hf_auth_token,
+    ).run(num_workers=num_workers)
 
 
 @app.command("refcoco")
@@ -200,7 +225,7 @@ def create_refcoco_instances(
 
     DownstreamDbCreator.from_one_instance_per_dict(
         dataset_name=DatasetName.refcoco,
-        paths_per_split=paths_per_split,
+        source_per_split=paths_per_split,
         instance_model_type=RefCocoInstance,
         output_dir=output_dir,
     ).run(num_workers)

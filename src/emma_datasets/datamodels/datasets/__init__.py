@@ -23,3 +23,4 @@ from emma_datasets.datamodels.datasets.visual_genome import (
     VgRegion,
 )
 from emma_datasets.datamodels.datasets.vqa_v2 import VQAv2AnnotationPaths, VQAv2Instance
+from emma_datasets.datamodels.datasets.winoground import WinogroundInstance

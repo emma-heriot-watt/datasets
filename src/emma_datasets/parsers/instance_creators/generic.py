@@ -31,7 +31,7 @@ class GenericInstanceCreator(ABC, Generic[InputType, OutputType]):
         )
 
         self._should_compress = should_compress
-        self._storage = data_storage
+        self.storage = data_storage
 
     def __call__(
         self,
@@ -63,7 +63,7 @@ class GenericInstanceCreator(ABC, Generic[InputType, OutputType]):
         instance = self._create_instance(input_data)
 
         if self._should_compress:
-            return self._storage.compress(instance)
+            return self.storage.compress(instance)
 
         return instance
 

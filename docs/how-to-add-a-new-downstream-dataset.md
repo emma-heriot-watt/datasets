@@ -103,6 +103,7 @@ You can use the `DownstreamDbCreator` to easily process all the files for all th
 - `DownstreamDbCreator.from_one_instance_per_json()`: for when each instance is within a separate JSON file
 - `DownstreamDbCreator.from_one_instance_per_dict()`: for when all instances are preprocessed into a dictionary
 - `DownstreamDbCreator.from_jsonl()`: for when all instances are contained within a single JSONL file
+- `DownstreamDbCreator.from_huggingface()`: for when you want to create a DatasetDb with a dataset from the [Hugging Face Hub](https://huggingface.co/dataset)
 
 For each class method, the process is mostly identical.
 

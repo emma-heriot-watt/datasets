@@ -35,6 +35,7 @@ class Paths:  # noqa: WPS230
         self.teach = self.datasets.joinpath("teach/")
         self.nlvr = self.datasets.joinpath("nlvr/")
         self.vqa_v2 = self.datasets.joinpath("vqa_v2/")
+        self.winoground = self.datasets.joinpath("winoground/")
         self.refcoco = self.datasets.joinpath("refcoco/")
 
         self.coco_images = self.coco.joinpath("images/")
@@ -57,6 +58,7 @@ class Paths:  # noqa: WPS230
         self.teach_edh_features = self.teach.joinpath("frame_features/")
         self.nlvr_features = self.nlvr.joinpath("image_features/")
         self.vqa_v2_features = self.coco_features
+        self.winoground_features = self.winoground.joinpath("image_features/")
         self.refcoco_features = self.coco_features
 
         # Databases for output
@@ -85,6 +87,7 @@ class Paths:  # noqa: WPS230
         self.teach.mkdir(parents=True, exist_ok=True)
         self.nlvr.mkdir(parents=True, exist_ok=True)
         self.vqa_v2.mkdir(parents=True, exist_ok=True)
+        self.winoground.mkdir(parents=True, exist_ok=True)
         self.refcoco.mkdir(parents=True, exist_ok=True)
 
         self.coco_images.mkdir(parents=True, exist_ok=True)
