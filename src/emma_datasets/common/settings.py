@@ -58,8 +58,8 @@ class Paths:  # noqa: WPS230
         self.teach_edh_features = self.teach.joinpath("frame_features/")
         self.nlvr_features = self.nlvr.joinpath("image_features/")
         self.vqa_v2_features = self.coco_features
+        self.refcoco_features = self.coco.joinpath("image_features_forced_bboxes/")
         self.winoground_features = self.winoground.joinpath("image_features/")
-        self.refcoco_features = self.coco_features
 
         # Databases for output
         self.databases = self.storage.joinpath("db/")

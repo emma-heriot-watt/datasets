@@ -118,6 +118,7 @@ def merge_refcoco_annotations(
     referring_expressions: list[RefCocoExpression],
     regions_metadata: dict[str, RefCocoRegion],
     image_metadata: dict[str, RefCocoImageMetadata],
+    dataset_split: DatasetSplit,
 ) -> list[dict[str, Any]]:
     """Merge the referring expressions, region and image annotations."""
     annotations = []
@@ -135,6 +136,7 @@ def merge_refcoco_annotations(
             "referring_expression": referring_expression,
             "region": region,
             "image_metadata": image,
+            "split": dataset_split,
         }
         annotations.append(instance)
 
@@ -152,7 +154,7 @@ def load_refcoco_annotations(refcoco_base_dir: Path) -> dict[DatasetSplit, Any]:
     annotations = {}
     for split, split_referring_expressions in referring_expressions.items():
         annotations[split] = merge_refcoco_annotations(
-            split_referring_expressions, regions_metadata, image_metadata
+            split_referring_expressions, regions_metadata, image_metadata, split
         )
 
     return annotations
@@ -165,11 +167,16 @@ class RefCocoInstance(BaseInstance):
     region: RefCocoRegion
     referring_expression: RefCocoExpression
     _features_path: Path = PrivateAttr()
+    split: DatasetSplit
 
     def __init__(self, **data: Any) -> None:
         super().__init__(**data)
 
-        self._features_path = settings.paths.coco_features.joinpath(  # noqa: WPS601
+        if self.split == DatasetSplit.test:
+            base_dir = settings.paths.refcoco_features
+        else:
+            base_dir = settings.paths.coco_features
+        self._features_path = base_dir.joinpath(  # noqa: WPS601
             f"{self.image_metadata.image_id.zfill(12)}.pt"  # noqa: WPS432
         )
 
