@@ -172,7 +172,7 @@ class RefCocoInstance(BaseInstance):
     def __init__(self, **data: Any) -> None:
         super().__init__(**data)
 
-        if self.split == DatasetSplit.test:
+        if self.split == DatasetSplit.train:
             base_dir = settings.paths.refcoco_features
         else:
             base_dir = settings.paths.coco_features
