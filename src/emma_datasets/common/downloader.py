@@ -157,24 +157,41 @@ class Downloader:
         object_key = parsed_url.path.lstrip("/")
 
         s3 = boto3.client("s3")
-        file_size: int = s3.get_object_attributes(
-            Bucket=bucket_name,
-            Key=object_key,
-            ObjectAttributes=["ObjectSize"],
-        )["ObjectSize"]
 
-        job_progress.update(task_id, total=file_size)
+        is_directory = False
+        if object_key.endswith("/"):
+            # this URL points to a directory -- recursively download all the files
+            raw_object_list = s3.list_objects(Bucket=bucket_name, Prefix=object_key)
+            is_directory = True
+            object_list = list(map(lambda x: x["Key"], raw_object_list["Contents"]))
+        else:
+            object_list = [object_key]
 
-        if not path.exists() or path.stat().st_size < file_size:
-            job_progress.start_task(task_id)
-            job_progress.update(task_id, visible=True)
-
-            s3.download_file(
+        for object_id in object_list:  # noqa: WPS426
+            file_size: int = s3.get_object_attributes(
                 Bucket=bucket_name,
-                Key=object_key,
-                Filename=path.as_posix(),
-                Callback=lambda x: job_progress.update(task_id, advance=x),
-            )
+                Key=object_id,
+                ObjectAttributes=["ObjectSize"],
+            )["ObjectSize"]
+            if is_directory:
+                filename = path.joinpath(Path(object_id).name)
+            else:
+                filename = path
+
+            job_progress.update(task_id, total=file_size)
+
+            if not filename.exists() or filename.stat().st_size < file_size:
+                job_progress.start_task(task_id)
+                job_progress.update(task_id, visible=True)
+
+                s3.download_file(
+                    Bucket=bucket_name,
+                    Key=object_id,
+                    Filename=filename.as_posix(),
+                    Callback=lambda x: job_progress.update(task_id, advance=x),
+                )
+
+            job_progress.reset(task_id)
 
         self._complete_download(task_id, path.name)
 

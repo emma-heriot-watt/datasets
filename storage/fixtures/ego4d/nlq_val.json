@@ -1,0 +1,1102 @@
+{
+	"version": "1",
+	"date": "220216",
+	"description": "NLQ Annotations (val)",
+	"manifest": "s3://ego4d-consortium-sharing/public/v1/full_scale/manifest.csv",
+	"videos": [
+		{
+			"video_uid": "38737402-19bd-4689-9e74-3af391b15feb",
+			"clips": [
+				{
+					"clip_uid": "93231c7e-1cf4-4a20-b1f8-9cc9428915b2",
+					"video_start_sec": 630.0,
+					"video_end_sec": 1110.0366739908854,
+					"video_start_frame": 35999,
+					"video_end_frame": 35999,
+					"clip_start_sec": 0,
+					"clip_end_sec": 480.03667399088545,
+					"clip_start_frame": 0,
+					"clip_end_frame": 14401,
+					"source_clip_uid": "cb3bf9d7-7f6b-4567-9446-45c6b493d721",
+					"annotations": [
+						{
+							"language_queries": [
+								{
+									"clip_start_sec": 425.0,
+									"clip_end_sec": 431.0,
+									"video_start_sec": 1055.0,
+									"video_end_sec": 1061.0,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "Objects: What did I put in X?",
+									"query": "what did I put in the black dustbin?",
+									"slot_x": "back dustbin",
+									"verb_x": "put",
+									"raw_tags": [
+										"Objects: What did I put in X?",
+										"what did I put in the black dustbin?",
+										"back dustbin",
+										"put"
+									]
+								},
+								{
+									"clip_start_sec": 465.0,
+									"clip_end_sec": 472.0,
+									"video_start_sec": 1095.0,
+									"video_end_sec": 1102.0,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "People: Who did I talk to in location X?",
+									"query": "who did I talk to in  the house?",
+									"slot_x": "house",
+									"verb_x": "talk",
+									"raw_tags": [
+										"People: Who did I talk to in location X?",
+										"who did I talk to in  the house?",
+										"house",
+										"talk"
+									]
+								},
+								{
+									"clip_start_sec": 173.9,
+									"clip_end_sec": 174.0,
+									"video_start_sec": 803.9,
+									"video_end_sec": 804.0,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "Objects: In what location did I see object X ?",
+									"query": "In what location did I see white dustbin?",
+									"slot_x": "white dustbin",
+									"verb_x": "see",
+									"raw_tags": [
+										"Objects: In what location did I see object X ?",
+										"In what location did I see white dustbin?",
+										"white dustbin",
+										"see"
+									]
+								},
+								{
+									"clip_start_sec": 178.0,
+									"clip_end_sec": 184.0,
+									"video_start_sec": 808.0,
+									"video_end_sec": 814.0,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "Place: Where did I put X?",
+									"query": "where did I put carton?",
+									"slot_x": "carton",
+									"verb_x": "put",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"where did I put carton?",
+										"carton",
+										"put"
+									]
+								}
+							],
+							"annotation_uid": "ca7e11a2-cd1e-40dd-9d2f-ea810ab6a99b"
+						},
+						{
+							"language_queries": [
+								{
+									"clip_start_sec": 384.0,
+									"clip_end_sec": 393.067,
+									"video_start_sec": 1014.0,
+									"video_end_sec": 1023.067,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "People: Who did I interact with when I did activity X?",
+									"query": "Who did I interact with when I played with the dog for the second time in the living room?",
+									"slot_x": "I played with the dog for the second time in the living room",
+									"verb_x": "play",
+									"raw_tags": [
+										"People: Who did I interact with when I did activity X?",
+										"Who did I interact with when I played with the dog for the second time in the living room?",
+										"I played with the dog for the second time in the living room",
+										"play"
+									]
+								},
+								{
+									"clip_start_sec": 444.067,
+									"clip_end_sec": 452.267,
+									"video_start_sec": 1074.067,
+									"video_end_sec": 1082.267,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "Place: Where did I put X?",
+									"query": "Where did I put the vacuum cleaner head?",
+									"slot_x": "vacuum cleaner head",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"Where did I put the vacuum cleaner head?",
+										"vacuum cleaner head",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 210.0,
+									"clip_end_sec": 217.0,
+									"video_start_sec": 840.0,
+									"video_end_sec": 847.0,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "Where was vacuum cleaner before I used it for the first time?",
+									"slot_x": "vacuum cleaner",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "I used it for the first time",
+									"verb_y": "use",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"Where was vacuum cleaner before I used it for the first time?",
+										"vacuum cleaner",
+										"[verb_not_applicable]",
+										"I used it for the first time",
+										"use"
+									]
+								},
+								{
+									"clip_start_sec": 141.0,
+									"clip_end_sec": 142.367,
+									"video_start_sec": 771.0,
+									"video_end_sec": 772.367,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "Place: Where did I put X?",
+									"query": "Where did I put the phone?",
+									"slot_x": "Phone",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"Where did I put the phone?",
+										"Phone",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 172.0,
+									"clip_end_sec": 174.6,
+									"video_start_sec": 802.0,
+									"video_end_sec": 804.6,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "Where was the trash can before I raised it?",
+									"slot_x": " trash can",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "I raised it",
+									"verb_y": "raise",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"Where was the trash can before I raised it?",
+										" trash can",
+										"[verb_not_applicable]",
+										"I raised it",
+										"raise"
+									]
+								},
+								{
+									"clip_start_sec": 73.0,
+									"clip_end_sec": 75.8,
+									"video_start_sec": 703.0,
+									"video_end_sec": 705.8,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "Place: Where did I put X?",
+									"query": "Where did I put the pink and white towel?",
+									"slot_x": "pink and white towel",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"Where did I put the pink and white towel?",
+										"pink and white towel",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 67.0,
+									"clip_end_sec": 71.0,
+									"video_start_sec": 697.0,
+									"video_end_sec": 701.0,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "Where was the phone before I picked it up for the first time in the bedroom?",
+									"slot_x": "phone",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": " picked it up for the first time in the bedroom",
+									"verb_y": "pick",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"Where was the phone before I picked it up for the first time in the bedroom?",
+										"phone",
+										"[verb_not_applicable]",
+										" picked it up for the first time in the bedroom",
+										"pick"
+									]
+								},
+								{
+									"clip_start_sec": 125.0,
+									"clip_end_sec": 141.267,
+									"video_start_sec": 755.0,
+									"video_end_sec": 771.267,
+									"video_start_frame": 35999,
+									"video_end_frame": 35999,
+									"template": "Objects: In what location did I see object X ?",
+									"query": "In what location did I press the phone last?",
+									"slot_x": "press the phone last",
+									"verb_x": "press",
+									"raw_tags": [
+										"Objects: In what location did I see object X ?",
+										"In what location did I press the phone last?",
+										"press the phone last",
+										"press"
+									]
+								}
+							],
+							"annotation_uid": "73e357da-b5c3-4b83-8bc8-d80129cbc46b"
+						}
+					]
+				}
+			],
+			"split": "val"
+		},
+		{
+			"video_uid": "413fe086-1745-4573-b75b-e7d26ff72df9",
+			"clips": [
+				{
+					"clip_uid": "75d3fc52-3776-47d4-b7fd-8074d30b06d1",
+					"video_start_sec": 0.0210286,
+					"video_end_sec": 480.0210286,
+					"video_start_frame": 1,
+					"video_end_frame": 14401,
+					"clip_start_sec": 0,
+					"clip_end_sec": 480.0,
+					"clip_start_frame": 0,
+					"clip_end_frame": 14400,
+					"source_clip_uid": "d43eaf7f-b8a0-44b0-b0c2-1e6227622be1",
+					"annotations": [
+						{
+							"language_queries": [
+								{
+									"clip_start_sec": 3.319,
+									"clip_end_sec": 4.619,
+									"video_start_sec": 3.3400286,
+									"video_end_sec": 4.6400286,
+									"video_start_frame": 101,
+									"video_end_frame": 140,
+									"template": "Place: Where did I put X?",
+									"query": "Where did I put the chopsticks.",
+									"slot_x": "chopsticks",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": null,
+									"verb_y": "[verb_not_applicable]",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"Where did I put the chopsticks.",
+										"chopsticks",
+										"[verb_not_applicable]",
+										null,
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 9.88635,
+									"clip_end_sec": 14.886,
+									"video_start_sec": 9.9073786,
+									"video_end_sec": 14.907028599999999,
+									"video_start_frame": 298,
+									"video_end_frame": 448,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "Where was the plastic plate before I removed it from the refrigerator.",
+									"slot_x": "plastic plate",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "I removed it from the refrigerator",
+									"verb_y": "remove",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"Where was the plastic plate before I removed it from the refrigerator.",
+										"plastic plate",
+										"[verb_not_applicable]",
+										"I removed it from the refrigerator",
+										"remove"
+									]
+								},
+								{
+									"clip_start_sec": 54.0,
+									"clip_end_sec": 119.454,
+									"video_start_sec": 54.0210286,
+									"video_end_sec": 119.47502859999999,
+									"video_start_frame": 1621,
+									"video_end_frame": 3585,
+									"template": "Objects: What did I put in X?",
+									"query": "What did I put in the pot?",
+									"slot_x": "pot",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": null,
+									"verb_y": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: What did I put in X?",
+										"What did I put in the pot?",
+										"pot",
+										"[verb_not_applicable]",
+										null,
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 306.55159,
+									"clip_end_sec": 308.551,
+									"video_start_sec": 306.5726186,
+									"video_end_sec": 308.5720286,
+									"video_start_frame": 9198,
+									"video_end_frame": 9258,
+									"template": "Objects: What did I put in X?",
+									"query": "What did I put in the refrigerator?",
+									"slot_x": "refrigerator",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": null,
+									"verb_y": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: What did I put in X?",
+										"What did I put in the refrigerator?",
+										"refrigerator",
+										"[verb_not_applicable]",
+										null,
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 181.98928,
+									"clip_end_sec": 183.03,
+									"video_start_sec": 182.0103086,
+									"video_end_sec": 183.0510286,
+									"video_start_frame": 5461,
+									"video_end_frame": 5492,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "Where was the electric kettle before I picked it from the kitchen table?",
+									"slot_x": "electric kettle",
+									"verb_x": null,
+									"slot_y": " I picked it from the kitchen table?",
+									"verb_y": "pick",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"Where was the electric kettle before I picked it from the kitchen table?",
+										"electric kettle",
+										null,
+										" I picked it from the kitchen table?",
+										"pick"
+									]
+								},
+								{
+									"clip_start_sec": 214.0519,
+									"clip_end_sec": 215.751,
+									"video_start_sec": 214.07292859999998,
+									"video_end_sec": 215.7720286,
+									"video_start_frame": 6423,
+									"video_end_frame": 6474,
+									"template": "Place: Where did I put X?",
+									"query": "Where did I put the plastic plate?",
+									"slot_x": "plastic plate",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": null,
+									"verb_y": "[verb_not_applicable]",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"Where did I put the plastic plate?",
+										"plastic plate",
+										"[verb_not_applicable]",
+										null,
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 347.094,
+									"clip_end_sec": 352.394,
+									"video_start_sec": 347.1150286,
+									"video_end_sec": 352.4150286,
+									"video_start_frame": 10414,
+									"video_end_frame": 10573,
+									"template": "Objects: What X did I Y?",
+									"query": "What vegetable did I slice?",
+									"slot_x": "vegetable",
+									"verb_x": null,
+									"slot_y": "slice",
+									"raw_tags": [
+										"Objects: What X did I Y?",
+										"What vegetable did I slice?",
+										"vegetable",
+										null,
+										"slice"
+									]
+								},
+								{
+									"clip_start_sec": 479.622,
+									"clip_end_sec": 480.022,
+									"video_start_sec": 479.64302860000004,
+									"video_end_sec": 480.0430286,
+									"video_start_frame": 14390,
+									"video_end_frame": 14402,
+									"template": "Objects: Where is object X?",
+									"query": "Where was the knife?",
+									"slot_x": "knife",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": null,
+									"verb_y": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: Where is object X?",
+										"Where was the knife?",
+										"knife",
+										"[verb_not_applicable]",
+										null,
+										"[verb_not_applicable]"
+									]
+								}
+							],
+							"annotation_uid": "93891b44-c00f-43d9-885b-92fdce39128c"
+						},
+						{
+							"language_queries": [
+								{
+									"clip_start_sec": 0.17257,
+									"clip_end_sec": 5.0,
+									"video_start_sec": 0.1935986,
+									"video_end_sec": 5.0210286,
+									"video_start_frame": 6,
+									"video_end_frame": 151,
+									"template": "Objects: What X did I Y?",
+									"query": "What did I use to stir the soup?",
+									"slot_x": "soup",
+									"verb_x": "stir",
+									"slot_y": "use to stir",
+									"raw_tags": [
+										"Objects: What X did I Y?",
+										"What did I use to stir the soup?",
+										"soup",
+										"stir",
+										"use to stir"
+									]
+								},
+								{
+									"clip_start_sec": 129.098,
+									"clip_end_sec": 179.0,
+									"video_start_sec": 129.1190286,
+									"video_end_sec": 179.0210286,
+									"video_start_frame": 3874,
+									"video_end_frame": 5371,
+									"template": "Objects: What did I put in X?",
+									"query": "What did I put in the dish?",
+									"slot_x": "dish",
+									"verb_x": "put",
+									"raw_tags": [
+										"Objects: What did I put in X?",
+										"What did I put in the dish?",
+										"dish",
+										"put"
+									]
+								},
+								{
+									"clip_start_sec": 181.51928,
+									"clip_end_sec": 187.0,
+									"video_start_sec": 181.5403086,
+									"video_end_sec": 187.0210286,
+									"video_start_frame": 5447,
+									"video_end_frame": 5611,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "Where was the electrical jug before I took it?",
+									"slot_x": "electrical jug",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "I took it",
+									"verb_y": "take",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"Where was the electrical jug before I took it?",
+										"electrical jug",
+										"[verb_not_applicable]",
+										"I took it",
+										"take"
+									]
+								},
+								{
+									"clip_start_sec": 227.0244,
+									"clip_end_sec": 237.0,
+									"video_start_sec": 227.0454286,
+									"video_end_sec": 237.0210286,
+									"video_start_frame": 6812,
+									"video_end_frame": 7111,
+									"template": "Objects: What X did I Y?",
+									"query": "What soup did I drink?",
+									"slot_x": "soup",
+									"verb_x": "drink",
+									"raw_tags": [
+										"Objects: What X did I Y?",
+										"What soup did I drink?",
+										"soup",
+										"drink"
+									]
+								},
+								{
+									"clip_start_sec": 241.85797,
+									"clip_end_sec": 309.0,
+									"video_start_sec": 241.8789986,
+									"video_end_sec": 309.0210286,
+									"video_start_frame": 7257,
+									"video_end_frame": 9271,
+									"template": "Place: Where did I put X?",
+									"query": "Where did I put the packet paper?",
+									"slot_x": "packet paper",
+									"verb_x": "put",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"Where did I put the packet paper?",
+										"packet paper",
+										"put"
+									]
+								},
+								{
+									"clip_start_sec": 340.3835,
+									"clip_end_sec": 415.0,
+									"video_start_sec": 340.40452860000005,
+									"video_end_sec": 415.0210286,
+									"video_start_frame": 10213,
+									"video_end_frame": 12451,
+									"template": "Objects: What did I put in X?",
+									"query": "What did I put in the soup?",
+									"slot_x": "soup",
+									"verb_x": "put",
+									"raw_tags": [
+										"Objects: What did I put in X?",
+										"What did I put in the soup?",
+										"soup",
+										"put"
+									]
+								}
+							],
+							"annotation_uid": "03c107e5-72a9-43fc-903c-054bed516108"
+						}
+					]
+				}
+			],
+			"split": "val"
+		},
+		{
+			"video_uid": "03e90bbc-7d6b-423c-84d9-b5be3eff11c5",
+			"clips": [
+				{
+					"clip_uid": "60e7e14d-cbed-46d1-924d-6ce451ea7d7c",
+					"video_start_sec": 719.9079689507452,
+					"video_end_sec": 1199.9079692,
+					"video_start_frame": 36000,
+					"video_end_frame": 36000,
+					"clip_start_sec": 0,
+					"clip_end_sec": 480.00000024925487,
+					"clip_start_frame": 0,
+					"clip_end_frame": 14400,
+					"source_clip_uid": "9403a2b6-477b-4c82-b731-6abafc720a78",
+					"annotations": [
+						{
+							"language_queries": [
+								{
+									"clip_start_sec": 84.32902,
+									"clip_end_sec": 84.71152,
+									"video_start_sec": 804.2369889507452,
+									"video_end_sec": 804.6194889507451,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Objects: What X did I Y?",
+									"query": "What cable did I remove?",
+									"slot_x": "Cable",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "Remove",
+									"verb_y": "remove",
+									"raw_tags": [
+										"Objects: What X did I Y?",
+										"What cable did I remove?",
+										"Cable",
+										"[verb_not_applicable]",
+										"Remove",
+										"remove"
+									]
+								},
+								{
+									"clip_start_sec": 108.00663,
+									"clip_end_sec": 110.09765,
+									"video_start_sec": 827.9145989507451,
+									"video_end_sec": 830.0056189507451,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Objects: In what location did I see object X ?",
+									"query": "In what location did I see an Identification card?",
+									"slot_x": "Identification card",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: In what location did I see object X ?",
+										"In what location did I see an Identification card?",
+										"Identification card",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 82.90758,
+									"clip_end_sec": 87.30613,
+									"video_start_sec": 802.8155489507451,
+									"video_end_sec": 807.2140989507451,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Objects: How many X\u2019s? (quantity question)",
+									"query": "How many cables did I put on the table?",
+									"slot_x": "Cables",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: How many X\u2019s? (quantity question)",
+										"How many cables did I put on the table?",
+										"Cables",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 217.535,
+									"clip_end_sec": 219.00059,
+									"video_start_sec": 937.4109379507452,
+									"video_end_sec": 938.8765279507452,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "Where was the power drill before I picked it?",
+									"slot_x": "Power drill",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "I picked it",
+									"verb_y": "pick",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"Where was the power drill before I picked it?",
+										"Power drill",
+										"[verb_not_applicable]",
+										"I picked it",
+										"pick"
+									]
+								},
+								{
+									"clip_start_sec": 248.40752,
+									"clip_end_sec": 253.51218,
+									"video_start_sec": 968.2834579507451,
+									"video_end_sec": 973.3881179507451,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Objects: Where is my object X?",
+									"query": "Where were my face masks?",
+									"slot_x": "Face masks",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: Where is my object X?",
+										"Where were my face masks?",
+										"Face masks",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 299.69841,
+									"clip_end_sec": 300.81259,
+									"video_start_sec": 1019.5743479507452,
+									"video_end_sec": 1020.6885279507451,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Place: Where did I put X?",
+									"query": "Where did I put the power drill?",
+									"slot_x": "Power drill",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"Where did I put the power drill?",
+										"Power drill",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 476.59963,
+									"clip_end_sec": 477.68527,
+									"video_start_sec": 1196.475567950745,
+									"video_end_sec": 1197.561207950745,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "Where was the footwear before I took it?",
+									"slot_x": "Footwear",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "I took it",
+									"verb_y": "take",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"Where was the footwear before I took it?",
+										"Footwear",
+										"[verb_not_applicable]",
+										"I took it",
+										"take"
+									]
+								},
+								{
+									"clip_start_sec": 479.23024,
+									"clip_end_sec": 480.067,
+									"video_start_sec": 1199.1061779507452,
+									"video_end_sec": 1199.942937950745,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Place: Where did I put X?",
+									"query": "Where did I put the shoe?",
+									"slot_x": "Shoe?",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"Where did I put the shoe?",
+										"Shoe?",
+										"[verb_not_applicable]"
+									]
+								}
+							],
+							"annotation_uid": "00bb3571-8b35-40ba-8163-a1a0fd20b886"
+						},
+						{
+							"language_queries": [
+								{
+									"clip_start_sec": 3.02416,
+									"clip_end_sec": 30.0,
+									"video_start_sec": 722.9321289507451,
+									"video_end_sec": 749.9079689507452,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "People: Who did I talk to in location X?",
+									"query": "who did I talk to in the house?",
+									"slot_x": "house",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"People: Who did I talk to in location X?",
+										"who did I talk to in the house?",
+										"house",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 112.14974,
+									"clip_end_sec": 116.0,
+									"video_start_sec": 832.0577089507451,
+									"video_end_sec": 835.9079689507452,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Objects: Where is object X?",
+									"query": "where is the blue bucket",
+									"slot_x": "bucket",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: Where is object X?",
+										"where is the blue bucket",
+										"bucket",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 187.678,
+									"clip_end_sec": 200.0,
+									"video_start_sec": 907.5539379507452,
+									"video_end_sec": 919.8759379507451,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "where is the impact wrench before drilling",
+									"slot_x": "impact wrench",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "",
+									"verb_y": "drill",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"where is the impact wrench before drilling",
+										"impact wrench",
+										"[verb_not_applicable]",
+										"",
+										"drill"
+									]
+								},
+								{
+									"clip_start_sec": 345.36337,
+									"clip_end_sec": 469.0,
+									"video_start_sec": 1065.2393079507451,
+									"video_end_sec": 1188.875937950745,
+									"video_start_frame": 36000,
+									"video_end_frame": 36000,
+									"template": "Place: Where did I put X?",
+									"query": "where did I put the CPU?",
+									"slot_x": "CPU",
+									"verb_x": "put",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"where did I put the CPU?",
+										"CPU",
+										"put"
+									]
+								}
+							],
+							"annotation_uid": "01b8f7c1-f44b-4812-a628-fe00b62c0802"
+						}
+					]
+				},
+				{
+					"clip_uid": "453bf120-65a3-4616-bbd7-51bafdaac44d",
+					"video_start_sec": 269.96796895074505,
+					"video_end_sec": 749.9360022,
+					"video_start_frame": 8099,
+					"video_end_frame": 22498,
+					"clip_start_sec": 0,
+					"clip_end_sec": 479.9680332492549,
+					"clip_start_frame": 0,
+					"clip_end_frame": 14399,
+					"source_clip_uid": "875efea4-70c8-40ca-9455-a5576ef9eeee",
+					"annotations": [
+						{
+							"language_queries": [
+								{
+									"clip_start_sec": 36.42709,
+									"clip_end_sec": 38.427,
+									"video_start_sec": 306.3630279507451,
+									"video_end_sec": 308.3629379507451,
+									"video_start_frame": 9191,
+									"video_end_frame": 9251,
+									"template": "Place: Where did I put X?",
+									"query": "where did I put the wood?",
+									"slot_x": "wood",
+									"verb_x": "put",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"where did I put the wood?",
+										"wood",
+										"put"
+									]
+								},
+								{
+									"clip_start_sec": 79.97017,
+									"clip_end_sec": 82.97,
+									"video_start_sec": 349.9061079507451,
+									"video_end_sec": 352.9059379507451,
+									"video_start_frame": 10497,
+									"video_end_frame": 10587,
+									"template": "Objects: Where is object X?",
+									"query": "where is the bottle?",
+									"slot_x": "bottle",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: Where is object X?",
+										"where is the bottle?",
+										"bottle",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 142.56648,
+									"clip_end_sec": 150.566,
+									"video_start_sec": 412.5024179507451,
+									"video_end_sec": 420.5019379507451,
+									"video_start_frame": 12375,
+									"video_end_frame": 12615,
+									"template": "Place: Where did I put X?",
+									"query": "where did I put the piece of metal?",
+									"slot_x": "piece of metal",
+									"verb_x": "put",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"where did I put the piece of metal?",
+										"piece of metal",
+										"put"
+									]
+								},
+								{
+									"clip_start_sec": 314.8216,
+									"clip_end_sec": 315.821,
+									"video_start_sec": 584.757537950745,
+									"video_end_sec": 585.7569379507452,
+									"video_start_frame": 17543,
+									"video_end_frame": 17573,
+									"template": "Place: Where did I put X?",
+									"query": "where did I put the pliers?",
+									"slot_x": "Pliers",
+									"verb_x": "put",
+									"raw_tags": [
+										"Place: Where did I put X?",
+										"where did I put the pliers?",
+										"Pliers",
+										"put"
+									]
+								},
+								{
+									"clip_start_sec": 325.48363,
+									"clip_end_sec": 328.483,
+									"video_start_sec": 595.419567950745,
+									"video_end_sec": 598.418937950745,
+									"video_start_frame": 17863,
+									"video_end_frame": 17952,
+									"template": "Objects: Where is object X?",
+									"query": "where is the nail gun?",
+									"slot_x": "nail gun",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: Where is object X?",
+										"where is the nail gun?",
+										"nail gun",
+										"[verb_not_applicable]"
+									]
+								}
+							],
+							"annotation_uid": "f2ca9cb0-702e-46fe-81e8-7ca64aad8e89"
+						},
+						{
+							"language_queries": [
+								{
+									"clip_start_sec": 94.49978,
+									"clip_end_sec": 96.852,
+									"video_start_sec": 364.4357179507451,
+									"video_end_sec": 366.78793795074506,
+									"video_start_frame": 10933,
+									"video_end_frame": 11004,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "Where was the socket set pack before i removed it ?",
+									"slot_x": "Socket",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "i removed it ",
+									"verb_y": "remove",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"Where was the socket set pack before i removed it ?",
+										"Socket",
+										"[verb_not_applicable]",
+										"i removed it ",
+										"remove"
+									]
+								},
+								{
+									"clip_start_sec": 99.5514,
+									"clip_end_sec": 105.947,
+									"video_start_sec": 369.4873379507451,
+									"video_end_sec": 375.8829379507451,
+									"video_start_frame": 11085,
+									"video_end_frame": 11276,
+									"template": "Objects: How many X\u2019s? (quantity question)",
+									"query": "How many socket sets did i remove from the pack ?",
+									"slot_x": "socket sets did i remove",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: How many X\u2019s? (quantity question)",
+										"How many socket sets did i remove from the pack ?",
+										"socket sets did i remove",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 4.96075,
+									"clip_end_sec": 7.928,
+									"video_start_sec": 274.92871895074506,
+									"video_end_sec": 277.89596895074504,
+									"video_start_frame": 8248,
+									"video_end_frame": 8337,
+									"template": "Objects: What X did I Y?",
+									"query": "What size of washer did i pick ?",
+									"slot_x": "Washer",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "did i pick",
+									"verb_y": "pick",
+									"raw_tags": [
+										"Objects: What X did I Y?",
+										"What size of washer did i pick ?",
+										"Washer",
+										"[verb_not_applicable]",
+										"did i pick",
+										"pick"
+									]
+								},
+								{
+									"clip_start_sec": 62.19819,
+									"clip_end_sec": 63.921,
+									"video_start_sec": 332.1341279507451,
+									"video_end_sec": 333.8569379507451,
+									"video_start_frame": 9964,
+									"video_end_frame": 10016,
+									"template": "Objects: Where is object X before / after event Y?",
+									"query": "Where was the tool case before i picked it ?",
+									"slot_x": "Case",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "i picked it",
+									"verb_y": "pick",
+									"raw_tags": [
+										"Objects: Where is object X before / after event Y?",
+										"Where was the tool case before i picked it ?",
+										"Case",
+										"[verb_not_applicable]",
+										"i picked it",
+										"pick"
+									]
+								},
+								{
+									"clip_start_sec": 93.34147,
+									"clip_end_sec": 96.115,
+									"video_start_sec": 363.2774079507451,
+									"video_end_sec": 366.0509379507451,
+									"video_start_frame": 10898,
+									"video_end_frame": 10981,
+									"template": "Objects: How many X\u2019s? (quantity question)",
+									"query": "How many drawers did i open ?",
+									"slot_x": "drawers did i open ",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: How many X\u2019s? (quantity question)",
+										"How many drawers did i open ?",
+										"drawers did i open ",
+										"[verb_not_applicable]"
+									]
+								},
+								{
+									"clip_start_sec": 323.05814,
+									"clip_end_sec": 330.387,
+									"video_start_sec": 592.9940779507451,
+									"video_end_sec": 600.290970950745,
+									"video_start_frame": 17790,
+									"video_end_frame": 18009,
+									"template": "Objects: What X is Y?",
+									"query": "what color of shirt was she wearing ?",
+									"slot_x": "color of shirt ",
+									"verb_x": "[verb_not_applicable]",
+									"slot_y": "she wearing",
+									"verb_y": "wear",
+									"raw_tags": [
+										"Objects: What X is Y?",
+										"what color of shirt was she wearing ?",
+										"color of shirt ",
+										"[verb_not_applicable]",
+										"she wearing",
+										"wear"
+									]
+								},
+								{
+									"clip_start_sec": 477.47954,
+									"clip_end_sec": 480.048,
+									"video_start_sec": 747.3835109507451,
+									"video_end_sec": 749.951970950745,
+									"video_start_frame": 22421,
+									"video_end_frame": 22498,
+									"template": "Objects: Where is object X?",
+									"query": "Where was the cordless drill ?",
+									"slot_x": "Drill",
+									"verb_x": "[verb_not_applicable]",
+									"raw_tags": [
+										"Objects: Where is object X?",
+										"Where was the cordless drill ?",
+										"Drill",
+										"[verb_not_applicable]"
+									]
+								}
+							],
+							"annotation_uid": "c6a8b15d-073a-4f10-a723-eb6c5ca82ab1"
+						}
+					]
+				}
+			],
+			"split": "val"
+		}
+	]
+}

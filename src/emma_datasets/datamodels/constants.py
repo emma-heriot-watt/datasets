@@ -42,6 +42,11 @@ class DatasetName(Enum):
     sbu_captions = "SBU Captions"
     nlvr = "NLVR^2"
     vqa_v2 = "VQA v2"
+    ego4d = "Ego4D Benchmark Annotations"
+    ego4d_nlq = "Ego4D Natural Language Queries"
+    ego4d_moments = "Ego4D Moment Queries"
+    ego4d_vq = "Ego4D Visual Queries"
+    ego4d_narrations = "Ego4D Narrations"
     winoground = "Winoground"
     refcoco = "COCO Referring Expressions"
 
@@ -69,6 +74,11 @@ DatasetModalityMap: dict[DatasetName, MediaType] = {
     DatasetName.teach: MediaType.video,
     DatasetName.nlvr: MediaType.video,
     DatasetName.vqa_v2: MediaType.image,
+    DatasetName.ego4d: MediaType.video,
+    DatasetName.ego4d_moments: MediaType.video,
+    DatasetName.ego4d_narrations: MediaType.video,
+    DatasetName.ego4d_nlq: MediaType.video,
+    DatasetName.ego4d_vq: MediaType.video,
     DatasetName.winoground: MediaType.image,
     DatasetName.refcoco: MediaType.image,
 }
@@ -77,6 +87,9 @@ AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
     AnnotationType.qa_pair: [
         DatasetName.gqa,
         DatasetName.vqa_v2,
+        DatasetName.ego4d_vq,
+        DatasetName.ego4d_moments,
+        DatasetName.ego4d_nlq,
     ],
     AnnotationType.caption: [
         DatasetName.coco,
@@ -85,6 +98,8 @@ AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
         DatasetName.conceptual_captions,
         DatasetName.sbu_captions,
         DatasetName.nlvr,
+        DatasetName.ego4d,
+        DatasetName.ego4d_narrations,
         DatasetName.winoground,
     ],
     AnnotationType.region: [DatasetName.visual_genome, DatasetName.refcoco],

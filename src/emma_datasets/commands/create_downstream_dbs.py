@@ -13,6 +13,12 @@ from emma_datasets.datamodels.datasets import (
     VQAv2Instance,
     WinogroundInstance,
 )
+from emma_datasets.datamodels.datasets.ego4d import (
+    Ego4DMomentsInstance,
+    Ego4DNLQInstance,
+    Ego4DVQInstance,
+    load_ego4d_annotations,
+)
 from emma_datasets.datamodels.datasets.nlvr import NlvrInstance
 from emma_datasets.datamodels.datasets.refcoco import RefCocoInstance, load_refcoco_annotations
 from emma_datasets.datamodels.datasets.vqa_v2 import (
@@ -194,6 +200,86 @@ def create_vqa_v2_instances(
     ).run(num_workers)
 
 
+@app.command("ego4d_nlq")
+def create_ego4d_nlq_instances(
+    ego4d_nlq_instances_base_dir: Path = settings.paths.ego4d_annotations,
+    output_dir: Path = settings.paths.databases,
+    num_workers: Optional[int] = None,
+) -> None:
+    """Create DB files for Ego4D Natural Language queries."""
+    ego4d_nlq_paths = {
+        DatasetSplit.train: ego4d_nlq_instances_base_dir.joinpath("nlq_train.json"),
+        DatasetSplit.valid: ego4d_nlq_instances_base_dir.joinpath("nlq_val.json"),
+        DatasetSplit.test: ego4d_nlq_instances_base_dir.joinpath("nlq_test_unannotated.json"),
+    }
+
+    source_per_split = {}
+
+    for split, split_path in ego4d_nlq_paths.items():
+        source_per_split[split] = load_ego4d_annotations(split_path)
+
+    DownstreamDbCreator.from_one_instance_per_dict(
+        dataset_name=DatasetName.ego4d_nlq,
+        source_per_split=source_per_split,
+        instance_model_type=Ego4DNLQInstance,
+        output_dir=output_dir,
+    ).run(num_workers)
+
+
+@app.command("ego4d_moments")
+def create_ego4d_moments_instances(
+    ego4d_moments_instances_base_dir: Path = settings.paths.ego4d_annotations,
+    output_dir: Path = settings.paths.databases,
+    num_workers: Optional[int] = None,
+) -> None:
+    """Create DB files for Ego4D vq queries."""
+    ego4d_moments_paths = {
+        DatasetSplit.train: ego4d_moments_instances_base_dir.joinpath("moments_train.json"),
+        DatasetSplit.valid: ego4d_moments_instances_base_dir.joinpath("moments_val.json"),
+        DatasetSplit.test: ego4d_moments_instances_base_dir.joinpath(
+            "moments_test_unannotated.json"
+        ),
+    }
+
+    source_per_split = {}
+
+    for split, split_path in ego4d_moments_paths.items():
+        source_per_split[split] = load_ego4d_annotations(split_path)
+
+    DownstreamDbCreator.from_one_instance_per_dict(
+        dataset_name=DatasetName.ego4d_vq,
+        source_per_split=source_per_split,
+        instance_model_type=Ego4DMomentsInstance,
+        output_dir=output_dir,
+    ).run(num_workers)
+
+
+@app.command("ego4d_vq")
+def create_ego4d_vq_instances(
+    ego4d_vq_instances_base_dir: Path = settings.paths.ego4d_annotations,
+    output_dir: Path = settings.paths.databases,
+    num_workers: Optional[int] = None,
+) -> None:
+    """Create DB files for Ego4D Visual Queries."""
+    ego4d_vq_paths = {
+        DatasetSplit.train: ego4d_vq_instances_base_dir.joinpath("vq_train.json"),
+        DatasetSplit.valid: ego4d_vq_instances_base_dir.joinpath("vq_val.json"),
+        DatasetSplit.test: ego4d_vq_instances_base_dir.joinpath("vq_test_unannotated.json"),
+    }
+
+    source_per_split = {}
+
+    for split, split_path in ego4d_vq_paths.items():
+        source_per_split[split] = load_ego4d_annotations(split_path)
+
+    DownstreamDbCreator.from_one_instance_per_dict(
+        dataset_name=DatasetName.ego4d_vq,
+        source_per_split=source_per_split,
+        instance_model_type=Ego4DVQInstance,
+        output_dir=output_dir,
+    ).run(num_workers)
+
+
 @app.command("winoground")
 def create_winoground_instances(
     hf_auth_token: Optional[str] = typer.Option(  # noqa: WPS404
@@ -221,11 +307,11 @@ def create_refcoco_instances(
     num_workers: Optional[int] = None,
 ) -> None:
     """Create DB files for RefCOCOg (UMD)."""
-    paths_per_split = load_refcoco_annotations(refcoco_instances_base_dir)
+    source_per_split = load_refcoco_annotations(refcoco_instances_base_dir)
 
     DownstreamDbCreator.from_one_instance_per_dict(
         dataset_name=DatasetName.refcoco,
-        source_per_split=paths_per_split,
+        source_per_split=source_per_split,
         instance_model_type=RefCocoInstance,
         output_dir=output_dir,
     ).run(num_workers)

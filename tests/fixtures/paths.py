@@ -107,8 +107,37 @@ def teach_edh_valid_unseen_data_paths(teach_edh_instance_path: Path) -> list[Pat
 
 
 @fixture(scope="session")
+def ego4d_root(fixtures_root: Path) -> Path:
+    return fixtures_root.joinpath("ego4d")
+
+
+@fixture(scope="session")
 def nlvr_instances_path(fixtures_root: Path) -> Path:
     return fixtures_root.joinpath("nlvr.jsonl")
+
+
+@fixture(scope="session")
+def ego4d_nlq_instances_path(ego4d_root: Path) -> Path:
+    path = ego4d_root.joinpath("nlq_val.json")
+    assert path.exists()
+
+    return path
+
+
+@fixture(scope="session")
+def ego4d_vq_instances_path(ego4d_root: Path) -> Path:
+    path = ego4d_root.joinpath("vq_val.json")
+    assert path.exists()
+
+    return path
+
+
+@fixture(scope="session")
+def ego4d_moments_instances_path(ego4d_root: Path) -> Path:
+    path = ego4d_root.joinpath("moments_val.json")
+    assert path.exists()
+
+    return path
 
 
 @fixture(scope="session")

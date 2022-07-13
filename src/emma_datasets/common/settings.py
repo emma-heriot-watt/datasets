@@ -35,9 +35,11 @@ class Paths:  # noqa: WPS230
         self.teach = self.datasets.joinpath("teach/")
         self.nlvr = self.datasets.joinpath("nlvr/")
         self.vqa_v2 = self.datasets.joinpath("vqa_v2/")
+        self.ego4d = self.datasets.joinpath("ego4d/")
         self.winoground = self.datasets.joinpath("winoground/")
         self.refcoco = self.datasets.joinpath("refcoco/")
 
+        self.ego4d_annotations = self.ego4d.joinpath("v1/annotations/")
         self.coco_images = self.coco.joinpath("images/")
         self.visual_genome_images = self.visual_genome.joinpath("images/")
         self.gqa_images = self.gqa.joinpath("images/")
@@ -48,6 +50,7 @@ class Paths:  # noqa: WPS230
         self.teach_edh_instances = self.teach.joinpath("edh_instances/")
         self.nlvr_images = self.nlvr.joinpath("images/")
         self.vqa_v2_images = self.coco_images
+        self.ego4d_clips = self.ego4d.joinpath("v1/clips/")
         self.refcoco = self.coco_images
 
         self.coco_features = self.coco.joinpath("image_features/")
@@ -58,6 +61,7 @@ class Paths:  # noqa: WPS230
         self.teach_edh_features = self.teach.joinpath("frame_features/")
         self.nlvr_features = self.nlvr.joinpath("image_features/")
         self.vqa_v2_features = self.coco_features
+        self.ego4d_features = self.ego4d.joinpath("frame_features")
         self.refcoco_features = self.coco.joinpath("image_features_forced_bboxes/")
         self.winoground_features = self.winoground.joinpath("image_features/")
 
@@ -87,6 +91,7 @@ class Paths:  # noqa: WPS230
         self.teach.mkdir(parents=True, exist_ok=True)
         self.nlvr.mkdir(parents=True, exist_ok=True)
         self.vqa_v2.mkdir(parents=True, exist_ok=True)
+        self.ego4d.mkdir(parents=True, exist_ok=True)
         self.winoground.mkdir(parents=True, exist_ok=True)
         self.refcoco.mkdir(parents=True, exist_ok=True)
 

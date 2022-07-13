@@ -1,4 +1,5 @@
 import logging
+import shutil
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Callable, Optional
@@ -17,6 +18,12 @@ logger = logging.getLogger(__name__)
 
 settings = Settings()
 settings.paths.create_dirs()
+
+app = typer.Typer(
+    add_completion=False,
+    no_args_is_help=True,
+    short_help="Organises the downloaded files.",
+)
 
 
 class OrganiseDataset:
@@ -249,6 +256,19 @@ def organise_vqa_v2(pool: ThreadPoolExecutor, progress: Progress) -> None:
     )
 
 
+def organise_ego4d(pool: ThreadPoolExecutor, progress: Progress) -> None:
+    """Extract and organise the annotation files from Ego4D."""
+    # first create a folder for the annotations
+    settings.paths.ego4d_annotations.mkdir(parents=True, exist_ok=True)
+
+    for annotation_file in settings.paths.ego4d.iterdir():
+        if annotation_file.is_file():
+            destination_path = settings.paths.ego4d_annotations.joinpath(annotation_file.name)
+
+            shutil.move(annotation_file, destination_path)
+
+
+@app.command()
 def organise_refcoco(pool: ThreadPoolExecutor, progress: Progress) -> None:
     """Extract and organise the annotation files from RefCOCOg."""
     organise_dataset = OrganiseDataset(settings.paths.refcoco, DatasetName.refcoco)
@@ -287,6 +307,7 @@ def organise_datasets(
         DatasetName.teach: organise_teach,
         DatasetName.nlvr: organise_nlvr,
         DatasetName.vqa_v2: organise_vqa_v2,
+        DatasetName.ego4d: organise_ego4d,
         DatasetName.refcoco: organise_refcoco,
     }
 
@@ -310,4 +331,4 @@ def organise_datasets(
 
 
 if __name__ == "__main__":
-    organise_datasets()
+    app()
