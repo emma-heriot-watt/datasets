@@ -24,6 +24,8 @@ from emma_datasets.datamodels.datasets.refcoco import RefCocoInstance, load_refc
 from emma_datasets.datamodels.datasets.vqa_v2 import (
     get_vqa_v2_annotation_paths,
     load_vqa_v2_annotations,
+    load_vqa_visual_genome_annotations,
+    resplit_vqa_v2_annotations,
 )
 from emma_datasets.io import read_json
 from emma_datasets.pipeline import DownstreamDbCreator
@@ -182,6 +184,8 @@ def create_vqa_v2_instances(
     vqa_v2_instances_base_dir: Path = settings.paths.vqa_v2,
     output_dir: Path = settings.paths.databases,
     num_workers: Optional[int] = None,
+    include_visual_genome: bool = False,
+    resplit_trainval: bool = False,
 ) -> None:
     """Create DB files for VQA-v2."""
     vqa_v2_dir_paths = get_vqa_v2_annotation_paths(vqa_v2_instances_base_dir)
@@ -191,6 +195,13 @@ def create_vqa_v2_instances(
         source_per_split[split_paths.split] = load_vqa_v2_annotations(
             questions_path=split_paths.questions_path, answers_path=split_paths.answers_path
         )
+    if resplit_trainval:
+        resplit_vqa_v2_annotations(
+            train_annotations=source_per_split[DatasetSplit.train],
+            valid_annotations=source_per_split[DatasetSplit.valid],
+        )
+    if include_visual_genome:
+        source_per_split[DatasetSplit.train].extend(load_vqa_visual_genome_annotations())
 
     DownstreamDbCreator.from_one_instance_per_dict(
         dataset_name=DatasetName.vqa_v2,
