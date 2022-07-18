@@ -6,7 +6,7 @@ from pydantic import BaseModel, PrivateAttr
 
 from emma_datasets.common import Settings
 from emma_datasets.datamodels.base_model import BaseInstance
-from emma_datasets.datamodels.constants import DatasetName, DatasetSplit, MediaType
+from emma_datasets.datamodels.constants import DatasetSplit, MediaType
 from emma_datasets.datamodels.datasets.utils.vqa_v2_utils import normalize_answer
 from emma_datasets.io import read_json
 
@@ -92,7 +92,6 @@ def vqa_v2_score(count: int) -> float:
 
 def prepare_training_targets(answers: list[str], ans2label: dict[str, int]) -> list[VQAv2Target]:
     """Compute answer VQA scores for answers in the predifined candidates."""
-    answers = [normalize_answer(answer) for answer in answers]
     targets = []
     for answer, count in Counter(answers).items():
         label = ans2label.get(answer, -1)
@@ -117,10 +116,12 @@ def merge_vqa_v2_annotations(
         answers = all_answers.get(question_id, None)
         if answers is None:
             raise AssertionError(f"Annotations for question {question_id} not found!")
-        questions[question_id]["answer_type"] = answers["answer_type"]
-        questions[question_id]["question_type"] = answers["question_type"]
+        questions[question_id]["answer_type"] = answers.get("answer_type", None)
+        questions[question_id]["question_type"] = answers.get("question_type", None)
         # Keep only the answers, discard the answer condfindence and id
-        questions[question_id]["answers"] = [answer["answer"] for answer in answers["answers"]]
+        questions[question_id]["answers"] = [
+            normalize_answer(answer["answer"]) for answer in answers["answers"]
+        ]
         # All VQA-v2 instances should have 10 answers
         if len(questions[question_id]["answers"]) != 10:
             raise AssertionError(
@@ -135,7 +136,8 @@ def merge_vqa_v2_annotations(
 
 
 def load_vqa_v2_annotations(
-    questions_path: Path, answers_path: Optional[Path]
+    questions_path: Path,
+    answers_path: Optional[Path],
 ) -> VQAv2AnnotationsType:
     """Load question and answer annotations for VQA-v2.
 
@@ -143,8 +145,6 @@ def load_vqa_v2_annotations(
     their unique question id.
     """
     questions = read_vqa_v2_json(questions_path, "questions")
-    for question_id in questions.keys():
-        questions[question_id]["original_dataset"] = DatasetName.vqa_v2
 
     if answers_path is not None:
         answers = read_vqa_v2_json(answers_path, "annotations")
@@ -154,15 +154,48 @@ def load_vqa_v2_annotations(
 
 
 def resplit_vqa_v2_annotations(
-    train_annotations: VQAv2AnnotationsType, valid_annotations: VQAv2AnnotationsType
+    vqa_v2_instances_base_dir: Path,
+    train_annotations: VQAv2AnnotationsType,
+    valid_annotations: VQAv2AnnotationsType,
 ) -> tuple[VQAv2AnnotationsType, VQAv2AnnotationsType]:
-    """Resplit train and valiadtion data to use more data for training."""
-    pass  # noqa: WPS420
+    """Resplit train and valiadtion data to use more data for training.
+
+    It is common practice to train on both training and validation VQA-v2 data to boost
+    performance. Following UNITER (https://github.com/ChenRocks/UNITER), we keep 26K samples for
+    validation and add the rest to the training set.
+    """
+    valid_ids_path = vqa_v2_instances_base_dir.joinpath("vqa_v2_valid_resplit.json")
+    if not valid_ids_path.exists():
+        raise AssertionError(
+            f"{valid_ids_path} does not exist. Download the validation ids from s3."
+        )
+    vqa_valid_question_ids = read_json(valid_ids_path)["question_ids"]
+    new_valid_annotations = []
+    for annotation in valid_annotations:
+        question_id = annotation["question_id"]
+        if isinstance(question_id, int):
+            question_id = str(question_id)
+        if question_id in vqa_valid_question_ids:
+            new_valid_annotations.append(annotation)
+        else:
+            train_annotations.append(annotation)
+
+    return train_annotations, new_valid_annotations
 
 
-def load_vqa_visual_genome_annotations() -> VQAv2AnnotationsType:
-    """Load additional visual genome data."""
-    pass  # noqa: WPS420
+def load_vqa_visual_genome_annotations(vqa_v2_instances_base_dir: Path) -> VQAv2AnnotationsType:
+    """Load additional visual genome data.
+
+    We use the preprocessed VG-VQA annotations from MCAN (https://github.com/MILVLG/mcan-vqa).
+    """
+    vg_questions_path = vqa_v2_instances_base_dir.joinpath("VG_questions.json")
+    vg_answers_path = vqa_v2_instances_base_dir.joinpath("VG_annotations.json")
+    if not (vg_questions_path.exists() and vg_answers_path.exists()):
+        raise AssertionError("VG annotation paths do not exist.")
+    return load_vqa_v2_annotations(
+        questions_path=vg_questions_path,
+        answers_path=vg_answers_path,
+    )
 
 
 class VQAv2Instance(BaseInstance):
@@ -175,15 +208,13 @@ class VQAv2Instance(BaseInstance):
     answers: Optional[list[str]]
     answer_type: Optional[str]
     training_targets: Optional[list[VQAv2Target]]
-    original_dataset: DatasetName
     _features_path: Path = PrivateAttr()
 
     def __init__(self, **data: Any) -> None:
         super().__init__(**data)
-        if self.original_dataset == DatasetName.vqa_v2:
-            self._features_path = settings.paths.coco_features.joinpath(  # noqa: WPS601
-                f"{self.image_id.zfill(12)}.pt"  # noqa: WPS432
-            )
+        self._features_path = settings.paths.coco_features.joinpath(  # noqa: WPS601
+            f"{self.image_id.zfill(12)}.pt"  # noqa: WPS432
+        )
 
     @property
     def modality(self) -> MediaType:

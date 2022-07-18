@@ -184,8 +184,8 @@ def create_vqa_v2_instances(
     vqa_v2_instances_base_dir: Path = settings.paths.vqa_v2,
     output_dir: Path = settings.paths.databases,
     num_workers: Optional[int] = None,
-    include_visual_genome: bool = False,
     resplit_trainval: bool = False,
+    include_visual_genome: bool = False,
 ) -> None:
     """Create DB files for VQA-v2."""
     vqa_v2_dir_paths = get_vqa_v2_annotation_paths(vqa_v2_instances_base_dir)
@@ -196,12 +196,18 @@ def create_vqa_v2_instances(
             questions_path=split_paths.questions_path, answers_path=split_paths.answers_path
         )
     if resplit_trainval:
-        resplit_vqa_v2_annotations(
+        train_annotations, valid_annotations = resplit_vqa_v2_annotations(
+            vqa_v2_instances_base_dir,
             train_annotations=source_per_split[DatasetSplit.train],
             valid_annotations=source_per_split[DatasetSplit.valid],
         )
+        source_per_split[DatasetSplit.train] = train_annotations
+        source_per_split[DatasetSplit.valid] = valid_annotations
+
     if include_visual_genome:
-        source_per_split[DatasetSplit.train].extend(load_vqa_visual_genome_annotations())
+        source_per_split[DatasetSplit.train].extend(
+            load_vqa_visual_genome_annotations(vqa_v2_instances_base_dir)
+        )
 
     DownstreamDbCreator.from_one_instance_per_dict(
         dataset_name=DatasetName.vqa_v2,
