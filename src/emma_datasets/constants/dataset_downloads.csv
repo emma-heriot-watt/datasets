@@ -727,6 +727,10 @@ teach,s3://teach-dataset/all_games.tar.gz
 teach,s3://teach-dataset/edh_instances.tar.gz
 teach,s3://teach-dataset/experiment_games.tar.gz
 teach,s3://teach-dataset/images_and_states.tar.gz
+teach,https://raw.githubusercontent.com/alexa/teach/main/src/teach/meta_data_files/divided_split/edh_instances/divided_val_seen.txt
+teach,https://raw.githubusercontent.com/alexa/teach/main/src/teach/meta_data_files/divided_split/edh_instances/divided_test_seen.txt
+teach,https://raw.githubusercontent.com/alexa/teach/main/src/teach/meta_data_files/divided_split/edh_instances/divided_val_unseen.txt
+teach,https://raw.githubusercontent.com/alexa/teach/main/src/teach/meta_data_files/divided_split/edh_instances/divided_test_unseen.txt
 vqa_v2,https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Questions_Train_mscoco.zip
 vqa_v2,https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Annotations_Train_mscoco.zip
 vqa_v2,https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Questions_Val_mscoco.zip

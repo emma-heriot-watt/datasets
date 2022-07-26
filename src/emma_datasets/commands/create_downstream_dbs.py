@@ -27,7 +27,7 @@ from emma_datasets.datamodels.datasets.vqa_v2 import (
     load_vqa_visual_genome_annotations,
     resplit_vqa_v2_annotations,
 )
-from emma_datasets.io import read_json
+from emma_datasets.io import read_json, read_txt
 from emma_datasets.pipeline import DownstreamDbCreator
 
 
@@ -56,18 +56,39 @@ def create_teach_edh_instances(
     teach_edh_instances_base_dir: Path = settings.paths.teach_edh_instances,
     output_dir: Path = settings.paths.databases,
     num_workers: Optional[int] = None,
+    divided_val_seen_path: Path = settings.paths.teach.joinpath(  # noqa: WPS404
+        "divided_val_seen.txt"
+    ),
+    divided_val_unseen_path: Path = settings.paths.teach.joinpath(  # noqa: WPS404
+        "divided_val_unseen.txt"
+    ),
+    divided_test_seen_path: Path = settings.paths.teach.joinpath(  # noqa: WPS404
+        "divided_test_seen.txt"
+    ),
+    divided_test_unseen_path: Path = settings.paths.teach.joinpath(  # noqa: WPS404
+        "divided_test_unseen.txt"
+    ),
 ) -> None:
     """Create DB files for TEACh EDH Instances."""
     edh_instance_dir_paths = {
         DatasetSplit.train: list(teach_edh_instances_base_dir.joinpath("train").iterdir()),
-        DatasetSplit.valid_seen: list(
-            teach_edh_instances_base_dir.joinpath("valid_seen").iterdir()
-        ),
-        DatasetSplit.valid_unseen: list(
-            teach_edh_instances_base_dir.joinpath("valid_unseen").iterdir()
-        ),
+        DatasetSplit.valid_seen: [
+            teach_edh_instances_base_dir.joinpath("valid_seen", json_file)
+            for json_file in read_txt(divided_val_seen_path)
+        ],
+        DatasetSplit.valid_unseen: [
+            teach_edh_instances_base_dir.joinpath("valid_unseen", json_file)
+            for json_file in read_txt(divided_val_unseen_path)
+        ],
+        DatasetSplit.test_seen: [
+            teach_edh_instances_base_dir.joinpath("valid_seen", json_file)
+            for json_file in read_txt(divided_test_seen_path)
+        ],
+        DatasetSplit.test_unseen: [
+            teach_edh_instances_base_dir.joinpath("valid_unseen", json_file)
+            for json_file in read_txt(divided_test_unseen_path)
+        ],
     }
-
     DownstreamDbCreator.from_one_instance_per_json(
         dataset_name=DatasetName.teach,
         source_per_split=edh_instance_dir_paths,

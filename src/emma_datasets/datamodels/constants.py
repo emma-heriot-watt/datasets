@@ -59,6 +59,8 @@ class DatasetSplit(Enum):
     test = "testing"
     valid_seen = "valid_seen"
     valid_unseen = "valid_unseen"
+    test_seen = "test_seen"
+    test_unseen = "test_unseen"
     restval = "rest_val"
     test_dev = "test_dev"
 

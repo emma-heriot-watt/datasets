@@ -23,13 +23,21 @@ def test_can_create_downstream_dbs_for_teach_edh(
             tmp_path.as_posix(),
             "--num-workers",
             "1",
+            "--divided-val-seen-path",
+            teach_edh_instance_path.joinpath("divided_val_seen.txt").as_posix(),
+            "--divided-val-unseen-path",
+            teach_edh_instance_path.joinpath("divided_val_unseen.txt").as_posix(),
+            "--divided-test-seen-path",
+            teach_edh_instance_path.joinpath("divided_test_seen.txt").as_posix(),
+            "--divided-test-unseen-path",
+            teach_edh_instance_path.joinpath("divided_test_unseen.txt").as_posix(),
         ],
     )
     # Verify the API returned without erroring
     assert app_output.exit_code == 0
 
     # Ensure there are 3 db files that have been created
-    assert len(list(tmp_path.iterdir())) == 3
+    assert len(list(tmp_path.iterdir())) == 5
 
     for db_path in tmp_path.iterdir():
         # Verify the Db is named correctly
