@@ -41,7 +41,7 @@ class GqaQaPairExtractor(AnnotationExtractor[QuestionAnswerPair]):
     def convert(self, raw_feature: list[dict[str, Any]]) -> Iterator[QuestionAnswerPair]:
         """Convert raw instance into QA pairs."""
         return (
-            QuestionAnswerPair(id=qa["id"], question=qa["question"], answer=qa["fullAnswer"])
+            QuestionAnswerPair(id=qa["id"], question=qa["question"], answer=qa["answer"])
             for qa in raw_feature
         )
 

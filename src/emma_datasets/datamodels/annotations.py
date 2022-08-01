@@ -44,7 +44,7 @@ class QuestionAnswerPair(Annotation):
 
     id: str
     question: str
-    answer: str
+    answer: Union[str, list[str]]
 
     def get_language_data(self) -> str:
         """Get the language data from a QA Pair."""

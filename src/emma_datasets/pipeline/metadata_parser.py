@@ -52,6 +52,7 @@ class MetadataParser:
             images_dir=settings.paths.coco_images,
             captions_dir=settings.paths.captions,
             features_dir=settings.paths.coco_features,
+            qa_pairs_dir=settings.paths.qa_pairs,
             progress=self.progress,
         )
 

@@ -52,6 +52,18 @@ def test_gqa_qa_extractor_works(
     assert generated_qa_pairs
 
 
+def test_vqa_v2_qa_extractor_works(
+    extract_vqa_v2_qa_pairs: bool, extracted_annotations_paths: dict[str, Path]
+) -> None:
+    assert extract_vqa_v2_qa_pairs
+
+    generated_qa_pairs = [
+        parse_file_as(list[QuestionAnswerPair], file_path)
+        for file_path in extracted_annotations_paths["qa_pairs"].iterdir()
+    ]
+    assert generated_qa_pairs
+
+
 def test_gqa_scene_graph_extractor_works(
     extract_gqa_scene_graphs: bool, extracted_annotations_paths: dict[str, Path]
 ) -> None:

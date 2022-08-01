@@ -21,14 +21,18 @@ settings = Settings()
 
 @fixture
 def coco_metadata_parser(
-    coco_captions_path: Path, extracted_annotations_paths: dict[str, Path], progress: Progress
+    coco_captions_path_train: Path,
+    coco_captions_path_valid: Path,
+    extracted_annotations_paths: dict[str, Path],
+    progress: Progress,
 ) -> CocoMetadataParser:
     return CocoMetadataParser(
-        caption_train_path=coco_captions_path,
-        caption_val_path=coco_captions_path,
+        caption_train_path=coco_captions_path_train,
+        caption_val_path=coco_captions_path_valid,
         images_dir=settings.paths.coco_images,
         captions_dir=extracted_annotations_paths["coco_captions"],
         features_dir=settings.paths.coco_features,
+        qa_pairs_dir=extracted_annotations_paths["qa_pairs"],
         progress=progress,
     )
 

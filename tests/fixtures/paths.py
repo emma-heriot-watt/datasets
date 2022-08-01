@@ -17,8 +17,15 @@ def fixtures_root(project_root: Path) -> Path:
 
 
 @fixture(scope="session")
-def coco_captions_path(fixtures_root: Path) -> Path:
-    paths = fixtures_root.joinpath("coco_captions.json")
+def coco_captions_path_train(fixtures_root: Path) -> Path:
+    paths = fixtures_root.joinpath("coco_captions_train.json")
+    assert paths.exists()
+    return paths
+
+
+@fixture(scope="session")
+def coco_captions_path_valid(fixtures_root: Path) -> Path:
+    paths = fixtures_root.joinpath("coco_captions_valid.json")
     assert paths.exists()
     return paths
 
@@ -176,7 +183,6 @@ def vqa_v2_train_data_path(fixtures_root: Path) -> tuple[Path, Path]:
 @fixture(scope="session")
 def vqa_v2_valid_data_path(fixtures_root: Path) -> tuple[Path, Path]:
     split_path = fixtures_root.joinpath("vqa_v2/")
-
     questions_paths = split_path.joinpath("v2_OpenEnded_mscoco_val2014_questions.json")
     annotations_paths = split_path.joinpath("v2_mscoco_val2014_annotations.json")
     return (questions_paths, annotations_paths)

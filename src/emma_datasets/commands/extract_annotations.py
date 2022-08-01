@@ -16,6 +16,7 @@ from emma_datasets.parsers.annotation_extractors import (
     GqaQaPairExtractor,
     GqaSceneGraphExtractor,
     VgRegionsExtractor,
+    VQAv2QaPairExtractor,
 )
 
 
@@ -48,6 +49,28 @@ def extract_gqa_qa_pairs(progress: Progress) -> GqaQaPairExtractor:
         [
             settings.paths.gqa_questions.joinpath("val_balanced_questions.json"),
             settings.paths.gqa_questions.joinpath("train_balanced_questions.json"),
+        ],
+        settings.paths.qa_pairs,
+        progress,
+    )
+
+
+def extract_vqa_v2_qa_pairs(progress: Progress) -> VQAv2QaPairExtractor:
+    """Extract QA Pairs from GQA."""
+    return VQAv2QaPairExtractor(
+        [
+            (
+                settings.paths.vqa_v2.joinpath("v2_OpenEnded_mscoco_val2014_questions.json"),
+                settings.paths.vqa_v2.joinpath("v2_mscoco_val2014_annotations.json"),
+            ),
+            (
+                settings.paths.vqa_v2.joinpath("VG_questions.json"),
+                settings.paths.vqa_v2.joinpath("VG_annotations.json"),
+            ),
+            (
+                settings.paths.vqa_v2.joinpath("v2_OpenEnded_mscoco_train2014_questions.json"),
+                settings.paths.vqa_v2.joinpath("v2_mscoco_train2014_annotations.json"),
+            ),
         ],
         settings.paths.qa_pairs,
         progress,
@@ -132,6 +155,7 @@ all_extractor_callables: list[Callable[[Progress], AnnotationExtractor[Any]]] = 
     extract_alfred_captions,
     extract_alfred_subgoal_trajectories,
     extract_alfred_task_descriptions,
+    extract_vqa_v2_qa_pairs,
 ]
 
 

@@ -4,6 +4,13 @@ from typing import Iterable, Iterator, Union
 
 
 InputPathType = Union[Iterable[str], Iterable[Path], str, Path]
+AnnotationPaths = Union[
+    Iterable[str],
+    Iterable[Path],
+    str,
+    Path,
+    Iterable[tuple[Path, Path]],
+]
 
 
 def get_paths_from_dir(dir_path: Path) -> Iterator[Path]:
@@ -31,7 +38,7 @@ def _get_all_paths(paths: Iterable[Path]) -> list[Path]:
     return list(itertools.chain(non_dir_paths, *files_from_dirs))
 
 
-def get_all_file_paths(paths: Union[Iterable[str], Iterable[Path], str, Path]) -> list[Path]:
+def get_all_file_paths(paths: AnnotationPaths) -> list[Path]:
     """Get all file paths from string paths."""
     if isinstance(paths, str):
         paths = convert_strings_to_paths([paths])

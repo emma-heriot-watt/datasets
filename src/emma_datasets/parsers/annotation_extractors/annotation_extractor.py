@@ -12,6 +12,7 @@ from emma_datasets.io import get_all_file_paths, read_json, write_json
 
 
 Annotation = TypeVar("Annotation", bound=BaseModel)
+AnnotationPaths = Union[str, list[str], Path, list[Path], list[tuple[Path, Path]]]  # noqa: WPS221
 
 
 class AnnotationExtractor(ABC, Generic[Annotation]):
@@ -37,7 +38,7 @@ class AnnotationExtractor(ABC, Generic[Annotation]):
 
     def __init__(
         self,
-        paths: Union[str, list[str], Path, list[Path]],
+        paths: AnnotationPaths,
         output_dir: Union[str, Path],
         progress: Progress,
     ) -> None:
@@ -50,7 +51,7 @@ class AnnotationExtractor(ABC, Generic[Annotation]):
         )
 
         self._paths = paths
-        self.file_paths: list[Path] = []
+        self.file_paths: Union[list[Path], list[tuple[Path, Path]]]
 
         self.output_dir = Path(output_dir)
 
@@ -154,7 +155,8 @@ class AnnotationExtractor(ABC, Generic[Annotation]):
     def _read(self) -> Iterator[Any]:
         """Read all files and return a single Iterator over all of them."""
         raw_data = itertools.chain.from_iterable(
-            self.process_raw_file_return(self.read(file_path)) for file_path in self.file_paths
+            self.process_raw_file_return(self.read(file_path))  # type: ignore[arg-type]
+            for file_path in self.file_paths
         )
 
         return self.postprocess_raw_data(raw_data)

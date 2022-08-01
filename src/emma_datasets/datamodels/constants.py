@@ -88,6 +88,7 @@ DatasetModalityMap: dict[DatasetName, MediaType] = {
 AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
     AnnotationType.qa_pair: [
         DatasetName.gqa,
+        DatasetName.coco,
         DatasetName.vqa_v2,
         DatasetName.ego4d_vq,
         DatasetName.ego4d_moments,

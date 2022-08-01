@@ -1,6 +1,6 @@
 import itertools
 from pathlib import Path
-from typing import Any
+from typing import Any, Union
 
 from pytest_cases import fixture
 
@@ -14,12 +14,13 @@ from emma_datasets.parsers.annotation_extractors import (
     GqaQaPairExtractor,
     GqaSceneGraphExtractor,
     VgRegionsExtractor,
+    VQAv2QaPairExtractor,
 )
 
 
 def extracted_annotations(
     annotation_extractor_class: Any,
-    paths: list[Path],
+    paths: Union[list[Path], list[tuple[Path, Path]]],
     output_dir: Path,
 ) -> None:
     with get_progress() as progress:
@@ -33,11 +34,13 @@ def extracted_annotations(
 
 @fixture
 def extract_coco_captions(
-    coco_captions_path: Path, extracted_annotations_paths: dict[str, Path]
+    coco_captions_path_train: Path,
+    coco_captions_path_valid: Path,
+    extracted_annotations_paths: dict[str, Path],
 ) -> bool:
     extracted_annotations(
         CocoCaptionExtractor,
-        [coco_captions_path, coco_captions_path],
+        [coco_captions_path_train, coco_captions_path_valid],
         extracted_annotations_paths["coco_captions"],
     )
     return True
@@ -59,6 +62,20 @@ def extract_gqa_qa_pairs(
 ) -> bool:
     extracted_annotations(
         GqaQaPairExtractor, [gqa_questions_path], extracted_annotations_paths["qa_pairs"]
+    )
+    return True
+
+
+@fixture
+def extract_vqa_v2_qa_pairs(
+    vqa_v2_train_data_path: tuple[Path, Path],
+    vqa_v2_valid_data_path: tuple[Path, Path],
+    extracted_annotations_paths: dict[str, Path],
+) -> bool:
+    extracted_annotations(
+        VQAv2QaPairExtractor,
+        [vqa_v2_train_data_path, vqa_v2_valid_data_path],
+        extracted_annotations_paths["qa_pairs"],
     )
     return True
 
@@ -138,6 +155,7 @@ def all_extracted_annotations(
     extract_coco_captions: bool,
     extract_vg_regions: bool,
     extract_gqa_qa_pairs: bool,
+    extract_vqa_v2_qa_pairs: bool,
     extract_gqa_scene_graphs: bool,
     extract_epic_kitchen_captions: bool,
     extract_alfred_captions: bool,
@@ -147,6 +165,7 @@ def all_extracted_annotations(
     assert extract_coco_captions
     assert extract_vg_regions
     assert extract_gqa_qa_pairs
+    assert extract_vqa_v2_qa_pairs
     assert extract_gqa_scene_graphs
     assert extract_epic_kitchen_captions
     assert extract_alfred_captions

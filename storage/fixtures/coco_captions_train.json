@@ -51,16 +51,6 @@
 	],
 	"images": [
 		{
-			"license": 4,
-			"file_name": "000000397133.jpg",
-			"coco_url": "http://images.cocodataset.org/val2017/000000397133.jpg",
-			"height": 427,
-			"width": 640,
-			"date_captured": "2013-11-14 17:02:52",
-			"flickr_url": "http://farm7.staticflickr.com/6116/6255196340_da26cf2c9e_z.jpg",
-			"id": 397133
-		},
-		{
 			"license": 1,
 			"file_name": "000000037777.jpg",
 			"coco_url": "http://images.cocodataset.org/val2017/000000037777.jpg",
@@ -306,26 +296,6 @@
 			"image_id": 37777,
 			"id": 603617,
 			"caption": "A kitchen that has a bowl of fruit on the table."
-		},
-		{
-			"image_id": 397133,
-			"id": 370584,
-			"caption": "Man in apron standing on front of oven with pans and bakeware"
-		},
-		{
-			"image_id": 397133,
-			"id": 370509,
-			"caption": "A man is in a kitchen making pizzas."
-		},
-		{
-			"image_id": 397133,
-			"id": 372252,
-			"caption": "A baker is working in the kitchen rolling dough."
-		},
-		{
-			"image_id": 397133,
-			"id": 372765,
-			"caption": "A person standing by a stove in a kitchen."
 		},
 		{
 			"image_id": 179765,

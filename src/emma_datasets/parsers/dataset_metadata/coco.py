@@ -28,6 +28,7 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
         images_dir: Path,
         captions_dir: Path,
         features_dir: Path,
+        qa_pairs_dir: Path,
         progress: Progress,
     ) -> None:
         super().__init__(
@@ -41,11 +42,17 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
         self.images_dir = images_dir
         self.captions_dir = captions_dir
         self.features_dir = features_dir
+        self.qa_pairs_dir = qa_pairs_dir
 
     def convert_to_dataset_metadata(self, metadata: CocoImageMetadata) -> DatasetMetadata:
         """Convert single instance's metadata to the common datamodel."""
         image_id = metadata.id
         feature_image_id = f"{int(metadata.id):012d}"
+        if self.qa_pairs_dir.joinpath(f"vqa_v2_{metadata.id}.json").exists():
+            qa_pairs_path = self.qa_pairs_dir.joinpath(f"vqa_v2_{metadata.id}.json")
+        else:
+            qa_pairs_path = None
+
         return DatasetMetadata(
             id=image_id,
             name=self.dataset_name,
@@ -59,6 +66,7 @@ class CocoMetadataParser(DatasetMetadataParser[CocoImageMetadata]):
             ),
             features_path=self.features_dir.joinpath(f"{feature_image_id}.{self.feature_ext}"),
             caption_path=self.captions_dir.joinpath(f"{metadata.id}.json"),
+            qa_pairs_path=qa_pairs_path,
         )
 
     def _read(self, path: Path) -> Any:

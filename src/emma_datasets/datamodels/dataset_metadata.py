@@ -13,8 +13,8 @@ class SourceMedia(BaseModel, frozen=True):
     url: Optional[HttpUrl]
     media_type: MediaType
     path: Optional[Path]
-    width: int
-    height: int
+    width: Optional[int]
+    height: Optional[int]
 
 
 class DatasetMetadata(BaseModel, frozen=True):
