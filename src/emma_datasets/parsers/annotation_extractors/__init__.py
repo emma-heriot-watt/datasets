@@ -7,6 +7,9 @@ from emma_datasets.parsers.annotation_extractors.alfred_trajectories import (
 )
 from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor
 from emma_datasets.parsers.annotation_extractors.coco_caption import CocoCaptionExtractor
+from emma_datasets.parsers.annotation_extractors.conceptual_captions import (
+    ConceptualCaptionsExtractor,
+)
 from emma_datasets.parsers.annotation_extractors.epic_kitchens_captions import (
     EpicKitchensCaptionExtractor,
 )

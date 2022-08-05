@@ -11,6 +11,7 @@ from emma_datasets.parsers.dataset_aligner import DatasetAligner
 from emma_datasets.parsers.dataset_metadata import (
     AlfredMetadataParser,
     CocoMetadataParser,
+    ConceptualCaptionsMetadataParser,
     EpicKitchensMetadataParser,
     GqaMetadataParser,
     VgMetadataParser,
@@ -104,12 +105,41 @@ class MetadataParser:
             DatasetName.visual_genome, self.progress, "Merging VG, COCO and GQA where possible"
         )
 
+        self._conceptual_captions = ConceptualCaptionsMetadataParser(
+            parquet_files_dir=[
+                (settings.paths.conceptual_captions.joinpath("train/"), DatasetSplit.train),
+                (settings.paths.conceptual_captions.joinpath("valid/"), DatasetSplit.valid),
+            ],
+            features_dir=[
+                (
+                    settings.paths.conceptual_captions_features.joinpath("train/"),
+                    DatasetSplit.train,
+                ),
+                (
+                    settings.paths.conceptual_captions_features.joinpath("valid/"),
+                    DatasetSplit.valid,
+                ),
+            ],
+            captions_dir=[
+                (
+                    settings.paths.captions.joinpath("conceptual_captions", "train/"),
+                    DatasetSplit.train,
+                ),
+                (
+                    settings.paths.captions.joinpath("conceptual_captions", "valid/"),
+                    DatasetSplit.valid,
+                ),
+            ],
+            progress=self.progress,
+        )
+
     def get_all_metadata_groups(self) -> Iterator[list[DatasetMetadata]]:
         """Get all dataset metadata from the input datasets."""
         return itertools.chain(
             self.coco_vg_gqa(),
             self.epic_kitchens(),
             self.alfred(),
+            self.conceptual_captions(),
         )
 
     def coco_vg_gqa(self) -> Iterator[list[DatasetMetadata]]:
@@ -139,5 +169,15 @@ class MetadataParser:
             self._alfred.convert_to_dataset_metadata(metadata) for metadata in alfred_metadata
         )
         dataset_metadata = ([metadata] for metadata in dataset_metadata_iterator)
+
+        return dataset_metadata
+
+    def conceptual_captions(self) -> Iterator[list[DatasetMetadata]]:
+        """Get dataset metadata from Conceptual Captions dataset."""
+        conceptual_captions_metadata = self._conceptual_captions.get_metadata(self.progress)
+        dataset_metadata = (
+            [self._conceptual_captions.convert_to_dataset_metadata(metadata)]
+            for metadata in conceptual_captions_metadata
+        )
 
         return dataset_metadata

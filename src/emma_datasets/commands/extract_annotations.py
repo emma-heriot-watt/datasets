@@ -12,6 +12,7 @@ from emma_datasets.parsers.annotation_extractors import (
     AlfredTrajectoryExtractor,
     AnnotationExtractor,
     CocoCaptionExtractor,
+    ConceptualCaptionsExtractor,
     EpicKitchensCaptionExtractor,
     GqaQaPairExtractor,
     GqaSceneGraphExtractor,
@@ -146,6 +147,18 @@ def extract_alfred_task_descriptions(progress: Progress) -> AlfredTaskDescriptio
     )
 
 
+def extract_conceptual_captions(progress: Progress) -> ConceptualCaptionsExtractor:
+    """Extract captions from Conceptual Captions."""
+    return ConceptualCaptionsExtractor(
+        [
+            settings.paths.conceptual_captions.joinpath("train/"),
+            settings.paths.conceptual_captions.joinpath("valid/"),
+        ],
+        settings.paths.captions.joinpath("conceptual_captions"),
+        progress,
+    )
+
+
 all_extractor_callables: list[Callable[[Progress], AnnotationExtractor[Any]]] = [
     extract_coco_captions,
     extract_gqa_qa_pairs,
@@ -155,6 +168,7 @@ all_extractor_callables: list[Callable[[Progress], AnnotationExtractor[Any]]] = 
     extract_alfred_captions,
     extract_alfred_subgoal_trajectories,
     extract_alfred_task_descriptions,
+    extract_conceptual_captions,
     extract_vqa_v2_qa_pairs,
 ]
 

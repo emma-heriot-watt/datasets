@@ -35,6 +35,7 @@ class Paths:  # noqa: WPS230
         self.teach = self.datasets.joinpath("teach/")
         self.nlvr = self.datasets.joinpath("nlvr/")
         self.vqa_v2 = self.datasets.joinpath("vqa_v2/")
+        self.conceptual_captions = self.datasets.joinpath("cc3m/")
         self.ego4d = self.datasets.joinpath("ego4d/")
         self.winoground = self.datasets.joinpath("winoground/")
         self.refcoco = self.datasets.joinpath("refcoco/")
@@ -61,6 +62,7 @@ class Paths:  # noqa: WPS230
         self.teach_edh_features = self.teach.joinpath("frame_features/")
         self.nlvr_features = self.nlvr.joinpath("image_features/")
         self.vqa_v2_features = self.coco_features
+        self.conceptual_captions_features = self.conceptual_captions.joinpath("image_features/")
         self.ego4d_features = self.ego4d.joinpath("frame_features")
         self.refcoco_features = self.coco.joinpath("image_features_forced_bboxes/")
         self.winoground_features = self.winoground.joinpath("image_features/")
