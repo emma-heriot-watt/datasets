@@ -39,6 +39,7 @@ class Paths:  # noqa: WPS230
         self.ego4d = self.datasets.joinpath("ego4d/")
         self.winoground = self.datasets.joinpath("winoground/")
         self.refcoco = self.datasets.joinpath("refcoco/")
+        self.simbot = self.datasets.joinpath("simbot/")
 
         self.ego4d_annotations = self.ego4d.joinpath("v1/annotations/")
         self.coco_images = self.coco.joinpath("images/")
@@ -53,6 +54,7 @@ class Paths:  # noqa: WPS230
         self.vqa_v2_images = self.coco_images
         self.ego4d_clips = self.ego4d.joinpath("v1/clips/")
         self.refcoco = self.coco_images
+        self.simbot_images = self.simbot.joinpath("mission_images/")
 
         self.coco_features = self.coco.joinpath("image_features/")
         self.visual_genome_features = self.visual_genome.joinpath("image_features/")
@@ -66,6 +68,7 @@ class Paths:  # noqa: WPS230
         self.ego4d_features = self.ego4d.joinpath("frame_features")
         self.refcoco_features = self.coco.joinpath("image_features_forced_bboxes/")
         self.winoground_features = self.winoground.joinpath("image_features/")
+        self.simbot_features = self.simbot.joinpath("frame_features/")
 
         # Databases for output
         self.databases = self.storage.joinpath("db/")
@@ -96,6 +99,7 @@ class Paths:  # noqa: WPS230
         self.ego4d.mkdir(parents=True, exist_ok=True)
         self.winoground.mkdir(parents=True, exist_ok=True)
         self.refcoco.mkdir(parents=True, exist_ok=True)
+        self.simbot.mkdir(parents=True, exist_ok=True)
 
         self.coco_images.mkdir(parents=True, exist_ok=True)
         self.visual_genome_images.mkdir(parents=True, exist_ok=True)
@@ -105,6 +109,7 @@ class Paths:  # noqa: WPS230
         self.epic_kitchens_frames.mkdir(parents=True, exist_ok=True)
         self.alfred_data.mkdir(parents=True, exist_ok=True)
         self.nlvr_images.mkdir(parents=True, exist_ok=True)
+        self.simbot_images.mkdir(parents=True, exist_ok=True)
 
         self.databases.mkdir(parents=True, exist_ok=True)
 
