@@ -8,7 +8,10 @@ from emma_datasets.datamodels.datasets.alfred import (
 )
 from emma_datasets.datamodels.datasets.coco import CocoCaption, CocoImageMetadata, CocoInstance
 from emma_datasets.datamodels.datasets.conceptual_captions import ConceptualCaptionsMetadata
-from emma_datasets.datamodels.datasets.epic_kitchens import EpicKitchensNarrationMetadata
+from emma_datasets.datamodels.datasets.epic_kitchens import (
+    EpicKitchensInstance,
+    EpicKitchensNarrationMetadata,
+)
 from emma_datasets.datamodels.datasets.gqa import (
     GqaImageMetadata,
     GqaObject,

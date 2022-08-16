@@ -19,6 +19,7 @@ from emma_datasets.datamodels.datasets.ego4d import (
     Ego4DVQInstance,
     load_ego4d_annotations,
 )
+from emma_datasets.datamodels.datasets.epic_kitchens import EpicKitchensInstance
 from emma_datasets.datamodels.datasets.nlvr import NlvrInstance
 from emma_datasets.datamodels.datasets.refcoco import RefCocoInstance, load_refcoco_annotations
 from emma_datasets.datamodels.datasets.vqa_v2 import (
@@ -27,7 +28,7 @@ from emma_datasets.datamodels.datasets.vqa_v2 import (
     load_vqa_visual_genome_annotations,
     resplit_vqa_v2_annotations,
 )
-from emma_datasets.io import read_json, read_txt
+from emma_datasets.io import read_csv, read_json, read_txt
 from emma_datasets.pipeline import DownstreamDbCreator
 
 
@@ -351,6 +352,35 @@ def create_refcoco_instances(
         dataset_name=DatasetName.refcoco,
         source_per_split=source_per_split,
         instance_model_type=RefCocoInstance,
+        output_dir=output_dir,
+    ).run(num_workers)
+
+
+@app.command("epic-kitchens")
+def create_epic_kitchens_instances(
+    epic_kitchens_instances_base_dir: Path = settings.paths.epic_kitchens,
+    output_dir: Path = settings.paths.databases,
+    num_workers: Optional[int] = None,
+) -> None:
+    """Create DB files for Epic-Kitchens."""
+    epic_kitchens_paths = {
+        DatasetSplit.train: epic_kitchens_instances_base_dir.joinpath("EPIC_100_train.csv"),
+        DatasetSplit.valid: epic_kitchens_instances_base_dir.joinpath("EPIC_100_validation.csv"),
+        DatasetSplit.test: epic_kitchens_instances_base_dir.joinpath(
+            "EPIC_100_test_timestamps.csv"
+        ),
+    }
+
+    source_per_split = {}
+
+    for split, split_path in epic_kitchens_paths.items():
+        split_annotations = read_csv(split_path)
+        source_per_split[split] = split_annotations
+
+    DownstreamDbCreator.from_one_instance_per_dict(
+        dataset_name=DatasetName.epic_kitchens,
+        source_per_split=source_per_split,
+        instance_model_type=EpicKitchensInstance,
         output_dir=output_dir,
     ).run(num_workers)
 

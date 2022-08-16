@@ -1,11 +1,16 @@
 import ast
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Optional, Union
 
 from pydantic import validator
 
-from emma_datasets.datamodels.base_model import BaseModel
-from emma_datasets.datamodels.constants import DatasetSplit
+from emma_datasets.common.settings import Settings
+from emma_datasets.datamodels.base_model import BaseInstance, BaseModel
+from emma_datasets.datamodels.constants import DatasetSplit, MediaType
+
+
+settings = Settings()
 
 
 def fix_timestamp_fields(timestamp: Union[str, datetime]) -> datetime:
@@ -54,3 +59,36 @@ class EpicKitchensNarrationMetadata(BaseModel):
 
     _fix_all_nouns = validator("all_nouns", pre=True, allow_reuse=True)(fix_lists)
     _fix_all_noun_classes = validator("all_noun_classes", pre=True, allow_reuse=True)(fix_lists)
+
+
+class EpicKitchensInstance(BaseInstance):
+    """The dataclass for an EpicKitchen instance."""
+
+    narration_id: str
+    participant_id: str
+    video_id: str
+    narration_timestamp: str
+    start_timestamp: str
+    stop_timestamp: str
+    start_frame: Optional[str]
+    stop_frame: Optional[str]
+    narration: Optional[str]
+    verb: Optional[str]
+    verb_class: Optional[str]
+    noun: Optional[str]
+    noun_class: Optional[str]
+    all_nouns: Optional[list[str]]
+    all_noun_classes: Optional[list[int]]
+
+    _fix_all_nouns = validator("all_nouns", pre=True, allow_reuse=True)(fix_lists)
+    _fix_all_noun_classes = validator("all_noun_classes", pre=True, allow_reuse=True)(fix_lists)
+
+    @property
+    def modality(self) -> MediaType:
+        """Get the modality of the instance."""
+        return MediaType.video
+
+    @property
+    def features_path(self) -> Path:
+        """Get the path to the features for this instance."""
+        return Settings().paths.epic_kitchens_features.joinpath(f"{self.narration_id}.pt")
