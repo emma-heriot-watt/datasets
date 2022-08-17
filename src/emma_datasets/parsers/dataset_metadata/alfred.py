@@ -108,10 +108,22 @@ class AlfredMetadataParser(DatasetMetadataParser[AlfredMetadata]):
         self, metadata: AlfredMetadata, frames_dir: Path, num_subgoals: int
     ) -> list[list[SourceMedia]]:
         """Get images for the entire trajectory."""
-        return [
+        num_high_level_subgoals = len(metadata.plan.high_level_actions)
+        source_media = [
             self.get_all_source_media_for_subgoal(metadata, frames_dir, high_idx)
-            for high_idx in range(num_subgoals)
+            for high_idx in range(num_high_level_subgoals)
         ]
+
+        if len(source_media) != num_subgoals:
+            # Merge the last two subgoal frames
+            last_source_media = source_media[-2]
+            last_source_media.extend(source_media[-1])
+            # Delete the last two frames
+            source_media = source_media[:-2]
+            # and add back the merged ones
+            source_media.append(last_source_media)
+
+        return source_media
 
     def _prepare_subgoal_paths(
         self,
