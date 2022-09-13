@@ -1,7 +1,8 @@
 import logging
 import tarfile
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator, Optional, TypeVar
+from typing import Optional, TypeVar
 from zipfile import ZipFile, ZipInfo
 
 from py7zr import SevenZipFile

@@ -1,5 +1,6 @@
+from collections.abc import Iterable, Iterator
 from multiprocessing.pool import Pool
-from typing import Iterable, Iterator, cast
+from typing import cast
 
 import pytest
 from pytest_cases import parametrize

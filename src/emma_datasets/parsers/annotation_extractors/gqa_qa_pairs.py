@@ -1,5 +1,6 @@
 import itertools
-from typing import Any, Iterator
+from collections.abc import Iterator
+from typing import Any
 
 from emma_datasets.datamodels import AnnotationType, DatasetName, QuestionAnswerPair
 from emma_datasets.parsers.annotation_extractors.annotation_extractor import AnnotationExtractor

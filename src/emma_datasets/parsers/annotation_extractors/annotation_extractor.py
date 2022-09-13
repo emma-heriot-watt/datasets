@@ -1,8 +1,9 @@
 import itertools
 from abc import ABC, abstractmethod
+from collections.abc import Iterable, Iterator
 from multiprocessing.pool import Pool
 from pathlib import Path
-from typing import Any, Generic, Iterable, Iterator, Optional, TypeVar, Union, overload
+from typing import Any, Generic, Optional, TypeVar, Union, overload
 
 from pydantic import BaseModel
 from rich.progress import Progress

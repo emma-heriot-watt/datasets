@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
+from collections.abc import Iterable, Iterator
 from multiprocessing.pool import Pool
-from typing import Generic, Iterable, Iterator, Optional, TypeVar, Union
+from typing import Generic, Optional, TypeVar, Union
 
 from pydantic import BaseModel
 from rich.progress import Progress

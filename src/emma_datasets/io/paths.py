@@ -1,6 +1,7 @@
 import itertools
+from collections.abc import Iterable, Iterator
 from pathlib import Path
-from typing import Iterable, Iterator, Union
+from typing import Union
 
 
 InputPathType = Union[Iterable[str], Iterable[Path], str, Path]

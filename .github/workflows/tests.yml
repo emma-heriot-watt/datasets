@@ -20,6 +20,8 @@ env:
 jobs:
   python:
     name: Run Python test suite
+    if: ${{ !github.event.pull_request.draft }}
+
     defaults:
       run:
         shell: bash

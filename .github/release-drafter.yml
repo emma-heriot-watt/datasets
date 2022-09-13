@@ -4,31 +4,43 @@ tag-template: "v$RESOLVED_VERSION"
 categories:
   - title: ":boom: Breaking Changes"
     label: "breaking"
+
   - title: ":rocket: Features"
     label: "enhancement"
-  - title: ":fire: Removals and Deprecations"
-    label: "removal"
+
   - title: ":beetle: Fixes"
     label: "bug"
-  - title: ":racehorse: Performance"
-    label: "performance"
-  - title: ":rotating_light: Testing"
-    label: "testing"
-  - title: ":construction_worker: Continuous Integration"
-    label: "continuous integration"
+
   - title: ":books: Documentation"
     label: "documentation"
-  - title: ":hammer: Refactoring"
-    label: "refactoring"
-  - title: ":lipstick: Style"
-    label: "style"
+
+  - title: ":hammer: Maintanance"
+    labels:
+      - "refactoring"
+      - "continuous integration"
+      - developer tools
+      - deployment
+      - build
+
   - title: ":package: Dependencies"
     labels:
       - "dependencies"
-      - "build"
+
+version-resolver:
+  major:
+    labels:
+      - "major"
+      - "backwards incompatible"
+
+  minor:
+    labels:
+      - "minor"
+
+  patch:
+    labels:
+      - "patch"
+
+  default: patch
+
 template: |
-
   $CHANGES
-
-exclude-labels:
-  - "sync"

@@ -2,11 +2,12 @@ import itertools
 import logging
 import signal
 import time
+from collections.abc import Iterable, Iterator, Sized
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from threading import Event
-from typing import Any, Iterable, Iterator, Optional, Sized, TypedDict, Union, cast
+from typing import Any, Optional, TypedDict, Union, cast
 from urllib.parse import ParseResult, parse_qs, urlparse
 
 import boto3

@@ -1,6 +1,7 @@
+from collections.abc import Iterable
 from multiprocessing.pool import Pool
 from pathlib import Path
-from typing import Any, Generic, Iterable, Optional, TypeVar, Union
+from typing import Any, Generic, Optional, TypeVar, Union
 
 from rich.progress import BarColumn, Progress, TaskID, TimeElapsedColumn
 

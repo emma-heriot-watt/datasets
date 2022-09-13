@@ -1,6 +1,7 @@
 import itertools
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 from overrides import overrides
 from rich.progress import Progress

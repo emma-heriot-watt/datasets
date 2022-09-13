@@ -1,7 +1,8 @@
 import sqlite3
+from collections.abc import Iterable, Iterator
 from pathlib import Path
 from types import TracebackType
-from typing import Any, Iterable, Iterator, Optional, Union
+from typing import Any, Optional, Union
 
 from emma_datasets.common.logger import get_logger
 from emma_datasets.db.storage import DataStorage, JsonStorage, StorageType, TorchStorage

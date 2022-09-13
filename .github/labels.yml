@@ -5,75 +5,92 @@
 # The repository labels will be automatically configured using this file and
 # the GitHub Action https://github.com/marketplace/actions/github-labeler.
 ## more info https://github.com/crazy-max/ghaction-github-labeler
+
+# -------------------------------- Versioning -------------------------------- #
+- name: major
+  descripion: "Backwards incompatible changes"
+  color: AB2232
+
+- name: minor
+  description: "Added backwards compatible functionality"
+  color: 0A8844
+
+- name: patch
+  description: "Small changes and bug fixes"
+  color: FBCA0C
+
+# ----------------------------------- Core ----------------------------------- #
+- name: backwards incompatible
+  description: incompatible changes to how the application works
+  color: AB2232
+
 - name: bug
   description: Something isn't working
   color: d23832
-- name: build
-  description: Compiling and packaging
-  color: "962EDD"
-- name: continuous integration
-  description: Continuous Integration
-  color: FCBFE3
-- name: deployment
-  description: Continuous Deployment
-  color: E1BFFC
-- name: developer tools
-  description: Developer tools and automation
-  color: "A8D8F0"
-- name: configuration
-  description: Modifying the model configurations
-  color: 8334C4
-- name: dependencies
-  description: Pull requests that update a dependency file
-  color: 0366d6
-- name: documentation
-  description: Improvements or additions to documentation
-  color: F695C4
-- name: duplicate
-  description: This issue or pull request already exists
-  color: ffffff
+
 - name: enhancement
   description: New feature or request
   color: 0A8844
-- name: good first issue
-  description: Good for newcomers
-  color: "42CD7D"
-- name: help wanted
-  description: Extra attention is needed
-  color: 95FFA4
-- name: invalid
-  description: This doesn't seem right
-  color: ffffff
-- name: performance
-  description: Improving efficiency and speed
-  color: "F2A33C"
-- name: question
-  description: Further information is requested
-  color: EE328E
+
+# - name: help wanted
+#   description: Extra attention is needed
+#   color: 95FFA4
+
+# - name: question
+#   description: Further information is requested
+#   color: EE328E
+
+# ------------------------------- Improvements ------------------------------- #
+# - name: performance
+#   description: Improving efficiency and speed
+#   color: "F2A33C"
+
 - name: refactoring
   description: Refactoring
   color: FBCA0C
-- name: removal
-  description: Removals and Deprecations
-  color: FFCC73
-- name: stale
-  description: Stale
-  color: ffffff
-- name: style
-  description: Code style and linting
-  color: FAC580
-- name: sync
-  description: Files are synced from the template
+
+- name: documentation
+  description: Improvements or additions to documentation
+  color: F695C4
+
+# -------------------------- Tooling and automation -------------------------- #
+- name: build
+  description: Compiling and packaging
+  color: "962EDD"
+
+- name: continuous integration
+  description: Integration new code
+  color: FCBFE3
+
+- name: developer tools
+  description: Developer tools and automation
+  color: "A8D8F0"
+
+- name: deployment
+  description: Deploying the application
+  color: E1BFFC
+
+# ------------------------------- Dependencies ------------------------------- #
+- name: dependencies
+  description: Pull requests that update dependencies
   color: 0366d6
-- name: question
-  description: Further information is requested
-  color: EE328E
-- name: testing
-  description: Testing the code base
-  color: FEEDB2
-- name: experiments
-  description: Performing experiments with the models
-  color: CD93F3
-- name: wontfix
-  description: This will not be worked on
-  color: ffffff
+
+# ------------------------------ Utility labels ------------------------------ #
+- name: automerge
+  color: "ffffff"
+  description: "Automerge this PR"
+
+- name: "stale"
+  color: "ffffff"
+  description: ""
+# - name: duplicate
+#   description: This issue or pull request already exists
+#   color: ffffff
+
+# - name: invalid
+#   description: This doesn't seem right
+#   color: ffffff
+
+# - name: wontfix
+#   description: This will not be worked on
+#   color: ffffff
