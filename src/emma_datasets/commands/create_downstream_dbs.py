@@ -22,7 +22,10 @@ from emma_datasets.datamodels.datasets.ego4d import (
 from emma_datasets.datamodels.datasets.epic_kitchens import EpicKitchensInstance
 from emma_datasets.datamodels.datasets.nlvr import NlvrInstance
 from emma_datasets.datamodels.datasets.refcoco import RefCocoInstance, load_refcoco_annotations
-from emma_datasets.datamodels.datasets.simbot import SimBotInstance, load_simbot_annotations
+from emma_datasets.datamodels.datasets.simbot import (
+    SimBotMissionInstance,
+    load_simbot_mission_annotations,
+)
 from emma_datasets.datamodels.datasets.vqa_v2 import (
     get_vqa_v2_annotation_paths,
     load_vqa_v2_annotations,
@@ -357,19 +360,19 @@ def create_refcoco_instances(
     ).run(num_workers)
 
 
-@app.command("simbot")
+@app.command("simbot-missions")
 def create_simbot_instances(
     simbot_instances_base_dir: Path = settings.paths.simbot,
     output_dir: Path = settings.paths.databases,
     num_workers: Optional[int] = None,
 ) -> None:
-    """Create DB files for Alexa Prize SimBot trajectory data."""
-    source_per_split = load_simbot_annotations(simbot_instances_base_dir)
+    """Create DB files for Alexa Prize SimBot mission data."""
+    source_per_split = load_simbot_mission_annotations(simbot_instances_base_dir)
 
     DownstreamDbCreator.from_one_instance_per_dict(
-        dataset_name=DatasetName.simbot,
+        dataset_name=DatasetName.simbot_missions,
         source_per_split=source_per_split,
-        instance_model_type=SimBotInstance,
+        instance_model_type=SimBotMissionInstance,
         output_dir=output_dir,
     ).run(num_workers)
 

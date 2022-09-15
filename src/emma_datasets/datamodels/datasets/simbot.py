@@ -64,12 +64,13 @@ class SimBotAnnotation(BaseModel):
     instructions: list[SimBotInstruction]
 
 
-class SimBotInstance(BaseInstance):
-    """A SimBot instance for the trajectory dataset."""
+class SimBotMissionInstance(BaseInstance):
+    """A SimBot instance for the mission dataset."""
 
     mission_id: str
     human_annotations: list[SimBotAnnotation]
     synethetic_annotations: Optional[list[SimBotAnnotation]]
+    actions: list[SimBotAction]
 
     @property
     def modality(self) -> MediaType:
@@ -85,7 +86,7 @@ class SimBotInstance(BaseInstance):
         return settings.paths.simbot_features.joinpath(f"{self.mission_id}.pt")
 
 
-def load_simbot_data(filepath: Path) -> list[dict[Any, Any]]:
+def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
     """Loads and reformats the SimBot annotations."""
     with open(filepath) as in_file:
         data = json.load(in_file)
@@ -104,11 +105,11 @@ def load_simbot_data(filepath: Path) -> list[dict[Any, Any]]:
     return restructured_data
 
 
-def load_simbot_annotations(base_dir: Path) -> dict[DatasetSplit, Any]:
-    """Loads all the SimBot annotation files."""
+def load_simbot_mission_annotations(base_dir: Path) -> dict[DatasetSplit, Any]:
+    """Loads all the SimBot mission annotation files."""
     source_per_split = {
-        DatasetSplit.train: load_simbot_data(base_dir.joinpath("train.json")),
-        DatasetSplit.valid: load_simbot_data(base_dir.joinpath("valid.json")),
+        DatasetSplit.train: load_simbot_mission_data(base_dir.joinpath("train.json")),
+        DatasetSplit.valid: load_simbot_mission_data(base_dir.joinpath("valid.json")),
     }
 
     return source_per_split
