@@ -1,8 +1,6 @@
 from pathlib import Path
 from typing import Optional, Union
 
-from pydantic import HttpUrl
-
 from emma_datasets.datamodels.base_model import BaseModel
 from emma_datasets.datamodels.constants import DatasetName, DatasetSplit, MediaType
 
@@ -10,7 +8,7 @@ from emma_datasets.datamodels.constants import DatasetName, DatasetSplit, MediaT
 class SourceMedia(BaseModel, frozen=True):
     """Source media from dataset."""
 
-    url: Optional[HttpUrl]
+    url: Optional[str]
     media_type: MediaType
     path: Optional[Path]
     width: Optional[int]
