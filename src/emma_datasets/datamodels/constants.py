@@ -50,6 +50,7 @@ class DatasetName(Enum):
     winoground = "Winoground"
     refcoco = "COCO Referring Expressions"
     simbot_missions = "Alexa Prize SimBot Mission data"
+    simbot_instructions = "Alexa Prize SimBot Instruction data"
 
 
 class DatasetSplit(Enum):
@@ -85,6 +86,7 @@ DatasetModalityMap: dict[DatasetName, MediaType] = {
     DatasetName.winoground: MediaType.image,
     DatasetName.refcoco: MediaType.image,
     DatasetName.simbot_missions: MediaType.multicam,
+    DatasetName.simbot_instructions: MediaType.multicam,
 }
 
 AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
@@ -96,6 +98,7 @@ AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
         DatasetName.ego4d_moments,
         DatasetName.ego4d_nlq,
         DatasetName.simbot_missions,
+        DatasetName.simbot_instructions,
     ],
     AnnotationType.caption: [
         DatasetName.coco,
@@ -114,6 +117,7 @@ AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
         DatasetName.alfred,
         DatasetName.teach,
         DatasetName.simbot_missions,
+        DatasetName.simbot_instructions,
     ],
     AnnotationType.task_description: [DatasetName.alfred],
 }

@@ -20,7 +20,10 @@ from emma_datasets.datamodels.datasets.gqa import (
 )
 from emma_datasets.datamodels.datasets.nlvr import NlvrInstance
 from emma_datasets.datamodels.datasets.refcoco import RefCocoInstance
-from emma_datasets.datamodels.datasets.simbot import SimBotMissionInstance
+from emma_datasets.datamodels.datasets.simbot import (
+    SimBotInstructionInstance,
+    SimBotMissionInstance,
+)
 from emma_datasets.datamodels.datasets.teach import TeachEdhInstance, TeachInteraction
 from emma_datasets.datamodels.datasets.visual_genome import (
     VgImageMetadata,
