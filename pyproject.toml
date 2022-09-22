@@ -10,6 +10,9 @@ readme = "README.md"
 repository = "https://github.com/emma-simbot/datasets"
 
 packages = [{ include = "emma_datasets", from = "src" }]
+[tool.poetry.group.spacy.dependencies]
+spacy = "^3.4.1"
+
 
 [tool.poe]
 envfile = ".env"
@@ -68,7 +71,6 @@ rich-click = { extras = ["typer"], version = "^1.4" }
 datasets = "^2.2.2"
 requests = "^2.27.1"
 pandas = "^1.4.3"
-spacy = "^3.4.1"
 
 
 [tool.poetry.extras]
