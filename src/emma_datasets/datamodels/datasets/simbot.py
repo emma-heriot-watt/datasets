@@ -1,8 +1,10 @@
 import json
+import re
 from enum import Enum
 from pathlib import Path
 from typing import Any, Literal, Optional
 
+import spacy
 from pydantic import BaseModel, Field, root_validator
 
 from emma_datasets.common.settings import Settings
@@ -28,26 +30,96 @@ class SimBotClarificationTypes(Enum):
     other = "other"
 
 
+class ClarificationTargetExtractor:
+    """Extract the target noun phrase for the clarfication question.
+
+    Spelling correction did not work for some cases, for which we fix it manually.
+    """
+
+    def __init__(self, spacy_model: str = "en_core_web_sm") -> None:
+
+        self.nlp = spacy.load(spacy_model)
+
+        self.nlp.add_pipe("merge_noun_chunks")
+        self._prefer_naive = {"look"}  # The verb 'look' is sometimes confused as a noun
+        self._skipped_nouns = {"can", "sink", "floppy"}  # Cannot identify certain words as nouns
+        # Rule-based approach to get the target word from its position.
+        # This fails for compound words, for which we use spacy noun chunks.
+        self.target_index = {
+            SimBotClarificationTypes.description: 3,
+            SimBotClarificationTypes.disambiguation: 1,
+            SimBotClarificationTypes.location: 3,
+        }
+
+    def __call__(self, question: str, question_type: SimBotClarificationTypes) -> Optional[str]:
+        """Preprocess the clarification target."""
+        tokens = question.split()
+        target_index = min(self.target_index[question_type], len(tokens) - 1)
+        naive_target = self.get_naive_target(tokens, target_index=target_index)
+        target = self.get_target(question, target_index=target_index)
+
+        if target is None or naive_target in self._prefer_naive:
+            target = naive_target
+
+        return target
+
+    def get_naive_target(self, question_tokens: list[str], target_index: int) -> str:
+        """Get the target based on the word position."""
+        naive_target = question_tokens[target_index]
+        return re.sub(r"[^\w\s]", "", naive_target)
+
+    def get_target(self, question: str, target_index: int) -> Optional[str]:  # noqa: WPS231
+        """Apply spell correction and find a noun phrase."""
+        doc = self.nlp(question.lower())
+        target = None
+        for index, token in enumerate(doc):
+            if index > target_index and token.is_stop:
+                continue
+            if token.tag_ in {"NNP", "NN"}:
+                target = token.text.replace("which ", "")
+                target = target.replace("the ", "")
+            elif index == target_index and token.text in self._skipped_nouns:
+                target = token.text
+            if target is not None:
+                break
+        return target
+
+
 class SimBotQA(BaseModel):
     """Class that contains the SimBot question answer annotations for a given step."""
 
     question: str
     answer: str
     question_necessary: bool
+    question_type: Optional[SimBotClarificationTypes] = None
+    question_target: Optional[str] = None
 
-    @property
-    def question_type(self) -> str:
-        """Get the type for a given question."""
-        question = self.question.lower()
-        question_types = {qtype.value: qtype.name for qtype in SimBotClarificationTypes}
-        if question.startswith("which"):
-            if question.split()[1] == "direction":
-                qtype = "which direction"
-            else:
-                qtype = "which+instruction_noun"
+
+def get_question_type(question: str) -> SimBotClarificationTypes:
+    """Get the type for a given question."""
+    question = question.lower()
+    question_types = {qtype.value: qtype for qtype in SimBotClarificationTypes}
+    if question.startswith("which"):
+        if question.split()[1] == "direction":
+            qtype = "which direction"
         else:
-            qtype = " ".join(question.split()[:2])
-        return question_types.get(qtype, SimBotClarificationTypes.other.name)
+            qtype = "which+instruction_noun"
+    else:
+        qtype = " ".join(question.split()[:2])
+    return question_types.get(qtype, SimBotClarificationTypes.other)
+
+
+def get_question_target(
+    clarification_target_extractor: ClarificationTargetExtractor,
+    question: str,
+    question_type: SimBotClarificationTypes,
+) -> Optional[str]:
+    """Get the type for a given question."""
+    if question_type == SimBotClarificationTypes.other:
+        return None
+    if question_type == SimBotClarificationTypes.direction:
+        return None
+    return clarification_target_extractor(question, question_type)
 
 
 class SimBotAction(BaseModel):
@@ -159,11 +231,28 @@ def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
     return restructured_data
 
 
+def prepare_instruction_question_answers(
+    clarification_target_extractor: ClarificationTargetExtractor, instruction: dict[str, Any]
+) -> dict[str, Any]:
+    """Add question types and targets."""
+    if "question_answers" not in instruction:
+        return instruction
+    for question_answer in instruction["question_answers"]:
+        question_answer["question_type"] = get_question_type(question=question_answer["question"])
+        question_answer["question_target"] = get_question_target(
+            clarification_target_extractor,
+            question=question_answer["question"],
+            question_type=question_answer["question_type"],
+        )
+    return instruction
+
+
 def load_simbot_instruction_data(filepath: Path) -> list[dict[Any, Any]]:
     """Loads and reformats the SimBot annotations for creating Simbot instructions."""
     with open(filepath) as fp:
         data = json.load(fp)
 
+    clarification_target_extractor = ClarificationTargetExtractor()
     instruction_data = []
     for mission_id, mission_annotations in data.items():
         actions = mission_annotations["actions"]
@@ -173,6 +262,9 @@ def load_simbot_instruction_data(filepath: Path) -> list[dict[Any, Any]]:
                 action_start_id = instruction["actions"][0]
                 action_end_id = instruction["actions"][-1]
                 instruction_actions = actions[action_start_id : action_end_id + 1]
+                instruction = prepare_instruction_question_answers(
+                    clarification_target_extractor, instruction
+                )
                 instruction_dict = {
                     "mission_id": mission_id,
                     "human_id": str(human_idx),

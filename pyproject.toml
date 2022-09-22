@@ -48,6 +48,10 @@ shell = """
 		"""
 interpreter = "bash"
 
+[tool.poe.tasks.install-spacy-model]
+help = 'Download the spacy pipeline'
+shell = """python -m spacy download en_core_web_sm"""
+interpreter = "bash"
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -64,6 +68,7 @@ rich-click = { extras = ["typer"], version = "^1.4" }
 datasets = "^2.2.2"
 requests = "^2.27.1"
 pandas = "^1.4.3"
+spacy = "^3.4.1"
 
 
 [tool.poetry.extras]

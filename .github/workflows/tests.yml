@@ -58,6 +58,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
+          poetry run poe install-spacy-model
 
       - name: Run test suite
         run: |
