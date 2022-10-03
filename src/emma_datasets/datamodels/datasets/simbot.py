@@ -206,10 +206,15 @@ class SimBotInstructionInstance(BaseInstance):
         return MediaType.multicam
 
     @property
-    def features_path(self) -> Path:
+    def features_path(self) -> list[Path]:
         """Returns the path to the features for the current instruction."""
-        basename = f"{self.mission_id}_instruction{self.instruction_id}.pt"
-        return settings.paths.simbot_features.joinpath(basename)
+        template = "{mission_id}_action{action_id}.pt"
+        return [
+            settings.paths.simbot_features.joinpath(
+                template.format(mission_id=self.mission_id, action_id=action.id)
+            )
+            for action in self.actions
+        ]
 
 
 def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
