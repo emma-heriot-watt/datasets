@@ -192,7 +192,7 @@ class SimBotInstructionInstance(BaseInstance):
     """A SimBot instance for the mission dataset."""
 
     mission_id: str
-    human_id: str
+    annotation_id: str
     instruction_id: str
     instruction: SimBotInstruction
     actions: list[SimBotAction]
@@ -257,8 +257,9 @@ def load_simbot_instruction_data(filepath: Path) -> list[dict[Any, Any]]:
     for mission_id, mission_annotations in data.items():
         actions = mission_annotations["actions"]
         human_annotations = mission_annotations["human_annotations"]
+        instruction_idx = 0
         for human_idx, human_annotation in enumerate(human_annotations):
-            for instruction_idx, instruction in enumerate(human_annotation["instructions"]):
+            for instruction in human_annotation["instructions"]:
                 action_start_id = instruction["actions"][0]
                 action_end_id = instruction["actions"][-1]
                 instruction_actions = actions[action_start_id : action_end_id + 1]
@@ -267,17 +268,35 @@ def load_simbot_instruction_data(filepath: Path) -> list[dict[Any, Any]]:
                 )
                 instruction_dict = {
                     "mission_id": mission_id,
-                    "human_id": str(human_idx),
+                    "annotation_id": f"human_{human_idx}",
                     "instruction_id": str(instruction_idx),
                     "instruction": instruction,
                     "actions": instruction_actions,
                 }
                 instruction_data.append(instruction_dict)
+                instruction_idx += 1
+
+        synthetic_annotations = mission_annotations["synthetic_annotations"]
+        for annot_id, synthetic_annotation in enumerate(synthetic_annotations):
+            for instruction in synthetic_annotation["instructions"]:  # noqa: WPS440
+                action_start_id = instruction["actions"][0]
+                action_end_id = instruction["actions"][-1]
+                instruction_actions = actions[action_start_id : action_end_id + 1]
+                instruction_dict = {
+                    "mission_id": mission_id,
+                    "annotation_id": f"synthetic_{annot_id}",
+                    "instruction_id": str(instruction_idx),
+                    "instruction": instruction,
+                    "actions": instruction_actions,
+                }
+                instruction_data.append(instruction_dict)
+                instruction_idx += 1
     return instruction_data
 
 
 def load_simbot_annotations(
-    base_dir: Path, annotation_type: Literal["missions", "instructions"] = "missions"
+    base_dir: Path,
+    annotation_type: Literal["missions", "instructions"] = "missions",
 ) -> dict[DatasetSplit, Any]:
     """Loads all the SimBot mission annotation files."""
     load_fn = (
