@@ -129,6 +129,11 @@ def simbot_instances_path(fixtures_root: Path) -> Path:
 
 
 @fixture(scope="session")
+def simbot_sticky_notes_path(fixtures_root: Path) -> Path:
+    return fixtures_root.joinpath("simbot_sticky_notes.json")
+
+
+@fixture(scope="session")
 def ego4d_nlq_instances_path(ego4d_root: Path) -> Path:
     path = ego4d_root.joinpath("nlq_val.json")
     assert path.exists()

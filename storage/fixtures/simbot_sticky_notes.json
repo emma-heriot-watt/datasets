@@ -1,0 +1,22 @@
+{
+	"object_detection_data_v2__images_run2_OfficeLayout1C_mirror__validation__2547_color.png": {
+		"coords": [[109, 142, 114, 142]],
+		"area": [0],
+		"image": "images_with_sticky_notes/object_detection_data_v2/images_run2_OfficeLayout1C_mirror/validation/2547_color.png"
+	},
+	"object_detection_data_v2__images_run30_OfficeLayout1C__validation__3_color.png": {
+		"coords": [[114, 145, 114, 152]],
+		"area": [0],
+		"image": "images_with_sticky_notes/object_detection_data_v2/images_run30_OfficeLayout1C/validation/3_color.png"
+	},
+	"object_detection_data_v2__images_run12_OfficeLayout1C_mirror__validation__3573_color.png": {
+		"coords": [[131, 151, 137, 151]],
+		"area": [0],
+		"image": "images_with_sticky_notes/object_detection_data_v2/images_run12_OfficeLayout1C_mirror/validation/3573_color.png"
+	},
+	"object_detection_data_v2__images_run12_OfficeLayout1__validation__1774_color.png": {
+		"coords": [[65, 111, 65, 111]],
+		"area": [0],
+		"image": "images_with_sticky_notes/object_detection_data_v2/images_run12_OfficeLayout1/validation/1774_color.png"
+	}
+}

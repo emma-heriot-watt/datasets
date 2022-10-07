@@ -1,4 +1,5 @@
 import json
+import random
 import re
 from enum import Enum
 from pathlib import Path
@@ -14,6 +15,8 @@ from emma_datasets.datamodels.constants import DatasetSplit, MediaType
 
 settings = Settings()
 
+SYNTHETIC_JSON = settings.paths.constants.joinpath("simbot_low_level_actions_templates.json")
+
 
 class SimBotClarificationTypes(Enum):
     """SimBot question clarification types.
@@ -28,6 +31,72 @@ class SimBotClarificationTypes(Enum):
     disambiguation = "which+instruction_noun"
     direction = "which direction"
     other = "other"
+
+
+class SyntheticLowLevelActionSampler:
+    """Create synthetic examples of low level actions."""
+
+    def __init__(self, input_json: Path = SYNTHETIC_JSON) -> None:
+        with open(input_json) as fp:
+            self._low_level_action_templates = json.load(fp)
+        # TODO: Examine for now is only reserved for the sticky notes
+        # but apparently the examine can be used for any other object as well
+        # https://alexaprizesim-ldg5293.slack.com/files/U02SFPST8AK/F043B3MAX1S/arena_for_embodied_ai_-_user_manual.pdf
+        self._low_level_actions = [
+            key for key in self._low_level_action_templates.keys() if key != "Examine"
+        ]
+
+    def __call__(
+        self,
+        original_action: Optional[dict[str, Any]] = None,
+        sample_sticky_note: bool = False,
+        sticky_note_image: Optional[str] = None,
+    ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+        """Sample a low level action and an instruction template."""
+        if sample_sticky_note:
+            if sticky_note_image is None:  # or sticky_note_image_layout is None:
+                raise AssertionError("Need a path to a sticky note image and the image layout")
+
+            low_level_action = "Examine"
+            low_level_action_template = random.choice(
+                self._low_level_action_templates[low_level_action]["templates"]
+            )
+            synthetic_instruction = {
+                "instruction": low_level_action_template,
+                "actions": [0],
+            }
+
+            action_type = self._low_level_action_templates[low_level_action]["type"]
+            synthetic_action = {
+                "id": 0,
+                "type": action_type,
+                action_type.lower(): {  # TODO: populate the mask field, lol GL
+                    "object": {"colorImageIndex": 0, "id": "Sticky Note", "mask": []}
+                },
+                "colorImages": [sticky_note_image],
+            }
+        else:
+            if original_action is None:
+                raise AssertionError("Need the original actions")
+            low_level_action = random.choice(self._low_level_actions)
+            low_level_action_template = random.choice(
+                self._low_level_action_templates[low_level_action]["templates"]
+            )
+            original_action_first_idx = original_action["id"]
+            synthetic_instruction = {
+                "instruction": low_level_action_template,
+                "actions": [original_action_first_idx],
+            }
+            action_type = self._low_level_action_templates[low_level_action]["type"]
+            synthetic_action = {
+                "id": original_action_first_idx,
+                "type": action_type,
+                action_type.lower(): {
+                    "direction": self._low_level_action_templates[low_level_action]["direction"]
+                },
+                "colorImages": original_action["colorImages"],
+            }
+        return (synthetic_instruction, [synthetic_action])
 
 
 class ClarificationTargetExtractor:
@@ -196,6 +265,12 @@ class SimBotInstructionInstance(BaseInstance):
     instruction_id: str
     instruction: SimBotInstruction
     actions: list[SimBotAction]
+    synthetic: bool = False
+
+    class Config:
+        """Custom configuration to allows additional fields."""
+
+        extra: str = "allow"
 
     @property
     def modality(self) -> MediaType:
@@ -252,64 +327,157 @@ def prepare_instruction_question_answers(
     return instruction
 
 
-def load_simbot_instruction_data(filepath: Path) -> list[dict[Any, Any]]:
+def create_instruction_dict(
+    instruction: dict[str, Any],
+    actions: list[dict[str, Any]],
+    mission_id: str,
+    annotation_id: str,
+    instruction_id: str,
+    clarification_extractor: Optional[ClarificationTargetExtractor] = None,
+    synthetic: bool = False,
+) -> dict[str, Any]:
+    """Create an instruction dict."""
+    action_start_id = instruction["actions"][0]
+    action_end_id = instruction["actions"][-1]
+    instruction_actions = actions[action_start_id : action_end_id + 1]
+    if clarification_extractor is not None:
+        instruction = prepare_instruction_question_answers(clarification_extractor, instruction)
+
+    instruction_dict = {
+        "instruction": instruction,
+        "actions": instruction_actions,
+        "mission_id": mission_id,
+        "annotation_id": annotation_id,
+        "instruction_id": instruction_id,
+        "synthetic": synthetic,
+    }
+    return instruction_dict
+
+
+def load_simbot_instruction_data(  # noqa: WPS210, WPS231
+    filepath: Path,
+    sticky_notes_json_path: Path,
+    num_additional_synthetic_instructions: int = -1,
+    num_sticky_notes_instructions: int = -1,
+) -> list[dict[Any, Any]]:
     """Loads and reformats the SimBot annotations for creating Simbot instructions."""
     with open(filepath) as fp:
         data = json.load(fp)
 
     clarification_target_extractor = ClarificationTargetExtractor()
+    synthetic_action_sampler = SyntheticLowLevelActionSampler()
+    total_sampled_synthetic_actions = 0
     instruction_data = []
+
     for mission_id, mission_annotations in data.items():
         actions = mission_annotations["actions"]
-        human_annotations = mission_annotations["human_annotations"]
         instruction_idx = 0
-        for human_idx, human_annotation in enumerate(human_annotations):
+        for human_idx, human_annotation in enumerate(mission_annotations["human_annotations"]):
             for instruction in human_annotation["instructions"]:
-                action_start_id = instruction["actions"][0]
-                action_end_id = instruction["actions"][-1]
-                instruction_actions = actions[action_start_id : action_end_id + 1]
-                instruction = prepare_instruction_question_answers(
-                    clarification_target_extractor, instruction
+                instruction_dict = create_instruction_dict(
+                    instruction=instruction,
+                    actions=actions,
+                    mission_id=mission_id,
+                    annotation_id=str(human_idx),
+                    instruction_id=str(instruction_idx),
+                    clarification_extractor=clarification_target_extractor,
+                    synthetic=False,
                 )
-                instruction_dict = {
-                    "mission_id": mission_id,
-                    "annotation_id": f"human_{human_idx}",
-                    "instruction_id": str(instruction_idx),
-                    "instruction": instruction,
-                    "actions": instruction_actions,
-                }
+
                 instruction_data.append(instruction_dict)
                 instruction_idx += 1
 
-        synthetic_annotations = mission_annotations["synthetic_annotations"]
-        for annot_id, synthetic_annotation in enumerate(synthetic_annotations):
+        for annot_idx, synthetic_annotation in enumerate(  # noqa: WPS352
+            mission_annotations["synthetic_annotations"]
+        ):
             for instruction in synthetic_annotation["instructions"]:  # noqa: WPS440
-                action_start_id = instruction["actions"][0]
-                action_end_id = instruction["actions"][-1]
-                instruction_actions = actions[action_start_id : action_end_id + 1]
-                instruction_dict = {
-                    "mission_id": mission_id,
-                    "annotation_id": f"synthetic_{annot_id}",
-                    "instruction_id": str(instruction_idx),
-                    "instruction": instruction,
-                    "actions": instruction_actions,
-                }
+                instruction_dict = create_instruction_dict(
+                    instruction=instruction,
+                    actions=actions,
+                    mission_id=mission_id,
+                    annotation_id=f"synthetic_{annot_idx}",
+                    instruction_id=str(instruction_idx),
+                    synthetic=True,
+                )
+
                 instruction_data.append(instruction_dict)
                 instruction_idx += 1
+
+                if (  # noqa: WPS337
+                    num_additional_synthetic_instructions == -1
+                    or total_sampled_synthetic_actions < num_additional_synthetic_instructions
+                ):
+
+                    (synth_instr, synth_action) = synthetic_action_sampler(
+                        original_action=actions[instruction["actions"][0]]
+                    )
+                    instruction_dict = create_instruction_dict(
+                        instruction=synth_instr,
+                        actions=synth_action,
+                        mission_id=mission_id,
+                        annotation_id=f"synthetic_{annot_idx}",
+                        instruction_id=str(instruction_idx),
+                        synthetic=True,
+                    )
+
+                    instruction_data.append(instruction_dict)
+                    instruction_idx += 1
+
+                    total_sampled_synthetic_actions += 1
+
+    with open(sticky_notes_json_path) as fp:  # noqa: WPS440
+        data = json.load(fp)
+
+    sticky_notes_images = data.keys()
+    total_sticky_notes_instructions = 0
+    for idx, sticky_note_image in enumerate(sticky_notes_images):
+        if total_sticky_notes_instructions == num_sticky_notes_instructions:
+            break
+        (synth_instr, synth_action) = synthetic_action_sampler(
+            sample_sticky_note=True,
+            sticky_note_image=sticky_note_image,
+        )
+        instruction_dict = create_instruction_dict(
+            instruction=synth_instr,
+            actions=synth_action,
+            mission_id=Path(sticky_note_image).stem,
+            annotation_id=f"synthetic_sticky_note{idx}",
+            instruction_id=str(idx),
+            synthetic=True,
+        )
+        instruction_data.append(instruction_dict)
+        total_sticky_notes_instructions += 1
     return instruction_data
 
 
 def load_simbot_annotations(
     base_dir: Path,
     annotation_type: Literal["missions", "instructions"] = "missions",
+    train_num_additional_synthetic_instructions: int = 20000,
+    valid_num_additional_synthetic_instructions: int = -1,
+    train_num_sticky_notes_instructions: int = 20000,
+    valid_num_sticky_notes_instructions: int = -1,
 ) -> dict[DatasetSplit, Any]:
     """Loads all the SimBot mission annotation files."""
-    load_fn = (
-        load_simbot_mission_data if annotation_type == "missions" else load_simbot_instruction_data
-    )
-    source_per_split = {
-        DatasetSplit.train: load_fn(base_dir.joinpath("train.json")),
-        DatasetSplit.valid: load_fn(base_dir.joinpath("valid.json")),
-    }
+    if annotation_type == "missions":
+        source_per_split = {
+            DatasetSplit.train: load_simbot_mission_data(base_dir.joinpath("train.json")),
+            DatasetSplit.valid: load_simbot_mission_data(base_dir.joinpath("valid.json")),
+        }
+    else:
+        source_per_split = {
+            DatasetSplit.train: load_simbot_instruction_data(
+                base_dir.joinpath("train.json"),
+                base_dir.joinpath("train_sticky_notes.json"),
+                num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
+                num_sticky_notes_instructions=train_num_sticky_notes_instructions,
+            ),
+            DatasetSplit.valid: load_simbot_instruction_data(
+                base_dir.joinpath("valid.json"),
+                base_dir.joinpath("valid_sticky_notes.json"),
+                num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
+                num_sticky_notes_instructions=valid_num_sticky_notes_instructions,
+            ),
+        }
 
     return source_per_split
