@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field, root_validator
 from emma_datasets.common.settings import Settings
 from emma_datasets.datamodels.base_model import BaseInstance
 from emma_datasets.datamodels.constants import DatasetSplit, MediaType
+from emma_datasets.db import DatasetDb
 
 
 settings = Settings()
@@ -479,5 +480,41 @@ def load_simbot_annotations(
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,
             ),
         }
+
+    return source_per_split
+
+
+def unwrap_instructions(db_path: Path) -> list[dict[Any, Any]]:
+    """Unwrap simbot instructions to action-level instances."""
+    unwrapped_instances = []
+    db = DatasetDb(db_path)
+    for _, _, sample in db:
+        instruction_instance = SimBotInstructionInstance.parse_raw(sample)
+        for action_index, action in enumerate(instruction_instance.actions):
+            instruction = instruction_instance.instruction.copy(
+                update={"actions": instruction_instance.instruction.actions[: action_index + 1]}
+            )
+            instruction_dict = {
+                "mission_id": instruction_instance.mission_id,
+                "annotation_id": f"{instruction_instance.annotation_id}_{action.id}",
+                "instruction_id": instruction_instance.instruction_id,
+                "instruction": instruction,
+                "actions": instruction_instance.actions[: action_index + 1],
+            }
+            unwrapped_instances.append(instruction_dict)
+    return unwrapped_instances
+
+
+def load_simbot_action_annotations(
+    base_dir: Path,
+    db_file_name: str,
+) -> dict[DatasetSplit, Any]:
+    """Loads all the SimBot actions."""
+    train_db = base_dir.joinpath(f"{db_file_name}_{DatasetSplit.train.name}.db")
+    valid_db = base_dir.joinpath(f"{db_file_name}_{DatasetSplit.valid.name}.db")
+    source_per_split = {
+        DatasetSplit.train: unwrap_instructions(train_db),
+        DatasetSplit.valid: unwrap_instructions(valid_db),
+    }
 
     return source_per_split
