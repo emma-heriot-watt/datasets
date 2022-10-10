@@ -1,6 +1,7 @@
 import json
 import random
 import re
+from copy import deepcopy
 from enum import Enum
 from pathlib import Path
 from typing import Any, Literal, Optional
@@ -83,14 +84,13 @@ class SyntheticLowLevelActionSampler:
             low_level_action_template = random.choice(
                 self._low_level_action_templates[low_level_action]["templates"]
             )
-            original_action_first_idx = original_action["id"]
             synthetic_instruction = {
                 "instruction": low_level_action_template,
-                "actions": [original_action_first_idx],
+                "actions": [0],
             }
             action_type = self._low_level_action_templates[low_level_action]["type"]
             synthetic_action = {
-                "id": original_action_first_idx,
+                "id": 0,
                 "type": action_type,
                 action_type.lower(): {
                     "direction": self._low_level_action_templates[low_level_action]["direction"]
@@ -203,6 +203,7 @@ class SimBotAction(BaseModel):
     id: int
     type: str
     color_images: list[str] = Field(..., alias="colorImages")
+    final: Optional[bool] = False
 
     @root_validator(pre=True)
     @classmethod
@@ -340,7 +341,11 @@ def create_instruction_dict(
     """Create an instruction dict."""
     action_start_id = instruction["actions"][0]
     action_end_id = instruction["actions"][-1]
-    instruction_actions = actions[action_start_id : action_end_id + 1]
+    instruction_actions = deepcopy(actions[action_start_id : action_end_id + 1])
+
+    # add the final label for the last action within an instruction
+    instruction_actions[-1]["final"] = True
+
     if clarification_extractor is not None:
         instruction = prepare_instruction_question_answers(clarification_extractor, instruction)
 
@@ -494,6 +499,7 @@ def unwrap_instructions(db_path: Path) -> list[dict[Any, Any]]:
             instruction = instruction_instance.instruction.copy(
                 update={"actions": instruction_instance.instruction.actions[: action_index + 1]}
             )
+
             instruction_dict = {
                 "mission_id": instruction_instance.mission_id,
                 "annotation_id": f"{instruction_instance.annotation_id}_{action.id}",
