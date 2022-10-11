@@ -38,8 +38,9 @@ class SimBotClarificationTypes(Enum):
 class SyntheticLowLevelActionSampler:
     """Create synthetic examples of low level actions."""
 
-    def __init__(self, input_json: Path = SYNTHETIC_JSON) -> None:
-        with open(input_json) as fp:
+    def __init__(self, low_level_action_json: Path = SYNTHETIC_JSON) -> None:
+
+        with open(low_level_action_json) as fp:
             self._low_level_action_templates = json.load(fp)
         # TODO: Examine for now is only reserved for the sticky notes
         # but apparently the examine can be used for any other object as well
@@ -53,6 +54,7 @@ class SyntheticLowLevelActionSampler:
         original_action: Optional[dict[str, Any]] = None,
         sample_sticky_note: bool = False,
         sticky_note_image: Optional[str] = None,
+        sticky_note_bbox_coords: Optional[list[int]] = None,
     ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
         """Sample a low level action and an instruction template."""
         if sample_sticky_note:
@@ -69,11 +71,16 @@ class SyntheticLowLevelActionSampler:
             }
 
             action_type = self._low_level_action_templates[low_level_action]["type"]
+
             synthetic_action = {
                 "id": 0,
                 "type": action_type,
-                action_type.lower(): {  # TODO: populate the mask field, lol GL
-                    "object": {"colorImageIndex": 0, "id": "Sticky Note", "mask": []}
+                action_type.lower(): {
+                    "object": {
+                        "colorImageIndex": 0,
+                        "id": "Sticky Note",
+                        "mask": sticky_note_bbox_coords,
+                    }
                 },
                 "colorImages": [sticky_note_image],
             }
@@ -362,7 +369,7 @@ def create_instruction_dict(
 
 def load_simbot_instruction_data(  # noqa: WPS210, WPS231
     filepath: Path,
-    sticky_notes_json_path: Path,
+    sticky_notes_images_json_path: Path,
     num_additional_synthetic_instructions: int = -1,
     num_sticky_notes_instructions: int = -1,
 ) -> list[dict[Any, Any]]:
@@ -431,7 +438,7 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
 
                     total_sampled_synthetic_actions += 1
 
-    with open(sticky_notes_json_path) as fp:  # noqa: WPS440
+    with open(sticky_notes_images_json_path) as fp:  # noqa: WPS440
         data = json.load(fp)
 
     sticky_notes_images = data.keys()
@@ -442,6 +449,7 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
         (synth_instr, synth_action) = synthetic_action_sampler(
             sample_sticky_note=True,
             sticky_note_image=sticky_note_image,
+            sticky_note_bbox_coords=data[sticky_note_image]["coords"],
         )
         instruction_dict = create_instruction_dict(
             instruction=synth_instr,
