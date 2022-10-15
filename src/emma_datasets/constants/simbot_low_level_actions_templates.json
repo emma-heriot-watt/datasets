@@ -3,17 +3,22 @@
 		"type": "Move",
 		"direction": "Forward",
 		"templates": [
+			"forward.",
+			"go forward.",
+			"head forward.",
+			"advance forward.",
 			"move forward.",
 			"move ahead.",
 			"move slightly forward.",
 			"move a bit forward.",
+			"move forward a bit.",
 			"move forward for a few steps.",
-			"move a little forward.",
 			"move a bit forward.",
+			"move a little forward.",
+			"run forward.",
+			"run ahead.",
 			"roll forward.",
 			"roll ahead.",
-			"run forward.",
-			"run a bit forward.",
 			"walk forward.",
 			"walk towards forward.",
 			"walk a bit forward.",
@@ -24,8 +29,6 @@
 			"walk a few steps forward.",
 			"walk a few steps onwards.",
 			"walk towards the front.",
-			"foward.",
-			"advance forward.",
 			"onward.",
 			"continue walking forward.",
 			"continue moving forward.",
@@ -33,10 +36,10 @@
 			"continue ahead.",
 			"continue a bit forward.",
 			"for a few steps, move forward.",
+			"move a few steps forward.",
+			"step forward a bit.",
 			"keep moving forward.",
-			"go forward.",
-			"keep going forward.",
-			"head forward."
+			"keep going forward."
 		]
 	},
 	"MoveBackward": {
@@ -48,14 +51,12 @@
 			"move backwards for a few steps.",
 			"move backwards a few steps.",
 			"move a little backwards.",
+			"move backwards a little.",
 			"move a bit backwards.",
-			"run backwards.",
-			"run a bit backwards.",
+			"move backwards a bit.",
 			"walk backwards.",
-			"walk towards backwards.",
 			"walk a bit backwards.",
 			"walk slightly backwards.",
-			"walk ahead.",
 			"walk backwards for a few steps.",
 			"walk a few steps backwards.",
 			"walk backwards a few steps.",
@@ -65,7 +66,26 @@
 			"continue backwards.",
 			"continue a bit backwards.",
 			"for a few steps, move backwards.",
-			"go backwards."
+			"go backwards.",
+			"move back.",
+			"move slightly back.",
+			"move back for a few steps.",
+			"move back a few steps.",
+			"move a little back.",
+			"move back a little.",
+			"move a bit back.",
+			"move back a bit.",
+			"move back a few steps.",
+			"walk back.",
+			"walk a bit back.",
+			"walk back a bit.",
+			"walk slightly back.",
+			"walk back slightly.",
+			"walk back for a few steps.",
+			"walk a few steps back.",
+			"walk back a few steps.",
+			"step back a bit.",
+			"step back."
 		]
 	},
 	"Rotate Right": {
@@ -73,7 +93,9 @@
 		"direction": "Right",
 		"templates": [
 			"turn right.",
-			"turn a bit to the right",
+			"go right.",
+			"look right.",
+			"turn a bit to the right.",
 			"turn clockwise",
 			"turn to your right.",
 			"turn to the right.",
@@ -93,9 +115,11 @@
 		"direction": "Left",
 		"templates": [
 			"turn left.",
-			"turn a bit to the left",
-			"turn counter-clockwise",
-			"turn anti-clockwise",
+			"go left.",
+			"look left.",
+			"turn a bit to the left.",
+			"turn counter-clockwise.",
+			"turn anti-clockwise.",
 			"turn to your left.",
 			"turn to the left.",
 			"turn on your left hand side.",
@@ -114,8 +138,10 @@
 		"direction": "Down",
 		"templates": [
 			"look down.",
-			"look down to the floor",
+			"look down to the floor.",
 			"look to the floor.",
+			"look at the floor.",
+			"look at your feet.",
 			"look downwards."
 		]
 	},
@@ -127,6 +153,8 @@
 			"look up to the ceiling.",
 			"look to the roof.",
 			"look to the ceiling.",
+			"look at the roof.",
+			"look at the ceiling.",
 			"look upwards."
 		]
 	},
@@ -164,6 +192,16 @@
 			"open the post it in front of you.",
 			"open the postit in front of you.",
 			"open the post-it in front of you."
+		]
+	},
+	"Turn Around": {
+		"type": "Turn",
+		"direction": "Around",
+		"templates": [
+			"turn around.",
+			"spin around.",
+			"look behind you.",
+			"do a u-turn."
 		]
 	}
 }
