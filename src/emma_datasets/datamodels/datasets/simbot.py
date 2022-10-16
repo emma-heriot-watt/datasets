@@ -514,6 +514,7 @@ def unwrap_instructions(db_path: Path) -> list[dict[Any, Any]]:
                 "instruction_id": instruction_instance.instruction_id,
                 "instruction": instruction,
                 "actions": instruction_instance.actions[: action_index + 1],
+                "synthetic": instruction_instance.synthetic,
             }
             unwrapped_instances.append(instruction_dict)
     return unwrapped_instances
