@@ -1,165 +1,26 @@
 import json
-import random
-import re
 from copy import deepcopy
-from enum import Enum
 from pathlib import Path
 from typing import Any, Literal, Optional
 
-import spacy
 from pydantic import BaseModel, Field, root_validator
 
 from emma_datasets.common.settings import Settings
 from emma_datasets.datamodels.base_model import BaseInstance
 from emma_datasets.datamodels.constants import DatasetSplit, MediaType
+from emma_datasets.datamodels.datasets.utils.simbot_data_augmentations import (
+    SyntheticGotoObjectGenerator,
+    SyntheticLowLevelActionSampler,
+)
+from emma_datasets.datamodels.datasets.utils.simbot_utils import (
+    ClarificationTargetExtractor,
+    SimBotClarificationTypes,
+    create_instruction_dict,
+)
 from emma_datasets.db import DatasetDb
 
 
 settings = Settings()
-
-SYNTHETIC_JSON = settings.paths.constants.joinpath("simbot_low_level_actions_templates.json")
-
-
-class SimBotClarificationTypes(Enum):
-    """SimBot question clarification types.
-
-    The 4 defined question types correspond to the synthetic clarification questions in the annotations.
-    https://us-east-1.console.aws.amazon.com/codesuite/codecommit/repositories/AlexaSimbotMLToolbox/browse/refs/heads/main/--/AlexaSimbotToolbox/data/trajectory-data?region=us-east-1
-    https://app.slack.com/client/T02SWBF7J7M/C03UQQM3HN0
-    """
-
-    location = "where is"
-    description = "what does"
-    disambiguation = "which+instruction_noun"
-    direction = "which direction"
-    other = "other"
-
-
-class SyntheticLowLevelActionSampler:
-    """Create synthetic examples of low level actions."""
-
-    def __init__(self, low_level_action_json: Path = SYNTHETIC_JSON) -> None:
-
-        with open(low_level_action_json) as fp:
-            self._low_level_action_templates = json.load(fp)
-        # TODO: Examine for now is only reserved for the sticky notes
-        # but apparently the examine can be used for any other object as well
-        # https://alexaprizesim-ldg5293.slack.com/files/U02SFPST8AK/F043B3MAX1S/arena_for_embodied_ai_-_user_manual.pdf
-        self._low_level_actions = [
-            key for key in self._low_level_action_templates.keys() if key != "Examine"
-        ]
-
-    def __call__(
-        self,
-        original_action: Optional[dict[str, Any]] = None,
-        sample_sticky_note: bool = False,
-        sticky_note_image: Optional[str] = None,
-        sticky_note_bbox_coords: Optional[list[int]] = None,
-    ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-        """Sample a low level action and an instruction template."""
-        if sample_sticky_note:
-            if sticky_note_image is None:  # or sticky_note_image_layout is None:
-                raise AssertionError("Need a path to a sticky note image and the image layout")
-
-            low_level_action = "Examine"
-            low_level_action_template = random.choice(
-                self._low_level_action_templates[low_level_action]["templates"]
-            )
-            synthetic_instruction = {
-                "instruction": low_level_action_template,
-                "actions": [0],
-            }
-
-            action_type = self._low_level_action_templates[low_level_action]["type"]
-
-            synthetic_action = {
-                "id": 0,
-                "type": action_type,
-                action_type.lower(): {
-                    "object": {
-                        "colorImageIndex": 0,
-                        "id": "Sticky Note",
-                        "mask": sticky_note_bbox_coords,
-                    }
-                },
-                "colorImages": [sticky_note_image],
-            }
-        else:
-            if original_action is None:
-                raise AssertionError("Need the original actions")
-            low_level_action = random.choice(self._low_level_actions)
-            low_level_action_template = random.choice(
-                self._low_level_action_templates[low_level_action]["templates"]
-            )
-            synthetic_instruction = {
-                "instruction": low_level_action_template,
-                "actions": [0],
-            }
-            action_type = self._low_level_action_templates[low_level_action]["type"]
-            synthetic_action = {
-                "id": 0,
-                "type": action_type,
-                action_type.lower(): {
-                    "direction": self._low_level_action_templates[low_level_action]["direction"]
-                },
-                "colorImages": original_action["colorImages"],
-            }
-        return (synthetic_instruction, [synthetic_action])
-
-
-class ClarificationTargetExtractor:
-    """Extract the target noun phrase for the clarfication question.
-
-    Spelling correction did not work for some cases, for which we fix it manually.
-    """
-
-    def __init__(self, spacy_model: str = "en_core_web_sm") -> None:
-
-        self.nlp = spacy.load(spacy_model)
-
-        self.nlp.add_pipe("merge_noun_chunks")
-        self._prefer_naive = {"look"}  # The verb 'look' is sometimes confused as a noun
-        self._skipped_nouns = {"can", "sink", "floppy"}  # Cannot identify certain words as nouns
-        # Rule-based approach to get the target word from its position.
-        # This fails for compound words, for which we use spacy noun chunks.
-        self.target_index = {
-            SimBotClarificationTypes.description: 3,
-            SimBotClarificationTypes.disambiguation: 1,
-            SimBotClarificationTypes.location: 3,
-        }
-
-    def __call__(self, question: str, question_type: SimBotClarificationTypes) -> Optional[str]:
-        """Preprocess the clarification target."""
-        tokens = question.split()
-        target_index = min(self.target_index[question_type], len(tokens) - 1)
-        naive_target = self.get_naive_target(tokens, target_index=target_index)
-        target = self.get_target(question, target_index=target_index)
-
-        if target is None or naive_target in self._prefer_naive:
-            target = naive_target
-
-        return target
-
-    def get_naive_target(self, question_tokens: list[str], target_index: int) -> str:
-        """Get the target based on the word position."""
-        naive_target = question_tokens[target_index]
-        return re.sub(r"[^\w\s]", "", naive_target)
-
-    def get_target(self, question: str, target_index: int) -> Optional[str]:  # noqa: WPS231
-        """Apply spell correction and find a noun phrase."""
-        doc = self.nlp(question.lower())
-        target = None
-        for index, token in enumerate(doc):
-            if index > target_index and token.is_stop:
-                continue
-            if token.tag_ in {"NNP", "NN"}:
-                target = token.text.replace("which ", "")
-                target = target.replace("the ", "")
-            elif index == target_index and token.text in self._skipped_nouns:
-                target = token.text
-            if target is not None:
-                break
-        return target
 
 
 class SimBotQA(BaseModel):
@@ -170,33 +31,6 @@ class SimBotQA(BaseModel):
     question_necessary: bool
     question_type: Optional[SimBotClarificationTypes] = None
     question_target: Optional[str] = None
-
-
-def get_question_type(question: str) -> SimBotClarificationTypes:
-    """Get the type for a given question."""
-    question = question.lower()
-    question_types = {qtype.value: qtype for qtype in SimBotClarificationTypes}
-    if question.startswith("which"):
-        if question.split()[1] == "direction":
-            qtype = "which direction"
-        else:
-            qtype = "which+instruction_noun"
-    else:
-        qtype = " ".join(question.split()[:2])
-    return question_types.get(qtype, SimBotClarificationTypes.other)
-
-
-def get_question_target(
-    clarification_target_extractor: ClarificationTargetExtractor,
-    question: str,
-    question_type: SimBotClarificationTypes,
-) -> Optional[str]:
-    """Get the type for a given question."""
-    if question_type == SimBotClarificationTypes.other:
-        return None
-    if question_type == SimBotClarificationTypes.direction:
-        return None
-    return clarification_target_extractor(question, question_type)
 
 
 class SimBotAction(BaseModel):
@@ -320,58 +154,12 @@ def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
     return restructured_data
 
 
-def prepare_instruction_question_answers(
-    clarification_target_extractor: ClarificationTargetExtractor, instruction: dict[str, Any]
-) -> dict[str, Any]:
-    """Add question types and targets."""
-    if "question_answers" not in instruction:
-        return instruction
-    for question_answer in instruction["question_answers"]:
-        question_answer["question_type"] = get_question_type(question=question_answer["question"])
-        question_answer["question_target"] = get_question_target(
-            clarification_target_extractor,
-            question=question_answer["question"],
-            question_type=question_answer["question_type"],
-        )
-    return instruction
-
-
-def create_instruction_dict(
-    instruction: dict[str, Any],
-    actions: list[dict[str, Any]],
-    mission_id: str,
-    annotation_id: str,
-    instruction_id: str,
-    clarification_extractor: Optional[ClarificationTargetExtractor] = None,
-    synthetic: bool = False,
-) -> dict[str, Any]:
-    """Create an instruction dict."""
-    action_start_id = instruction["actions"][0]
-    action_end_id = instruction["actions"][-1]
-    instruction_actions = deepcopy(actions[action_start_id : action_end_id + 1])
-
-    # add the final label for the last action within an instruction
-    instruction_actions[-1]["final"] = True
-
-    if clarification_extractor is not None:
-        instruction = prepare_instruction_question_answers(clarification_extractor, instruction)
-
-    instruction_dict = {
-        "instruction": instruction,
-        "actions": instruction_actions,
-        "mission_id": mission_id,
-        "annotation_id": annotation_id,
-        "instruction_id": instruction_id,
-        "synthetic": synthetic,
-    }
-    return instruction_dict
-
-
 def load_simbot_instruction_data(  # noqa: WPS210, WPS231
     filepath: Path,
     sticky_notes_images_json_path: Path,
     num_additional_synthetic_instructions: int = -1,
     num_sticky_notes_instructions: int = -1,
+    add_synthetic_goto_instructions: bool = True,
 ) -> list[dict[Any, Any]]:
     """Loads and reformats the SimBot annotations for creating Simbot instructions."""
     with open(filepath) as fp:
@@ -379,6 +167,10 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
 
     clarification_target_extractor = ClarificationTargetExtractor()
     synthetic_action_sampler = SyntheticLowLevelActionSampler()
+    if add_synthetic_goto_instructions:
+        synthetic_goto_generator = SyntheticGotoObjectGenerator()
+    else:
+        synthetic_goto_generator = None
     total_sampled_synthetic_actions = 0
     instruction_data = []
 
@@ -399,6 +191,18 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
 
                 instruction_data.append(instruction_dict)
                 instruction_idx += 1
+                if human_idx > 0 or not synthetic_goto_generator:
+                    continue
+                instruction_dict = synthetic_goto_generator(
+                    mission_id=mission_id,
+                    instruction_idx=instruction_idx,
+                    instruction_actions=deepcopy(
+                        instruction_dict["actions"],
+                    ),
+                )
+                if instruction_dict is not None:
+                    instruction_data.append(instruction_dict)
+                    instruction_idx += 1
 
         for annot_idx, synthetic_annotation in enumerate(  # noqa: WPS352
             mission_annotations["synthetic_annotations"]
@@ -421,16 +225,11 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
                     or total_sampled_synthetic_actions < num_additional_synthetic_instructions
                 ):
 
-                    (synth_instr, synth_action) = synthetic_action_sampler(
-                        original_action=actions[instruction["actions"][0]]
-                    )
-                    instruction_dict = create_instruction_dict(
-                        instruction=synth_instr,
-                        actions=synth_action,
+                    instruction_dict = synthetic_action_sampler(
                         mission_id=mission_id,
                         annotation_id=f"synthetic_{annot_idx}",
-                        instruction_id=str(instruction_idx),
-                        synthetic=True,
+                        instruction_idx=instruction_idx,
+                        original_action=actions[instruction["actions"][0]],
                     )
 
                     instruction_data.append(instruction_dict)
@@ -446,18 +245,13 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
     for idx, sticky_note_image in enumerate(sticky_notes_images):
         if total_sticky_notes_instructions == num_sticky_notes_instructions:
             break
-        (synth_instr, synth_action) = synthetic_action_sampler(
+        instruction_dict = synthetic_action_sampler(
+            mission_id=Path(sticky_note_image).stem,
+            annotation_id=f"synthetic_sticky_note{idx}",
+            instruction_idx=idx,
             sample_sticky_note=True,
             sticky_note_image=sticky_note_image,
             sticky_note_bbox_coords=data[sticky_note_image]["coords"],
-        )
-        instruction_dict = create_instruction_dict(
-            instruction=synth_instr,
-            actions=synth_action,
-            mission_id=Path(sticky_note_image).stem,
-            annotation_id=f"synthetic_sticky_note{idx}",
-            instruction_id=str(idx),
-            synthetic=True,
         )
         instruction_data.append(instruction_dict)
         total_sticky_notes_instructions += 1
@@ -471,6 +265,7 @@ def load_simbot_annotations(
     valid_num_additional_synthetic_instructions: int = -1,
     train_num_sticky_notes_instructions: int = 20000,
     valid_num_sticky_notes_instructions: int = -1,
+    add_synthetic_goto_instructions: bool = True,
 ) -> dict[DatasetSplit, Any]:
     """Loads all the SimBot mission annotation files."""
     if annotation_type == "missions":
@@ -485,12 +280,14 @@ def load_simbot_annotations(
                 base_dir.joinpath("train_sticky_notes.json"),
                 num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=train_num_sticky_notes_instructions,
+                add_synthetic_goto_instructions=add_synthetic_goto_instructions,
             ),
             DatasetSplit.valid: load_simbot_instruction_data(
                 base_dir.joinpath("valid.json"),
                 base_dir.joinpath("valid_sticky_notes.json"),
                 num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,
+                add_synthetic_goto_instructions=add_synthetic_goto_instructions,
             ),
         }
 

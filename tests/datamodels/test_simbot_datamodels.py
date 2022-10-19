@@ -30,7 +30,9 @@ def test_can_load_simbot_instruction_data(
 
     instances = parse_obj_as(
         list[SimBotInstructionInstance],
-        load_simbot_instruction_data(simbot_instances_path, simbot_sticky_notes_path),
+        load_simbot_instruction_data(
+            simbot_instances_path, simbot_sticky_notes_path, add_synthetic_goto_instructions=False
+        ),
     )
     assert instances, "The file doesn't contain any instances."
 
