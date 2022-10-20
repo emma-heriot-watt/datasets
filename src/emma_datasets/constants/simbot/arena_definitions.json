@@ -1,4 +1,6 @@
 {
+	"image_width": 300,
+	"image_height": 300,
 	"room_names": [
 		"BreakRoom",
 		"Lab1",

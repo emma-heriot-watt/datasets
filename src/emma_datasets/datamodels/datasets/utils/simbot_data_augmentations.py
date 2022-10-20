@@ -1,31 +1,29 @@
 import random
-from pathlib import Path
 from typing import Any, Optional
 
 import torch
 
-from emma_datasets.common.settings import Settings
+from emma_datasets.common import Settings
+from emma_datasets.constants.simbot.simbot import (
+    get_arena_definitions,
+    get_low_level_action_templates,
+)
 from emma_datasets.datamodels.datasets.utils.masks import compress_simbot_mask
 from emma_datasets.datamodels.datasets.utils.simbot_utils import (
     get_object_from_action_object_metadata,
 )
-from emma_datasets.io import read_json
 
 
 settings = Settings()
-
-SYNTHETIC_JSON = settings.paths.constants.joinpath(
-    "simbot", "simbot_low_level_actions_templates.json"
-)
 
 
 class SyntheticLowLevelActionSampler:
     """Create synthetic examples of low level actions."""
 
-    def __init__(self, low_level_action_json: Path = SYNTHETIC_JSON) -> None:
+    def __init__(self) -> None:
 
         self.examine_action = "Examine"
-        self._low_level_action_templates = read_json(low_level_action_json)
+        self._low_level_action_templates = get_low_level_action_templates()
         # TODO: Examine for now is only reserved for the sticky notes
         # but apparently the examine can be used for any other object as well
         # https://alexaprizesim-ldg5293.slack.com/files/U02SFPST8AK/F043B3MAX1S/arena_for_embodied_ai_-_user_manual.pdf
@@ -102,12 +100,8 @@ class SyntheticLowLevelActionSampler:
 class SyntheticGotoObjectGenerator:
     """Create synthetic examples of go to actions for interactable objects."""
 
-    def __init__(
-        self,
-    ) -> None:
-        arena_definitions = read_json(
-            settings.paths.constants.joinpath("simbot/arena_definitions.json")
-        )
+    def __init__(self) -> None:
+        arena_definitions = get_arena_definitions()
 
         self.idx_to_label = {
             idx: label for label, idx in arena_definitions["label_to_idx"].items()
