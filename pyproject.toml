@@ -10,12 +10,13 @@ readme = "README.md"
 repository = "https://github.com/emma-simbot/datasets"
 
 packages = [{ include = "emma_datasets", from = "src" }]
-[tool.poetry.group.spacy.dependencies]
-spacy = "^3.4.1"
 
 
 [tool.poe]
 envfile = ".env"
+
+[tool.poe.poetry_hooks]
+post_install = "postinstall"
 
 [tool.poe.tasks]
 
@@ -51,10 +52,14 @@ shell = """
 		"""
 interpreter = "bash"
 
-[tool.poe.tasks.install-spacy-model]
-help = 'Download the spacy pipeline'
-shell = """python -m spacy download en_core_web_sm"""
+
+[[tool.poe.tasks.postinstall]]
+help = 'Download the spacy model if Spacy is installed (ignore if not)'
+shell = """
+echo -e "from contextlib import suppress\nwith suppress(ModuleNotFoundError):\n  from spacy.cli.download import download\n  download('en_core_web_sm')" | python3 -
+"""
 interpreter = "bash"
+
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -63,7 +68,6 @@ rich = "^12.4.4"
 numpy = "^1.22.3"
 orjson = "^3.6.8"
 Pillow = "^9.1.1"
-torch = "1.11.0"
 py7zr = "^0.18.6"
 boto3 = "1.23.3"
 overrides = "^6.1.0"
@@ -71,12 +75,15 @@ rich-click = { extras = ["typer"], version = "^1.4" }
 datasets = "^2.2.2"
 requests = "^2.27.1"
 pandas = "^1.4.3"
+emma-common = { git = "https://github.com/emma-simbot/common" }
 
+[tool.poetry.group.spacy.dependencies]
+spacy = "^3.4.1"
 
-[tool.poetry.extras]
-torch = ["torch"]
+[tool.poetry.group.torch.dependencies]
+torch = "^1.11.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 wemake-python-styleguide = "^0.16.1"
 flake8 = "^4.0"
 mypy = "^0.950"
@@ -100,7 +107,7 @@ profile = "black"
 combine_as_imports = true
 lines_after_imports = 2
 line_length = 99
-known_first_party = ["src", "emma_datasets"]
+known_first_party = ["emma_datasets"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "setuptools"]

@@ -6,69 +6,63 @@
 # the GitHub Action https://github.com/marketplace/actions/github-labeler.
 ## more info https://github.com/crazy-max/ghaction-github-labeler
 
-# -------------------------------- Versioning -------------------------------- #
-- name: major
-  descripion: "Backwards incompatible changes"
-  color: AB2232
+# ------------------------- Conventional Commit types ------------------------ #
+# From https://github.com/commitizen/conventional-commit-types/blob/master/index.json
 
-- name: minor
-  description: "Added backwards compatible functionality"
+- name: feature
+  description: A new enhancement or feature
   color: 0A8844
+  from_name: "enhancement"
 
-- name: patch
-  description: "Small changes and bug fixes"
+- name: fix
+  description: A bug fix
+  color: d23832
+  from_name: "bug"
+
+- name: documentation
+  description: Documentation changes only
+  color: 8AD9F5
+
+- name: style
+  description: Changes that do not affect meaning of code (formatting, etc.)
+  color: F9CD8E
+
+- name: refactor
+  description: Code change that neither fixes a bug nor adds a feature
   color: FBCA0C
+  from_name: refactoring
 
-# ----------------------------------- Core ----------------------------------- #
+- name: performance
+  description: Code change that improves performance
+  color: F2A33C
+
+- name: test
+  description: Adding missing tests or correcting existing tests
+  color: 34FFB3
+
+- name: build
+  description: Changes that affect the build system or external dependencies
+  color: 8F4FBB
+
+- name: continuous integration
+  description: Changes to CI configuration and scripts
+  color: FCBFE3
+
+- name: chore
+  description: Other changes that don't modify src or test files
+  color: d3d3d3
+
+- name: revert
+  description: Revert a previous commit
+  color: 1e1e1e
+
 - name: backwards incompatible
   description: incompatible changes to how the application works
   color: AB2232
 
-- name: bug
-  description: Something isn't working
-  color: d23832
-
-- name: enhancement
-  description: New feature or request
-  color: 0A8844
-
-# - name: help wanted
-#   description: Extra attention is needed
-#   color: 95FFA4
-
-# - name: question
-#   description: Further information is requested
-#   color: EE328E
-
-# ------------------------------- Improvements ------------------------------- #
-# - name: performance
-#   description: Improving efficiency and speed
-#   color: "F2A33C"
-
-- name: refactoring
-  description: Refactoring
-  color: FBCA0C
-
-- name: documentation
-  description: Improvements or additions to documentation
-  color: F695C4
-
-# -------------------------- Tooling and automation -------------------------- #
-- name: build
-  description: Compiling and packaging
-  color: "962EDD"
-
-- name: continuous integration
-  description: Integration new code
-  color: FCBFE3
-
-- name: developer tools
-  description: Developer tools and automation
-  color: "A8D8F0"
-
-- name: deployment
-  description: Deploying the application
-  color: E1BFFC
+- name: question
+  description: Further information is requested
+  color: EE328E
 
 # ------------------------------- Dependencies ------------------------------- #
 - name: dependencies
