@@ -2,11 +2,9 @@ name: Continuous Integration
 
 on:
   workflow_dispatch:
+  workflow_call:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
-    branches:
-      - main
-  push:
     branches:
       - main
 
