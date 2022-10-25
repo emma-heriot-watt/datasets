@@ -55,8 +55,12 @@ jobs:
           PAT: ${{ secrets.PAT }}
         run: |
           git config --global url."https://${PAT}@github.com/".insteadOf "https://github.com/"
+
       - name: Install Poetry
         uses: snok/install-poetry@v1
+
+      - name: Install PoethePoet as a Poetry plugin
+        run: poetry self add 'poethepoet[poetry_plugin]'
 
       - name: Load cached Python
         uses: tespkg/actions-cache@v1
@@ -127,8 +131,12 @@ jobs:
           PAT: ${{ secrets.PAT }}
         run: |
           git config --global url."https://${PAT}@github.com/".insteadOf "https://github.com/"
+
       - name: Install Poetry
         uses: snok/install-poetry@v1
+
+      - name: Install PoethePoet as a Poetry plugin
+        run: poetry self add 'poethepoet[poetry_plugin]'
 
       - name: Load cached Python
         uses: tespkg/actions-cache@v1
@@ -184,6 +192,7 @@ jobs:
       - name: Install pre-commit
         run: |
           pip install pre-commit
+
       - name: Load cached pre-commit environment
         uses: tespkg/actions-cache@v1
         id: pre-commit-cache
@@ -201,6 +210,7 @@ jobs:
         run: |
           git add .pre-commit-config.yaml
           pre-commit run --color=always --all-files
+
       - name: Annotate any changes using reviewdog
         if: ${{ failure() }}
         id: reviewdog-suggester
