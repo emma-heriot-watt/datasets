@@ -1,16 +1,10 @@
 import random
 from typing import Any, Optional
 
-import torch
-
-from emma_datasets.common import Settings
-from emma_datasets.constants.simbot.simbot import (
-    get_arena_definitions,
-    get_low_level_action_templates,
-)
-from emma_datasets.datamodels.datasets.utils.masks import compress_simbot_mask
-from emma_datasets.datamodels.datasets.utils.simbot_utils import (
-    get_object_from_action_object_metadata,
+from emma_datasets.common.settings import Settings
+from emma_datasets.constants.simbot.simbot import get_low_level_action_templates
+from emma_datasets.datamodels.datasets.utils.simbot.object_features_processing import (
+    ObjectClassDecoder,
 )
 
 
@@ -100,14 +94,12 @@ class SyntheticLowLevelActionSampler:
 class SyntheticGotoObjectGenerator:
     """Create synthetic examples of go to actions for interactable objects."""
 
-    def __init__(self) -> None:
-        arena_definitions = get_arena_definitions()
+    def __init__(
+        self,
+    ) -> None:
 
-        self.idx_to_label = {
-            idx: label for label, idx in arena_definitions["label_to_idx"].items()
-        }
-        self.object_assets_to_names = arena_definitions["asset_to_name"]
         self._annotation_id = "synthetic_goto"
+        self.object_decoder = ObjectClassDecoder()
 
     def __call__(
         self,
@@ -122,7 +114,7 @@ class SyntheticGotoObjectGenerator:
             return None
 
         # Get the target object from the 3rd action
-        target_object, target_object_name = self._get_target_object_and_name(
+        target_object, target_object_name = self.object_decoder.get_target_object_and_name(
             instruction_actions[2]
         )
         # Prepare the new Goto instruction
@@ -131,9 +123,10 @@ class SyntheticGotoObjectGenerator:
             "actions": [instruction_actions[1]["id"]],
         }
         # Get a mask for the target object
-        mask = self._get_target_object_mask(
+        mask = self.object_decoder.get_target_object_mask(
             mission_id=mission_id,
-            instruction_actions=instruction_actions,
+            action_id=instruction_actions[1]["id"],
+            frame_index=instruction_actions[1]["goto"]["object"]["colorImageIndex"],
             target_object_name=target_object_name,
         )
         if not mask:
@@ -179,48 +172,6 @@ class SyntheticGotoObjectGenerator:
         )
         if not action_pattern:
             return False
-        goto_object = self._get_target_object(instruction_actions[1])
-        target_object = self._get_target_object(instruction_actions[2])
+        goto_object = self.object_decoder.get_target_object(instruction_actions[1])
+        target_object = self.object_decoder.get_target_object(instruction_actions[2])
         return goto_object != target_object
-
-    def _get_target_object(self, action: dict[str, Any]) -> str:
-        """Get the target object id for an action."""
-        action_type = action["type"].lower()
-        return action[action_type]["object"]["id"]
-
-    def _get_target_object_and_name(self, action: dict[str, Any]) -> tuple[str, str]:
-        """Get the target object id and name for an action."""
-        target_object = self._get_target_object(action)
-        target_object_name = get_object_from_action_object_metadata(
-            target_object, self.object_assets_to_names
-        )
-        return target_object, target_object_name
-
-    def _get_target_object_mask(
-        self, mission_id: int, instruction_actions: list[dict[str, Any]], target_object_name: str
-    ) -> Optional[list[list[int]]]:
-        # Load the features from the Goto action
-        action_id = instruction_actions[1]["id"]
-        features_path = settings.paths.simbot_features.joinpath(
-            f"{mission_id}_action{action_id}.pt"
-        )
-        image_index = instruction_actions[1]["goto"]["object"]["colorImageIndex"]
-        features = torch.load(features_path)["frames"][image_index]["features"]
-        # Get the class indices for the predicted boxes
-        class_indices = torch.argmax(features["bbox_probas"], dim=1).tolist()
-        # Get the indices of the objects that match the target_object_name
-        candidate_objects = [
-            idx
-            for idx, class_idx in enumerate(class_indices)
-            if self.idx_to_label[class_idx] == target_object_name
-        ]
-        if not candidate_objects:
-            return None
-        # Keep the bounding box for one matching object
-        (x_min, y_min, x_max, y_max) = features["bbox_coords"][candidate_objects[0]].tolist()
-        # Convert bbox to mask
-        mask = torch.zeros((features["width"], features["height"]))
-        # populate the bbox region in the mask with ones
-        mask[int(y_min) : int(y_max) + 1, int(x_min) : int(x_max) + 1] = 1  # noqa: WPS221
-        compressed_mask = compress_simbot_mask(mask)
-        return compressed_mask

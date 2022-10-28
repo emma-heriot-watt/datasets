@@ -8,11 +8,12 @@ from pydantic import BaseModel, Field, root_validator
 from emma_datasets.common.settings import Settings
 from emma_datasets.datamodels.base_model import BaseInstance
 from emma_datasets.datamodels.constants import DatasetSplit, MediaType
-from emma_datasets.datamodels.datasets.utils.simbot_data_augmentations import (
+from emma_datasets.datamodels.datasets.utils.simbot.ambiguous_data import AmbiguousGotoProcessor
+from emma_datasets.datamodels.datasets.utils.simbot.data_augmentations import (
     SyntheticGotoObjectGenerator,
     SyntheticLowLevelActionSampler,
 )
-from emma_datasets.datamodels.datasets.utils.simbot_utils import (
+from emma_datasets.datamodels.datasets.utils.simbot.instruction_processing import (
     ClarificationTargetExtractor,
     SimBotClarificationTypes,
     create_instruction_dict,
@@ -109,6 +110,8 @@ class SimBotInstructionInstance(BaseInstance):
     instruction: SimBotInstruction
     actions: list[SimBotAction]
     synthetic: bool = False
+    ambiguous: bool = False
+    keep_only_target_frame: bool = False
 
     class Config:
         """Custom configuration to allows additional fields."""
@@ -171,6 +174,8 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
         synthetic_goto_generator = SyntheticGotoObjectGenerator()
     else:
         synthetic_goto_generator = None
+
+    ambiguous_goto_processor = AmbiguousGotoProcessor()
     total_sampled_synthetic_actions = 0
     instruction_data = []
 
@@ -216,7 +221,11 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
                     instruction_id=str(instruction_idx),
                     synthetic=True,
                 )
-
+                instruction_dict = ambiguous_goto_processor(
+                    instruction_dict=instruction_dict,
+                    mission_id=mission_id,
+                    action=actions[instruction["actions"][0]],
+                )
                 instruction_data.append(instruction_dict)
                 instruction_idx += 1
 
@@ -300,6 +309,8 @@ def unwrap_instructions(db_path: Path) -> list[dict[Any, Any]]:
     db = DatasetDb(db_path)
     for _, _, sample in db:
         instruction_instance = SimBotInstructionInstance.parse_raw(sample)
+        if instruction_instance.ambiguous:
+            continue
         for action_index, action in enumerate(instruction_instance.actions):
             instruction = instruction_instance.instruction.copy(
                 update={"actions": instruction_instance.instruction.actions[: action_index + 1]}

@@ -155,6 +155,7 @@ def create_instruction_dict(
     instruction_id: str,
     clarification_extractor: Optional[ClarificationTargetExtractor] = None,
     synthetic: bool = False,
+    ambiguous: bool = False,
 ) -> dict[str, Any]:
     """Create an instruction dict."""
     action_start_id = instruction["actions"][0]
@@ -174,5 +175,6 @@ def create_instruction_dict(
         "annotation_id": annotation_id,
         "instruction_id": instruction_id,
         "synthetic": synthetic,
+        "ambiguous": ambiguous,
     }
     return instruction_dict
