@@ -1,6 +1,6 @@
 from typing import Any
 
-from emma_datasets.datamodels.datasets.utils.simbot.object_features_processing import (
+from emma_datasets.datamodels.datasets.utils.simbot_utils.object_features_processing import (
     ObjectClassDecoder,
 )
 

@@ -8,12 +8,14 @@ from pydantic import BaseModel, Field, root_validator
 from emma_datasets.common.settings import Settings
 from emma_datasets.datamodels.base_model import BaseInstance
 from emma_datasets.datamodels.constants import DatasetSplit, MediaType
-from emma_datasets.datamodels.datasets.utils.simbot.ambiguous_data import AmbiguousGotoProcessor
-from emma_datasets.datamodels.datasets.utils.simbot.data_augmentations import (
+from emma_datasets.datamodels.datasets.utils.simbot_utils.ambiguous_data import (
+    AmbiguousGotoProcessor,
+)
+from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
     SyntheticGotoObjectGenerator,
     SyntheticLowLevelActionSampler,
 )
-from emma_datasets.datamodels.datasets.utils.simbot.instruction_processing import (
+from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
     ClarificationTargetExtractor,
     SimBotClarificationTypes,
     create_instruction_dict,
@@ -111,6 +113,7 @@ class SimBotInstructionInstance(BaseInstance):
     actions: list[SimBotAction]
     synthetic: bool = False
     ambiguous: bool = False
+    paraphrasable: bool = False
     keep_only_target_frame: bool = False
 
     class Config:
@@ -160,6 +163,7 @@ def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
 def load_simbot_instruction_data(  # noqa: WPS210, WPS231
     filepath: Path,
     sticky_notes_images_json_path: Path,
+    augmentation_images_json_path: Path,
     num_additional_synthetic_instructions: int = -1,
     num_sticky_notes_instructions: int = -1,
     add_synthetic_goto_instructions: bool = True,
@@ -264,6 +268,14 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
         )
         instruction_data.append(instruction_dict)
         total_sticky_notes_instructions += 1
+
+    with open(augmentation_images_json_path) as fp:  # noqa: WPS440
+        data = json.load(fp)
+
+    for _, mission_metadata in data.items():
+        instruction_dict = create_instruction_dict(**mission_metadata)
+        instruction_data.append(instruction_dict)
+
     return instruction_data
 
 
@@ -287,6 +299,7 @@ def load_simbot_annotations(
             DatasetSplit.train: load_simbot_instruction_data(
                 base_dir.joinpath("train.json"),
                 base_dir.joinpath("train_sticky_notes.json"),
+                base_dir.joinpath("train_augmentation_instructions.json"),
                 num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=train_num_sticky_notes_instructions,
                 add_synthetic_goto_instructions=add_synthetic_goto_instructions,
@@ -294,6 +307,7 @@ def load_simbot_annotations(
             DatasetSplit.valid: load_simbot_instruction_data(
                 base_dir.joinpath("valid.json"),
                 base_dir.joinpath("valid_sticky_notes.json"),
+                base_dir.joinpath("valid_augmentation_instructions.json"),
                 num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,
                 add_synthetic_goto_instructions=add_synthetic_goto_instructions,

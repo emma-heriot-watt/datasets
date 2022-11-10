@@ -1,0 +1,68 @@
+{
+	"Goto_object_detection_data_v4__images_run1_trajv1_start0_end1000_OfficeLayout1C__train__31760_color.png": {
+		"instruction": {
+			"instruction": "move to the pink embiggenator monitor.",
+			"actions": [0]
+		},
+		"actions": [
+			{
+				"id": 0,
+				"type": "Goto",
+				"goto": {
+					"object": {
+						"id": "V_Monitor_Embiggenator",
+						"colorImageIndex": 0,
+						"mask": [[16, 154, 27, 165]],
+						"attributes": {
+							"readable_name": "Embiggenator monitor",
+							"color": "pink",
+							"location": null
+						}
+					}
+				},
+				"colorImages": [
+					"object_detection_data_v4__images_run1_trajv1_start0_end1000_OfficeLayout1C__train__31760_color.png"
+				],
+				"final": true
+			}
+		],
+		"mission_id": "Goto_object_detection_data_v4__images_run1_trajv1_start0_end1000_OfficeLayout1C__train__31760_color.png",
+		"annotation_id": 0,
+		"instruction_id": 0,
+		"synthetic": true,
+		"paraphrasable": true
+	},
+	"Goto_object_detection_data_v4__images_run1_trajv1_start0_end1000_OfficeLayout1C__train__31853_color.png": {
+		"instruction": {
+			"instruction": "move towards the pink embiggenator monitor.",
+			"actions": [0]
+		},
+		"actions": [
+			{
+				"id": 0,
+				"type": "Goto",
+				"goto": {
+					"object": {
+						"id": "V_Monitor_Embiggenator",
+						"colorImageIndex": 0,
+						"mask": [[16, 155, 28, 166]],
+						"attributes": {
+							"readable_name": "Embiggenator monitor",
+							"color": "pink",
+							"location": null
+						}
+					}
+				},
+				"colorImages": [
+					"object_detection_data_v4__images_run1_trajv1_start0_end1000_OfficeLayout1C__train__31853_color.png"
+				],
+				"final": true
+			}
+		],
+		"mission_id": "Goto_object_detection_data_v4__images_run1_trajv1_start0_end1000_OfficeLayout1C__train__31853_color.png",
+		"annotation_id": 0,
+		"instruction_id": 0,
+		"synthetic": true,
+		"paraphrasable": true
+	}
+}

@@ -1,9 +1,13 @@
 import random
-from typing import Any, Optional
+from typing import Any, Literal, Optional
+
+import numpy as np
+from numpy.typing import NDArray
+from pydantic import BaseModel
 
 from emma_datasets.common.settings import Settings
 from emma_datasets.constants.simbot.simbot import get_low_level_action_templates
-from emma_datasets.datamodels.datasets.utils.simbot.object_features_processing import (
+from emma_datasets.datamodels.datasets.utils.simbot_utils.object_features_processing import (
     ObjectClassDecoder,
 )
 
@@ -175,3 +179,150 @@ class SyntheticGotoObjectGenerator:
         goto_object = self.object_decoder.get_target_object(instruction_actions[1])
         target_object = self.object_decoder.get_target_object(instruction_actions[2])
         return goto_object != target_object
+
+
+class SimBotObjectAttributes(BaseModel):
+    """Base model for attributes of objects."""
+
+    readable_name: str
+    color: Optional[str] = None
+    location: Optional[Literal["left", "right"]] = None
+
+
+class AugmentationInstruction(BaseModel):
+    """Basemodel for an augmentation instruction."""
+
+    action_type: str
+    object_id: str
+    bbox: list[int]
+    image_name: str
+    attributes: SimBotObjectAttributes
+
+
+class BaseAugmentation:
+    """Base class for object augmentations."""
+
+    def __call__(
+        self, annotations: dict[str, Any], robot_position: NDArray[np.float32], image_name: str
+    ) -> list[AugmentationInstruction]:
+        """Creates new annotations for a given object."""
+        raise NotImplementedError("Do not call BaseAugmentation class")
+
+    def _compute_bbox_center(self, bbox: list[int]) -> tuple[float, float]:
+        (x_min, y_min, x_max, y_max) = bbox
+        return ((x_max - x_min) / 2, (y_max - y_min) / 2)
+
+
+class SpecialMonitorAugmentation(BaseAugmentation):
+    """Monitor Augmentations."""
+
+    def __init__(self, min_interaction_distance: float = 1.5) -> None:
+        self.min_interaction_distance = min_interaction_distance
+        self._monitor_color_map = {
+            "Freeze ray monitor": "blue",
+            "Gravity flipper monitor": "green",
+            "Laser monitor": "red",
+            "Embiggenator monitor": "pink",
+        }
+        self._monitor_object_type_map = {
+            "V_Monitor_FreezeRay": "Freeze ray monitor",
+            "V_Monitor_Gravity": "Gravity flipper monitor",
+            "V_Monitor_Laser": "Laser monitor",
+            "V_Monitor_Embiggenator": "Embiggenator monitor",
+        }
+
+    def __call__(
+        self, annotations: dict[str, Any], robot_position: NDArray[np.float32], image_name: str
+    ) -> list[AugmentationInstruction]:
+        """Get new annotations for monitors."""
+        interaction_instructions = []
+        navigation_instructions = []
+        for _, annotation in annotations.items():
+            image_annotation = annotation["image_annotation"]
+            object_annotation = annotation["object_annotation"]
+            object_type = image_annotation["object_type"]
+            readable_name = self._monitor_object_type_map.get(object_type, None)
+            if readable_name is None:
+                continue
+            color_name = self._monitor_color_map[readable_name]
+
+            object_position = np.array(
+                [
+                    object_annotation["position"]["x"],
+                    object_annotation["position"]["y"],
+                    object_annotation["position"]["z"],
+                ]
+            )
+            distance2object = np.linalg.norm(robot_position - object_position)
+
+            # Monitor is within reach - interaction instruction
+            if distance2object <= self.min_interaction_distance:
+                instruction = AugmentationInstruction(
+                    action_type="Toggle",
+                    object_id=object_type,
+                    attributes=SimBotObjectAttributes(
+                        readable_name=readable_name, color=color_name
+                    ),
+                    bbox=image_annotation["bbox"],
+                    image_name=image_name,
+                )
+                interaction_instructions.append(instruction)
+
+            # Monitor is out of reach - navigation instruction
+            else:
+                instruction = AugmentationInstruction(
+                    action_type="Goto",
+                    object_id=object_type,
+                    attributes=SimBotObjectAttributes(
+                        readable_name=readable_name, color=color_name
+                    ),
+                    bbox=image_annotation["bbox"],
+                    image_name=image_name,
+                )
+                navigation_instructions.append(instruction)
+
+        # Image has multiple monitors, include instructions with spatial or color information
+        if len(interaction_instructions) > 1:
+            interaction_instructions.extend(
+                self._get_instructions_from_attributes(interaction_instructions)
+            )
+
+        if len(navigation_instructions) > 1:
+            navigation_instructions.extend(
+                self._get_instructions_from_attributes(navigation_instructions)
+            )
+
+        return interaction_instructions + navigation_instructions
+
+    def _get_instructions_from_attributes(
+        self, instruction_list: list[AugmentationInstruction]
+    ) -> list[AugmentationInstruction]:
+        bbox_centers = [
+            self._compute_bbox_center(instruction.bbox) for instruction in instruction_list
+        ]
+
+        left2right = np.argsort([bbox_center[0] for bbox_center in bbox_centers])
+        left_instruction = AugmentationInstruction(
+            action_type=instruction_list[left2right[0]].action_type,
+            object_id=instruction_list[left2right[0]].object_id,
+            attributes=SimBotObjectAttributes(
+                readable_name=instruction_list[left2right[0]].attributes.readable_name,
+                color=instruction_list[left2right[0]].attributes.color,
+                location="left",
+            ),
+            bbox=instruction_list[left2right[0]].bbox,
+            image_name=instruction_list[left2right[0]].image_name,
+        )
+
+        right_instruction = AugmentationInstruction(
+            action_type=instruction_list[left2right[-1]].action_type,
+            object_id=instruction_list[left2right[-1]].object_id,
+            attributes=SimBotObjectAttributes(
+                readable_name=instruction_list[left2right[-1]].attributes.readable_name,
+                color=instruction_list[left2right[-1]].attributes.color,
+                location="right",
+            ),
+            bbox=instruction_list[left2right[-1]].bbox,
+            image_name=instruction_list[left2right[-1]].image_name,
+        )
+        return [left_instruction, right_instruction]

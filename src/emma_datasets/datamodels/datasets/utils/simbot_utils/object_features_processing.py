@@ -4,10 +4,10 @@ from typing import Any, Optional
 import torch
 
 from emma_datasets.common.settings import Settings
-from emma_datasets.datamodels.datasets.utils.simbot.instruction_processing import (
+from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
     get_object_from_action_object_metadata,
 )
-from emma_datasets.datamodels.datasets.utils.simbot.masks import compress_simbot_mask
+from emma_datasets.datamodels.datasets.utils.simbot_utils.masks import compress_simbot_mask
 from emma_datasets.io import read_json
 
 

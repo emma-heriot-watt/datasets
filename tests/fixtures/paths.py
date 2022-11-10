@@ -125,12 +125,17 @@ def nlvr_instances_path(fixtures_root: Path) -> Path:
 
 @fixture(scope="session")
 def simbot_instances_path(fixtures_root: Path) -> Path:
-    return fixtures_root.joinpath("simbot.json")
+    return fixtures_root.joinpath("simbot", "simbot.json")
 
 
 @fixture(scope="session")
 def simbot_sticky_notes_path(fixtures_root: Path) -> Path:
-    return fixtures_root.joinpath("simbot_sticky_notes.json")
+    return fixtures_root.joinpath("simbot", "simbot_sticky_notes.json")
+
+
+@fixture(scope="session")
+def augmentation_images_json_path(fixtures_root: Path) -> Path:
+    return fixtures_root.joinpath("simbot", "simbot_augmentation_images.json")
 
 
 @fixture(scope="session")
