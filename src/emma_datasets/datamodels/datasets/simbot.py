@@ -1,13 +1,11 @@
 import json
 from copy import deepcopy
 from pathlib import Path
-from typing import Any, Literal, Optional
-
-from pydantic import BaseModel, Field, root_validator
+from typing import Any, Literal
 
 from emma_datasets.common.settings import Settings
-from emma_datasets.datamodels.base_model import BaseInstance
-from emma_datasets.datamodels.constants import DatasetSplit, MediaType
+from emma_datasets.datamodels.constants import DatasetSplit
+from emma_datasets.datamodels.datasets import SimBotInstructionInstance
 from emma_datasets.datamodels.datasets.utils.simbot_utils.ambiguous_data import (
     AmbiguousGotoProcessor,
 )
@@ -17,128 +15,15 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations imp
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
     ClarificationTargetExtractor,
-    SimBotClarificationTypes,
     create_instruction_dict,
+)
+from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
+    InstructionParaphraser,
 )
 from emma_datasets.db import DatasetDb
 
 
 settings = Settings()
-
-
-class SimBotQA(BaseModel):
-    """Class that contains the SimBot question answer annotations for a given step."""
-
-    question: str
-    answer: str
-    question_necessary: bool
-    question_type: Optional[SimBotClarificationTypes] = None
-    question_target: Optional[str] = None
-
-
-class SimBotAction(BaseModel):
-    """SimBot action API data structure."""
-
-    class Config:
-        """Custom configuration to allows additional fields."""
-
-        extra: str = "allow"
-
-    id: int
-    type: str
-    color_images: list[str] = Field(..., alias="colorImages")
-    final: Optional[bool] = False
-
-    @root_validator(pre=True)
-    @classmethod
-    def check_action_data(cls, data_dict: dict[str, Any]) -> dict[str, Any]:
-        """Validates the current action data structure.
-
-        It makes sure that it contains a field corresponding to the action type.
-        """
-        if data_dict["type"].lower() not in data_dict:
-            raise ValueError(f"Action data should have a field for `{data_dict['type']}`")
-
-        return data_dict
-
-    @property
-    def get_action_data(self) -> dict[str, Any]:
-        """Extracts the field corresponding to the current action data."""
-        return getattr(self, self.type.lower())
-
-
-class SimBotInstruction(BaseModel):
-    """SimBot instruction language annotations."""
-
-    instruction: str
-    actions: list[int]
-    question_answers: Optional[list[SimBotQA]]
-
-
-class SimBotAnnotation(BaseModel):
-    """Represents a sequence of pairs (actions, instruction)."""
-
-    instructions: list[SimBotInstruction]
-
-
-class SimBotMissionInstance(BaseInstance):
-    """A SimBot instance for the mission dataset."""
-
-    mission_id: str
-    human_annotations: list[SimBotAnnotation]
-    synethetic_annotations: Optional[list[SimBotAnnotation]]
-    actions: list[SimBotAction]
-
-    @property
-    def modality(self) -> MediaType:
-        """Returns the modality for the given instance.
-
-        SimBot has multicam views because of the look-around action which returns 4 images.
-        """
-        return MediaType.multicam
-
-    @property
-    def features_path(self) -> Path:
-        """Returns the path to the features for the current mission."""
-        return settings.paths.simbot_features.joinpath(f"{self.mission_id}.pt")
-
-
-class SimBotInstructionInstance(BaseInstance):
-    """A SimBot instance for the mission dataset."""
-
-    mission_id: str
-    annotation_id: str
-    instruction_id: str
-    instruction: SimBotInstruction
-    actions: list[SimBotAction]
-    synthetic: bool = False
-    ambiguous: bool = False
-    paraphrasable: bool = False
-    keep_only_target_frame: bool = False
-
-    class Config:
-        """Custom configuration to allows additional fields."""
-
-        extra: str = "allow"
-
-    @property
-    def modality(self) -> MediaType:
-        """Returns the modality for the given instance.
-
-        SimBot has multicam views because of the look-around action which returns 4 images.
-        """
-        return MediaType.multicam
-
-    @property
-    def features_path(self) -> list[Path]:
-        """Returns the path to the features for the current instruction."""
-        template = "{mission_id}_action{action_id}.pt"
-        return [
-            settings.paths.simbot_features.joinpath(
-                template.format(mission_id=self.mission_id, action_id=action.id)
-            )
-            for action in self.actions
-        ]
 
 
 def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
@@ -160,7 +45,7 @@ def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
     return restructured_data
 
 
-def load_simbot_instruction_data(  # noqa: WPS210, WPS231
+def load_simbot_instruction_data(  # noqa: WPS231
     filepath: Path,
     sticky_notes_images_json_path: Path,
     augmentation_images_json_path: Path,
@@ -249,12 +134,34 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
                     instruction_idx += 1
 
                     total_sampled_synthetic_actions += 1
+    instruction_data.extend(
+        load_simbot_sticky_note_instruction_data(
+            sticky_notes_images_json_path=sticky_notes_images_json_path,
+            num_sticky_notes_instructions=num_sticky_notes_instructions,
+            synthetic_action_sampler=synthetic_action_sampler,
+        )
+    )
+    instruction_data.extend(
+        load_simbot_augmentation_instruction_data(
+            augmentation_images_json_path=augmentation_images_json_path
+        )
+    )
 
-    with open(sticky_notes_images_json_path) as fp:  # noqa: WPS440
+    return instruction_data
+
+
+def load_simbot_sticky_note_instruction_data(
+    sticky_notes_images_json_path: Path,
+    num_sticky_notes_instructions: int,
+    synthetic_action_sampler: SyntheticLowLevelActionSampler,
+) -> list[dict[Any, Any]]:
+    """Load sticky note data."""
+    with open(sticky_notes_images_json_path) as fp:
         data = json.load(fp)
 
     sticky_notes_images = data.keys()
     total_sticky_notes_instructions = 0
+    instruction_data = []
     for idx, sticky_note_image in enumerate(sticky_notes_images):
         if total_sticky_notes_instructions == num_sticky_notes_instructions:
             break
@@ -269,10 +176,22 @@ def load_simbot_instruction_data(  # noqa: WPS210, WPS231
         instruction_data.append(instruction_dict)
         total_sticky_notes_instructions += 1
 
-    with open(augmentation_images_json_path) as fp:  # noqa: WPS440
-        data = json.load(fp)
+    return instruction_data
 
+
+def load_simbot_augmentation_instruction_data(
+    augmentation_images_json_path: Path,
+) -> list[dict[Any, Any]]:
+    """Load the augmentation data."""
+    with open(augmentation_images_json_path) as fp:
+        data = json.load(fp)
+    paraphraser = InstructionParaphraser()
+    instruction_data = []
     for _, mission_metadata in data.items():
+        instruction_instance = SimBotInstructionInstance(**mission_metadata)
+        mission_metadata["instruction"]["instruction"] = paraphraser.from_instruction_instance(
+            instruction_instance
+        )
         instruction_dict = create_instruction_dict(**mission_metadata)
         instruction_data.append(instruction_dict)
 

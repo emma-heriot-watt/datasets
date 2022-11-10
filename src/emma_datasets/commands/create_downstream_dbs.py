@@ -9,6 +9,8 @@ from emma_datasets.common import Settings
 from emma_datasets.datamodels import DatasetName, DatasetSplit
 from emma_datasets.datamodels.datasets import (
     CocoInstance,
+    SimBotInstructionInstance,
+    SimBotMissionInstance,
     TeachEdhInstance,
     VQAv2Instance,
     WinogroundInstance,
@@ -23,8 +25,6 @@ from emma_datasets.datamodels.datasets.epic_kitchens import EpicKitchensInstance
 from emma_datasets.datamodels.datasets.nlvr import NlvrInstance
 from emma_datasets.datamodels.datasets.refcoco import RefCocoInstance, load_refcoco_annotations
 from emma_datasets.datamodels.datasets.simbot import (
-    SimBotInstructionInstance,
-    SimBotMissionInstance,
     load_simbot_action_annotations,
     load_simbot_annotations,
 )

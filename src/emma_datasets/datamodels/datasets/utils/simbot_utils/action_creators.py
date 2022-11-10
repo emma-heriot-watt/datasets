@@ -82,7 +82,6 @@ class BaseActionCreator:
             "annotation_id": 0,
             "instruction_id": 0,
             "synthetic": True,
-            "paraphrasable": True,
         }
         return instruction_dict
 

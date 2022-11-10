@@ -1,9 +1,12 @@
 import re
 from copy import deepcopy
-from enum import Enum
 from typing import Any, Optional
 
 import spacy
+
+from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
+    SimBotClarificationTypes,
+)
 
 
 def get_object_from_action_object_metadata(
@@ -32,21 +35,6 @@ def get_object_from_action_object_metadata(
         if object_name_candidate is not None:
             return object_name_candidate
     return object_asset
-
-
-class SimBotClarificationTypes(Enum):
-    """SimBot question clarification types.
-
-    The 4 defined question types correspond to the synthetic clarification questions in the annotations.
-    https://us-east-1.console.aws.amazon.com/codesuite/codecommit/repositories/AlexaSimbotMLToolbox/browse/refs/heads/main/--/AlexaSimbotToolbox/data/trajectory-data?region=us-east-1
-    https://app.slack.com/client/T02SWBF7J7M/C03UQQM3HN0
-    """
-
-    location = "where is"
-    description = "what does"
-    disambiguation = "which+instruction_noun"
-    direction = "which direction"
-    other = "other"
 
 
 class ClarificationTargetExtractor:

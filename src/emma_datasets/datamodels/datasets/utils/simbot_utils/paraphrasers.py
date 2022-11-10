@@ -1,6 +1,9 @@
 import random
 
-from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
+from emma_datasets.constants.simbot.simbot import get_objects_id_synonyms
+from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
+    ParaphrasableActions,
+    SimBotInstructionInstance,
     SimBotObjectAttributes,
 )
 
@@ -8,7 +11,8 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations imp
 class InstructionParaphraser:
     """Paraphrase an instruction."""
 
-    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+    def __init__(self) -> None:
+        object_synonyms = get_objects_id_synonyms()
         self.paraphraser_map = {
             "goto": GotoParaphraser(object_synonyms),
             "toggle": ToggleParaphraser(object_synonyms),
@@ -27,6 +31,23 @@ class InstructionParaphraser:
             raise AssertionError(f"Action {action_type} cannot be paraphrased")
         insrtuction = paraphraser(object_id, object_attributes)
         return insrtuction
+
+    def from_instruction_instance(self, instruction_instance: SimBotInstructionInstance) -> str:
+        """Paraphrase an instruction from a SimbotInstructionInstance."""
+        cond1 = len(instruction_instance.actions) == 1
+        action = instruction_instance.actions[0]
+        action_type = action.type.lower()
+        action_data = action.get_action_data
+        cond2 = action_type in ParaphrasableActions
+        if cond1 and cond2:
+            instruction = self(
+                action_type=action_type,
+                object_id=action_data["object"]["id"],
+                object_attributes=SimBotObjectAttributes(**action_data["object"]["attributes"]),
+            )
+        else:
+            instruction = instruction_instance.instruction.instruction
+        return instruction
 
 
 class BaseParaphraser:
@@ -71,7 +92,7 @@ class BaseParaphraser:
         if selected_type == self._action_type:
             object_name = attributes.readable_name
         else:
-            object_name = random.choice(self.object_synonyms[object_id])
+            object_name = random.choice(self.object_synonyms.get(object_id, [object_id]))
 
         template_values = {
             "verb": random.choice(self._instruction_options),

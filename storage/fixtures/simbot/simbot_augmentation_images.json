@@ -29,8 +29,7 @@
 		"mission_id": "Goto_object_detection_data_v4__images_run1_trajv1_start0_end1000_OfficeLayout1C__train__31760_color.png",
 		"annotation_id": 0,
 		"instruction_id": 0,
-		"synthetic": true,
-		"paraphrasable": true
+		"synthetic": true
 	},
 	"Goto_object_detection_data_v4__images_run1_trajv1_start0_end1000_OfficeLayout1C__train__31853_color.png": {
 		"instruction": {
@@ -62,7 +61,6 @@
 		"mission_id": "Goto_object_detection_data_v4__images_run1_trajv1_start0_end1000_OfficeLayout1C__train__31853_color.png",
 		"annotation_id": 0,
 		"instruction_id": 0,
-		"synthetic": true,
-		"paraphrasable": true
+		"synthetic": true
 	}
 }
