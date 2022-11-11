@@ -55,7 +55,7 @@ class SyntheticLowLevelActionSampler:
             payload = {
                 "object": {
                     "id": "Sticky Note",
-                    "mask": sticky_note_bbox_coords,
+                    "mask": [sticky_note_bbox_coords],
                     "colorImageIndex": 0,
                 }
             }
