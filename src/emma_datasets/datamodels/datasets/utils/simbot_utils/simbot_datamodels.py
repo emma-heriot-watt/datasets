@@ -166,3 +166,24 @@ class AugmentationInstruction(BaseModel):
     bbox: list[int]
     image_name: str
     attributes: SimBotObjectAttributes
+
+
+class SimBotPlannerInstance(BaseInstance):
+    """Basemodel for the high-level planner dataset."""
+
+    mission_id: str
+    task_description: str
+    instructions: list[str]
+
+    @property
+    def modality(self) -> MediaType:
+        """Returns the modality for the given instance.
+
+        SimBot has multicam views because of the look-around action which returns 4 images.
+        """
+        return MediaType.multicam
+
+    @property
+    def features_path(self) -> list[Path]:
+        """Returns the path to the features for the current instruction."""
+        return []

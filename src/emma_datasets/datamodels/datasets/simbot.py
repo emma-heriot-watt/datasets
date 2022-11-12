@@ -6,6 +6,7 @@ from typing import Any, Literal
 from emma_datasets.common.settings import Settings
 from emma_datasets.datamodels.constants import DatasetSplit
 from emma_datasets.datamodels.datasets import SimBotInstructionInstance
+from emma_datasets.datamodels.datasets.alfred import AlfredMetadata
 from emma_datasets.datamodels.datasets.utils.simbot_utils.ambiguous_data import (
     AmbiguousGotoProcessor,
 )
@@ -21,6 +22,7 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
     InstructionParaphraser,
 )
 from emma_datasets.db import DatasetDb
+from emma_datasets.io.paths import get_all_file_paths
 
 
 settings = Settings()
@@ -272,5 +274,72 @@ def load_simbot_action_annotations(
         DatasetSplit.train: unwrap_instructions(train_db),
         DatasetSplit.valid: unwrap_instructions(valid_db),
     }
+
+    return source_per_split
+
+
+def generate_planner_data_from_mission_file(filepath: Path) -> list[dict[Any, Any]]:
+    """Loads and reformats the SimBot annotations for creating SimBot planner data."""
+    with open(filepath) as fp:
+        data = json.load(fp)
+
+    restructured_data = []
+
+    for mission_id, mission_annotations in data.items():
+        human_annotations = mission_annotations["human_annotations"]
+        task_description = mission_annotations["CDF"]["task_description"]
+
+        for h_annotation in human_annotations:
+
+            restructured_data.append(
+                {
+                    "mission_id": mission_id,
+                    "task_description": task_description,
+                    "instructions": [
+                        instruction["instruction"] for instruction in h_annotation["instructions"]
+                    ],
+                }
+            )
+
+    return restructured_data
+
+
+def generate_planner_data_from_alfred(alfred_path: Path) -> list[dict[Any, Any]]:
+    """Loads and reformats the SimBot annotations for creating Simbot planner data from ALFRED."""
+    all_file_paths = get_all_file_paths(alfred_path.iterdir())
+    restructured_data = []
+
+    for file_path in all_file_paths:
+        with open(file_path) as in_file:
+            metadata_str = json.load(in_file)
+            metadata = AlfredMetadata.parse_obj(metadata_str)
+
+            for ann in metadata.turk_annotations["anns"]:
+                restructured_data.append(
+                    {
+                        "mission_id": metadata.task_id,
+                        "task_description": ann.task_desc,
+                        "instructions": ann.high_descs,
+                    }
+                )
+
+    return restructured_data
+
+
+def load_simbot_planner_annotations(
+    simbot_base_dir: Path, alfred_data_dir: Path
+) -> dict[DatasetSplit, Any]:
+    """Generates raw data for the high-level planner to be used for SimBot."""
+    train_data = generate_planner_data_from_mission_file(
+        simbot_base_dir.joinpath("train.json")
+    ) + generate_planner_data_from_alfred(alfred_data_dir.joinpath("train"))
+
+    valid_data = (
+        generate_planner_data_from_mission_file(simbot_base_dir.joinpath("valid.json"))
+        + generate_planner_data_from_alfred(alfred_data_dir.joinpath("valid_seen"))
+        + generate_planner_data_from_alfred(alfred_data_dir.joinpath("valid_unseen"))
+    )
+
+    source_per_split = {DatasetSplit.train: train_data, DatasetSplit.valid: valid_data}
 
     return source_per_split

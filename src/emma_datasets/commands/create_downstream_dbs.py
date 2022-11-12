@@ -27,6 +27,10 @@ from emma_datasets.datamodels.datasets.refcoco import RefCocoInstance, load_refc
 from emma_datasets.datamodels.datasets.simbot import (
     load_simbot_action_annotations,
     load_simbot_annotations,
+    load_simbot_planner_annotations,
+)
+from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
+    SimBotPlannerInstance,
 )
 from emma_datasets.datamodels.datasets.vqa_v2 import (
     get_vqa_v2_annotation_paths,
@@ -447,6 +451,24 @@ def create_epic_kitchens_instances(
         dataset_name=DatasetName.epic_kitchens,
         source_per_split=source_per_split,
         instance_model_type=EpicKitchensInstance,
+        output_dir=output_dir,
+    ).run(num_workers)
+
+
+@app.command("simbot-planner")
+def create_simbot_high_level_planner_data(
+    simbot_instances_base_dir: Path = settings.paths.simbot,
+    alfred_data_dir: Path = settings.paths.alfred_data,
+    output_dir: Path = settings.paths.databases,
+    num_workers: Optional[int] = None,
+) -> None:
+    """Create DB files for Alexa Prize SimBot mission data."""
+    source_per_split = load_simbot_planner_annotations(simbot_instances_base_dir, alfred_data_dir)
+
+    DownstreamDbCreator.from_one_instance_per_dict(
+        dataset_name=DatasetName.simbot_planner,
+        source_per_split=source_per_split,
+        instance_model_type=SimBotPlannerInstance,
         output_dir=output_dir,
     ).run(num_workers)
 

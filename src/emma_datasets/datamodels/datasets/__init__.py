@@ -24,6 +24,7 @@ from emma_datasets.datamodels.datasets.teach import TeachEdhInstance, TeachInter
 from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
     SimBotInstructionInstance,
     SimBotMissionInstance,
+    SimBotPlannerInstance,
 )
 from emma_datasets.datamodels.datasets.visual_genome import (
     VgImageMetadata,
