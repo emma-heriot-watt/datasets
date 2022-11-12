@@ -1,0 +1,20 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [1.4.0](https://github.com/emma-simbot/datasets/compare/v1.3.0...v1.4.0) (2022-11-12)
+
+
+### Features
+
+* Add paraphrasing to augmented instructions ([#558](https://github.com/emma-simbot/datasets/issues/558)) ([239a4aa](https://github.com/emma-simbot/datasets/commit/239a4aaac94d258f2f8b193342a47de8e8f455bc))
+* high level planner data ([#563](https://github.com/emma-simbot/datasets/issues/563)) ([891c28f](https://github.com/emma-simbot/datasets/commit/891c28fe752570707c13453c775d3edacc97ac38))
+* Special monitor augmentations ([#557](https://github.com/emma-simbot/datasets/issues/557)) ([0a8d2d5](https://github.com/emma-simbot/datasets/commit/0a8d2d52fd8d47e7ae929c454647f53bb79466de))
+* Update arena definitions to match new vision model ([#555](https://github.com/emma-simbot/datasets/issues/555)) ([4271558](https://github.com/emma-simbot/datasets/commit/4271558d5824da96bc6cee487b86492d60de2210))
+
+
+### Bug Fixes
+
+* Handle ambiguous Goto ([#554](https://github.com/emma-simbot/datasets/issues/554)) ([239b68d](https://github.com/emma-simbot/datasets/commit/239b68d0c677227fa8c3b37465dac8220f87a19e))
+* sticky note mask ([#559](https://github.com/emma-simbot/datasets/issues/559)) ([dade243](https://github.com/emma-simbot/datasets/commit/dade2435cc5b2b4234d2c997163906b277556db2))
