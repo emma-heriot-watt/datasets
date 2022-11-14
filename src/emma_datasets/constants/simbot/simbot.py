@@ -10,6 +10,7 @@ settings = Settings()
 ARENA_JSON = settings.paths.constants.joinpath("simbot", "arena_definitions.json")
 SYNTHETIC_JSON = settings.paths.constants.joinpath("simbot", "low_level_actions_templates.json")
 OBJECT_SYNONYMS = settings.paths.constants.joinpath("simbot/object_id_synonyms.json")
+OBJECT_MANIFEST = settings.paths.constants.joinpath("simbot/ObjectManifest.json")
 
 
 @lru_cache(maxsize=1)
@@ -28,3 +29,9 @@ def get_low_level_action_templates() -> dict[str, Any]:
 def get_objects_id_synonyms() -> dict[str, list[str]]:
     """Load the object synonyms."""
     return read_json(OBJECT_SYNONYMS)
+
+
+@lru_cache(maxsize=1)
+def get_object_manifest() -> dict[str, Any]:
+    """Load the object manifest."""
+    return read_json(OBJECT_MANIFEST)
