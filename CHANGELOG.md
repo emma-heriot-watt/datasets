@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.0](https://github.com/emma-simbot/datasets/compare/v1.4.1...v1.5.0) (2022-11-14)
+
+
+### Features
+
+* Add object manifest ([#561](https://github.com/emma-simbot/datasets/issues/561)) ([ce3876f](https://github.com/emma-simbot/datasets/commit/ce3876fd1b2a35d010afa7ffd780b44071db2817))
+
 ## [1.4.1](https://github.com/emma-simbot/datasets/compare/v1.4.0...v1.4.1) (2022-11-14)
 
 
