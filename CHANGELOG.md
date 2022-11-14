@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/emma-simbot/datasets/compare/v1.4.0...v1.4.1) (2022-11-14)
+
+
+### Bug Fixes
+
+* Use readable names only for special monitors ([#562](https://github.com/emma-simbot/datasets/issues/562)) ([e6a0e82](https://github.com/emma-simbot/datasets/commit/e6a0e821e71a247d30852f50c5ce382ce0e1c721))
+
 ## [1.4.0](https://github.com/emma-simbot/datasets/compare/v1.3.0...v1.4.0) (2022-11-12)
 
 
