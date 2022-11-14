@@ -58,6 +58,12 @@ class BaseParaphraser:
         self._action_type = action_type
         self._instruction_options: list[str]
         self._available_templates: dict[str, list[str]]
+        self._special_name_cases = {
+            "V_Monitor_Embiggenator",
+            "V_Monitor_Gravity",
+            "V_Monitor_Laser",
+            "V_Monitor_FreezeRay",
+        }
         self._verb_templates = [
             "{verb} the {object}.",
         ]
@@ -89,7 +95,7 @@ class BaseParaphraser:
         selected_type = random.choice(available_types)
         selected_template = random.choice(self._available_templates[selected_type])
 
-        if selected_type == self._action_type:
+        if selected_type == self._action_type and selected_type in self._special_name_cases:
             object_name = attributes.readable_name
         else:
             object_name = random.choice(self.object_synonyms.get(object_id, [object_id]))
