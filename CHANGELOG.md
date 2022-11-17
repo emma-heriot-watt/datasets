@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.0](https://github.com/emma-simbot/datasets/compare/v1.6.0...v1.7.0) (2022-11-17)
+
+
+### Features
+
+* New object classes ([#560](https://github.com/emma-simbot/datasets/issues/560)) ([98984d6](https://github.com/emma-simbot/datasets/commit/98984d64537ab4896e7bb85bdf8f289856e60dcc))
+
 ## [1.6.0](https://github.com/emma-simbot/datasets/compare/v1.5.0...v1.6.0) (2022-11-17)
 
 
