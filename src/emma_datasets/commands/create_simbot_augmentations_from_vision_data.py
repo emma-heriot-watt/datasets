@@ -13,7 +13,7 @@ from numpy.typing import NDArray
 from torch.utils.data import DataLoader, IterableDataset
 
 from emma_datasets.common import Settings, get_progress
-from emma_datasets.constants.simbot.simbot import get_objects_id_synonyms
+from emma_datasets.constants.simbot.simbot import get_class_thresholds, get_objects_asset_synonyms
 from emma_datasets.datamodels.datasets.utils.simbot_utils.action_creators import (
     BaseActionCreator,
     GotoActionCreator,
@@ -66,6 +66,7 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
             action_creator.action_type: action_creator for action_creator in action_creators
         }
         self._coordinate_margin = coordinate_margin
+        self._class_thresholds = get_class_thresholds()
         self._start = 0
         self._end = len(self.metadata_files)
         self._cache = settings.paths.simbot.joinpath("augmentations")
@@ -123,7 +124,12 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
                 image_name = str(full_image_name.relative_to(self.root_vision_path))
 
                 augmentation_instructions.extend(
-                    augmentation(annotations, robot_position, image_name)
+                    augmentation(
+                        annotations=annotations,
+                        robot_position=robot_position,
+                        image_name=image_name,
+                        class_thresholds=self._class_thresholds,
+                    )
                 )
 
             final_instructions = []
@@ -318,8 +324,10 @@ if __name__ == "__main__":
         limit_examples=args.limit_examples,
     )
 
-    object_synonyms = get_objects_id_synonyms()
-    augmentations = [SpecialMonitorAugmentation(min_interaction_distance=MIN_INTERACTION_DISTANCE)]
+    object_synonyms = get_objects_asset_synonyms()
+    augmentations: list[BaseAugmentation] = [
+        SpecialMonitorAugmentation(min_interaction_distance=MIN_INTERACTION_DISTANCE),
+    ]
     action_creators = [ToggleActionCreator(object_synonyms), GotoActionCreator(object_synonyms)]
 
     dataset = AugmentationDataset(

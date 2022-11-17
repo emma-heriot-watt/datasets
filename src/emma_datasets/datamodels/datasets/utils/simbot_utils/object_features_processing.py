@@ -24,7 +24,7 @@ class ObjectClassDecoder:
         self.idx_to_label = {
             idx: label for label, idx in arena_definitions["label_to_idx"].items()
         }
-        self.object_assets_to_names = arena_definitions["asset_to_name"]
+        self.object_assets_to_names = arena_definitions["asset_to_label"]
 
     def get_target_object(self, action: dict[str, Any]) -> str:
         """Get the target object id for an action."""
@@ -41,7 +41,7 @@ class ObjectClassDecoder:
 
     def get_candidate_object_in_frame(
         self,
-        mission_id: int,
+        mission_id: str,
         action_id: int,
         frame_index: int,
         target_object_name: str,
@@ -59,7 +59,7 @@ class ObjectClassDecoder:
         return candidate_objects
 
     def get_target_object_mask(
-        self, mission_id: int, action_id: int, frame_index: int, target_object_name: str
+        self, mission_id: str, action_id: int, frame_index: int, target_object_name: str
     ) -> Optional[list[list[int]]]:
         """Get the mask of an object that matches the target object name."""
         # Load the features from the Goto action

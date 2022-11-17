@@ -1,13 +1,14 @@
 import os
 from typing import Any
 
-from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
-    AugmentationInstruction,
-    SimBotObjectAttributes,
-)
 from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
+    BaseParaphraser,
     GotoParaphraser,
     ToggleParaphraser,
+)
+from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
+    AugmentationInstruction,
+    SimBotObjectAttributes,
 )
 
 
@@ -16,7 +17,7 @@ class BaseActionCreator:
 
     def __init__(self) -> None:
         self.action_type = "Base"
-        self.paraphraser = self._no_paraphraser
+        self.paraphraser: BaseParaphraser
 
     def __call__(self, augmentation_instruction: AugmentationInstruction) -> dict[str, Any]:
         """Create an instruction dict from an augmentation instruction."""
@@ -33,9 +34,6 @@ class BaseActionCreator:
             object_id, attributes, mission_id, synthetic_action
         )
         return instruction_dict
-
-    def _no_paraphraser(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
-        return f"{object_id}."
 
     def _flat_image_name(self, image_name: str) -> str:
         return "__".join(image_name.split(os.sep))

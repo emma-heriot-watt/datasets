@@ -1,14 +1,20 @@
 import random
-from typing import Any, Literal, Optional
+from typing import Any, Optional
 
 import numpy as np
 from numpy.typing import NDArray
-from pydantic import BaseModel
 
 from emma_datasets.common.settings import Settings
-from emma_datasets.constants.simbot.simbot import get_low_level_action_templates
+from emma_datasets.constants.simbot.simbot import (
+    get_arena_definitions,
+    get_low_level_action_templates,
+)
 from emma_datasets.datamodels.datasets.utils.simbot_utils.object_features_processing import (
     ObjectClassDecoder,
+)
+from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
+    AugmentationInstruction,
+    SimBotObjectAttributes,
 )
 
 
@@ -31,7 +37,7 @@ class SyntheticLowLevelActionSampler:
 
     def __call__(
         self,
-        mission_id: int,
+        mission_id: str,
         annotation_id: str,
         instruction_idx: int,
         original_action: Optional[dict[str, Any]] = None,
@@ -107,7 +113,7 @@ class SyntheticGotoObjectGenerator:
 
     def __call__(
         self,
-        mission_id: int,
+        mission_id: str,
         instruction_idx: int,
         instruction_actions: list[dict[str, Any]],
     ) -> Optional[dict[str, Any]]:
@@ -181,29 +187,18 @@ class SyntheticGotoObjectGenerator:
         return goto_object != target_object
 
 
-class SimBotObjectAttributes(BaseModel):
-    """Base model for attributes of objects."""
-
-    readable_name: str
-    color: Optional[str] = None
-    location: Optional[Literal["left", "right"]] = None
-
-
-class AugmentationInstruction(BaseModel):
-    """Basemodel for an augmentation instruction."""
-
-    action_type: str
-    object_id: str
-    bbox: list[int]
-    image_name: str
-    attributes: SimBotObjectAttributes
-
-
 class BaseAugmentation:
     """Base class for object augmentations."""
 
+    def __init__(self) -> None:
+        self._assets_to_labels = get_arena_definitions()["asset_to_label"]
+
     def __call__(
-        self, annotations: dict[str, Any], robot_position: NDArray[np.float32], image_name: str
+        self,
+        annotations: dict[str, Any],
+        robot_position: NDArray[np.float32],
+        image_name: str,
+        class_thresholds: dict[str, list[int]],
     ) -> list[AugmentationInstruction]:
         """Creates new annotations for a given object."""
         raise NotImplementedError("Do not call BaseAugmentation class")
@@ -212,11 +207,15 @@ class BaseAugmentation:
         (x_min, y_min, x_max, y_max) = bbox
         return ((x_max - x_min) / 2, (y_max - y_min) / 2)
 
+    def _compute_bbox_area(self, bbox: list[int]) -> float:
+        return (bbox[3] - bbox[1]) * (bbox[2] - bbox[0])
+
 
 class SpecialMonitorAugmentation(BaseAugmentation):
     """Monitor Augmentations."""
 
     def __init__(self, min_interaction_distance: float = 1.5) -> None:
+        super().__init__()
         self.min_interaction_distance = min_interaction_distance
         self._monitor_color_map = {
             "Freeze ray monitor": "blue",
@@ -231,8 +230,12 @@ class SpecialMonitorAugmentation(BaseAugmentation):
             "V_Monitor_Embiggenator": "Embiggenator monitor",
         }
 
-    def __call__(
-        self, annotations: dict[str, Any], robot_position: NDArray[np.float32], image_name: str
+    def __call__(  # noqa: WPS231
+        self,
+        annotations: dict[str, Any],
+        robot_position: NDArray[np.float32],
+        image_name: str,
+        class_thresholds: dict[str, list[int]],
     ) -> list[AugmentationInstruction]:
         """Get new annotations for monitors."""
         interaction_instructions = []
@@ -241,8 +244,13 @@ class SpecialMonitorAugmentation(BaseAugmentation):
             image_annotation = annotation["image_annotation"]
             object_annotation = annotation["object_annotation"]
             object_type = image_annotation["object_type"]
+            bbox = image_annotation["bbox"]
             readable_name = self._monitor_object_type_map.get(object_type, None)
             if readable_name is None:
+                continue
+            # all special monitors have Computer as class label
+            # ignore the maximum threshold value
+            if self._compute_bbox_area(bbox) < class_thresholds["Computer"][0]:
                 continue
             color_name = self._monitor_color_map[readable_name]
 
@@ -263,7 +271,7 @@ class SpecialMonitorAugmentation(BaseAugmentation):
                     attributes=SimBotObjectAttributes(
                         readable_name=readable_name, color=color_name
                     ),
-                    bbox=image_annotation["bbox"],
+                    bbox=bbox,
                     image_name=image_name,
                 )
                 interaction_instructions.append(instruction)
@@ -276,7 +284,7 @@ class SpecialMonitorAugmentation(BaseAugmentation):
                     attributes=SimBotObjectAttributes(
                         readable_name=readable_name, color=color_name
                     ),
-                    bbox=image_annotation["bbox"],
+                    bbox=bbox,
                     image_name=image_name,
                 )
                 navigation_instructions.append(instruction)

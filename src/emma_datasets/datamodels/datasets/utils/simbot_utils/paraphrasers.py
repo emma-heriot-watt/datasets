@@ -1,6 +1,9 @@
 import random
 
-from emma_datasets.constants.simbot.simbot import get_objects_id_synonyms
+from emma_datasets.constants.simbot.simbot import get_arena_definitions, get_objects_asset_synonyms
+from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
+    get_object_asset_from_object_id,
+)
 from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
     ParaphrasableActions,
     SimBotInstructionInstance,
@@ -12,7 +15,7 @@ class InstructionParaphraser:
     """Paraphrase an instruction."""
 
     def __init__(self) -> None:
-        object_synonyms = get_objects_id_synonyms()
+        object_synonyms = get_objects_asset_synonyms()
         self.paraphraser_map = {
             "goto": GotoParaphraser(object_synonyms),
             "toggle": ToggleParaphraser(object_synonyms),
@@ -63,6 +66,7 @@ class BaseParaphraser:
         self._action_type = action_type
         self._instruction_options: list[str]
         self._available_templates: dict[str, list[str]]
+        self._assets_to_labels = get_arena_definitions()["asset_to_label"]
         self._special_name_cases = {
             "V_Monitor_Embiggenator",
             "V_Monitor_Gravity",
@@ -106,7 +110,8 @@ class BaseParaphraser:
         if selected_type == self._action_type and selected_type in self._special_name_cases:
             object_name = attributes.readable_name
         else:
-            object_name = random.choice(self.object_synonyms.get(object_id, [object_id]))
+            object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
+            object_name = random.choice(self.object_synonyms[object_asset])
 
         template_values = {
             "verb": random.choice(self._instruction_options),

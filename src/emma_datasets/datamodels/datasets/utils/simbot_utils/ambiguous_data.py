@@ -17,7 +17,7 @@ class AmbiguousGotoProcessor:
         self.object_decoder = ObjectClassDecoder()
 
     def __call__(
-        self, instruction_dict: dict[str, Any], mission_id: int, action: dict[str, Any]
+        self, instruction_dict: dict[str, Any], mission_id: str, action: dict[str, Any]
     ) -> dict[str, Any]:
         """Annotate an instruction."""
         if action["type"] != "Goto" or "officeRoom" in action["goto"]["object"]:
@@ -50,7 +50,7 @@ class AmbiguousGotoProcessor:
         return instruction_dict
 
     def _ambiguous_across_frames(
-        self, frame_index: int, mission_id: int, action: dict[str, Any], target_object_name: str
+        self, frame_index: int, mission_id: str, action: dict[str, Any], target_object_name: str
     ) -> bool:
         ambiguous_across_frames = False
         for other_frame_index, _ in enumerate(action["colorImages"]):
@@ -67,7 +67,7 @@ class AmbiguousGotoProcessor:
         return ambiguous_across_frames
 
     def _ambiguous_in_frame(
-        self, frame_index: int, mission_id: int, action_id: int, target_object_name: str
+        self, frame_index: int, mission_id: str, action_id: int, target_object_name: str
     ) -> bool:
         candidate_objects = self.object_decoder.get_candidate_object_in_frame(
             mission_id=mission_id,

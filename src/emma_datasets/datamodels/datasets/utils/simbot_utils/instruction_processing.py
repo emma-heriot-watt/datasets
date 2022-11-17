@@ -9,6 +9,31 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels impo
 )
 
 
+def get_object_asset_from_object_id(object_id: str, object_assets_to_names: dict[str, str]) -> str:
+    """Map the object id to its object asset.
+
+    Example:
+        (object_asset, object_name) = (Desk_01_1000, Desk_01)
+    """
+    object_assets = object_assets_to_names.keys()
+    # Case1: Object id in action matches exactly with object assets
+    if object_id in object_assets:
+        return object_id
+
+    # Case2: The object id contains a substring that matches with the object assests
+    # Example: Desk_01_1000
+    # Because the ids can have additional tags we need to remove these tags
+    # and check if they asset after removing the tags match an object asset
+    object_id_components = object_id.split("_")
+
+    for idx in range(len(object_id_components), 0, -1):
+        # tries to match the longest sub-string first
+        object_name_candidate = "_".join(object_id_components[:idx])
+        if object_name_candidate in object_assets:
+            return object_name_candidate
+    return object_id
+
+
 def get_object_from_action_object_metadata(
     object_asset: str, object_assets_to_names: dict[str, str]
 ) -> str:
