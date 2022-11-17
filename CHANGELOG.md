@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0](https://github.com/emma-simbot/datasets/compare/v1.5.0...v1.6.0) (2022-11-17)
+
+
+### Features
+
+* Add paraphrasers for all actions ([#571](https://github.com/emma-simbot/datasets/issues/571)) ([5a0e980](https://github.com/emma-simbot/datasets/commit/5a0e9808403324b83019caacba0b6dad4e28b064))
+
 ## [1.5.0](https://github.com/emma-simbot/datasets/compare/v1.4.1...v1.5.0) (2022-11-14)
 
 
