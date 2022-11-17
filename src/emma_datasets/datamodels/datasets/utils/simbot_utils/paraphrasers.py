@@ -20,6 +20,11 @@ class InstructionParaphraser:
             "close": CloseParaphraser(object_synonyms),
             "pickup": PickupParaphraser(object_synonyms),
             "place": PlaceParaphraser(object_synonyms),
+            "break": BreakParaphraser(object_synonyms),
+            "scan": ScanParaphraser(object_synonyms),
+            "pour": PourParaphraser(object_synonyms),
+            "clean": CleanParaphraser(object_synonyms),
+            "fill": FillParaphraser(object_synonyms),
         }
 
     def __call__(
@@ -64,6 +69,9 @@ class BaseParaphraser:
             "V_Monitor_Laser",
             "V_Monitor_FreezeRay",
         }
+        self._full_templates = [
+            "{instruction}",
+        ]
         self._verb_templates = [
             "{verb} the {object}.",
         ]
@@ -109,6 +117,14 @@ class BaseParaphraser:
         instruction = selected_template.format(**template_values)
 
         return instruction.lower()
+
+    def _add_prefix(self, instruction: str, prefix: str) -> str:
+        return f"{prefix} {instruction}"
+
+    def _add_suffix(self, instruction: str, suffix: str) -> str:
+        if instruction.endswith("."):
+            instruction = instruction[:-1]
+        return f"{instruction} {suffix}"
 
 
 class GotoParaphraser(BaseParaphraser):
@@ -293,6 +309,7 @@ class PlaceParaphraser(BaseParaphraser):
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="place")
+        # TODO: Use random nouns to place, e.g. Place the donut on the ....
         self._instruction_options = [
             "place it on",
             "leave it on",
@@ -317,6 +334,198 @@ class PlaceParaphraser(BaseParaphraser):
         object_location = attributes.location
         if object_location is not None:
             available_types.append("place_location")
+
+        instruction = self._get_instruction(
+            object_id=object_id, attributes=attributes, available_types=available_types
+        )
+        return instruction
+
+
+class BreakParaphraser(BaseParaphraser):
+    """Paraphrase break instructions."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__(object_synonyms=object_synonyms, action_type="break")
+        self._instruction_options = [
+            "break",
+            "smash",
+            "shatter",
+            "crash",
+        ]
+        self._prefix_option = "use the hammer to"
+        self._suffix_option = "with the hammer."
+
+        self._available_templates = {
+            "break": self._verb_templates,
+            "break_color": self._verb_color_templates,
+            "break_location": self._verb_location_templates,
+        }
+
+    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+        """Get a break instruction."""
+        available_types = ["break"]
+        object_color = attributes.color
+        if object_color is not None:
+            available_types.append("break_color")
+
+        object_location = attributes.location
+        if object_location is not None:
+            available_types.append("break_location")
+
+        instruction = self._get_instruction(
+            object_id=object_id, attributes=attributes, available_types=available_types
+        )
+        proba = random.random()
+        if proba < (1 / 3):
+            instruction = self._add_prefix(instruction, self._prefix_option)
+        elif proba < (2 / 3):
+            instruction = self._add_suffix(instruction, self._suffix_option)
+        return instruction
+
+
+class CleanParaphraser(BaseParaphraser):
+    """Paraphrase clean instructions."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__(object_synonyms=object_synonyms, action_type="clean")
+        self._instruction_options = [
+            "clean the plate.",
+            "rinse the plate.",
+        ]
+        self._suffix_option = "in the sink."
+
+        self._available_templates = {
+            "clean": self._full_templates,
+        }
+
+    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+        """Get a clean instruction."""
+        available_types = ["clean"]
+
+        instruction = self._get_instruction(
+            object_id=object_id, attributes=attributes, available_types=available_types
+        )
+        if random.random() < (1 / 2):
+            instruction = self._add_suffix(instruction, self._suffix_option)
+        return instruction
+
+
+class PourParaphraser(BaseParaphraser):
+    """Paraphrase pour instructions."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__(object_synonyms=object_synonyms, action_type="pour")
+        self._instruction_options = [
+            "pour it into",
+            "pour it in",
+            "pour the water into",
+            "pour the coffee into",
+            "pour the cereal into",
+            "pour the milk into",
+        ]
+
+        self._available_templates = {
+            "pour": self._verb_templates,
+            "pour_color": self._verb_color_templates,
+            "pour_location": self._verb_location_templates,
+        }
+
+    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+        """Get a pour instruction."""
+        available_types = ["pour"]
+        object_color = attributes.color
+        if object_color is not None:
+            available_types.append("pour_color")
+
+        object_location = attributes.location
+        if object_location is not None:
+            available_types.append("pour_location")
+
+        instruction = self._get_instruction(
+            object_id=object_id, attributes=attributes, available_types=available_types
+        )
+        return instruction
+
+
+class ScanParaphraser(BaseParaphraser):
+    """Paraphrase scan instructions."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__(object_synonyms=object_synonyms, action_type="scan")
+        self._instruction_options = ["Scan"]
+
+        self._available_templates = {
+            "scan": self._verb_templates,
+            "scan_color": self._verb_color_templates,
+            "scan_location": self._verb_location_templates,
+        }
+
+    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+        """Get a scan instruction."""
+        available_types = ["scan"]
+        object_color = attributes.color
+        if object_color is not None:
+            available_types.append("scan_color")
+
+        object_location = attributes.location
+        if object_location is not None:
+            available_types.append("scan_location")
+
+        instruction = self._get_instruction(
+            object_id=object_id, attributes=attributes, available_types=available_types
+        )
+        return instruction
+
+
+class FillParaphraser(BaseParaphraser):
+    """Paraphrase fill instructions."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__(object_synonyms=object_synonyms, action_type="fill")
+        self._instruction_options = ["fill"]
+
+        self._suffix_option = "with water."
+        self._available_templates = {"fill": self._verb_templates}
+
+    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+        """Get a fill instruction."""
+        available_types = ["fill"]
+
+        instruction = self._get_instruction(
+            object_id=object_id, attributes=attributes, available_types=available_types
+        )
+        return instruction
+
+
+class SearchParaphraser(BaseParaphraser):
+    """Paraphrase search instructions."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__(object_synonyms=object_synonyms, action_type="search")
+        self._instruction_options = [
+            "find",
+            "locate",
+            "where is",
+            "search for",
+            "seek",
+            "trace",
+            "can you find",
+            "can you locate",
+            "can you search for",
+            "do you see",
+        ]
+
+        self._available_templates = {
+            "search": self._verb_templates,
+            "search_color": self._verb_color_templates,
+        }
+
+    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+        """Get a search instruction."""
+        available_types = ["search"]
+        object_color = attributes.color
+        if object_color is not None:
+            available_types.append("search_color")
 
         instruction = self._get_instruction(
             object_id=object_id, attributes=attributes, available_types=available_types
