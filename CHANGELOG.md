@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.1](https://github.com/emma-simbot/datasets/compare/v1.8.0...v1.8.1) (2022-11-24)
+
+
+### Bug Fixes
+
+* close paraphraser ([#577](https://github.com/emma-simbot/datasets/issues/577)) ([c043c84](https://github.com/emma-simbot/datasets/commit/c043c84959b68393aed2840d859ad43cec8360f1))
+* paraphrasable property ([#576](https://github.com/emma-simbot/datasets/issues/576)) ([47101b2](https://github.com/emma-simbot/datasets/commit/47101b23c00de94da7689d0e12fc5673931225fe))
+
 ## [1.8.0](https://github.com/emma-simbot/datasets/compare/v1.7.0...v1.8.0) (2022-11-24)
 
 
