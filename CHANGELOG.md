@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.0](https://github.com/emma-simbot/datasets/compare/v1.7.0...v1.8.0) (2022-11-24)
+
+
+### Features
+
+* Update label-to-idx and idx-to-label arena definitions ([#573](https://github.com/emma-simbot/datasets/issues/573)) ([1bb0db5](https://github.com/emma-simbot/datasets/commit/1bb0db592addb94ed88168e90b8190ef17305717))
+
 ## [1.7.0](https://github.com/emma-simbot/datasets/compare/v1.6.0...v1.7.0) (2022-11-17)
 
 
