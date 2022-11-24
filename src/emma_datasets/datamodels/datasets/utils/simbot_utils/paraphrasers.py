@@ -248,7 +248,7 @@ class CloseParaphraser(BaseParaphraser):
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="close")
-        self._instruction_options = ["close"]
+        self._instruction_options = ["close", "shut"]
 
         self._available_templates = {
             "close": self._verb_templates,
@@ -258,7 +258,7 @@ class CloseParaphraser(BaseParaphraser):
 
     def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
         """Get a close instruction."""
-        available_types = ["close", "shut"]
+        available_types = ["close"]
         object_color = attributes.color
         if object_color is not None:
             available_types.append("close_color")
