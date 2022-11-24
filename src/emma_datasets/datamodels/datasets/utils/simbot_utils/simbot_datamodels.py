@@ -146,7 +146,7 @@ class SimBotInstructionInstance(BaseInstance):
     def paraphrasable(self) -> bool:
         """Check if the instance allows for paraphrasing."""
         cond1 = len(self.actions) == 1  # number of actions
-        cond2 = self.actions[0].type in ParaphrasableActions  # action type
+        cond2 = self.actions[0].type.lower() in ParaphrasableActions  # action type
         return cond1 and cond2 and self.synthetic
 
 
