@@ -194,6 +194,7 @@ def load_simbot_augmentation_instruction_data(
         mission_metadata["instruction"]["instruction"] = paraphraser.from_instruction_instance(
             instruction_instance
         )
+        mission_metadata["vision_augmentation"] = True
         instruction_dict = create_instruction_dict(**mission_metadata)
         instruction_data.append(instruction_dict)
 
@@ -258,6 +259,7 @@ def unwrap_instructions(db_path: Path) -> list[dict[Any, Any]]:
                 "instruction": instruction,
                 "actions": instruction_instance.actions[: action_index + 1],
                 "synthetic": instruction_instance.synthetic,
+                "vision_augmentation": instruction_instance.vision_augmentation,
             }
             unwrapped_instances.append(instruction_dict)
     return unwrapped_instances

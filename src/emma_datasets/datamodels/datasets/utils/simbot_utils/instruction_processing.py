@@ -170,6 +170,8 @@ def create_instruction_dict(
     synthetic: bool = False,
     ambiguous: bool = False,
     paraphrasable: bool = False,
+    vision_augmentation: bool = False,
+    **kwargs: Any,
 ) -> dict[str, Any]:
     """Create an instruction dict."""
     action_start_id = instruction["actions"][0]
@@ -191,5 +193,6 @@ def create_instruction_dict(
         "synthetic": synthetic,
         "ambiguous": ambiguous,
         "paraphrasable": paraphrasable,
+        "vision_augmentation": vision_augmentation,
     }
     return instruction_dict

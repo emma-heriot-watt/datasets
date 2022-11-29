@@ -28,17 +28,21 @@ class InstructionParaphraser:
             "pour": PourParaphraser(object_synonyms),
             "clean": CleanParaphraser(object_synonyms),
             "fill": FillParaphraser(object_synonyms),
+            "search": SearchParaphraser(object_synonyms),
         }
 
     def __call__(
-        self, action_type: str, object_id: str, object_attributes: SimBotObjectAttributes
+        self,
+        action_type: str,
+        object_id: str,
+        object_attributes: SimBotObjectAttributes,
     ) -> str:
         """Paraphrase."""
         paraphraser = self.paraphraser_map.get(action_type, None)
         if paraphraser is None:
             raise AssertionError(f"Action {action_type} cannot be paraphrased")
-        insrtuction = paraphraser(object_id, object_attributes)
-        return insrtuction
+        instruction = paraphraser(object_id, object_attributes)
+        return instruction
 
     def from_instruction_instance(self, instruction_instance: SimBotInstructionInstance) -> str:
         """Paraphrase an instruction from a SimbotInstructionInstance."""
@@ -48,10 +52,22 @@ class InstructionParaphraser:
         action_data = action.get_action_data
         cond2 = action_type in ParaphrasableActions
         if cond1 and cond2:
+            # For instruction instances that have multiple objects e.g, search we pick one at random
+            if isinstance(action_data["object"]["attributes"], list):
+                object_candidates = len(action_data["object"]["attributes"])
+                object_candidate_index = random.randint(0, object_candidates - 1)
+                object_attributes = SimBotObjectAttributes(
+                    **action_data["object"]["attributes"][object_candidate_index]
+                )
+                object_id = action_data["object"]["id"][object_candidate_index]
+            else:
+                object_attributes = SimBotObjectAttributes(**action_data["object"]["attributes"])
+                object_id = action_data["object"]["id"]
+
             instruction = self(
                 action_type=action_type,
-                object_id=action_data["object"]["id"],
-                object_attributes=SimBotObjectAttributes(**action_data["object"]["attributes"]),
+                object_id=object_id,
+                object_attributes=object_attributes,
             )
         else:
             instruction = instruction_instance.instruction.instruction
@@ -111,7 +127,7 @@ class BaseParaphraser:
             object_name = attributes.readable_name
         else:
             object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
-            object_name = random.choice(self.object_synonyms[object_asset])
+            object_name = random.choice(self.object_synonyms.get(object_asset, [object_asset]))
 
         template_values = {
             "verb": random.choice(self._instruction_options),

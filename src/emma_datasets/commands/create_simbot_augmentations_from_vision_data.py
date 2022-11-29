@@ -3,13 +3,15 @@ import math
 import os
 import shutil
 from argparse import ArgumentParser
+from collections import defaultdict
 from collections.abc import Iterator
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 import numpy as np
 import torch
 from numpy.typing import NDArray
+from rich.progress import Progress, TaskID
 from torch.utils.data import DataLoader, IterableDataset
 
 from emma_datasets.common import Settings, get_progress
@@ -17,19 +19,48 @@ from emma_datasets.constants.simbot.simbot import get_class_thresholds, get_obje
 from emma_datasets.datamodels.datasets.utils.simbot_utils.action_creators import (
     BaseActionCreator,
     GotoActionCreator,
+    SearchActionCreator,
     ToggleActionCreator,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
     BaseAugmentation,
-    SpecialMonitorAugmentation,
+    GoToAugmentation,
+    SearchAugmentation,
+    ToggleAugmentation,
 )
 
 
 settings = Settings()
-MIN_INTERACTION_DISTANCE = 1.5
+SEARCH_OBJECTS = [  # noqa: WPS407
+    "Action Figure",
+    "Bowl",
+    "Can",
+    "Cereal Box",
+    "Coffee Maker",
+    "Coffee Unmaker",
+    "Color Changer",
+    "Control Panel",
+    "Embiggenator",
+    "Floppy Disk",
+    "Freeze Ray",
+    "Freezer",
+    "Fuse Box",
+    "Generator",
+    "Gravity Pad",
+    "Hammer",
+    "Laser",
+    "Laser Tip",
+    "Milk",
+    "Mug",
+    "Printer Cartridge",
+    "Robot Arm",
+    "Time Machine",
+    "Trophy",
+    "Wall Shelf",
+]
 
 
-class AugmentationDataset(IterableDataset[dict[Any, Any]]):
+class AugmentationVisionDataset(IterableDataset[dict[Any, Any]]):
     """Create additional trajectory data.
 
     Args:
@@ -48,9 +79,8 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
         output_image_dir: Path,
         root_vision_path: Path,
         metadata_files: list[Path],
-        augmentations: list[BaseAugmentation],
+        vision_data_augmentations: dict[str, BaseAugmentation],
         action_creators: list[BaseActionCreator],
-        dataset_version: str = "v4",
         coordinate_margin: float = 10,
     ) -> None:
         self.output_json_file = output_json_file
@@ -58,10 +88,7 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
         self.output_image_dir.mkdir(parents=True, exist_ok=True)
         self.root_vision_path = root_vision_path
         self.metadata_files = metadata_files
-        if dataset_version != "v4":
-            raise NotImplementedError(f"Unsupported dataset version {dataset_version}")
-        self._dataset_version = dataset_version
-        self.augmentations = augmentations
+        self.vision_data_augmentations = vision_data_augmentations
         self.action_creators = {
             action_creator.action_type: action_creator for action_creator in action_creators
         }
@@ -72,23 +99,80 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
         self._cache = settings.paths.simbot.joinpath("augmentations")
         self._cache.mkdir(parents=True, exist_ok=True)
 
+    def configure_worker_folders(self, num_workers: int) -> None:
+        """Create the folder inside the cache for each worker."""
+        if num_workers == 0:
+            worker_folder = self._cache.joinpath("worker_0")
+            worker_folder.mkdir(parents=True, exist_ok=True)
+        else:
+            for worker_id in range(num_workers):
+                worker_folder = self._cache.joinpath(f"worker_{worker_id}")
+                worker_folder.mkdir(parents=True, exist_ok=True)
+
     def gather(self) -> None:
-        """Write the new annotations."""
-        worker_json_files = self._cache.iterdir()
-        metadata = {}
-        for worker_json_file in worker_json_files:
-            with open(worker_json_file) as worker_file:
-                worker_metadata = json.load(worker_file)
-                metadata.update(worker_metadata)
+        """Write the new annotations.
+
+        Group the metadata in terms of action type and call the post-process for each action type.
+        This is used in case where some augmentators require to do some post-processing after
+        collecting the data from all workers, e.g downsampling.
+        """
+        worker_folders = list(self._cache.iterdir())
+        metadata_per_action_type: dict[str, Any] = {}
+
+        progress = get_progress()
+        task_id = progress.add_task(
+            "Gathering annotations",
+            visible=True,
+            start=True,
+            total=len(worker_folders),
+            comment="",
+        )
+        with progress:
+            metadata_per_action_type = self._collect_metadata_from_workers(
+                worker_folders, progress, task_id
+            )
+
+        progress = get_progress()
+        task_id = progress.add_task(
+            "Post-processing annotations",
+            visible=True,
+            start=True,
+            total=len(metadata_per_action_type.keys()),
+            comment="",
+        )
+
+        final_metadata = {}
+        with progress:
+            for action_type, annotations_per_action_type in metadata_per_action_type.items():
+                final_metadata.update(
+                    self.vision_data_augmentations[action_type].post_process_metadata(
+                        annotations_per_action_type
+                    )
+                )
+                progress.advance(task_id)
 
         with open(self.output_json_file, "w") as out_file:
-            json.dump(metadata, out_file, indent=4)
+            json.dump(final_metadata, out_file, indent=4)
 
-        for _, action_metadata in metadata.items():
-            image_name = action_metadata["actions"][0]["colorImages"][0]
-            destination_color_image = Path(self.output_image_dir, image_name)
-            source_color_image = Path(self.root_vision_path, str(image_name).replace("__", os.sep))
-            shutil.copy(source_color_image, destination_color_image)
+        progress = get_progress()
+        task_id = progress.add_task(
+            f"Writing images to {self.output_image_dir}",
+            visible=True,
+            start=True,
+            total=len(final_metadata.keys()),
+            comment="",
+        )
+        with progress:
+            for _, action_metadata in final_metadata.items():
+                progress.advance(task_id)
+                image_name = action_metadata["actions"][0]["colorImages"][0]
+                destination_color_image = Path(self.output_image_dir, image_name)
+                if destination_color_image.exists():
+                    continue
+                source_color_image = Path(
+                    self.root_vision_path, str(image_name).replace("__", os.sep)
+                )
+                shutil.copy(source_color_image, destination_color_image)
 
         shutil.rmtree(self._cache)
 
@@ -104,20 +188,20 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
         if worker_info is None:
             iter_start = self._start
             iter_end = self._end
-            worker_output_json = self._cache.joinpath("worker_0.json")
+            worker_output_folder = self._cache.joinpath("worker_0")
         # in a worker process, split the workload
         else:
             worker_id = worker_info.id
             per_worker = int(math.ceil((self._end - self._start) / float(worker_info.num_workers)))
             iter_start = self._start + worker_id * per_worker
             iter_end = min(iter_start + per_worker, self._end)
-            worker_output_json = self._cache.joinpath(f"worker_{worker_id}.json")
+            worker_output_folder = self._cache.joinpath(f"worker_{worker_id}")
 
         for file_idx in range(iter_start, iter_end):
             metadata_json_path = self.metadata_files[file_idx]
-            (annotations, robot_position) = self._load_metadata(metadata_json_path)
+            (annotations, room_name, robot_position) = self._load_metadata(metadata_json_path)
             augmentation_instructions = []
-            for augmentation in self.augmentations:
+            for _, augmentation in self.vision_data_augmentations.items():
                 full_image_name = metadata_json_path.parent.joinpath(
                     f"{metadata_json_path.stem.split('_')[0]}_color.png",
                 )
@@ -129,6 +213,7 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
                         robot_position=robot_position,
                         image_name=image_name,
                         class_thresholds=self._class_thresholds,
+                        room_name=room_name,
                     )
                 )
 
@@ -140,12 +225,16 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
                 final_instructions.append(instruction_dict)
 
             if final_instructions:
+                json_file = str(metadata_json_path.relative_to(self.root_vision_path)).replace(
+                    os.sep, "__"
+                )
+                worker_output_json = worker_output_folder.joinpath(json_file)
                 self._write_to_cache(final_instructions, worker_output_json)
             yield {}
 
     def _load_metadata(
         self, metadata_json_path: Path
-    ) -> tuple[dict[str, Any], NDArray[np.float32]]:
+    ) -> tuple[dict[str, Any], str, NDArray[np.float32]]:
         metadata_json_full_path = self.root_vision_path.joinpath(metadata_json_path)
 
         with open(metadata_json_full_path) as fp:
@@ -153,6 +242,7 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
 
         image_annotations = metadata["image_annotations"]
         objects_annotations = metadata["response"]["objects"]
+        room = metadata["cdf"]["scene"]["roomLocation"][0]
 
         image_annotations_dict = {
             image_ann["object_id"]: image_ann for image_ann in image_annotations
@@ -185,7 +275,7 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
             ]
         )
 
-        return (annotations, robot_position)
+        return (annotations, room, robot_position)
 
     def _write_to_cache(
         self, final_instructions: list[dict[str, Any]], worker_output_json: Path
@@ -202,9 +292,33 @@ class AugmentationDataset(IterableDataset[dict[Any, Any]]):
         with open(worker_output_json, "w") as worker_out_file:
             json.dump(metadata, worker_out_file, indent=4)
 
+    def _collect_metadata_from_workers(
+        self, worker_folders: list[Path], progress: Progress, task_id: TaskID
+    ) -> dict[str, Any]:
+        metadata_per_action_type: dict[str, Any] = defaultdict(dict)
+        for worker_folder in worker_folders:
+            worker_json_files = worker_folder.iterdir()
+            for worker_json_file in worker_json_files:
+                with open(worker_json_file) as worker_file:
+                    worker_metadata = json.load(worker_file)
+                for key, annotation in worker_metadata.items():
+                    action_type = annotation["actions"][0]["type"]
+                    metadata_per_action_type[action_type][key] = annotation
+
+            progress.advance(task_id)
+        return metadata_per_action_type
+
+
+def get_metadata_version(root_file_path: Union[str, Path]) -> str:
+    """Get the version from a metadata filepath."""
+    return str(root_file_path).split("object_detection_data_")[1][:2]
+
 
 def load_all_metadata_files(
-    root_vision_path: Path, metadata_file: Path, limit_examples: Optional[int] = None
+    root_vision_path: Path,
+    metadata_file: Path,
+    limit_examples: Optional[int] = None,
+    dataset_version: Optional[str] = None,
 ) -> list[Path]:
     """Reads all the available image annotation files."""
     with open(metadata_file) as f:
@@ -213,8 +327,16 @@ def load_all_metadata_files(
     metadata_files_temp = sorted(
         [root_vision_path.joinpath(line.strip()) for line in annotation_files]
     )
+    if dataset_version is not None:
+        metadata_files_temp = [
+            metadata_file
+            for metadata_file in metadata_files_temp
+            if get_metadata_version(metadata_file) == dataset_version
+        ]
+
     if limit_examples is not None:
         metadata_files_temp = metadata_files_temp[:limit_examples]
+
     metadata_files = []
 
     progress = get_progress()
@@ -243,7 +365,7 @@ def collate_fn(batch: dict[str, Any]) -> dict[str, Any]:
     return batch
 
 
-def generate_data(dataset: AugmentationDataset, num_workers: int = 0) -> None:
+def generate_data(dataset: AugmentationVisionDataset, num_workers: int = 0) -> None:
     """Iterate over the dataset."""
     data_generator = DataLoader(
         dataset, batch_size=1, num_workers=num_workers, collate_fn=lambda x: x
@@ -305,6 +427,11 @@ if __name__ == "__main__":
         type=int,
         help="Limit of examples",
     )
+    parser.add_argument(
+        "--dataset_version",
+        type=str,
+        help="Use only examples from a specific dataset version",
+    )
 
     parser.add_argument(
         "--num_workers",
@@ -312,7 +439,42 @@ if __name__ == "__main__":
         default=0,
         help="Number of workers",
     )
-
+    parser.add_argument(
+        "--min_toggle_distance",
+        type=float,
+        default=1.5,  # noqa: WPS432
+        help="Minimum distance for toggling an object",
+    )
+    parser.add_argument(
+        "--min_goto_distance",
+        type=float,
+        default=2.5,  # noqa: WPS432
+        help="Minimum distance for going to an object",
+    )
+    parser.add_argument(
+        "--min_search_distance",
+        type=float,
+        default=2.5,  # noqa: WPS432
+        help="Minimum distance for searching an object",
+    )
+    parser.add_argument(
+        "--search_max_negative_examples_per_room",
+        type=int,
+        default=4000,  # noqa: WPS432
+        help="Maximum negative examples per room for searching an object",
+    )
+    parser.add_argument(
+        "--goto_max_examples_per_class",
+        type=int,
+        default=5000,  # noqa: WPS432
+        help="Maximum examples per class for going to an object",
+    )
+    parser.add_argument(
+        "--toggle_max_examples_per_class",
+        type=int,
+        default=5000,  # noqa: WPS432
+        help="Maximum examples per class for toggling an object",
+    )
     args = parser.parse_args()
 
     root_vision_path = args.root_vision_path
@@ -322,22 +484,41 @@ if __name__ == "__main__":
         root_vision_path=root_vision_path,
         metadata_file=input_metadata_txt_path,
         limit_examples=args.limit_examples,
+        dataset_version=args.dataset_version,
     )
 
     object_synonyms = get_objects_asset_synonyms()
-    augmentations: list[BaseAugmentation] = [
-        SpecialMonitorAugmentation(min_interaction_distance=MIN_INTERACTION_DISTANCE),
+    action_creators = [
+        ToggleActionCreator(object_synonyms),
+        GotoActionCreator(object_synonyms),
+        SearchActionCreator(object_synonyms),
     ]
-    action_creators = [ToggleActionCreator(object_synonyms), GotoActionCreator(object_synonyms)]
+    vision_data_augmentations: dict[str, BaseAugmentation] = {
+        "Toggle": ToggleAugmentation(
+            min_interaction_distance=args.min_toggle_distance,
+            toggle_classes=["Robot Arm", "Button"],
+        ),
+        "Search": SearchAugmentation(
+            search_classes=SEARCH_OBJECTS,
+            min_interaction_distance=args.min_search_distance,
+            max_negative_examples_per_room=args.search_max_negative_examples_per_room,
+        ),
+        "Goto": GoToAugmentation(
+            min_interaction_distance=args.min_goto_distance,
+            goto_classes=["Whiteboard", "Robot Arm", "Wall Shelf"],
+        ),
+    }
 
-    dataset = AugmentationDataset(
+    dataset = AugmentationVisionDataset(
         output_json_file=args.output_json_file,
         output_image_dir=args.output_image_dir,
         root_vision_path=root_vision_path,
         metadata_files=metadata_files,
-        augmentations=augmentations,
+        vision_data_augmentations=vision_data_augmentations,
         action_creators=action_creators,
         coordinate_margin=10,
     )
+
+    dataset.configure_worker_folders(args.num_workers)
 
     generate_data(dataset, num_workers=args.num_workers)

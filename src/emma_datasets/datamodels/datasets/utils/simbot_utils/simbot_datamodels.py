@@ -1,6 +1,6 @@
 from enum import Enum
 from pathlib import Path
-from typing import Any, Literal, Optional
+from typing import Any, Literal, Optional, Union
 
 from pydantic import BaseModel, Field, root_validator
 
@@ -11,7 +11,7 @@ from emma_datasets.datamodels.constants import MediaType
 
 settings = Settings()
 
-ParaphrasableActions = {"goto", "toggle", "open", "close", "pickup", "place"}
+ParaphrasableActions = {"goto", "toggle", "open", "close", "pickup", "place", "search"}
 
 
 class SimBotClarificationTypes(Enum):
@@ -117,6 +117,7 @@ class SimBotInstructionInstance(BaseInstance):
     synthetic: bool = False
     ambiguous: bool = False
     keep_only_target_frame: bool = False
+    vision_augmentation: bool = False
 
     class Config:
         """Custom configuration to allows additional fields."""
@@ -133,7 +134,20 @@ class SimBotInstructionInstance(BaseInstance):
 
     @property
     def features_path(self) -> list[Path]:
-        """Returns the path to the features for the current instruction."""
+        """Returns the path to the features for the current instruction.
+
+        Instances comming from vision augmentations have only a single action. Because images can
+        belong to multiple instances, to avoid duplicates the feature path is directly the path to
+        the image.
+        """
+        if self.vision_augmentation:
+            template = "{feature_path}.pt"
+            color_image = self.actions[0].color_images[0]
+            feature_path = Path(color_image).stem
+            return [
+                settings.paths.simbot_features.joinpath(template.format(feature_path=feature_path))
+            ]
+
         template = "{mission_id}_action{action_id}.pt"
         return [
             settings.paths.simbot_features.joinpath(
@@ -155,17 +169,21 @@ class SimBotObjectAttributes(BaseModel):
 
     readable_name: str
     color: Optional[str] = None
-    location: Optional[Literal["left", "right"]] = None
+    location: Optional[Literal["left", "middle", "right"]] = None
 
 
 class AugmentationInstruction(BaseModel):
     """Basemodel for an augmentation instruction."""
 
     action_type: str
-    object_id: str
-    bbox: list[int]
+    object_id: Union[str, list[str]]
+    bbox: Union[list[int], list[list[int]], None]  # one, multiple, or no bounding boxes at all
     image_name: str
-    attributes: SimBotObjectAttributes
+    attributes: Union[SimBotObjectAttributes, list[SimBotObjectAttributes]]
+    annotation_id: int
+    image_index: int = 0
+    room_name: Optional[str] = None
+    augmentation_metadata: Optional[dict[str, Any]] = None
 
 
 class SimBotPlannerInstance(BaseInstance):

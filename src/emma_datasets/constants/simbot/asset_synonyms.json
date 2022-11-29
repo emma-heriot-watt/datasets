@@ -353,7 +353,7 @@
 	"Bookshelf_Wooden_01": ["Shelf", "Bookshelf", "Bookcase", "Wooden Shelves"],
 	"AP_Prop_Shelf_06": ["Shelf", "Rack"],
 	"AP_Prop_Shelf_Wall_FreezeRay": ["Shelf", "Target Shelf", "Freeze Ray Shelf"],
-	"AP_Prop_Shelf_Wall_04": ["Shelf"],
+	"AP_Prop_Shelf_Wall_04": ["Shelf", "Target Shelf", "Freeze Ray Shelf"],
 	"Shelves_Tall_01": ["Shelf", "Rack"],
 	"AP_Prop_Shelf_Wall_Laser": ["Shelf", "Target Shelf", "Laser Shelf"],
 	"CakeSlice_02": ["Cake"],
