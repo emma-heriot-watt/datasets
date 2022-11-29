@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.0](https://github.com/emma-simbot/datasets/compare/v1.9.0...v1.10.0) (2022-11-29)
+
+
+### Features
+
+* Filter look around in human instructions ([#581](https://github.com/emma-simbot/datasets/issues/581)) ([801c7d4](https://github.com/emma-simbot/datasets/commit/801c7d49573feb3cb414f611333122c9f94d10a9))
+
 ## [1.9.0](https://github.com/emma-simbot/datasets/compare/v1.8.1...v1.9.0) (2022-11-29)
 
 
