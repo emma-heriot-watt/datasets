@@ -17,6 +17,8 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations imp
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
     ClarificationTargetExtractor,
     create_instruction_dict,
+    get_action_types_for_instruction,
+    instruction_has_spatial_info,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
     InstructionParaphraser,
@@ -75,6 +77,16 @@ def load_simbot_instruction_data(  # noqa: WPS231
         instruction_idx = 0
         for human_idx, human_annotation in enumerate(mission_annotations["human_annotations"]):
             for instruction in human_annotation["instructions"]:
+                action_types = get_action_types_for_instruction(instruction, actions)
+
+                # Ignore look around actions that have spatial information
+                if instruction_has_spatial_info(instruction) and "Look" in action_types:
+                    continue
+
+                # Ignore look around actions if they are the first action in an instruction
+                elif action_types[0] == "Look":
+                    instruction["actions"] = instruction["actions"][1:]
+
                 instruction_dict = create_instruction_dict(
                     instruction=instruction,
                     actions=actions,
@@ -89,7 +101,7 @@ def load_simbot_instruction_data(  # noqa: WPS231
                 instruction_idx += 1
                 if human_idx > 0 or not synthetic_goto_generator:
                     continue
-                instruction_dict = synthetic_goto_generator(
+                instruction_dict = synthetic_goto_generator(  # type: ignore[assignment]
                     mission_id=mission_id,
                     instruction_idx=instruction_idx,
                     instruction_actions=deepcopy(

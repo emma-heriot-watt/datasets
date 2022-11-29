@@ -196,3 +196,32 @@ def create_instruction_dict(
         "vision_augmentation": vision_augmentation,
     }
     return instruction_dict
+
+
+def instruction_has_spatial_info(instruction_dict: dict[str, Any]) -> bool:
+    """Check if an instruction dict has spatial information.
+
+    This check is done both in the raw instruction text and the question answer. It is used to
+    filter out look around actions from human instructions.
+    """
+    question_answers = instruction_dict.get("question_answers", [])
+    qa_concatenations = [f"{qa['question']} {qa['answer']}" for qa in question_answers]
+
+    concat_string = " ".join([instruction_dict["instruction"]] + qa_concatenations)
+
+    has_spatial_info = (
+        "left" in concat_string
+        or "right" in concat_string
+        or "behind" in concat_string
+        or "front" in concat_string
+    )
+    return has_spatial_info
+
+
+def get_action_types_for_instruction(
+    instruction_dict: dict[str, Any], actions: list[dict[str, Any]]
+) -> list[str]:
+    """Get the action types for an instruction."""
+    action_start_id = instruction_dict["actions"][0]
+    action_end_id = instruction_dict["actions"][-1]
+    return [action["type"] for action in actions[action_start_id : action_end_id + 1]]
