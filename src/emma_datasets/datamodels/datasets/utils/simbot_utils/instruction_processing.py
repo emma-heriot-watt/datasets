@@ -4,6 +4,7 @@ from typing import Any, Optional
 
 import spacy
 
+from emma_datasets.constants.simbot.simbot import get_arena_definitions
 from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
     SimBotClarificationTypes,
 )
@@ -13,7 +14,7 @@ def get_object_asset_from_object_id(object_id: str, object_assets_to_names: dict
     """Map the object id to its object asset.
 
     Example:
-        (object_asset, object_name) = (Desk_01_1000, Desk_01)
+        (object_asset, object_name) = (V_Monitor_Laser_1000, V_Monitor_Laser)
     """
     object_assets = object_assets_to_names.keys()
     # Case1: Object id in action matches exactly with object assets
@@ -34,16 +35,14 @@ def get_object_asset_from_object_id(object_id: str, object_assets_to_names: dict
     return object_id
 
 
-def get_object_from_action_object_metadata(
-    object_asset: str, object_assets_to_names: dict[str, str]
-) -> str:
-    """Map the object asset for a given action to its readable name.
+def get_object_label_from_object_id(object_id: str, object_assets_to_names: dict[str, str]) -> str:
+    """Map the object id for a given action to its name.
 
-    Example:
-        (object_asset, object_name) = (Desk_01_1000, Desk)
+    The name corresponds to the object detection label. Example:
+        (object_id, object_name) = (V_Monitor_Laser_1000, Computer)
     """
     # Case1: Object asset in action matches exactly with object assets
-    object_name_candidate = object_assets_to_names.get(object_asset, None)
+    object_name_candidate = object_assets_to_names.get(object_id, None)
     if object_name_candidate is not None:
         return object_name_candidate
 
@@ -51,7 +50,7 @@ def get_object_from_action_object_metadata(
     # Example: Desk_01_1000
     # Because the assets can have additional tags we need to remove these tags
     # and check if they asset after removing the tags match an object label
-    object_asset_components = object_asset.split("_")
+    object_asset_components = object_id.split("_")
 
     for idx in range(len(object_asset_components), 0, -1):
         # tries to match the longest sub-string first
@@ -59,7 +58,23 @@ def get_object_from_action_object_metadata(
         object_name_candidate = object_assets_to_names.get(object_name_candidate, None)
         if object_name_candidate is not None:
             return object_name_candidate
-    return object_asset
+
+    return object_id
+
+
+def get_object_readable_name_from_object_id(
+    object_id: str, object_assets_to_names: dict[str, str], special_name_cases: dict[str, str]
+) -> str:
+    """Map the object asset for a given action to its readable name.
+
+    Example:
+        (object_asset, object_name) = (V_Monitor_Laser_1000, Laser Monitor)
+    """
+    object_asset = get_object_asset_from_object_id(object_id, object_assets_to_names)
+    readable_name = special_name_cases.get(object_asset, None)
+    if readable_name is None:
+        return object_assets_to_names.get(object_asset, object_asset)
+    return readable_name
 
 
 class ClarificationTargetExtractor:
@@ -82,18 +97,106 @@ class ClarificationTargetExtractor:
             SimBotClarificationTypes.disambiguation: 1,
             SimBotClarificationTypes.location: 3,
         }
+        # This is a manual fix for mapping common target names to object detector labels
+        self._normalized_name_map = {
+            "changer": "color changer",
+            "swapper": "color changer",
+            "panel": "control panel",
+            "control": "control panel",
+            "ray": "freeze ray",
+            "maker": "coffee maker",
+            "refrigerator": "fridge",
+            "tip": "laser tip",
+            "pot": "coffee pot",
+            "floppy": "floppy disk",
+            "cartridge": "printer cartridge",
+            "desk": "table",
+            "jelly": "jar",
+            "monitor": "computer",
+            "extinguisher": "fire extinguisher",
+            "figure": "action figure",
+            "coffeemaker": "coffee maker",
+            "toast": "bread",
+            "pc": "computer",
+            "terminal": "computer",
+            "bean": "coffee beans",
+            "cereal": "cereal box",
+            "driver": "screwdriver",
+            "disk": "floppy disk",
+            "faucet": "sink",
+            "tap": "sink",
+            "platform": "wall shelf",
+            "cupboard": "drawer",
+            "jug": "coffee pot",
+            "soda": "can",
+            "pipe": "sink",
+            "sign": "warning sign",
+            "countertop": "counter top",
+            "oven": "microwave",
+            "saw": "handsaw",
+            "hammmer": "hammer",
+            "candy": "candy bar",
+        }
 
-    def __call__(self, question: str, question_type: SimBotClarificationTypes) -> Optional[str]:
+        self._nomalize_types = {
+            "machine": {
+                "time": "time machine",
+                "coffee": "coffee maker",
+                "laser": "laser",
+                "freeze ray": "freeze ray",
+                "color": "color changer",
+                "print": "printer",
+            },
+            "slice": {
+                "apple": "apple",
+                "cake": "cake",
+                "pie": "pie",
+                "bread": "bread",
+                "toast": "bread",
+            },
+            "button": {
+                "red": "red button",
+                "blue": "blue button",
+                "green": "green button",
+            },
+            "target": {
+                "freeze ray": "freeze ray shelf",
+                "laser": "laser shelf",
+            },
+            "container": {"milk": "milk"},
+        }
+        self._normalize_synonyms = {
+            "machine": {"machine", "station"},
+            "target": {"target", "shelf"},
+            "slice": {"slice"},
+            "button": {"button"},
+            "container": {"container"},
+        }
+
+    def __call__(
+        self,
+        question: str,
+        question_type: SimBotClarificationTypes,
+    ) -> Optional[str]:
         """Preprocess the clarification target."""
         tokens = question.split()
         target_index = min(self.target_index[question_type], len(tokens) - 1)
         naive_target = self.get_naive_target(tokens, target_index=target_index)
         target = self.get_target(question, target_index=target_index)
-
         if target is None or naive_target in self._prefer_naive:
             target = naive_target
 
         return target
+
+    def normalize_target(self, target: Optional[str], instruction: str) -> Optional[str]:
+        """Convert the target to an object detection label."""
+        if target is None:
+            return target
+        normalized_target = self._normalized_name_map.get(target, target)
+        for object_type in self._nomalize_types:
+            normalized_target = self._normalized_names(normalized_target, instruction, object_type)
+
+        return normalized_target.title()
 
     def get_naive_target(self, question_tokens: list[str], target_index: int) -> str:
         """Get the target based on the word position."""
@@ -114,7 +217,16 @@ class ClarificationTargetExtractor:
                 target = token.text
             if target is not None:
                 break
+
         return target
+
+    def _normalized_names(self, normalized_target: str, instruction: str, object_type: str) -> str:
+        if normalized_target in self._normalize_synonyms[object_type]:
+            normalized_types = self._nomalize_types[object_type]
+            for keyword, normalized_name in normalized_types.items():
+                if keyword in instruction:
+                    return normalized_name
+        return normalized_target
 
 
 def get_question_type(question: str) -> SimBotClarificationTypes:
@@ -196,6 +308,28 @@ def create_instruction_dict(
         "vision_augmentation": vision_augmentation,
     }
     return instruction_dict
+
+
+class HoldingObject:
+    """Add the holding object to the actions."""
+
+    def __init__(self) -> None:
+        self._object_assets_to_names = get_arena_definitions()["asset_to_label"]
+
+    def __call__(self, actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        """Add the holding object to actions."""
+        holding_object = None
+        for action in actions:
+            action["holding_object"] = holding_object
+            # Update the object that will be held after the current action
+            if action["type"] == "Pickup":
+                holding_object = get_object_label_from_object_id(
+                    action["pickup"]["object"]["id"],
+                    self._object_assets_to_names,
+                )
+            elif action["type"] == "Place":
+                holding_object = None
+        return actions
 
 
 def instruction_has_spatial_info(instruction_dict: dict[str, Any]) -> bool:

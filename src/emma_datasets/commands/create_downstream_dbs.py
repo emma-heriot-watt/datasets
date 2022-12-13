@@ -27,6 +27,7 @@ from emma_datasets.datamodels.datasets.refcoco import RefCocoInstance, load_refc
 from emma_datasets.datamodels.datasets.simbot import (
     load_simbot_action_annotations,
     load_simbot_annotations,
+    load_simbot_clarification_annotations,
     load_simbot_planner_annotations,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
@@ -410,7 +411,7 @@ def create_simbot_instruction_instances(
 
 
 @app.command("simbot-actions")
-def create_simbot_action_leve_instances(
+def create_simbot_action_level_instances(
     simbot_instances_base_dir: Path = settings.paths.simbot,
     output_dir: Path = settings.paths.databases,
     num_workers: Optional[int] = None,
@@ -420,6 +421,23 @@ def create_simbot_action_leve_instances(
     source_per_split = load_simbot_action_annotations(output_dir, db_file_name)
     DownstreamDbCreator.from_one_instance_per_dict(
         dataset_name=DatasetName.simbot_actions,
+        source_per_split=source_per_split,
+        instance_model_type=SimBotInstructionInstance,
+        output_dir=output_dir,
+    ).run(num_workers)
+
+
+@app.command("simbot-clarifications")
+def create_simbot_clarification_instances(
+    simbot_instances_base_dir: Path = settings.paths.simbot,
+    output_dir: Path = settings.paths.databases,
+    num_workers: Optional[int] = None,
+) -> None:
+    """Create DB files for Alexa Prize SimBot clarification data."""
+    db_file_name = f"{DatasetName.simbot_instructions.name}"
+    source_per_split = load_simbot_clarification_annotations(output_dir, db_file_name)
+    DownstreamDbCreator.from_one_instance_per_dict(
+        dataset_name=DatasetName.simbot_clarifications,
         source_per_split=source_per_split,
         instance_model_type=SimBotInstructionInstance,
         output_dir=output_dir,

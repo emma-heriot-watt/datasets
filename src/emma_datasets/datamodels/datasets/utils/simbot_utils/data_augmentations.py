@@ -15,6 +15,8 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.object_features_processing import (
     ObjectClassDecoder,
+    compute_bbox_area,
+    compute_bbox_center_coords,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
     AugmentationInstruction,
@@ -236,13 +238,6 @@ class BaseAugmentation:
         distance_to_object = np.linalg.norm(robot_position - object_position)
         return distance_to_object
 
-    def _compute_bbox_center_coords(self, bbox: list[int]) -> tuple[float, float]:
-        (x_min, y_min, x_max, y_max) = bbox
-        return (x_min + (x_max - x_min) / 2, y_min + (y_max - y_min) / 2)
-
-    def _compute_bbox_area(self, bbox: list[int]) -> float:
-        return (bbox[3] - bbox[1]) * (bbox[2] - bbox[0])
-
     def _get_instructions_from_attributes(
         self,
         instruction_list: list[AugmentationInstruction],
@@ -250,7 +245,7 @@ class BaseAugmentation:
     ) -> tuple[list[AugmentationInstruction], int]:
         instructions = []
         bbox_centers = [
-            self._compute_bbox_center_coords(instruction.bbox) for instruction in instruction_list  # type: ignore[arg-type]
+            compute_bbox_center_coords(instruction.bbox) for instruction in instruction_list
         ]
 
         left2right = np.argsort([bbox_center[0] for bbox_center in bbox_centers])
@@ -340,7 +335,7 @@ class GoToAugmentation(BaseAugmentation):
 
             # Ignore too small objects
             bbox = image_annotation["bbox"]
-            if self._compute_bbox_area(bbox) < class_thresholds[object_class][0]:
+            if compute_bbox_area(bbox) < class_thresholds[object_class][0]:
                 continue
 
             distance_to_object = self._compute_distance_to_object(
@@ -454,7 +449,7 @@ class ToggleAugmentation(BaseAugmentation):
 
             # Ignore too small objects
             bbox = image_annotation["bbox"]
-            if self._compute_bbox_area(bbox) < class_thresholds[object_class][0]:
+            if compute_bbox_area(bbox) < class_thresholds[object_class][0]:
                 continue
 
             distance_to_object = self._compute_distance_to_object(
@@ -572,7 +567,7 @@ class SearchAugmentation(BaseAugmentation):
 
             # Ignore too small objects
             bbox = image_annotation["bbox"]
-            if self._compute_bbox_area(bbox) < class_thresholds[object_class][0]:
+            if compute_bbox_area(bbox) < class_thresholds[object_class][0]:
                 continue
 
             distance_to_object = self._compute_distance_to_object(

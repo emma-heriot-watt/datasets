@@ -5,7 +5,7 @@ import torch
 
 from emma_datasets.common.settings import Settings
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
-    get_object_from_action_object_metadata,
+    get_object_label_from_object_id,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.masks import compress_simbot_mask
 from emma_datasets.io import read_json
@@ -34,7 +34,7 @@ class ObjectClassDecoder:
     def get_target_object_and_name(self, action: dict[str, Any]) -> tuple[str, str]:
         """Get the target object id and name for an action."""
         target_object = self.get_target_object(action)
-        target_object_name = get_object_from_action_object_metadata(
+        target_object_name = get_object_label_from_object_id(
             target_object, self.object_assets_to_names
         )
         return target_object, target_object_name
@@ -47,15 +47,37 @@ class ObjectClassDecoder:
         target_object_name: str,
     ) -> list[int]:
         """Get a list of object indices matching the target object name."""
-        features_path = settings.paths.simbot_features.joinpath(
-            f"{mission_id}_action{action_id}.pt"
+        features = self.load_features(
+            mission_id=mission_id, action_id=action_id, frame_index=frame_index
         )
-        if not features_path.exists():
+        if not features:
             return []
-        features = self._load_frame_features(features_path=features_path, frame_index=frame_index)
         candidate_objects = self._get_candidate_objects_from_features(
             features=features, target_object_name=target_object_name
         )
+        if target_object_name == "Shelf":
+            candidate_objects.extend(
+                self._get_candidate_objects_from_features(
+                    features=features, target_object_name="Wall Shelf"
+                )
+            )
+        elif target_object_name in "Cabinet":
+            candidate_objects.extend(
+                self._get_candidate_objects_from_features(
+                    features=features, target_object_name="Counter"
+                )
+            )
+        elif target_object_name == "Box":
+            candidate_objects.extend(
+                self._get_candidate_objects_from_features(
+                    features=features, target_object_name="Cereal Box"
+                )
+            )
+            candidate_objects.extend(
+                self._get_candidate_objects_from_features(
+                    features=features, target_object_name="Boxes"
+                )
+            )
         return candidate_objects
 
     def get_target_object_mask(
@@ -63,11 +85,11 @@ class ObjectClassDecoder:
     ) -> Optional[list[list[int]]]:
         """Get the mask of an object that matches the target object name."""
         # Load the features from the Goto action
-        features_path = settings.paths.simbot_features.joinpath(
-            f"{mission_id}_action{action_id}.pt"
+        features = self.load_features(
+            mission_id=mission_id, action_id=action_id, frame_index=frame_index
         )
-
-        features = self._load_frame_features(features_path=features_path, frame_index=frame_index)
+        if not features:
+            return None
         candidate_objects = self._get_candidate_objects_from_features(
             features=features, target_object_name=target_object_name
         )
@@ -82,6 +104,18 @@ class ObjectClassDecoder:
         mask[int(y_min) : int(y_max) + 1, int(x_min) : int(x_max) + 1] = 1  # noqa: WPS221
         compressed_mask = compress_simbot_mask(mask)
         return compressed_mask
+
+    def load_features(
+        self, mission_id: str, action_id: int, frame_index: int
+    ) -> Optional[dict[str, Any]]:
+        """Get the mask of an object that matches the target object name."""
+        # Load the features from the Goto action
+        features_path = settings.paths.simbot_features.joinpath(
+            f"{mission_id}_action{action_id}.pt"
+        )
+        if not features_path.exists():
+            return None
+        return self._load_frame_features(features_path=features_path, frame_index=frame_index)
 
     def _load_frame_features(self, features_path: Path, frame_index: int) -> dict[str, Any]:
         features = torch.load(features_path)["frames"][frame_index]["features"]
@@ -111,3 +145,14 @@ class ObjectClassDecoder:
             if self.idx_to_label[class_idx] == target_object_name
         ]
         return candidate_objects
+
+
+def compute_bbox_center_coords(bbox: list[int]) -> tuple[float, float]:
+    """Compute the centre of the bounding box."""
+    (x_min, y_min, x_max, y_max) = bbox
+    return (x_min + (x_max - x_min) / 2, y_min + (y_max - y_min) / 2)
+
+
+def compute_bbox_area(bbox: list[int]) -> float:
+    """Compute the area of the bounding box."""
+    return (bbox[3] - bbox[1]) * (bbox[2] - bbox[0])

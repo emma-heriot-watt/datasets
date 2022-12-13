@@ -46,10 +46,12 @@ class SimBotAction(BaseModel):
         """Custom configuration to allows additional fields."""
 
         extra: str = "allow"
+        allow_population_by_field_name = True
 
     id: int
     type: str
     color_images: list[str] = Field(..., alias="colorImages")
+    holding_object: Optional[str] = None
     final: Optional[bool] = False
 
     @root_validator(pre=True)
@@ -76,6 +78,17 @@ class SimBotInstruction(BaseModel):
     instruction: str
     actions: list[int]
     question_answers: Optional[list[SimBotQA]]
+
+    @property
+    def necessary_question_answers(self) -> list[SimBotQA]:
+        """Get the necessary question-answers."""
+        necessary_question_answers: list[SimBotQA] = []
+        if not self.question_answers:
+            return necessary_question_answers
+        for qa_pair in self.question_answers:
+            if qa_pair.question_necessary:
+                necessary_question_answers.append(qa_pair)
+        return necessary_question_answers
 
 
 class SimBotAnnotation(BaseModel):
@@ -161,7 +174,12 @@ class SimBotInstructionInstance(BaseInstance):
         """Check if the instance allows for paraphrasing."""
         cond1 = len(self.actions) == 1  # number of actions
         cond2 = self.actions[0].type.lower() in ParaphrasableActions  # action type
-        return cond1 and cond2 and self.synthetic
+        cond3 = self.synthetic  # synthetic and not Goto room
+        # Synthetic goto room instructions are not paraphrasable
+        action_metadata = self.actions[0].get_action_data.get("object", None)
+        if cond3 and action_metadata is not None and "id" not in action_metadata:
+            cond3 = False
+        return cond1 and cond2 and cond3
 
 
 class SimBotObjectAttributes(BaseModel):

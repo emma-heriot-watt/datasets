@@ -1,4 +1,5 @@
 import json
+import random
 from copy import deepcopy
 from pathlib import Path
 from typing import Any, Literal
@@ -9,6 +10,7 @@ from emma_datasets.datamodels.datasets import SimBotInstructionInstance
 from emma_datasets.datamodels.datasets.alfred import AlfredMetadata
 from emma_datasets.datamodels.datasets.utils.simbot_utils.ambiguous_data import (
     AmbiguousGotoProcessor,
+    ClarificationFilter,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
     SyntheticGotoObjectGenerator,
@@ -16,6 +18,7 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations imp
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
     ClarificationTargetExtractor,
+    HoldingObject,
     create_instruction_dict,
     get_action_types_for_instruction,
     instruction_has_spatial_info,
@@ -28,6 +31,7 @@ from emma_datasets.io.paths import get_all_file_paths
 
 
 settings = Settings()
+random.seed(42)  # noqa: WPS432
 
 
 def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
@@ -69,11 +73,13 @@ def load_simbot_instruction_data(  # noqa: WPS231
         synthetic_goto_generator = None
 
     ambiguous_goto_processor = AmbiguousGotoProcessor()
+    holding_object_processor = HoldingObject()
     total_sampled_synthetic_actions = 0
     instruction_data = []
 
     for mission_id, mission_annotations in data.items():
-        actions = mission_annotations["actions"]
+        actions = holding_object_processor(mission_annotations["actions"])
+
         instruction_idx = 0
         for human_idx, human_annotation in enumerate(mission_annotations["human_annotations"]):
             for instruction in human_annotation["instructions"]:
@@ -289,6 +295,55 @@ def load_simbot_action_annotations(
         DatasetSplit.valid: unwrap_instructions(valid_db),
     }
 
+    return source_per_split
+
+
+def filter_clarifications(db_path: Path) -> list[dict[Any, Any]]:  # noqa: WPS231
+    """Filter simbot clarifications."""
+    filtered_instances = []
+    db = DatasetDb(db_path)
+    qa_filter = ClarificationFilter()
+    for _, _, sample in db:
+        instruction_instance = SimBotInstructionInstance.parse_raw(sample)
+        if instruction_instance.synthetic:
+            filtered_instances.append(instruction_instance.dict())
+            continue
+
+        if qa_filter.skip_instruction(instruction_instance.instruction.instruction):
+            continue
+        # Filter the clarifications
+        new_question_answers = qa_filter(instruction_instance)
+        if new_question_answers is None:
+            new_instruction = instruction_instance.instruction.copy(
+                update={"question_answers": new_question_answers}
+            )
+            new_instruction_instance = instruction_instance.copy(
+                update={"instruction": new_instruction}
+            )
+            filtered_instances.append(new_instruction_instance.dict())
+        else:
+            for qa_pair in new_question_answers:
+                new_instruction = instruction_instance.instruction.copy(
+                    update={"question_answers": [qa_pair]}
+                )
+                new_instruction_instance = instruction_instance.copy(
+                    update={"instruction": new_instruction}
+                )
+                filtered_instances.append(new_instruction_instance.dict())
+    return filtered_instances
+
+
+def load_simbot_clarification_annotations(
+    base_dir: Path,
+    db_file_name: str,
+) -> dict[DatasetSplit, Any]:
+    """Loads all the SimBot clarifications."""
+    train_db = base_dir.joinpath(f"{db_file_name}_{DatasetSplit.train.name}.db")
+    valid_db = base_dir.joinpath(f"{db_file_name}_{DatasetSplit.valid.name}.db")
+    source_per_split = {
+        DatasetSplit.train: filter_clarifications(train_db),
+        DatasetSplit.valid: filter_clarifications(valid_db),
+    }
     return source_per_split
 
 

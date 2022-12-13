@@ -52,6 +52,7 @@ class DatasetName(Enum):
     simbot_missions = "Alexa Prize SimBot Mission data"
     simbot_instructions = "Alexa Prize SimBot Instruction data"
     simbot_actions = "Alexa Prize SimBot Action-level data"
+    simbot_clarifications = "Alexa Prize SimBot Clarification data"
     simbot_planner = "Alexa Prize SimBot High-level Planner data"
 
 
@@ -90,6 +91,7 @@ DatasetModalityMap: dict[DatasetName, MediaType] = {
     DatasetName.simbot_missions: MediaType.multicam,
     DatasetName.simbot_instructions: MediaType.multicam,
     DatasetName.simbot_actions: MediaType.multicam,
+    DatasetName.simbot_clarifications: MediaType.multicam,
     DatasetName.simbot_planner: MediaType.multicam,
 }
 
@@ -104,6 +106,7 @@ AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
         DatasetName.simbot_missions,
         DatasetName.simbot_instructions,
         DatasetName.simbot_actions,
+        DatasetName.simbot_clarifications,
     ],
     AnnotationType.caption: [
         DatasetName.coco,
@@ -124,6 +127,7 @@ AnnotationDatasetMap: dict[AnnotationType, list[DatasetName]] = {
         DatasetName.simbot_missions,
         DatasetName.simbot_instructions,
         DatasetName.simbot_actions,
+        DatasetName.simbot_clarifications,
         DatasetName.simbot_planner,
     ],
     AnnotationType.task_description: [DatasetName.alfred],
