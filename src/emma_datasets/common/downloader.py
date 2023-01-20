@@ -164,7 +164,7 @@ class Downloader:
             # this URL points to a directory -- recursively download all the files
             raw_object_list = s3.list_objects(Bucket=bucket_name, Prefix=object_key)
             is_directory = True
-            object_list = list(map(lambda x: x["Key"], raw_object_list["Contents"]))
+            object_list = [raw_object["Key"] for raw_object in raw_object_list["Contents"]]
         else:
             object_list = [object_key]
 
@@ -277,12 +277,12 @@ class Downloader:
         split = query_params["split"][0]
         dataset = load_dataset(dataset_name, split=split)
 
-        data_iterator = map(
-            lambda data_item: DownloadItem(
+        data_iterator = (
+            DownloadItem(
                 output_path=output_dir.joinpath(split),
                 url=data_item[item_key],
-            ),
-            dataset,
+            )
+            for data_item in dataset
         )
 
         data_count = len(dataset) if isinstance(dataset, Sized) else 0

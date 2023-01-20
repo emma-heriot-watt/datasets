@@ -80,7 +80,7 @@ class BaseActionCreator:
             attributes = augmentation_instruction.attributes
             object_attributes = attributes[search_object_initial_candidate_idx]
         else:
-            object_id = augmentation_instruction.object_id  # type: ignore[assignment]
+            object_id = augmentation_instruction.object_id
             object_attributes = augmentation_instruction.attributes
 
         synthetic_instruction = {
@@ -128,10 +128,10 @@ class SearchActionCreator(BaseActionCreator):
     def __call__(self, augmentation_instruction: AugmentationInstruction) -> dict[str, Any]:
         """Create the search instruction dictionary."""
         instruction_dict = super().__call__(augmentation_instruction=augmentation_instruction)
-        instruction_dict["positive"] = augmentation_instruction.augmentation_metadata["positive"]  # type: ignore[index]
+        instruction_dict["positive"] = augmentation_instruction.augmentation_metadata["positive"]
         return instruction_dict
 
     def _create_mission_id(self, augmentation_instruction: AugmentationInstruction) -> str:
         image_name = self._flat_image_name(augmentation_instruction.image_name)
-        positive = augmentation_instruction.augmentation_metadata["positive"]  # type: ignore[index]
+        positive = augmentation_instruction.augmentation_metadata["positive"]
         return f"{self.action_type}_ispositive{positive}_{augmentation_instruction.annotation_id}_{image_name}"

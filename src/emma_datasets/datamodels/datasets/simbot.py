@@ -107,7 +107,7 @@ def load_simbot_instruction_data(  # noqa: WPS231
                 instruction_idx += 1
                 if human_idx > 0 or not synthetic_goto_generator:
                     continue
-                instruction_dict = synthetic_goto_generator(  # type: ignore[assignment]
+                instruction_dict = synthetic_goto_generator(
                     mission_id=mission_id,
                     instruction_idx=instruction_idx,
                     instruction_actions=deepcopy(
