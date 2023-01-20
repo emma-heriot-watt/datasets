@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional, Union
 
 import numpy as np
-from rich_click import typer
+import typer
 
 from emma_datasets.common import Settings
 from emma_datasets.datamodels import DatasetName, DatasetSplit

@@ -1,5 +1,5 @@
 import rich_click as click
-from rich_click import typer
+import typer
 
 from emma_datasets.commands.create_downstream_dbs import app as create_downstream_dbs_cli
 from emma_datasets.commands.download_datasets import download_datasets

@@ -101,7 +101,10 @@ class ClarificationTargetExtractor:
         self._normalized_name_map = {
             "changer": "color changer",
             "swapper": "color changer",
+            "swapper machine": "color changer",
             "panel": "control panel",
+            "mschine": "machine",
+            "refrigeratorand": "fridge",
             "control": "control panel",
             "ray": "freeze ray",
             "maker": "coffee maker",
@@ -110,19 +113,25 @@ class ClarificationTargetExtractor:
             "pot": "coffee pot",
             "floppy": "floppy disk",
             "cartridge": "printer cartridge",
+            "catridge": "printer cartridge",
+            "cartrige": "printer cartridge",
             "desk": "table",
             "jelly": "jar",
             "monitor": "computer",
             "extinguisher": "fire extinguisher",
             "figure": "action figure",
             "coffeemaker": "coffee maker",
+            "unmaker": "coffee unmaker",
             "toast": "bread",
+            "loaf": "bread",
             "pc": "computer",
             "terminal": "computer",
+            "freeze ray controller": "computer",
             "bean": "coffee beans",
             "cereal": "cereal box",
             "driver": "screwdriver",
             "disk": "floppy disk",
+            "disc": "floppy disk",
             "faucet": "sink",
             "tap": "sink",
             "platform": "wall shelf",
@@ -155,13 +164,13 @@ class ClarificationTargetExtractor:
                 "toast": "bread",
             },
             "button": {
-                "red": "red button",
-                "blue": "blue button",
-                "green": "green button",
+                "red": "button",
+                "blue": "button",
+                "green": "button",
             },
             "target": {
-                "freeze ray": "freeze ray shelf",
-                "laser": "laser shelf",
+                "freeze ray": "wall shelf",
+                "laser": "wall shelf",
             },
             "container": {"milk": "milk"},
         }
@@ -172,6 +181,7 @@ class ClarificationTargetExtractor:
             "button": {"button"},
             "container": {"container"},
         }
+        self._object_classes = get_arena_definitions()["asset_to_label"].values()
 
     def __call__(
         self,
@@ -192,11 +202,14 @@ class ClarificationTargetExtractor:
         """Convert the target to an object detection label."""
         if target is None:
             return target
+        # First, use a list of manual common mappings
         normalized_target = self._normalized_name_map.get(target, target)
+        # Second, for a number of categories
         for object_type in self._nomalize_types:
             normalized_target = self._normalized_names(normalized_target, instruction, object_type)
 
-        return normalized_target.title()
+        normalized_target = normalized_target.title()
+        return normalized_target
 
     def get_naive_target(self, question_tokens: list[str], target_index: int) -> str:
         """Get the target based on the word position."""

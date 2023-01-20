@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 from typing import Optional, cast
 
-from rich_click import typer
+import typer
 
 from emma_datasets.common import Downloader, Settings
 from emma_datasets.common.downloader import DataDict

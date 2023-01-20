@@ -130,12 +130,14 @@ def load_simbot_instruction_data(  # noqa: WPS231
                     instruction_id=str(instruction_idx),
                     synthetic=True,
                 )
-                instruction_dict = ambiguous_goto_processor(
-                    instruction_dict=instruction_dict,
-                    mission_id=mission_id,
-                    action=actions[instruction["actions"][0]],
+
+                instruction_data.extend(
+                    ambiguous_goto_processor(
+                        instruction_dict=instruction_dict,
+                        mission_id=mission_id,
+                        action=actions[instruction["actions"][0]],
+                    )
                 )
-                instruction_data.append(instruction_dict)
                 instruction_idx += 1
 
                 if (  # noqa: WPS337

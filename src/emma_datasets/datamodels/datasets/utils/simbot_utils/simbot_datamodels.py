@@ -129,7 +129,6 @@ class SimBotInstructionInstance(BaseInstance):
     actions: list[SimBotAction]
     synthetic: bool = False
     ambiguous: bool = False
-    keep_only_target_frame: bool = False
     vision_augmentation: bool = False
 
     class Config:

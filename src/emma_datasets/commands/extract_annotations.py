@@ -1,8 +1,8 @@
 from multiprocessing.pool import Pool
 from typing import Any, Callable, Optional
 
+import typer
 from rich.progress import Progress
-from rich_click import typer
 
 from emma_datasets.common import Settings, get_progress
 from emma_datasets.datamodels import AnnotationType, DatasetName
