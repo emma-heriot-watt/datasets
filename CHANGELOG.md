@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.1](https://github.com/emma-simbot/datasets/compare/v1.11.0...v1.11.1) (2023-01-20)
+
+
+### Bug Fixes
+
+* Bug for location questions ([#596](https://github.com/emma-simbot/datasets/issues/596)) ([951c019](https://github.com/emma-simbot/datasets/commit/951c0195656d736cae01531de376d51391aeeb78))
+* linting ([#598](https://github.com/emma-simbot/datasets/issues/598)) ([76480fb](https://github.com/emma-simbot/datasets/commit/76480fba1f3a66c3082f13b21325aad043913881))
+
 ## [1.11.0](https://github.com/emma-simbot/datasets/compare/v1.10.0...v1.11.0) (2022-12-13)
 
 
