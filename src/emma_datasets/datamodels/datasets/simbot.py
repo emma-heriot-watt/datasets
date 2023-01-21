@@ -2,7 +2,7 @@ import json
 import random
 from copy import deepcopy
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, Optional
 
 from emma_datasets.common.settings import Settings
 from emma_datasets.datamodels.constants import DatasetSplit
@@ -54,15 +54,16 @@ def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
 
 
 def load_simbot_instruction_data(  # noqa: WPS231
-    filepath: Path,
+    trajectory_json_path: Path,
     sticky_notes_images_json_path: Path,
     augmentation_images_json_path: Path,
+    annotation_images_json_path: Optional[Path] = None,
     num_additional_synthetic_instructions: int = -1,
     num_sticky_notes_instructions: int = -1,
     add_synthetic_goto_instructions: bool = True,
 ) -> list[dict[Any, Any]]:
     """Loads and reformats the SimBot annotations for creating Simbot instructions."""
-    with open(filepath) as fp:
+    with open(trajectory_json_path) as fp:
         data = json.load(fp)
 
     clarification_target_extractor = ClarificationTargetExtractor()
@@ -165,9 +166,18 @@ def load_simbot_instruction_data(  # noqa: WPS231
     )
     instruction_data.extend(
         load_simbot_augmentation_instruction_data(
-            augmentation_images_json_path=augmentation_images_json_path
+            augmentation_images_json_path=augmentation_images_json_path,
+            paraphrase_when_creating_instruction=True,
         )
     )
+
+    if annotation_images_json_path is not None:
+        instruction_data.extend(
+            load_simbot_augmentation_instruction_data(
+                augmentation_images_json_path=augmentation_images_json_path,
+                paraphrase_when_creating_instruction=False,
+            )
+        )
 
     return instruction_data
 
@@ -202,7 +212,7 @@ def load_simbot_sticky_note_instruction_data(
 
 
 def load_simbot_augmentation_instruction_data(
-    augmentation_images_json_path: Path,
+    augmentation_images_json_path: Path, paraphrase_when_creating_instruction: bool = True
 ) -> list[dict[Any, Any]]:
     """Load the augmentation data."""
     with open(augmentation_images_json_path) as fp:
@@ -210,10 +220,11 @@ def load_simbot_augmentation_instruction_data(
     paraphraser = InstructionParaphraser()
     instruction_data = []
     for _, mission_metadata in data.items():
-        instruction_instance = SimBotInstructionInstance(**mission_metadata)
-        mission_metadata["instruction"]["instruction"] = paraphraser.from_instruction_instance(
-            instruction_instance
-        )
+        if paraphrase_when_creating_instruction:
+            instruction_instance = SimBotInstructionInstance(**mission_metadata)
+            mission_metadata["instruction"]["instruction"] = paraphraser.from_instruction_instance(
+                instruction_instance
+            )
         mission_metadata["vision_augmentation"] = True
         instruction_dict = create_instruction_dict(**mission_metadata)
         instruction_data.append(instruction_dict)
@@ -242,6 +253,7 @@ def load_simbot_annotations(
                 base_dir.joinpath("train.json"),
                 base_dir.joinpath("train_sticky_notes.json"),
                 base_dir.joinpath("train_augmentation_instructions.json"),
+                base_dir.joinpath("train_augmentation_annotated_instructions.json"),
                 num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=train_num_sticky_notes_instructions,
                 add_synthetic_goto_instructions=add_synthetic_goto_instructions,
@@ -250,6 +262,7 @@ def load_simbot_annotations(
                 base_dir.joinpath("valid.json"),
                 base_dir.joinpath("valid_sticky_notes.json"),
                 base_dir.joinpath("valid_augmentation_instructions.json"),
+                base_dir.joinpath("valid_annotation_instructions.json"),
                 num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,
                 add_synthetic_goto_instructions=add_synthetic_goto_instructions,
