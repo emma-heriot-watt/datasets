@@ -97,6 +97,7 @@ isort = "^5.10.1"
 black = { extras = ["jupyter"], version = "^22.3" }
 pytest-cases = "^3.6.13"
 deepdiff = "^5.8.1"
+scikit-learn = "^1.2.0"
 types-requests = "^2.27.29"
 
 [tool.black]
