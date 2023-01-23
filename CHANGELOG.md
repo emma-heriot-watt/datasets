@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.0](https://github.com/emma-simbot/datasets/compare/v1.12.0...v1.13.0) (2023-01-23)
+
+
+### Features
+
+* Create train valid splits for annotated data ([#600](https://github.com/emma-simbot/datasets/issues/600)) ([d99dd90](https://github.com/emma-simbot/datasets/commit/d99dd90af2243d0aea1367ff106d5592014c4175))
+* new model version ([#597](https://github.com/emma-simbot/datasets/issues/597)) ([9ad4a86](https://github.com/emma-simbot/datasets/commit/9ad4a865a80dd4402f4e437a3dd17b89b594d958))
+
 ## [1.12.0](https://github.com/emma-simbot/datasets/compare/v1.11.1...v1.12.0) (2023-01-21)
 
 
