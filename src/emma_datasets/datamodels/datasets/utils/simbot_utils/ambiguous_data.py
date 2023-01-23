@@ -264,7 +264,7 @@ class ClarificationFilter:
 
         return False
 
-    def _keep_qa_pair(
+    def _keep_qa_pair(  # noqa: WPS212
         self, qa_pair: SimBotQA, mission_id: str, action: SimBotAction, instruction: str
     ) -> bool:
         keep_qa_pair = False
@@ -276,6 +276,8 @@ class ClarificationFilter:
         target_object = self.clarification_target_extractor.normalize_target(
             qa_pair.question_target, instruction
         )
+        if target_object is None:
+            return True
         # Second, check if the agent is holding the target object
         holding_clarification_target = self.ambiguity_processor.holding_object(
             action, target_class_label=target_object

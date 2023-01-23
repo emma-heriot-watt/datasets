@@ -4,7 +4,9 @@ from typing import Any, Union
 
 from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
     BaseParaphraser,
+    CloseParaphraser,
     GotoParaphraser,
+    OpenParaphraser,
     SearchParaphraser,
     ToggleParaphraser,
 )
@@ -80,7 +82,7 @@ class BaseActionCreator:
             attributes = augmentation_instruction.attributes
             object_attributes = attributes[search_object_initial_candidate_idx]
         else:
-            object_id = augmentation_instruction.object_id
+            object_id = augmentation_instruction.object_id  # type: ignore[assignment]
             object_attributes = augmentation_instruction.attributes
 
         synthetic_instruction = {
@@ -128,10 +130,26 @@ class SearchActionCreator(BaseActionCreator):
     def __call__(self, augmentation_instruction: AugmentationInstruction) -> dict[str, Any]:
         """Create the search instruction dictionary."""
         instruction_dict = super().__call__(augmentation_instruction=augmentation_instruction)
-        instruction_dict["positive"] = augmentation_instruction.augmentation_metadata["positive"]
+        instruction_dict["positive"] = augmentation_instruction.augmentation_metadata["positive"]  # type: ignore[index]
         return instruction_dict
 
     def _create_mission_id(self, augmentation_instruction: AugmentationInstruction) -> str:
         image_name = self._flat_image_name(augmentation_instruction.image_name)
-        positive = augmentation_instruction.augmentation_metadata["positive"]
+        positive = augmentation_instruction.augmentation_metadata["positive"]  # type: ignore[index]
         return f"{self.action_type}_ispositive{positive}_{augmentation_instruction.annotation_id}_{image_name}"
+
+
+class OpenActionCreator(BaseActionCreator):
+    """Open action class."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        self.action_type = "Open"
+        self.paraphraser = OpenParaphraser(object_synonyms)
+
+
+class CloseActionCreator(BaseActionCreator):
+    """Close action class."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        self.action_type = "Close"
+        self.paraphraser = CloseParaphraser(object_synonyms)

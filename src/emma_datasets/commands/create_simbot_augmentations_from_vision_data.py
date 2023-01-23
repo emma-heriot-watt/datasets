@@ -18,13 +18,16 @@ from emma_datasets.common import Settings, get_progress
 from emma_datasets.constants.simbot.simbot import get_class_thresholds, get_objects_asset_synonyms
 from emma_datasets.datamodels.datasets.utils.simbot_utils.action_creators import (
     BaseActionCreator,
+    CloseActionCreator,
     GotoActionCreator,
+    OpenActionCreator,
     SearchActionCreator,
     ToggleActionCreator,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
     BaseAugmentation,
     GoToAugmentation,
+    OpenCloseAugmentation,
     SearchAugmentation,
     ToggleAugmentation,
 )
@@ -33,6 +36,9 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations imp
 settings = Settings()
 SEARCH_OBJECTS = [  # noqa: WPS407
     "Action Figure",
+    "Apple",
+    "Banana",
+    "Bed Toy",
     "Bowl",
     "Can",
     "Cereal Box",
@@ -40,20 +46,27 @@ SEARCH_OBJECTS = [  # noqa: WPS407
     "Coffee Unmaker",
     "Color Changer",
     "Control Panel",
+    "Cup",
     "Embiggenator",
     "Floppy Disk",
     "Freeze Ray",
     "Freezer",
+    "Fridge",
     "Fuse Box",
     "Generator",
     "Gravity Pad",
     "Hammer",
     "Laser",
     "Laser Tip",
+    "Lever",
+    "Knife",
     "Milk",
     "Mug",
+    "Printer",
     "Printer Cartridge",
     "Robot Arm",
+    "Sandwitch",
+    "Spoon",
     "Time Machine",
     "Trophy",
     "Wall Shelf",
@@ -475,6 +488,18 @@ if __name__ == "__main__":
         default=5000,  # noqa: WPS432
         help="Maximum examples per class for toggling an object",
     )
+    parser.add_argument(
+        "--open_max_examples_per_class",
+        type=int,
+        default=1000,
+        help="Maximum examples per class for opening an object",
+    )
+    parser.add_argument(
+        "--close_max_examples_per_class",
+        type=int,
+        default=1000,
+        help="Maximum examples per class for closing an object",
+    )
     args = parser.parse_args()
 
     root_vision_path = args.root_vision_path
@@ -489,23 +514,35 @@ if __name__ == "__main__":
 
     object_synonyms = get_objects_asset_synonyms()
     action_creators = [
-        ToggleActionCreator(object_synonyms),
+        CloseActionCreator(object_synonyms),
         GotoActionCreator(object_synonyms),
+        OpenActionCreator(object_synonyms),
         SearchActionCreator(object_synonyms),
+        ToggleActionCreator(object_synonyms),
     ]
     vision_data_augmentations: dict[str, BaseAugmentation] = {
-        "Toggle": ToggleAugmentation(
+        "Close": OpenCloseAugmentation(
             min_interaction_distance=args.min_toggle_distance,
-            toggle_classes=["Robot Arm", "Button"],
+            action_type="Close",
+            action_type_classes=["Fuse Box"],
+        ),
+        "Goto": GoToAugmentation(
+            min_interaction_distance=args.min_goto_distance,
+            goto_classes=["Whiteboard", "Robot Arm", "Wall Shelf", "Fuse Box"],
+        ),
+        "Open": OpenCloseAugmentation(
+            min_interaction_distance=args.min_toggle_distance,
+            action_type="Open",
+            action_type_classes=["Fuse Box"],
         ),
         "Search": SearchAugmentation(
             search_classes=SEARCH_OBJECTS,
             min_interaction_distance=args.min_search_distance,
             max_negative_examples_per_room=args.search_max_negative_examples_per_room,
         ),
-        "Goto": GoToAugmentation(
-            min_interaction_distance=args.min_goto_distance,
-            goto_classes=["Whiteboard", "Robot Arm", "Wall Shelf"],
+        "Toggle": ToggleAugmentation(
+            min_interaction_distance=args.min_toggle_distance,
+            toggle_classes=["Robot Arm", "Button", "Lever"],
         ),
     }
 

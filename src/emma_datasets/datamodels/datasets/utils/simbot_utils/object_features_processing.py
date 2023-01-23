@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 import torch
 
@@ -107,7 +107,7 @@ class ObjectClassDecoder:
         mask = torch.zeros((features["width"], features["height"]))
         # populate the bbox region in the mask with ones
         mask[int(y_min) : int(y_max) + 1, int(x_min) : int(x_max) + 1] = 1  # noqa: WPS221
-        compressed_mask = compress_simbot_mask(mask)
+        compressed_mask = compress_simbot_mask(mask.tolist())
         return compressed_mask
 
     def load_features(
@@ -152,12 +152,14 @@ class ObjectClassDecoder:
         return candidate_objects
 
 
-def compute_bbox_center_coords(bbox: list[int]) -> tuple[float, float]:
+def compute_bbox_center_coords(bbox: Union[list[int], torch.Tensor]) -> tuple[float, float]:
     """Compute the centre of the bounding box."""
-    (x_min, y_min, x_max, y_max) = bbox
+    bbox_list = bbox if isinstance(bbox, list) else bbox.tolist()
+    (x_min, y_min, x_max, y_max) = bbox_list
     return (x_min + (x_max - x_min) / 2, y_min + (y_max - y_min) / 2)
 
 
-def compute_bbox_area(bbox: list[int]) -> float:
+def compute_bbox_area(bbox: Union[list[int], torch.Tensor]) -> float:
     """Compute the area of the bounding box."""
-    return (bbox[3] - bbox[1]) * (bbox[2] - bbox[0])
+    bbox_list = bbox if isinstance(bbox, list) else bbox.tolist()
+    return (bbox_list[3] - bbox_list[1]) * (bbox_list[2] - bbox_list[0])

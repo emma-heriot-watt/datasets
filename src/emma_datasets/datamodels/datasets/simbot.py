@@ -108,7 +108,7 @@ def load_simbot_instruction_data(  # noqa: WPS231
                 instruction_idx += 1
                 if human_idx > 0 or not synthetic_goto_generator:
                     continue
-                instruction_dict = synthetic_goto_generator(
+                instruction_dict = synthetic_goto_generator(  # type: ignore[assignment]
                     mission_id=mission_id,
                     instruction_idx=instruction_idx,
                     instruction_actions=deepcopy(
@@ -262,7 +262,7 @@ def load_simbot_annotations(
                 base_dir.joinpath("valid.json"),
                 base_dir.joinpath("valid_sticky_notes.json"),
                 base_dir.joinpath("valid_augmentation_instructions.json"),
-                base_dir.joinpath("valid_annotation_instructions.json"),
+                base_dir.joinpath("valid_augmentation_annotated_instructions.json"),
                 num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,
                 add_synthetic_goto_instructions=add_synthetic_goto_instructions,

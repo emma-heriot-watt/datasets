@@ -130,25 +130,27 @@ class SyntheticGotoObjectGenerator:
             return None
 
         # Get the target object from the 3rd action
-        target_object, target_object_name = self.object_decoder.get_target_object_and_name(
+        target_object, target_object_name, _ = self.object_decoder.get_target_object_and_name(
             instruction_actions[2]
         )
+
         # Prepare the new Goto instruction
+        action_id = instruction_actions[1]["id"]
         synthetic_instruction = {
             "instruction": f"go to the {target_object_name.lower()}",
-            "actions": [instruction_actions[1]["id"]],
+            "actions": [action_id],
         }
         # Get a mask for the target object
         mask = self.object_decoder.get_target_object_mask(
             mission_id=mission_id,
-            action_id=instruction_actions[1]["id"],
+            action_id=action_id,
             frame_index=instruction_actions[1]["goto"]["object"]["colorImageIndex"],
-            target_object_name=target_object_name,
+            target_class_label=target_object_name,
         )
         if not mask:
             return None
         synthetic_action = {
-            "id": instruction_actions[1]["id"],
+            "id": action_id,
             "type": "Goto",
             "goto": {
                 "object": {
@@ -245,7 +247,7 @@ class BaseAugmentation:
     ) -> tuple[list[AugmentationInstruction], int]:
         instructions = []
         bbox_centers = [
-            compute_bbox_center_coords(instruction.bbox) for instruction in instruction_list
+            compute_bbox_center_coords(instruction.bbox) for instruction in instruction_list  # type: ignore[arg-type]
         ]
 
         left2right = np.argsort([bbox_center[0] for bbox_center in bbox_centers])
@@ -504,6 +506,109 @@ class ToggleAugmentation(BaseAugmentation):
             toggle_metadata_grouped_by_class[object_class] = instructions
 
         for _, object_class_metadata in toggle_metadata_grouped_by_class.items():
+            random.shuffle(object_class_metadata)
+            for object_class_annotation in object_class_metadata[: self.max_examples_per_class]:
+                final_metadata.update(object_class_annotation)
+        return final_metadata
+
+
+class OpenCloseAugmentation(BaseAugmentation):
+    """OpenClose Augmentations."""
+
+    def __init__(
+        self,
+        action_type_classes: list[str],
+        action_type: str = "Open",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 5000,
+    ) -> None:
+        super().__init__()
+        self.min_interaction_distance = min_interaction_distance
+        self.max_examples_per_class = max_examples_per_class
+        self.action_objects = action_type_classes
+        self.action_type = action_type
+
+    def __call__(  # noqa: WPS231
+        self,
+        annotations: dict[str, Any],
+        robot_position: NDArray[np.float32],
+        image_name: str,
+        class_thresholds: dict[str, list[int]],
+        room_name: str,
+    ) -> list[AugmentationInstruction]:
+        """Get new annotations for the selected classes."""
+        open_instructions_dict = defaultdict(list)
+        annotation_id = 0
+        for _, annotation in annotations.items():
+            image_annotation = annotation["image_annotation"]
+            object_annotation = annotation["object_annotation"]
+            object_type = image_annotation["object_type"]
+            if object_type == "Unassigned":
+                continue
+
+            object_asset = get_object_asset_from_object_id(object_type, self._assets_to_labels)
+            object_class = self._assets_to_labels[object_asset]
+
+            # Ignore objects that are not specified
+            if object_class not in self.action_objects:
+                continue
+
+            # Ignore too small objects
+            bbox = image_annotation["bbox"]
+            if compute_bbox_area(bbox) < class_thresholds[object_class][0]:
+                continue
+
+            distance_to_object = self._compute_distance_to_object(
+                object_annotation, robot_position
+            )
+            if distance_to_object <= self.min_interaction_distance:
+                instruction = AugmentationInstruction(
+                    action_type=self.action_type,
+                    object_id=object_type,
+                    attributes=SimBotObjectAttributes(
+                        readable_name=object_class,
+                        color=self._object_color_map.get(object_class, None),
+                    ),
+                    bbox=image_annotation["bbox"],
+                    image_name=image_name,
+                    annotation_id=annotation_id,
+                    room_name=room_name,
+                )
+                annotation_id += 1
+                open_instructions_dict[object_class].append(instruction)
+
+        open_instructions = []
+        for _, object_instructions in open_instructions_dict.items():
+            if len(object_instructions) > 1:
+                instructions, annotation_id = self._get_instructions_from_attributes(
+                    object_instructions, annotation_id
+                )
+                open_instructions.extend(instructions)
+            else:
+                open_instructions.extend(object_instructions)
+        return open_instructions
+
+    def post_process_metadata(self, action_metadata: dict[str, Any]) -> dict[str, Any]:
+        """Post process the metadata for the search actions.
+
+        This basically downsamples the negative examples in the dataset using a fixed maximum
+        number of negative examples per room.
+        """
+        final_metadata: dict[str, Any] = {}
+        action_metadata_grouped_by_class: dict[str, Any] = {}
+
+        for key, annotation in action_metadata.items():
+            action_metadata = annotation["actions"][0][self.action_type.lower()]
+            object_id = action_metadata["object"]["id"]
+
+            object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
+            object_class = self._assets_to_labels[object_asset]
+
+            instructions = action_metadata_grouped_by_class.get(object_class, [])
+            instructions.append({key: annotation})
+            action_metadata_grouped_by_class[object_class] = instructions
+
+        for _, object_class_metadata in action_metadata_grouped_by_class.items():
             random.shuffle(object_class_metadata)
             for object_class_annotation in object_class_metadata[: self.max_examples_per_class]:
                 final_metadata.update(object_class_annotation)
