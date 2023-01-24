@@ -1,6 +1,5 @@
 import json
 import random
-from copy import deepcopy
 from pathlib import Path
 from typing import Any, Literal, Optional
 
@@ -13,7 +12,6 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.ambiguous_data import 
     ClarificationFilter,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
-    SyntheticGotoObjectGenerator,
     SyntheticLowLevelActionSampler,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
@@ -60,7 +58,6 @@ def load_simbot_instruction_data(  # noqa: WPS231
     annotation_images_json_path: Optional[Path] = None,
     num_additional_synthetic_instructions: int = -1,
     num_sticky_notes_instructions: int = -1,
-    add_synthetic_goto_instructions: bool = True,
 ) -> list[dict[Any, Any]]:
     """Loads and reformats the SimBot annotations for creating Simbot instructions."""
     with open(trajectory_json_path) as fp:
@@ -68,10 +65,6 @@ def load_simbot_instruction_data(  # noqa: WPS231
 
     clarification_target_extractor = ClarificationTargetExtractor()
     synthetic_action_sampler = SyntheticLowLevelActionSampler()
-    if add_synthetic_goto_instructions:
-        synthetic_goto_generator = SyntheticGotoObjectGenerator()
-    else:
-        synthetic_goto_generator = None
 
     ambiguous_goto_processor = AmbiguousGotoProcessor()
     holding_object_processor = HoldingObject()
@@ -106,18 +99,6 @@ def load_simbot_instruction_data(  # noqa: WPS231
 
                 instruction_data.append(instruction_dict)
                 instruction_idx += 1
-                if human_idx > 0 or not synthetic_goto_generator:
-                    continue
-                instruction_dict = synthetic_goto_generator(  # type: ignore[assignment]
-                    mission_id=mission_id,
-                    instruction_idx=instruction_idx,
-                    instruction_actions=deepcopy(
-                        instruction_dict["actions"],
-                    ),
-                )
-                if instruction_dict is not None:
-                    instruction_data.append(instruction_dict)
-                    instruction_idx += 1
 
         for annot_idx, synthetic_annotation in enumerate(  # noqa: WPS352
             mission_annotations["synthetic_annotations"]
@@ -239,7 +220,6 @@ def load_simbot_annotations(
     valid_num_additional_synthetic_instructions: int = -1,
     train_num_sticky_notes_instructions: int = 20000,
     valid_num_sticky_notes_instructions: int = -1,
-    add_synthetic_goto_instructions: bool = True,
 ) -> dict[DatasetSplit, Any]:
     """Loads all the SimBot mission annotation files."""
     if annotation_type == "missions":
@@ -256,7 +236,6 @@ def load_simbot_annotations(
                 base_dir.joinpath("train_augmentation_annotated_instructions.json"),
                 num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=train_num_sticky_notes_instructions,
-                add_synthetic_goto_instructions=add_synthetic_goto_instructions,
             ),
             DatasetSplit.valid: load_simbot_instruction_data(
                 base_dir.joinpath("valid.json"),
@@ -265,7 +244,6 @@ def load_simbot_annotations(
                 base_dir.joinpath("valid_augmentation_annotated_instructions.json"),
                 num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,
-                add_synthetic_goto_instructions=add_synthetic_goto_instructions,
             ),
         }
 

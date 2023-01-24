@@ -14,7 +14,6 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing
     get_object_asset_from_object_id,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.object_features_processing import (
-    ObjectClassDecoder,
     compute_bbox_area,
     compute_bbox_center_coords,
 )
@@ -105,94 +104,6 @@ class SyntheticLowLevelActionSampler:
             "synthetic": True,
         }
         return instruction_dict
-
-
-class SyntheticGotoObjectGenerator:
-    """Create synthetic examples of go to actions for interactable objects."""
-
-    def __init__(
-        self,
-    ) -> None:
-
-        self._annotation_id = "synthetic_goto"
-        self.object_decoder = ObjectClassDecoder()
-
-    def __call__(
-        self,
-        mission_id: str,
-        instruction_idx: int,
-        instruction_actions: list[dict[str, Any]],
-    ) -> Optional[dict[str, Any]]:
-        """Generate a new Goto action."""
-        synthetic_instruction = None
-        synthetic_action = None
-        if not self._check_usable_instruction(instruction_actions):
-            return None
-
-        # Get the target object from the 3rd action
-        target_object, target_object_name, _ = self.object_decoder.get_target_object_and_name(
-            instruction_actions[2]
-        )
-
-        # Prepare the new Goto instruction
-        action_id = instruction_actions[1]["id"]
-        synthetic_instruction = {
-            "instruction": f"go to the {target_object_name.lower()}",
-            "actions": [action_id],
-        }
-        # Get a mask for the target object
-        mask = self.object_decoder.get_target_object_mask(
-            mission_id=mission_id,
-            action_id=action_id,
-            frame_index=instruction_actions[1]["goto"]["object"]["colorImageIndex"],
-            target_class_label=target_object_name,
-        )
-        if not mask:
-            return None
-        synthetic_action = {
-            "id": action_id,
-            "type": "Goto",
-            "goto": {
-                "object": {
-                    "id": target_object,
-                    "colorImageIndex": instruction_actions[1]["goto"]["object"]["colorImageIndex"],
-                    "mask": mask,
-                }
-            },
-            "colorImages": instruction_actions[1]["colorImages"],
-            "final": True,
-        }
-
-        instruction_dict = {
-            "instruction": synthetic_instruction,
-            "actions": [synthetic_action],
-            "mission_id": mission_id,
-            "annotation_id": self._annotation_id,
-            "instruction_id": str(instruction_idx),
-            "synthetic": True,
-        }
-        return instruction_dict
-
-    def _check_usable_instruction(
-        self,
-        instruction_actions: list[dict[str, Any]],
-    ) -> bool:
-        """Check if the given instruction can be converted into a new Goto instruction.
-
-        1. Instructions should follow the pattern (Look Around, Goto <object 1>, Interact <object 2>)
-        2. <object 2> should not be a receptacle, i.e. Interact should not be "place"
-        3. <object 1> should be different from <object 2>
-        """
-        if len(instruction_actions) != 3:
-            return False
-        action_pattern = (
-            instruction_actions[0]["type"] == "Look" and instruction_actions[1]["type"] == "Goto"
-        )
-        if not action_pattern:
-            return False
-        goto_object = self.object_decoder.get_target_object(instruction_actions[1])
-        target_object = self.object_decoder.get_target_object(instruction_actions[2])
-        return goto_object != target_object
 
 
 class BaseAugmentation:

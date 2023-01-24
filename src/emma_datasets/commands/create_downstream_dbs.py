@@ -391,7 +391,6 @@ def create_simbot_instruction_instances(
     num_workers: Optional[int] = None,
     train_num_additional_synthetic_instructions: int = 20000,
     valid_num_additional_synthetic_instructions: int = -1,
-    add_synthetic_goto_instructions: bool = True,
 ) -> None:
     """Create DB files for Alexa Prize SimBot mission data."""
     source_per_split = load_simbot_annotations(
@@ -399,7 +398,6 @@ def create_simbot_instruction_instances(
         annotation_type="instructions",
         train_num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
         valid_num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
-        add_synthetic_goto_instructions=add_synthetic_goto_instructions,
     )
 
     DownstreamDbCreator.from_one_instance_per_dict(
