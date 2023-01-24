@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.2](https://github.com/emma-simbot/datasets/compare/v1.13.1...v1.13.2) (2023-01-24)
+
+
+### Bug Fixes
+
+* Remove synthetic goto from dataset creation ([#602](https://github.com/emma-simbot/datasets/issues/602)) ([e88a33e](https://github.com/emma-simbot/datasets/commit/e88a33e582030dd92bd37b7ff1802dd81ac6b253))
+
 ## [1.13.1](https://github.com/emma-simbot/datasets/compare/v1.13.0...v1.13.1) (2023-01-24)
 
 
