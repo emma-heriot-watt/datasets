@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.1](https://github.com/emma-simbot/datasets/compare/v1.13.0...v1.13.1) (2023-01-24)
+
+
+### Bug Fixes
+
+* Fix naming conventions when creating actions ([#601](https://github.com/emma-simbot/datasets/issues/601)) ([36269b0](https://github.com/emma-simbot/datasets/commit/36269b09b51ad25183a0fa979754ec6203b490b3))
+
 ## [1.13.0](https://github.com/emma-simbot/datasets/compare/v1.12.0...v1.13.0) (2023-01-23)
 
 
