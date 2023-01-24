@@ -204,12 +204,22 @@ class BaseAugmentation:
         self._index_to_label = {index: label for label, index in label_to_index.items()}
 
         self._object_color_map = {
-            "Freeze ray monitor": "blue",
-            "Gravity flipper monitor": "green",
-            "Laser monitor": "red",
-            "Embiggenator monitor": "pink",
-            "Freeze ray shelf": "blue",
-            "Laser shelf": "red",
+            "Embiggenator Monitor": "pink",
+            "Freeze Ray Monitor": "blue",
+            "Freeze Ray Shelf": "blue",
+            "Gravity Monitor": "green",
+            "Laser Monitor": "red",
+            "Laser Shelf": "red",
+        }
+
+        self._special_object_type_map = {
+            "AP_Prop_Shelf_Wall_04": "Freeze Ray Shelf",
+            "AP_Prop_Shelf_Wall_FreezeRay": "Freeze Ray Shelf",
+            "AP_Prop_Shelf_Wall_Laser": "Laser Shelf",
+            "V_Monitor_Embiggenator": "Embiggenator Monitor",
+            "V_Monitor_FreezeRay": "Freeze Ray Monitor",
+            "V_Monitor_Gravity": "Gravity Monitor",
+            "V_Monitor_Laser": "Laser Monitor",
         }
 
     def __call__(
@@ -297,15 +307,7 @@ class GoToAugmentation(BaseAugmentation):
         super().__init__()
         self.min_interaction_distance = min_interaction_distance
         self.max_examples_per_class = max_examples_per_class
-        self._special_object_type_map = {
-            "V_Monitor_FreezeRay": "Freeze ray monitor",
-            "V_Monitor_Gravity": "Gravity flipper monitor",
-            "V_Monitor_Laser": "Laser monitor",
-            "V_Monitor_Embiggenator": "Embiggenator monitor",
-            "AP_Prop_Shelf_Wall_FreezeRay": "Freeze ray shelf",
-            "AP_Prop_Shelf_Wall_Laser": "Laser shelf",
-            "AP_Prop_Shelf_Wall_04": "Freeze ray shelf",
-        }
+
         # Force goto special monitors
         self.goto_objects = goto_classes + list(self._special_object_type_map.values())
 
@@ -411,15 +413,7 @@ class ToggleAugmentation(BaseAugmentation):
         super().__init__()
         self.min_interaction_distance = min_interaction_distance
         self.max_examples_per_class = max_examples_per_class
-        self._special_object_type_map = {
-            "V_Monitor_FreezeRay": "Freeze ray monitor",
-            "V_Monitor_Gravity": "Gravity flipper monitor",
-            "V_Monitor_Laser": "Laser monitor",
-            "V_Monitor_Embiggenator": "Embiggenator monitor",
-            "ColorChanger_Button_Blue": "Blue button",
-            "ColorChanger_Button_Green": "Green button",
-            "ColorChanger_Button_Red": "Red button",
-        }
+
         # Force toggle special monitors
         self.toggle_objects = toggle_classes + list(self._special_object_type_map.values())
 
@@ -626,15 +620,7 @@ class SearchAugmentation(BaseAugmentation):
     ) -> None:
         super().__init__()
         self.min_interaction_distance = min_interaction_distance
-        self._special_object_type_map = {
-            "V_Monitor_FreezeRay": "Freeze ray monitor",
-            "V_Monitor_Gravity": "Gravity flipper monitor",
-            "V_Monitor_Laser": "Laser monitor",
-            "V_Monitor_Embiggenator": "Embiggenator monitor",
-            "AP_Prop_Shelf_Wall_FreezeRay": "Freeze ray shelf",
-            "AP_Prop_Shelf_Wall_Laser": "Laser shelf",
-            "AP_Prop_Shelf_Wall_04": "Freeze ray shelf",
-        }
+
         # Force search special monitors
         self.search_objects = search_classes + list(self._special_object_type_map.values())
         self.max_negative_examples_per_room = max_negative_examples_per_room
