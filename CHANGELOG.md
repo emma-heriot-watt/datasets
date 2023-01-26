@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/emma-simbot/datasets/compare/v1.13.2...v1.14.0) (2023-01-26)
+
+
+### Features
+
+* create dbs for search like itm ([#603](https://github.com/emma-simbot/datasets/issues/603)) ([869ea46](https://github.com/emma-simbot/datasets/commit/869ea46416f023549a4bfa969788431947f42fc3))
+
 ## [1.13.2](https://github.com/emma-simbot/datasets/compare/v1.13.1...v1.13.2) (2023-01-24)
 
 
