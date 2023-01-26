@@ -155,7 +155,7 @@ def load_simbot_instruction_data(  # noqa: WPS231
     if annotation_images_json_path is not None:
         instruction_data.extend(
             load_simbot_augmentation_instruction_data(
-                augmentation_images_json_path=augmentation_images_json_path,
+                augmentation_images_json_path=annotation_images_json_path,
                 paraphrase_when_creating_instruction=False,
             )
         )
@@ -233,7 +233,7 @@ def load_simbot_annotations(
                 base_dir.joinpath("train.json"),
                 base_dir.joinpath("train_sticky_notes.json"),
                 base_dir.joinpath("train_augmentation_instructions.json"),
-                base_dir.joinpath("train_augmentation_annotated_instructions.json"),
+                base_dir.joinpath("train_annotation_instructions.json"),
                 num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=train_num_sticky_notes_instructions,
             ),
@@ -241,7 +241,7 @@ def load_simbot_annotations(
                 base_dir.joinpath("valid.json"),
                 base_dir.joinpath("valid_sticky_notes.json"),
                 base_dir.joinpath("valid_augmentation_instructions.json"),
-                base_dir.joinpath("valid_augmentation_annotated_instructions.json"),
+                base_dir.joinpath("valid_augmentation_annotation_instructions.json"),
                 num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,
             ),

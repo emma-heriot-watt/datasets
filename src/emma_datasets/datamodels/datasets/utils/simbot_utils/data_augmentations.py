@@ -1,5 +1,5 @@
 import random
-from collections import defaultdict
+from collections import Counter, defaultdict
 from typing import Any, Optional
 
 import numpy as np
@@ -168,7 +168,7 @@ class BaseAugmentation:
     ) -> tuple[list[AugmentationInstruction], int]:
         instructions = []
         bbox_centers = [
-            compute_bbox_center_coords(instruction.bbox) for instruction in instruction_list  # type: ignore[arg-type]
+            compute_bbox_center_coords(instruction.bbox) for instruction in instruction_list
         ]
 
         left2right = np.argsort([bbox_center[0] for bbox_center in bbox_centers])
@@ -526,8 +526,9 @@ class SearchAugmentation(BaseAugmentation):
     def __init__(
         self,
         search_classes: list[str],
-        min_interaction_distance: float = 2.5,
-        max_negative_examples_per_room: int = 100,
+        min_interaction_distance: float = 0,
+        max_negative_examples_per_room: int = 150,
+        max_examples_per_object: int = 4000,
     ) -> None:
         super().__init__()
         self.min_interaction_distance = min_interaction_distance
@@ -535,6 +536,7 @@ class SearchAugmentation(BaseAugmentation):
         # Force search special monitors
         self.search_objects = search_classes + list(self._special_object_type_map.values())
         self.max_negative_examples_per_room = max_negative_examples_per_room
+        self.max_examples_per_object = max_examples_per_object
 
     def __call__(  # noqa: WPS231
         self,
@@ -584,6 +586,7 @@ class SearchAugmentation(BaseAugmentation):
                 SimBotObjectAttributes(
                     readable_name=readable_name,
                     color=self._object_color_map.get(readable_name, None),
+                    distance=distance_to_object,
                 )
             )
 
@@ -604,16 +607,18 @@ class SearchAugmentation(BaseAugmentation):
         negative_search_object_ids = []
         negative_search_object_attributes = []
         # If there is a searchable object that was not present, this is a negative example
-        for search_object, is_present in objects_in_image.items():
-            if is_present:
-                continue
-            negative_search_object_ids.append(search_object)
-            negative_search_object_attributes.append(
-                SimBotObjectAttributes(
-                    readable_name=search_object,
-                    color=self._object_color_map.get(search_object, None),
+        all_absent = all(
+            [not is_present for search_object, is_present in objects_in_image.items()]
+        )
+        if all_absent:
+            for search_object in objects_in_image:
+                negative_search_object_ids.append(search_object)
+                negative_search_object_attributes.append(
+                    SimBotObjectAttributes(
+                        readable_name=search_object,
+                        color=self._object_color_map.get(search_object, None),
+                    )
                 )
-            )
 
         if negative_search_object_ids:
             instruction = AugmentationInstruction(
@@ -629,24 +634,61 @@ class SearchAugmentation(BaseAugmentation):
             instructions.append(instruction)
         return instructions
 
-    def post_process_metadata(self, search_metadata: dict[str, Any]) -> dict[str, Any]:
+    def post_process_metadata(  # noqa: WPS231
+        self, search_metadata: dict[str, Any]
+    ) -> dict[str, Any]:
         """Post process the metadata for the search actions.
 
         This basically downsamples the negative examples in the dataset using a fixed maximum
         number of negative examples per room.
         """
-        final_metadata: dict[str, Any] = {}
-        negative_metadata_grouped_by_room: dict[str, Any] = {}
-
+        # Step1: Compute the frequencies of each object
+        counter_dict = Counter()  # type: ignore[var-annotated]
+        readable_name_to_metadata = defaultdict(list)
         for key, annotation in search_metadata.items():
-            if annotation["positive"]:
-                final_metadata[key] = annotation
-            else:
-                room = annotation["room_name"]
+            if not annotation["positive"]:
+                continue
+            search_object_metadata = annotation["actions"][0]["search"]["object"]
+            readable_names = {
+                attribute["readable_name"] for attribute in search_object_metadata["attributes"]
+            }
 
-                negative_metadata = negative_metadata_grouped_by_room.get(room, [])
-                negative_metadata.append({key: annotation})
-                negative_metadata_grouped_by_room[room] = negative_metadata
+            counter_dict.update(Counter(readable_names))
+            for readable_name in readable_names:
+                readable_name_to_metadata[readable_name].append(key)
+
+        object_frequencies = dict(sorted(counter_dict.items(), key=lambda freq: freq[1]))
+
+        # Step2: Add up to max_examples_per_object per object. Note that in the end the frequency of an object may be beyond max_examples_per_object. This is will happen if an object Y has less than max_examples_per_object but the object X is in the same image and has already appeared max_examples_per_objec times.
+        final_metadata: dict[str, Any] = {}
+        for readable_name in object_frequencies:  # noqa: WPS440
+            keys = readable_name_to_metadata[readable_name]
+
+            keys_already_in_final = set(final_metadata.keys()).intersection(set(keys))
+            keys_not_in_final = set(keys).difference(keys_already_in_final)
+
+            # We already have enough images for that object, skip these keys
+            if len(keys_already_in_final) > self.max_examples_per_object:
+                continue
+
+            remaining_count = self.max_examples_per_object - len(keys_already_in_final)
+            for key in keys_not_in_final:  # noqa: WPS440
+                if remaining_count == 0:
+                    break
+                final_metadata[key] = search_metadata[key]
+                remaining_count -= 1
+
+        # Step 3: Add random negative images
+        negative_metadata_grouped_by_room: dict[str, Any] = {}
+        for key, annotation in search_metadata.items():  # noqa: WPS440
+            if annotation["positive"]:
+                continue
+
+            room = annotation["room_name"]
+
+            negative_metadata = negative_metadata_grouped_by_room.get(room, [])
+            negative_metadata.append({key: annotation})
+            negative_metadata_grouped_by_room[room] = negative_metadata
 
         for _, room_metadata in negative_metadata_grouped_by_room.items():
             random.shuffle(room_metadata)

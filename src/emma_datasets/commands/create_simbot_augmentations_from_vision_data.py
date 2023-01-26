@@ -47,6 +47,7 @@ SEARCH_OBJECTS = [  # noqa: WPS407
     "Color Changer",
     "Control Panel",
     "Cup",
+    "Donut",
     "Embiggenator",
     "Floppy Disk",
     "Freeze Ray",
@@ -61,12 +62,14 @@ SEARCH_OBJECTS = [  # noqa: WPS407
     "Lever",
     "Knife",
     "Milk",
+    "Microwave",
     "Mug",
     "Printer",
     "Printer Cartridge",
     "Robot Arm",
     "Sandwitch",
     "Spoon",
+    "Sink",
     "Time Machine",
     "Trophy",
     "Wall Shelf",
@@ -467,14 +470,20 @@ if __name__ == "__main__":
     parser.add_argument(
         "--min_search_distance",
         type=float,
-        default=2.5,  # noqa: WPS432
+        default=0,
         help="Minimum distance for searching an object",
     )
     parser.add_argument(
         "--search_max_negative_examples_per_room",
         type=int,
-        default=4000,  # noqa: WPS432
+        default=150,  # noqa: WPS432
         help="Maximum negative examples per room for searching an object",
+    )
+    parser.add_argument(
+        "--search_max_examples_per_object",
+        type=int,
+        default=4000,  # noqa: WPS432
+        help="Maximum positive examples per object",
     )
     parser.add_argument(
         "--goto_max_examples_per_class",
@@ -539,6 +548,7 @@ if __name__ == "__main__":
             search_classes=SEARCH_OBJECTS,
             min_interaction_distance=args.min_search_distance,
             max_negative_examples_per_room=args.search_max_negative_examples_per_room,
+            max_examples_per_object=args.search_max_examples_per_object,
         ),
         "Toggle": ToggleAugmentation(
             min_interaction_distance=args.min_toggle_distance,

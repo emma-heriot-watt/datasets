@@ -187,6 +187,7 @@ class SimBotObjectAttributes(BaseModel):
     readable_name: str
     color: Optional[str] = None
     location: Optional[Literal["left", "middle", "right"]] = None
+    distance: Optional[float] = None
 
 
 class AugmentationInstruction(BaseModel):
