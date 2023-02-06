@@ -1,4 +1,5 @@
 import random
+from copy import deepcopy
 
 from emma_datasets.constants.simbot.simbot import get_arena_definitions, get_objects_asset_synonyms
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
@@ -81,6 +82,8 @@ class BaseParaphraser:
         self.object_synonyms = object_synonyms
         self._action_type = action_type
         self._instruction_options: list[str]
+        # Additional instruction options that cannot be combined with a prefix
+        self._no_prefix_instruction_options: list[str] = []
         self._available_templates: dict[str, list[str]]
         arena_definitions = get_arena_definitions()
         self._assets_to_labels = arena_definitions["asset_to_label"]
@@ -105,6 +108,21 @@ class BaseParaphraser:
             "{verb} the {location} {color} {object}.",
             "{verb} the {object} on your {location}.",
         ]
+        self._prefix_options = [
+            "I would like to",
+            "I need to",
+            "I need you to",
+            "I am telling you to",
+            "you should",
+            "we need to",
+            "let's",
+            "can you",
+            "could you",
+            "okay",
+            "okay now",
+            "now",
+            "please",
+        ]
 
     def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
         """Paraphrase."""
@@ -125,23 +143,35 @@ class BaseParaphraser:
             special_name_cases=self._special_name_cases,
         )
 
+        instruction_options = deepcopy(self._instruction_options)
+        if self._no_prefix_instruction_options:
+            instruction_options.extend(self._no_prefix_instruction_options)
+
+        verb = random.choice(instruction_options)
         template_values = {
-            "verb": random.choice(self._instruction_options),
+            "verb": verb,
             "object": object_name,
             "color": attributes.color,
             "location": attributes.location,
         }
         instruction = selected_template.format(**template_values)
 
+        # Allow a prefix if the selected verb is not part of the self._no_prefix_instruction_options
+        if len(instruction_options) == len(self._instruction_options):
+            allowed_prefix = True
+        else:
+            allowed_prefix = verb not in self._no_prefix_instruction_options
+        if allowed_prefix and random.random() < 1 / 2:
+            instruction = self._add_prefix(instruction, random.choice(self._prefix_options))
         return instruction.lower()
 
     def _add_prefix(self, instruction: str, prefix: str) -> str:
-        return f"{prefix} {instruction}"
+        return f"{prefix} {instruction}".lower()
 
     def _add_suffix(self, instruction: str, suffix: str) -> str:
         if instruction.endswith("."):
             instruction = instruction[:-1]
-        return f"{instruction} {suffix}"
+        return f"{instruction} {suffix}".lower()
 
 
 class GotoParaphraser(BaseParaphraser):
@@ -374,7 +404,8 @@ class BreakParaphraser(BaseParaphraser):
             "shatter",
             "smash",
         ]
-        self._prefix_option = "use the hammer to"
+        augmented_prefix_options = [f"{opt} use the hammer to" for opt in self._prefix_options]
+        self._prefix_options.extend(augmented_prefix_options)
         self._suffix_option = "with the hammer."
 
         self._available_templates = {
@@ -398,9 +429,7 @@ class BreakParaphraser(BaseParaphraser):
             object_id=object_id, attributes=attributes, available_types=available_types
         )
         proba = random.random()
-        if proba < (1 / 3):
-            instruction = self._add_prefix(instruction, self._prefix_option)
-        elif proba < (2 / 3):
+        if proba < (1 / 3) and "hammer" not in instruction:
             instruction = self._add_suffix(instruction, self._suffix_option)
         return instruction
 
@@ -538,14 +567,13 @@ class SearchParaphraser(BaseParaphraser):
         self._instruction_options = [
             "find",
             "locate",
-            "where is",
             "search for",
             "look for",
             "seek",
             "trace",
-            "can you find",
-            "can you locate",
-            "can you search for",
+        ]
+        self._no_prefix_instruction_options = [
+            "where is",
             "do you see",
         ]
 

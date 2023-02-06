@@ -122,19 +122,24 @@ class AmbiguityProcessor:
         candidate_areas = [compute_bbox_area(bbox) for bbox in candidate_bboxes]
         candidate_xcenter = [compute_bbox_center_coords(bbox)[0] for bbox in candidate_bboxes]
         no_salient_bbox = True
-        for area, xcenter in zip(candidate_areas, candidate_xcenter):
+        for index, (area, xcenter) in enumerate(zip(candidate_areas, candidate_xcenter)):
             # An object is salient if it's centered in the image
             cond1 = self._min_center_coord <= xcenter <= self._max_center_coord
-            if not cond1:
-                continue
-            # An object is salient if it is relatively large compared to other candidate objects
-            area_comparison = [
-                area >= self._area_percentage * other_area for other_area in candidate_areas
-            ]
+            if cond1:
+                # An object is salient if it is relatively large compared to other candidate objects
+                area_comparison = [
+                    area >= self._area_percentage * other_area for other_area in candidate_areas
+                ]
+            else:
+                # The area is much bigger than other candidates
+                area_comparison = [
+                    area >= 3 * other_area
+                    for other_index, other_area in enumerate(candidate_areas)
+                    if other_index != index
+                ]
             cond2 = all(area_comparison)
             if cond2:
                 return False
-
         return no_salient_bbox
 
     def _filter_bboxes_based_on_area(
@@ -229,7 +234,14 @@ class ClarificationFilter:
     def __init__(self) -> None:
         self.ambiguity_processor = AmbiguityProcessor()
         self.clarification_target_extractor = ClarificationTargetExtractor()
-        self._skip_instruction_word_list = ["locate", "find", "search"]
+        self._skip_instruction_word_list = [
+            "locate",
+            "find",
+            "search",
+            "look for",
+            "trace",
+            "seek",
+        ]
         self._disambiguation_keyword_list = ["blue", "red", "green", "with"]
         self._assets_to_labels = get_arena_definitions()["asset_to_label"]
 

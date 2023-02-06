@@ -1,17 +1,55 @@
 {
-	"Computer_Monitor_01": ["Computer", "Desktop", "Screen"],
+	"Computer_Monitor_01": [
+		"Computer",
+		"Monitor",
+		"Computer Monitor",
+		"PC",
+		"Desktop",
+		"Screen",
+		"Computer Screen"
+	],
 	"V_Monitor_Gravity": ["Computer", "Gravity Monitor", "Monitor", "Screen"],
-	"Computer_Monitor_New": ["Computer", "Desktop", "Screen"],
+	"Computer_Monitor_New": [
+		"Computer",
+		"Monitor",
+		"Computer Monitor",
+		"PC",
+		"Desktop",
+		"Screen",
+		"Computer Screen"
+	],
 	"Lab_Terminal": ["Machine Panel"],
 	"V_Monitor_Laser": ["Computer", "Laser Monitor", "Monitor", "Screen"],
-	"V_Monitor_Portal": ["Computer", "Desktop", "Screen"],
+	"V_Monitor_Portal": [
+		"Computer",
+		"Monitor",
+		"Computer Monitor",
+		"Desktop",
+		"Screen",
+		"Computer Screen"
+	],
 	"V_Monitor_Embiggenator": [
 		"Computer",
 		"Embiggenator Monitor",
 		"Monitor",
 		"Screen"
 	],
-	"Computer_Monitor_Broken": ["Computer"],
+	"Computer_Monitor_Broken": [
+		"Computer",
+		"Broken Computer",
+		"Monitor",
+		"Broken Monitor",
+		"Screen",
+		"Broken Screen",
+		"Computer Monitor",
+		"Broken Computer Monitor",
+		"PC",
+		"Broken PC",
+		"Desktop",
+		"Broken Desktop",
+		"Computer Screen",
+		"Broken Computer Screen"
+	],
 	"V_Monitor_FreezeRay": [
 		"Computer",
 		"Freeze Ray Monitor",
@@ -159,7 +197,7 @@
 	"FuseBox_02": ["Fuse Box", "Circuit Box", "Power Box"],
 	"FuseBox_01": ["Fuse Box", "Circuit Box", "Power Box"],
 	"SM_Prop_Lighting_Cable_Bulb_01": ["Light Bulb"],
-	"Trophy01": ["Trophy"],
+	"Trophy01": ["Trophy", "Trophy Cup"],
 	"CoffeePot_01": ["Coffee Pot", "Pot", "Kettle"],
 	"SM_Prop_Certificate_01": ["Certificate"],
 	"MilkCarton_01": ["Milk", "Carton", "Milk Carton"],
@@ -261,7 +299,7 @@
 	"AP_Bld_Wall_Glass_Large_Door_01": ["Door"],
 	"SM_Bld_Door_02": ["Door"],
 	"Printer_Cartridge": ["Printer Cartridge", "Ink Cartridge", "Cartridge"],
-	"Printer_Cartridge_Lever": ["Printer Cartridge", "Lever", "Handle"],
+	"Printer_Cartridge_Lever": ["Printer Cartridge", "Lever Cartridge"],
 	"Printer_Cartridge_Figure": [
 		"Printer Cartridge",
 		"Cartridge",
@@ -290,7 +328,7 @@
 	"SM_Prop_Table_02": ["Table"],
 	"TableRound_02": ["Table"],
 	"Desk_01": ["Table"],
-	"AppleSlice_01": ["Apple"],
+	"AppleSlice_01": ["Apple", "Apple Slice"],
 	"Apple": ["Apple"],
 	"SM_Prop_Papers_01": ["Paper"],
 	"SM_Prop_Paper_04": ["Paper"],
