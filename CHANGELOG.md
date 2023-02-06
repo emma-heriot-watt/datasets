@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.0](https://github.com/emma-simbot/datasets/compare/v1.16.2...v1.17.0) (2023-02-06)
+
+
+### Features
+
+* Remove human act_no_match ([#612](https://github.com/emma-simbot/datasets/issues/612)) ([4207bed](https://github.com/emma-simbot/datasets/commit/4207bedb5b1ccbb92d0d43d84fb6a0bba751d892))
+
 ## [1.16.2](https://github.com/emma-simbot/datasets/compare/v1.16.1...v1.16.2) (2023-02-06)
 
 
