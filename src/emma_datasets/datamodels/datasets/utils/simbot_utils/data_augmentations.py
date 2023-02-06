@@ -114,6 +114,9 @@ class BaseAugmentation:
         self.max_examples_per_class = 1
         self.action_objects: list[str] = []
         self._assets_to_labels = get_arena_definitions()["asset_to_label"]
+        self._labels_to_assets = defaultdict(list)
+        for asset, object_label in self._assets_to_labels.items():
+            self._labels_to_assets[object_label].append(asset)
         label_to_index = get_arena_definitions()["label_to_idx"]
         self._index_to_label = {index: label for label, index in label_to_index.items()}
 
@@ -134,6 +137,10 @@ class BaseAugmentation:
             "V_Monitor_FreezeRay": "Freeze Ray Monitor",
             "V_Monitor_Gravity": "Gravity Monitor",
             "V_Monitor_Laser": "Laser Monitor",
+        }
+        self._special_object_class_map = {
+            object_class: object_type
+            for object_type, object_class in self._special_object_type_map.items()
         }
 
     def __call__(
@@ -938,12 +945,13 @@ class SearchAugmentation(BaseAugmentation):
         negative_search_object_ids = []
         negative_search_object_attributes = []
         # If there is a searchable object that was not present, this is a negative example
-        all_absent = all(
-            [not is_present for search_object, is_present in objects_in_image.items()]
-        )
-        if all_absent:
+        if all([not is_present for _, is_present in objects_in_image.items()]):
             for search_object in objects_in_image:
-                negative_search_object_ids.append(search_object)
+                search_object_id = self._special_object_class_map.get(search_object, None)
+                if search_object_id is None:
+                    search_object_id = self._labels_to_assets[search_object][0]
+
+                negative_search_object_ids.append(search_object_id)
                 negative_search_object_attributes.append(
                     SimBotObjectAttributes(
                         readable_name=search_object,
