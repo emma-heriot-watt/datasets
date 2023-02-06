@@ -3,6 +3,7 @@ from copy import deepcopy
 
 from emma_datasets.constants.simbot.simbot import get_arena_definitions, get_objects_asset_synonyms
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
+    get_object_asset_from_object_id,
     get_object_readable_name_from_object_id,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels import (
@@ -142,6 +143,17 @@ class BaseParaphraser:
             object_assets_to_names=self._assets_to_labels,
             special_name_cases=self._special_name_cases,
         )
+
+        object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
+        object_class = self._assets_to_labels[object_asset]
+
+        # If its not a `special case` object then the object class and the object readable name should be the same.
+        # Therefore you can always sample a synonym.
+        if object_name == object_class:
+            object_name = random.choice(self.object_synonyms[object_asset])
+        # If the template is not a verb_template we can use any synonym
+        elif self._available_templates[selected_type] != self._verb_templates:
+            object_name = random.choice(self.object_synonyms[object_asset])
 
         instruction_options = deepcopy(self._instruction_options)
         if self._no_prefix_instruction_options:
