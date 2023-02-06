@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.2](https://github.com/emma-simbot/datasets/compare/v1.16.1...v1.16.2) (2023-02-06)
+
+
+### Bug Fixes
+
+* object ids in negative examples ([#611](https://github.com/emma-simbot/datasets/issues/611)) ([38def87](https://github.com/emma-simbot/datasets/commit/38def8794e6db972dbc386592ddcd77f59d7e8f4))
+
 ## [1.16.1](https://github.com/emma-simbot/datasets/compare/v1.16.0...v1.16.1) (2023-02-06)
 
 
