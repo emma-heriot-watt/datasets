@@ -4,9 +4,13 @@ from typing import Any, Union
 
 from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
     BaseParaphraser,
+    BreakParaphraser,
+    CleanParaphraser,
     CloseParaphraser,
+    FillParaphraser,
     GotoParaphraser,
     OpenParaphraser,
+    PourParaphraser,
     SearchParaphraser,
     ToggleParaphraser,
 )
@@ -153,3 +157,35 @@ class CloseActionCreator(BaseActionCreator):
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         self.action_type = "Close"
         self.paraphraser = CloseParaphraser(object_synonyms)
+
+
+class BreakActionCreator(BaseActionCreator):
+    """Break action class."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        self.action_type = "Break"
+        self.paraphraser = BreakParaphraser(object_synonyms)
+
+
+class CleanActionCreator(BaseActionCreator):
+    """Clean action class."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        self.action_type = "Clean"
+        self.paraphraser = CleanParaphraser(object_synonyms)
+
+
+class FillActionCreator(BaseActionCreator):
+    """Fill action class."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        self.action_type = "Fill"
+        self.paraphraser = FillParaphraser(object_synonyms)
+
+
+class PourActionCreator(BaseActionCreator):
+    """Pour action class."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        self.action_type = "Pour"
+        self.paraphraser = PourParaphraser(object_synonyms)

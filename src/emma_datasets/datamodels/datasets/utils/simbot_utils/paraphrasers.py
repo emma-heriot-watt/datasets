@@ -86,7 +86,7 @@ class BaseParaphraser:
         self._assets_to_labels = arena_definitions["asset_to_label"]
         self._special_name_cases = arena_definitions["special_asset_to_readable_name"]
         self._full_templates = [
-            "{instruction}",
+            "{verb}",  # By convention the full instruction will be provided in `verb` entry.
         ]
         self._verb_templates = [
             "{verb} the {object}.",
@@ -367,9 +367,12 @@ class BreakParaphraser(BaseParaphraser):
         super().__init__(object_synonyms=object_synonyms, action_type="break")
         self._instruction_options = [
             "break",
-            "smash",
-            "shatter",
+            "break into pieces",
+            "break to pieces",
             "crash",
+            "crack",
+            "shatter",
+            "smash",
         ]
         self._prefix_option = "use the hammer to"
         self._suffix_option = "with the hammer."
@@ -408,18 +411,24 @@ class CleanParaphraser(BaseParaphraser):
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="clean")
         self._instruction_options = [
-            "clean the plate.",
-            "rinse the plate.",
+            "clean",
+            "cleanse",
+            "rinse",
+            "soak",
+            "sponge",
+            "wash",
+            "wipe",
         ]
         self._suffix_option = "in the sink."
 
         self._available_templates = {
-            "clean": self._full_templates,
+            "clean_full": self._full_templates,
+            "clean_object": self._verb_templates,
         }
 
     def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
         """Get a clean instruction."""
-        available_types = ["clean"]
+        available_types = ["clean_full", "clean_object"]
 
         instruction = self._get_instruction(
             object_id=object_id, attributes=attributes, available_types=available_types
@@ -504,15 +513,20 @@ class FillParaphraser(BaseParaphraser):
         self._instruction_options = ["fill"]
 
         self._suffix_option = "with water."
-        self._available_templates = {"fill": self._verb_templates}
+        self._available_templates = {
+            "fill_full": self._full_templates,
+            "fill_object": self._verb_templates,
+        }
 
     def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
         """Get a fill instruction."""
-        available_types = ["fill"]
+        available_types = ["fill_full", "fill_object"]
 
         instruction = self._get_instruction(
             object_id=object_id, attributes=attributes, available_types=available_types
         )
+        if random.random() < (1 / 2):
+            instruction = self._add_suffix(instruction, self._suffix_option)
         return instruction
 
 

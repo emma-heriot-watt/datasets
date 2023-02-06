@@ -110,6 +110,9 @@ class BaseAugmentation:
     """Base class for object augmentations."""
 
     def __init__(self) -> None:
+        self.action_type = "Base"
+        self.max_examples_per_class = 1
+        self.action_objects: list[str] = []
         self._assets_to_labels = get_arena_definitions()["asset_to_label"]
         label_to_index = get_arena_definitions()["label_to_idx"]
         self._index_to_label = {index: label for label, index in label_to_index.items()}
@@ -147,6 +150,81 @@ class BaseAugmentation:
     def post_process_metadata(self, action_type_metadata: dict[str, Any]) -> dict[str, Any]:
         """Post-process any annotation."""
         return action_type_metadata
+
+    def _downsample_augmentation_metadata(
+        self, action_type_metadata: dict[str, Any]
+    ) -> dict[str, Any]:
+        """Downsamples the dataset using a fixed maximum number of examples per object."""
+        final_metadata: dict[str, Any] = {}
+        action_metadata_grouped_per_object_class: dict[str, Any] = {}
+
+        for key, annotation in action_type_metadata.items():
+            action = annotation["actions"][0][self.action_type.lower()]
+            object_id = action["object"]["id"]
+
+            object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
+            object_class = self._special_object_type_map.get(
+                object_asset, self._assets_to_labels[object_asset]
+            )
+
+            instructions = action_metadata_grouped_per_object_class.get(object_class, [])
+            instructions.append({key: annotation})
+            action_metadata_grouped_per_object_class[object_class] = instructions
+
+        for _, object_class_metadata in action_metadata_grouped_per_object_class.items():
+            random.shuffle(object_class_metadata)
+            for object_class_annotation in object_class_metadata[: self.max_examples_per_class]:
+                final_metadata.update(object_class_annotation)
+        return final_metadata
+
+    def _should_ignore_annotation_for_image(
+        self,
+        annotation: dict[str, Any],
+        robot_position: NDArray[np.float32],
+        class_thresholds: dict[str, list[int]],
+    ) -> bool:
+        """Check basic stuff to verify that an annotation is valid for an augmentation.
+
+        An annotation is valid if 1) the object class is not `Unassigned`, 2) the object is in the
+        actionable objects, and 3) the area bounding box of the object is within the object class
+        thresholds.
+        """
+        image_annotation = annotation["image_annotation"]
+        object_type = image_annotation["object_type"]
+        if object_type == "Unassigned":
+            return True
+
+        object_asset = get_object_asset_from_object_id(object_type, self._assets_to_labels)
+        object_class = self._assets_to_labels[object_asset]
+        readable_name = self._special_object_type_map.get(object_asset, object_class)
+
+        # Ignore objects that are not specified
+        if readable_name not in self.action_objects:
+            return True
+
+        # Ignore too small objects
+        bbox = image_annotation["bbox"]
+        if compute_bbox_area(bbox) < class_thresholds[object_class][0]:  # noqa: WPS531
+            return True
+        return False
+
+    def _merge_instructions(
+        self, action_instructions_dict: dict[str, Any], annotation_id: int
+    ) -> list[dict[str, Any]]:
+        """Merge the instructions into a list.
+
+        Create additional instructions determined by the object attributes.
+        """
+        action_instructions = []
+        for _, object_instructions in action_instructions_dict.items():
+            if len(object_instructions) > 1:
+                instructions, annotation_id = self._get_instructions_from_attributes(
+                    object_instructions, annotation_id
+                )
+                action_instructions.extend(instructions)
+            else:
+                action_instructions.extend(object_instructions)
+        return action_instructions
 
     def _compute_distance_to_object(
         self, object_annotation: dict[str, Any], robot_position: NDArray[np.float32]
@@ -212,17 +290,19 @@ class GoToAugmentation(BaseAugmentation):
     def __init__(
         self,
         goto_classes: list[str],
+        action_type: str = "Goto",
         min_interaction_distance: float = 2.5,
         max_examples_per_class: int = 5000,
     ) -> None:
         super().__init__()
         self.min_interaction_distance = min_interaction_distance
         self.max_examples_per_class = max_examples_per_class
+        self.action_type = action_type
 
         # Force goto special monitors
-        self.goto_objects = goto_classes + list(self._special_object_type_map.values())
+        self.action_objects = goto_classes + list(self._special_object_type_map.values())
 
-    def __call__(  # noqa: WPS231
+    def __call__(
         self,
         annotations: dict[str, Any],
         robot_position: NDArray[np.float32],
@@ -234,35 +314,30 @@ class GoToAugmentation(BaseAugmentation):
         navigation_instructions_dict = defaultdict(list)
         annotation_id = 0
         for _, annotation in annotations.items():
+            should_ignore_ann = self._should_ignore_annotation_for_image(
+                annotation, robot_position, class_thresholds
+            )
+            if should_ignore_ann:
+                continue
             image_annotation = annotation["image_annotation"]
             object_annotation = annotation["object_annotation"]
             object_type = image_annotation["object_type"]
-            if object_type == "Unassigned":
-                continue
 
             object_asset = get_object_asset_from_object_id(object_type, self._assets_to_labels)
             object_class = self._assets_to_labels[object_asset]
             readable_name = self._special_object_type_map.get(object_asset, object_class)
-
-            # Ignore objects that are not specified
-            if readable_name not in self.goto_objects:
-                continue
-
-            # Ignore too small objects
-            bbox = image_annotation["bbox"]
-            if compute_bbox_area(bbox) < class_thresholds[object_class][0]:
-                continue
 
             distance_to_object = self._compute_distance_to_object(
                 object_annotation, robot_position
             )
             if distance_to_object > self.min_interaction_distance:
                 instruction = AugmentationInstruction(
-                    action_type="Goto",
+                    action_type=self.action_type,
                     object_id=object_type,
                     attributes=SimBotObjectAttributes(
                         readable_name=readable_name,
                         color=self._object_color_map.get(readable_name, None),
+                        distance=distance_to_object,
                     ),
                     bbox=image_annotation["bbox"],
                     image_name=image_name,
@@ -272,61 +347,245 @@ class GoToAugmentation(BaseAugmentation):
                 annotation_id += 1
                 navigation_instructions_dict[object_class].append(instruction)
 
-        navigation_instructions = []
-        for _, object_instructions in navigation_instructions_dict.items():
-            if len(object_instructions) > 1:
-                instructions, annotation_id = self._get_instructions_from_attributes(
-                    object_instructions, annotation_id
-                )
-                navigation_instructions.extend(instructions)
-            else:
-                navigation_instructions.extend(object_instructions)
-
+        navigation_instructions = self._merge_instructions(
+            navigation_instructions_dict, annotation_id
+        )
         return navigation_instructions
 
+    @classmethod
+    def from_yaml_config(
+        cls,
+        goto_classes: list[str],
+        action_type: str = "Goto",
+        min_interaction_distance: float = 2.5,
+        max_examples_per_class: int = 5000,
+    ) -> BaseAugmentation:
+        """Instantiate the class."""
+        return cls(
+            goto_classes=goto_classes,
+            action_type=action_type,
+            min_interaction_distance=min_interaction_distance,
+            max_examples_per_class=max_examples_per_class,
+        )
+
     def post_process_metadata(self, goto_metadata: dict[str, Any]) -> dict[str, Any]:
-        """Post process the metadata for the search actions.
-
-        This basically downsamples the negative examples in the dataset using a fixed maximum
-        number of negative examples per room.
-        """
-        final_metadata: dict[str, Any] = {}
-        goto_metadata_grouped_by_class: dict[str, Any] = {}
-
-        for key, annotation in goto_metadata.items():
-            object_id = annotation["actions"][0]["goto"]["object"]["id"]  # noqa: WPS219
-
-            object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
-            object_class = self._special_object_type_map.get(
-                object_asset, self._assets_to_labels[object_asset]
-            )
-
-            instructions = goto_metadata_grouped_by_class.get(object_class, [])
-            instructions.append({key: annotation})
-            goto_metadata_grouped_by_class[object_class] = instructions
-
-        for _, object_class_metadata in goto_metadata_grouped_by_class.items():
-            random.shuffle(object_class_metadata)
-            for object_class_annotation in object_class_metadata[: self.max_examples_per_class]:
-                final_metadata.update(object_class_annotation)
-        return final_metadata
+        """Post process the metadata for the goto actions."""
+        return self._downsample_augmentation_metadata(action_type_metadata=goto_metadata)
 
 
-class ToggleAugmentation(BaseAugmentation):
-    """Toggle Augmentations."""
+class BreakAugmentation(BaseAugmentation):
+    """Break Augmentation."""
 
     def __init__(
         self,
-        toggle_classes: list[str],
+        break_classes: list[str],
+        action_type: str = "Break",
         min_interaction_distance: float = 1.5,
         max_examples_per_class: int = 5000,
     ) -> None:
         super().__init__()
         self.min_interaction_distance = min_interaction_distance
         self.max_examples_per_class = max_examples_per_class
+        self.action_type = action_type
 
-        # Force toggle special monitors
-        self.toggle_objects = toggle_classes + list(self._special_object_type_map.values())
+        self.action_objects = break_classes
+
+    def __call__(
+        self,
+        annotations: dict[str, Any],
+        robot_position: NDArray[np.float32],
+        image_name: str,
+        class_thresholds: dict[str, list[int]],
+        room_name: str,
+    ) -> list[AugmentationInstruction]:
+        """Get new annotations for the selected classes."""
+        break_instructions_dict = defaultdict(list)
+        annotation_id = 0
+        for _, annotation in annotations.items():
+            should_ignore_ann = self._should_ignore_annotation_for_image(
+                annotation, robot_position, class_thresholds
+            )
+            if should_ignore_ann:
+                continue
+            image_annotation = annotation["image_annotation"]
+            object_annotation = annotation["object_annotation"]
+            object_type = image_annotation["object_type"]
+
+            object_asset = get_object_asset_from_object_id(object_type, self._assets_to_labels)
+            object_class = self._assets_to_labels[object_asset]
+            readable_name = self._special_object_type_map.get(object_asset, object_class)
+
+            distance_to_object = self._compute_distance_to_object(
+                object_annotation, robot_position
+            )
+
+            is_breakable = "BREAKABLE" in object_annotation["supportedStates"]
+            is_broken = object_annotation["currentStates"].get("Broken", False)
+            can_break_object = all(
+                [is_breakable, not is_broken, distance_to_object <= self.min_interaction_distance]
+            )
+
+            if can_break_object:
+                instruction = AugmentationInstruction(
+                    action_type=self.action_type,
+                    object_id=object_type,
+                    attributes=SimBotObjectAttributes(
+                        readable_name=readable_name,
+                        color=self._object_color_map.get(readable_name, None),
+                        distance=distance_to_object,
+                    ),
+                    bbox=image_annotation["bbox"],
+                    image_name=image_name,
+                    annotation_id=annotation_id,
+                    room_name=room_name,
+                )
+                annotation_id += 1
+                break_instructions_dict[object_class].append(instruction)
+
+        break_instructions = self._merge_instructions(break_instructions_dict, annotation_id)
+        return break_instructions
+
+    @classmethod
+    def from_yaml_config(
+        cls,
+        break_classes: list[str],
+        action_type: str = "Break",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 5000,
+    ) -> BaseAugmentation:
+        """Instantiate the class."""
+        return cls(
+            break_classes=break_classes,
+            action_type=action_type,
+            min_interaction_distance=min_interaction_distance,
+            max_examples_per_class=max_examples_per_class,
+        )
+
+    def post_process_metadata(self, break_metadata: dict[str, Any]) -> dict[str, Any]:
+        """Post process the metadata for the break actions."""
+        return self._downsample_augmentation_metadata(action_type_metadata=break_metadata)
+
+
+class CleanAugmentation(BaseAugmentation):
+    """Clean Augmentation."""
+
+    def __init__(
+        self,
+        cleanable_object_types: list[str],
+        cleaning_classes: list[str],
+        action_type: str = "Clean",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 1000,
+    ) -> None:
+        super().__init__()
+        self.min_interaction_distance = min_interaction_distance
+        self.max_examples_per_class = max_examples_per_class
+        self.action_type = action_type
+
+        # DIRTY interactable uses CLEAN on KitchenCounterSink_01 that is TOGGLED, resulting in DIRTY being set to false
+        self.action_objects = cleaning_classes
+        self.cleanable_object_types = cleanable_object_types
+
+    def __call__(
+        self,
+        annotations: dict[str, Any],
+        robot_position: NDArray[np.float32],
+        image_name: str,
+        class_thresholds: dict[str, list[int]],
+        room_name: str,
+    ) -> list[AugmentationInstruction]:
+        """Get new annotations for the selected classes."""
+        clean_instructions_dict = defaultdict(list)
+        annotation_id = 0
+        for _, annotation in annotations.items():
+            should_ignore_ann = self._should_ignore_annotation_for_image(
+                annotation, robot_position, class_thresholds
+            )
+            if should_ignore_ann:
+                continue
+            image_annotation = annotation["image_annotation"]
+            object_annotation = annotation["object_annotation"]
+            object_type = image_annotation["object_type"]
+
+            object_asset = get_object_asset_from_object_id(object_type, self._assets_to_labels)
+            object_class = self._assets_to_labels[object_asset]
+            readable_name = self._special_object_type_map.get(object_asset, object_class)
+
+            distance_to_object = self._compute_distance_to_object(
+                object_annotation, robot_position
+            )
+            if distance_to_object <= self.min_interaction_distance:
+                cleaning_object_type = random.choice(self.cleanable_object_types)
+                cleaning_object_asset = get_object_asset_from_object_id(
+                    object_type, self._assets_to_labels
+                )
+                cleaning_object_class = self._assets_to_labels[object_asset]
+                cleaning_readable_name = self._special_object_type_map.get(
+                    cleaning_object_asset, cleaning_object_class
+                )
+
+                instruction = AugmentationInstruction(
+                    action_type=self.action_type,
+                    object_id=cleaning_object_type,
+                    attributes=SimBotObjectAttributes(
+                        readable_name=cleaning_readable_name,
+                        color=self._object_color_map.get(readable_name, None),
+                        distance=distance_to_object,
+                    ),
+                    bbox=image_annotation["bbox"],
+                    image_name=image_name,
+                    annotation_id=annotation_id,
+                    room_name=room_name,
+                )
+
+                annotation_id += 1
+                clean_instructions_dict[object_class].append(instruction)
+
+        clean_instructions = self._merge_instructions(clean_instructions_dict, annotation_id)
+        return clean_instructions
+
+    @classmethod
+    def from_yaml_config(
+        cls,
+        cleanable_object_types: list[str],
+        cleaning_classes: list[str],
+        action_type: str = "Clean",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 1000,
+    ) -> BaseAugmentation:
+        """Instantiate the class."""
+        return cls(
+            cleanable_object_types=cleanable_object_types,
+            cleaning_classes=cleaning_classes,
+            action_type=action_type,
+            min_interaction_distance=min_interaction_distance,
+            max_examples_per_class=max_examples_per_class,
+        )
+
+    def post_process_metadata(self, clean_metadata: dict[str, Any]) -> dict[str, Any]:
+        """Post process the metadata for the clean actions."""
+        return self._downsample_augmentation_metadata(action_type_metadata=clean_metadata)
+
+
+class FillPourAugmentation(BaseAugmentation):
+    """FillPour Augmentation."""
+
+    def __init__(
+        self,
+        fillable_object_types: list[str],
+        filling_classes: list[str],
+        action_type: str = "Fill",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 5000,
+    ) -> None:
+        super().__init__()
+        self.min_interaction_distance = min_interaction_distance
+        self.max_examples_per_class = max_examples_per_class
+        self.action_type = action_type
+
+        # Fillable interactable with FILLED set to false uses FILL on KitchenCounterSink_01 that has TOGGLED set to true, resulting in fillable interactable having FILLED set to true
+        self.fillable_object_types = fillable_object_types
+        self.filling_classes = filling_classes
 
     def __call__(  # noqa: WPS231
         self,
@@ -337,7 +596,7 @@ class ToggleAugmentation(BaseAugmentation):
         room_name: str,
     ) -> list[AugmentationInstruction]:
         """Get new annotations for the selected classes."""
-        toggle_instructions_dict = defaultdict(list)
+        clean_instructions_dict = defaultdict(list)
         annotation_id = 0
         for _, annotation in annotations.items():
             image_annotation = annotation["image_annotation"]
@@ -350,8 +609,12 @@ class ToggleAugmentation(BaseAugmentation):
             object_class = self._assets_to_labels[object_asset]
             readable_name = self._special_object_type_map.get(object_asset, object_class)
 
-            # Ignore objects that are not specified
-            if readable_name not in self.toggle_objects:
+            # Ignore objects that are not specified for the Fill action
+            if self.action_type == "Fill" and readable_name not in self.filling_classes:
+                continue
+
+            # Ignore objects that are not specified for the Fill action
+            if self.action_type == "Pour" and object_type not in self.fillable_object_types:
                 continue
 
             # Ignore too small objects
@@ -363,12 +626,112 @@ class ToggleAugmentation(BaseAugmentation):
                 object_annotation, robot_position
             )
             if distance_to_object <= self.min_interaction_distance:
+                if self.action_type == "Fill":
+                    object_type = random.choice(self.fillable_object_types)
+                    object_asset = get_object_asset_from_object_id(
+                        object_type, self._assets_to_labels
+                    )
+                    object_class = self._assets_to_labels[object_asset]
+                    readable_name = self._special_object_type_map.get(object_asset, object_class)
+
                 instruction = AugmentationInstruction(
-                    action_type="Toggle",
+                    action_type=self.action_type,
                     object_id=object_type,
                     attributes=SimBotObjectAttributes(
                         readable_name=readable_name,
                         color=self._object_color_map.get(readable_name, None),
+                        distance=distance_to_object,
+                    ),
+                    bbox=image_annotation["bbox"],
+                    image_name=image_name,
+                    annotation_id=annotation_id,
+                    room_name=room_name,
+                )
+
+                annotation_id += 1
+                clean_instructions_dict[object_class].append(instruction)
+
+        clean_instructions = self._merge_instructions(clean_instructions_dict, annotation_id)
+        return clean_instructions
+
+    @classmethod
+    def from_yaml_config(
+        cls,
+        fillable_object_types: list[str],
+        filling_classes: list[str],
+        action_type: str = "Fill",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 5000,
+    ) -> BaseAugmentation:
+        """Instantiate the class."""
+        return cls(
+            fillable_object_types=fillable_object_types,
+            filling_classes=filling_classes,
+            action_type=action_type,
+            min_interaction_distance=min_interaction_distance,
+            max_examples_per_class=max_examples_per_class,
+        )
+
+    def post_process_metadata(self, clean_metadata: dict[str, Any]) -> dict[str, Any]:
+        """Post process the metadata for the clean actions."""
+        return self._downsample_augmentation_metadata(action_type_metadata=clean_metadata)
+
+
+class ToggleAugmentation(BaseAugmentation):
+    """Toggle Augmentations."""
+
+    def __init__(
+        self,
+        toggle_classes: list[str],
+        action_type: str = "Toggle",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 5000,
+    ) -> None:
+        super().__init__()
+        self.min_interaction_distance = min_interaction_distance
+        self.max_examples_per_class = max_examples_per_class
+        self.action_type = action_type
+
+        # Force toggle special monitors
+        self.action_objects = toggle_classes + list(self._special_object_type_map.values())
+
+    def __call__(
+        self,
+        annotations: dict[str, Any],
+        robot_position: NDArray[np.float32],
+        image_name: str,
+        class_thresholds: dict[str, list[int]],
+        room_name: str,
+    ) -> list[AugmentationInstruction]:
+        """Get new annotations for the selected classes."""
+        toggle_instructions_dict = defaultdict(list)
+        annotation_id = 0
+        for _, annotation in annotations.items():
+            should_ignore_ann = self._should_ignore_annotation_for_image(
+                annotation, robot_position, class_thresholds
+            )
+            if should_ignore_ann:
+                continue
+            image_annotation = annotation["image_annotation"]
+            object_annotation = annotation["object_annotation"]
+            object_type = image_annotation["object_type"]
+
+            object_asset = get_object_asset_from_object_id(object_type, self._assets_to_labels)
+            object_class = self._assets_to_labels[object_asset]
+            readable_name = self._special_object_type_map.get(object_asset, object_class)
+
+            distance_to_object = self._compute_distance_to_object(
+                object_annotation, robot_position
+            )
+
+            if distance_to_object <= self.min_interaction_distance:
+                instruction = AugmentationInstruction(
+                    action_type=self.action_type,
+                    object_id=object_type,
+                    attributes=SimBotObjectAttributes(
+                        readable_name=readable_name,
+                        color=self._object_color_map.get(readable_name, None),
+                        distance=distance_to_object,
                     ),
                     bbox=image_annotation["bbox"],
                     image_name=image_name,
@@ -378,43 +741,28 @@ class ToggleAugmentation(BaseAugmentation):
                 annotation_id += 1
                 toggle_instructions_dict[object_class].append(instruction)
 
-        toggle_instructions = []
-        for _, object_instructions in toggle_instructions_dict.items():
-            if len(object_instructions) > 1:
-                instructions, annotation_id = self._get_instructions_from_attributes(
-                    object_instructions, annotation_id
-                )
-                toggle_instructions.extend(instructions)
-            else:
-                toggle_instructions.extend(object_instructions)
+        toggle_instructions = self._merge_instructions(toggle_instructions_dict, annotation_id)
         return toggle_instructions
 
+    @classmethod
+    def from_yaml_config(
+        cls,
+        toggle_classes: list[str],
+        action_type: str = "Toggle",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 5000,
+    ) -> BaseAugmentation:
+        """Instantiate the class."""
+        return cls(
+            toggle_classes=toggle_classes,
+            action_type=action_type,
+            min_interaction_distance=min_interaction_distance,
+            max_examples_per_class=max_examples_per_class,
+        )
+
     def post_process_metadata(self, toggle_metadata: dict[str, Any]) -> dict[str, Any]:
-        """Post process the metadata for the search actions.
-
-        This basically downsamples the negative examples in the dataset using a fixed maximum
-        number of negative examples per room.
-        """
-        final_metadata: dict[str, Any] = {}
-        toggle_metadata_grouped_by_class: dict[str, Any] = {}
-
-        for key, annotation in toggle_metadata.items():
-            object_id = annotation["actions"][0]["toggle"]["object"]["id"]  # noqa: WPS219
-
-            object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
-            object_class = self._special_object_type_map.get(
-                object_asset, self._assets_to_labels[object_asset]
-            )
-
-            instructions = toggle_metadata_grouped_by_class.get(object_class, [])
-            instructions.append({key: annotation})
-            toggle_metadata_grouped_by_class[object_class] = instructions
-
-        for _, object_class_metadata in toggle_metadata_grouped_by_class.items():
-            random.shuffle(object_class_metadata)
-            for object_class_annotation in object_class_metadata[: self.max_examples_per_class]:
-                final_metadata.update(object_class_annotation)
-        return final_metadata
+        """Post process the metadata for the toggle actions."""
+        return self._downsample_augmentation_metadata(action_type_metadata=toggle_metadata)
 
 
 class OpenCloseAugmentation(BaseAugmentation):
@@ -433,7 +781,7 @@ class OpenCloseAugmentation(BaseAugmentation):
         self.action_objects = action_type_classes
         self.action_type = action_type
 
-    def __call__(  # noqa: WPS231
+    def __call__(
         self,
         annotations: dict[str, Any],
         robot_position: NDArray[np.float32],
@@ -445,34 +793,31 @@ class OpenCloseAugmentation(BaseAugmentation):
         open_instructions_dict = defaultdict(list)
         annotation_id = 0
         for _, annotation in annotations.items():
+            should_ignore_ann = self._should_ignore_annotation_for_image(
+                annotation, robot_position, class_thresholds
+            )
+            if should_ignore_ann:
+                continue
             image_annotation = annotation["image_annotation"]
             object_annotation = annotation["object_annotation"]
             object_type = image_annotation["object_type"]
-            if object_type == "Unassigned":
-                continue
 
             object_asset = get_object_asset_from_object_id(object_type, self._assets_to_labels)
             object_class = self._assets_to_labels[object_asset]
-
-            # Ignore objects that are not specified
-            if object_class not in self.action_objects:
-                continue
-
-            # Ignore too small objects
-            bbox = image_annotation["bbox"]
-            if compute_bbox_area(bbox) < class_thresholds[object_class][0]:
-                continue
+            readable_name = self._special_object_type_map.get(object_asset, object_class)
 
             distance_to_object = self._compute_distance_to_object(
                 object_annotation, robot_position
             )
+
             if distance_to_object <= self.min_interaction_distance:
                 instruction = AugmentationInstruction(
                     action_type=self.action_type,
                     object_id=object_type,
                     attributes=SimBotObjectAttributes(
-                        readable_name=object_class,
+                        readable_name=readable_name,
                         color=self._object_color_map.get(object_class, None),
+                        distance=distance_to_object,
                     ),
                     bbox=image_annotation["bbox"],
                     image_name=image_name,
@@ -482,42 +827,28 @@ class OpenCloseAugmentation(BaseAugmentation):
                 annotation_id += 1
                 open_instructions_dict[object_class].append(instruction)
 
-        open_instructions = []
-        for _, object_instructions in open_instructions_dict.items():
-            if len(object_instructions) > 1:
-                instructions, annotation_id = self._get_instructions_from_attributes(
-                    object_instructions, annotation_id
-                )
-                open_instructions.extend(instructions)
-            else:
-                open_instructions.extend(object_instructions)
+        open_instructions = self._merge_instructions(open_instructions_dict, annotation_id)
         return open_instructions
 
+    @classmethod
+    def from_yaml_config(
+        cls,
+        action_type_classes: list[str],
+        action_type: str = "Open",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 5000,
+    ) -> BaseAugmentation:
+        """Instantiate the class."""
+        return cls(
+            action_type_classes=action_type_classes,
+            action_type=action_type,
+            min_interaction_distance=min_interaction_distance,
+            max_examples_per_class=max_examples_per_class,
+        )
+
     def post_process_metadata(self, action_metadata: dict[str, Any]) -> dict[str, Any]:
-        """Post process the metadata for the search actions.
-
-        This basically downsamples the negative examples in the dataset using a fixed maximum
-        number of negative examples per room.
-        """
-        final_metadata: dict[str, Any] = {}
-        action_metadata_grouped_by_class: dict[str, Any] = {}
-
-        for key, annotation in action_metadata.items():
-            action_metadata = annotation["actions"][0][self.action_type.lower()]
-            object_id = action_metadata["object"]["id"]
-
-            object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
-            object_class = self._assets_to_labels[object_asset]
-
-            instructions = action_metadata_grouped_by_class.get(object_class, [])
-            instructions.append({key: annotation})
-            action_metadata_grouped_by_class[object_class] = instructions
-
-        for _, object_class_metadata in action_metadata_grouped_by_class.items():
-            random.shuffle(object_class_metadata)
-            for object_class_annotation in object_class_metadata[: self.max_examples_per_class]:
-                final_metadata.update(object_class_annotation)
-        return final_metadata
+        """Post process the metadata for the open and close actions."""
+        return self._downsample_augmentation_metadata(action_type_metadata=action_metadata)
 
 
 class SearchAugmentation(BaseAugmentation):
@@ -633,6 +964,22 @@ class SearchAugmentation(BaseAugmentation):
             )
             instructions.append(instruction)
         return instructions
+
+    @classmethod
+    def from_yaml_config(
+        cls,
+        search_classes: list[str],
+        min_interaction_distance: float = 0,
+        max_negative_examples_per_room: int = 150,
+        max_examples_per_object: int = 4000,
+    ) -> BaseAugmentation:
+        """Instantiate the class."""
+        return cls(
+            search_classes=search_classes,
+            min_interaction_distance=min_interaction_distance,
+            max_negative_examples_per_room=max_negative_examples_per_room,
+            max_examples_per_object=max_examples_per_object,
+        )
 
     def post_process_metadata(  # noqa: WPS231
         self, search_metadata: dict[str, Any]

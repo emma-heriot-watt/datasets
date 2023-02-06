@@ -18,14 +18,21 @@ from emma_datasets.common import Settings, get_progress
 from emma_datasets.constants.simbot.simbot import get_class_thresholds, get_objects_asset_synonyms
 from emma_datasets.datamodels.datasets.utils.simbot_utils.action_creators import (
     BaseActionCreator,
+    BreakActionCreator,
+    CleanActionCreator,
     CloseActionCreator,
+    FillActionCreator,
     GotoActionCreator,
     OpenActionCreator,
+    PourActionCreator,
     SearchActionCreator,
     ToggleActionCreator,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
     BaseAugmentation,
+    BreakAugmentation,
+    CleanAugmentation,
+    FillPourAugmentation,
     GoToAugmentation,
     OpenCloseAugmentation,
     SearchAugmentation,
@@ -405,6 +412,22 @@ def generate_data(dataset: AugmentationVisionDataset, num_workers: int = 0) -> N
     dataset.gather()
 
 
+def string_to_class(class_str: str) -> BaseAugmentation:
+    """Switcher for augmentation classes."""
+    switcher = {
+        "Break": BreakAugmentation,
+        "Clean": CleanAugmentation,
+        "Pour": FillPourAugmentation,
+        "Fill": FillPourAugmentation,
+        "Close": OpenCloseAugmentation,
+        "Goto": GoToAugmentation,
+        "Open": OpenCloseAugmentation,
+        "Search": SearchAugmentation,
+        "Toggle": ToggleAugmentation,
+    }
+    return switcher[class_str]
+
+
 if __name__ == "__main__":
     parser = ArgumentParser()
 
@@ -455,60 +478,13 @@ if __name__ == "__main__":
         default=0,
         help="Number of workers",
     )
+
     parser.add_argument(
-        "--min_toggle_distance",
-        type=float,
-        default=1.5,  # noqa: WPS432
-        help="Minimum distance for toggling an object",
+        "--augmentation_config",
+        default="src/emma_datasets/constants/simbot/augmentations.json",
+        help="Path to augmentation config",
     )
-    parser.add_argument(
-        "--min_goto_distance",
-        type=float,
-        default=2.5,  # noqa: WPS432
-        help="Minimum distance for going to an object",
-    )
-    parser.add_argument(
-        "--min_search_distance",
-        type=float,
-        default=0,
-        help="Minimum distance for searching an object",
-    )
-    parser.add_argument(
-        "--search_max_negative_examples_per_room",
-        type=int,
-        default=150,  # noqa: WPS432
-        help="Maximum negative examples per room for searching an object",
-    )
-    parser.add_argument(
-        "--search_max_examples_per_object",
-        type=int,
-        default=4000,  # noqa: WPS432
-        help="Maximum positive examples per object",
-    )
-    parser.add_argument(
-        "--goto_max_examples_per_class",
-        type=int,
-        default=5000,  # noqa: WPS432
-        help="Maximum examples per class for going to an object",
-    )
-    parser.add_argument(
-        "--toggle_max_examples_per_class",
-        type=int,
-        default=5000,  # noqa: WPS432
-        help="Maximum examples per class for toggling an object",
-    )
-    parser.add_argument(
-        "--open_max_examples_per_class",
-        type=int,
-        default=1000,
-        help="Maximum examples per class for opening an object",
-    )
-    parser.add_argument(
-        "--close_max_examples_per_class",
-        type=int,
-        default=1000,
-        help="Maximum examples per class for closing an object",
-    )
+
     args = parser.parse_args()
 
     root_vision_path = args.root_vision_path
@@ -523,38 +499,26 @@ if __name__ == "__main__":
 
     object_synonyms = get_objects_asset_synonyms()
     action_creators = [
+        BreakActionCreator(object_synonyms),
+        CleanActionCreator(object_synonyms),
+        FillActionCreator(object_synonyms),
+        PourActionCreator(object_synonyms),
         CloseActionCreator(object_synonyms),
         GotoActionCreator(object_synonyms),
         OpenActionCreator(object_synonyms),
         SearchActionCreator(object_synonyms),
         ToggleActionCreator(object_synonyms),
     ]
-    vision_data_augmentations: dict[str, BaseAugmentation] = {
-        "Close": OpenCloseAugmentation(
-            min_interaction_distance=args.min_toggle_distance,
-            action_type="Close",
-            action_type_classes=["Fuse Box"],
-        ),
-        "Goto": GoToAugmentation(
-            min_interaction_distance=args.min_goto_distance,
-            goto_classes=["Whiteboard", "Robot Arm", "Wall Shelf", "Fuse Box"],
-        ),
-        "Open": OpenCloseAugmentation(
-            min_interaction_distance=args.min_toggle_distance,
-            action_type="Open",
-            action_type_classes=["Fuse Box"],
-        ),
-        "Search": SearchAugmentation(
-            search_classes=SEARCH_OBJECTS,
-            min_interaction_distance=args.min_search_distance,
-            max_negative_examples_per_room=args.search_max_negative_examples_per_room,
-            max_examples_per_object=args.search_max_examples_per_object,
-        ),
-        "Toggle": ToggleAugmentation(
-            min_interaction_distance=args.min_toggle_distance,
-            toggle_classes=["Robot Arm", "Button", "Lever"],
-        ),
-    }
+    vision_data_augmentations: dict[str, BaseAugmentation] = {}
+    with open(args.augmentation_config) as fp:
+        augmentation_config = json.load(fp)
+
+    for augmentation, augmentation_dict in augmentation_config.items():
+        class_name = list(augmentation_dict.keys())[0]
+        augmentation_class = string_to_class(augmentation)
+        vision_data_augmentations[augmentation] = augmentation_class.from_yaml_config(
+            **augmentation_dict[class_name]
+        )
 
     dataset = AugmentationVisionDataset(
         output_json_file=args.output_json_file,
