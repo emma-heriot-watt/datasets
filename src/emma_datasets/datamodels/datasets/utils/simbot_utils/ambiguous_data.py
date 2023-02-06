@@ -91,6 +91,11 @@ class AmbiguityProcessor:
         )
         return len(candidate_objects) == 0  # noqa: WPS507
 
+    def target_same_as_readable_name(self, action: SimBotAction, target_class_label: str) -> bool:
+        """Check if the target and readable names are the same."""
+        _, _, readable_name = self.object_decoder.get_target_object_and_name(action.dict())
+        return target_class_label == readable_name
+
     def holding_object(self, action: SimBotAction, target_class_label: str) -> bool:
         """Check if the agent is holding the target object."""
         if target_class_label == "Slice":
@@ -276,7 +281,7 @@ class ClarificationFilter:
 
         return False
 
-    def _keep_qa_pair(  # noqa: WPS212
+    def _keep_qa_pair(
         self, qa_pair: SimBotQA, mission_id: str, action: SimBotAction, instruction: str
     ) -> bool:
         keep_qa_pair = False
@@ -299,24 +304,20 @@ class ClarificationFilter:
 
         # Finally, check conditions based on the question type
         if qa_pair.question_type == SimBotClarificationTypes.disambiguation:
-            keyword_exists = self._check_instruction_keywords(instruction)
-            if keyword_exists:
-                return keep_qa_pair
-            if self._first_target_is_unique(action, mission_id):
-                return keep_qa_pair
-            keep_qa_pair = self.ambiguity_processor.ambiguous_in_frame(
-                frame_index=action.get_action_data["object"]["colorImageIndex"],
+            keep_qa_pair = self._filter_disambiguation_questions(
                 mission_id=mission_id,
-                action_id=action.id,
-                target_class_label=target_object,
+                action=action,
+                instruction=instruction,
+                target_object=target_object,
             )
         elif qa_pair.question_type == SimBotClarificationTypes.location:
-            keep_qa_pair = self.ambiguity_processor.not_in_frame(
-                frame_index=0,
+            keep_qa_pair = self._filter_location_questions(
                 mission_id=mission_id,
-                action_id=action.id,
-                target_class_label=target_object,
+                action=action,
+                instruction=instruction,
+                target_object=target_object,
             )
+
         if qa_pair.question_target != "desk":
             qa_pair.question_target = target_object.lower()
         return keep_qa_pair
@@ -345,3 +346,35 @@ class ClarificationFilter:
             if keyword in instruction:
                 return True
         return False
+
+    def _filter_disambiguation_questions(
+        self, mission_id: str, action: SimBotAction, instruction: str, target_object: str
+    ) -> bool:
+        """Filter disambiguation questions."""
+        keyword_exists = self._check_instruction_keywords(instruction)
+        if keyword_exists:
+            return False
+        if self._first_target_is_unique(action, mission_id):
+            return False
+        return self.ambiguity_processor.ambiguous_in_frame(
+            frame_index=action.get_action_data["object"]["colorImageIndex"],
+            mission_id=mission_id,
+            action_id=action.id,
+            target_class_label=target_object,
+        )
+
+    def _filter_location_questions(
+        self, mission_id: str, action: SimBotAction, instruction: str, target_object: str
+    ) -> bool:
+        """Filter location questions."""
+        target_same_as_readable_name = self.ambiguity_processor.target_same_as_readable_name(
+            action=action,
+            target_class_label=target_object,
+        )
+        target_not_in_frame = self.ambiguity_processor.not_in_frame(
+            frame_index=0,
+            mission_id=mission_id,
+            action_id=action.id,
+            target_class_label=target_object,
+        )
+        return target_same_as_readable_name and target_not_in_frame

@@ -75,6 +75,7 @@
 	"SM_Prop_FolderTray_04": ["Tray", "Paper Tray"],
 	"SM_Prop_Oxygen_Tank_Large": ["Water Tank"],
 	"SM_Prop_Oxygen_Tank": ["Water Tank"],
+	"SM_Prop_Oxygen_Tank Water": ["Water Tank"],
 	"DeskFan_Broken_01": ["Fan", "Broken Fan"],
 	"DeskFan_New_01": ["Fan"],
 	"SM_Prop_PowerBoxes_01": ["Power Boxes"],
@@ -86,6 +87,7 @@
 	"KitchenCounter01": ["Counter", "Countertop", "Slab"],
 	"KitchenCounterBase_03": ["Counter", "Countertop", "Slab"],
 	"CounterBase_03": ["Counter", "Countertop", "Slab"],
+	"KitchenCounterTop_02": ["Counter", "Countertop", "Slab"],
 	"ColorChangerStation": ["Color Changer", "Color Swapper"],
 	"Spoon_01": ["Spoon"],
 	"Laser_CircuitBoard": ["Circuit Board"],
@@ -139,6 +141,7 @@
 	"SM_Bld_Wall_Window_Blinds_Open_04": ["Blinds"],
 	"AP_Prop_Lab_Clamp_02_Arm_01": ["Clamp"],
 	"ActionFigure": ["Action Figure", "Toy"],
+	"ToyBed": ["Toy", "Toy Bed", "Bed", "Small Bed"],
 	"WaterPuddle_01": ["Puddle", "Spill"],
 	"CoffeeMaker_01": ["Coffee Maker", "Coffee Machine"],
 	"SM_Prop_Plastic_Pipe_Spool_01": ["Wire Coil"],
@@ -467,5 +470,6 @@
 	"AP_Prop_Whiteboard_Devices_10": ["Board", "White Board", "Whiteboard"],
 	"AP_Prop_Whiteboard_Devices_09": ["Board", "White Board", "Whiteboard"],
 	"WaterCooler_01": ["Water Cooler", "Cooler"],
-	"SM_Prop_Drink_Dispenser_01": ["Cooler", "Dispenser"]
+	"SM_Prop_Drink_Dispenser_01": ["Cooler", "Dispenser"],
+	"MissionItemHolder": ["Item"]
 }
