@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.0](https://github.com/emma-simbot/datasets/compare/v1.18.0...v1.19.0) (2023-02-07)
+
+
+### Features
+
+* Pick up augmentation ([#614](https://github.com/emma-simbot/datasets/issues/614)) ([3316cc6](https://github.com/emma-simbot/datasets/commit/3316cc6bed4681d1ae3ba8af9bce92f9f346fb30))
+
 ## [1.18.0](https://github.com/emma-simbot/datasets/compare/v1.17.0...v1.18.0) (2023-02-07)
 
 
