@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.0](https://github.com/emma-simbot/datasets/compare/v1.17.0...v1.18.0) (2023-02-07)
+
+
+### Features
+
+* remove  instruction templates for examine sticky notes ([#613](https://github.com/emma-simbot/datasets/issues/613)) ([a922e5d](https://github.com/emma-simbot/datasets/commit/a922e5d2597aac7e6a77ea3d8422bdad94b2849c))
+
 ## [1.17.0](https://github.com/emma-simbot/datasets/compare/v1.16.2...v1.17.0) (2023-02-06)
 
 
