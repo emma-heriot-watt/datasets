@@ -210,7 +210,7 @@ class BaseAugmentation:
             return True
 
         # Ignore too small objects
-        bbox = image_annotation["bbox"]
+        bbox = self._get_bbox(image_annotation)
         if compute_bbox_area(bbox) < class_thresholds[object_class][0]:  # noqa: WPS531
             return True
         return False
@@ -290,6 +290,9 @@ class BaseAugmentation:
 
         return instructions, annotation_id
 
+    def _get_bbox(self, image_annotation: dict[str, Any]) -> list[int]:
+        return image_annotation["bbox"]
+
 
 class GoToAugmentation(BaseAugmentation):
     """Goto Augmentations."""
@@ -346,7 +349,7 @@ class GoToAugmentation(BaseAugmentation):
                         color=self._object_color_map.get(readable_name, None),
                         distance=distance_to_object,
                     ),
-                    bbox=image_annotation["bbox"],
+                    bbox=self._get_bbox(image_annotation),
                     image_name=image_name,
                     annotation_id=annotation_id,
                     room_name=room_name,
@@ -441,7 +444,7 @@ class BreakAugmentation(BaseAugmentation):
                         color=self._object_color_map.get(readable_name, None),
                         distance=distance_to_object,
                     ),
-                    bbox=image_annotation["bbox"],
+                    bbox=self._get_bbox(image_annotation),
                     image_name=image_name,
                     annotation_id=annotation_id,
                     room_name=room_name,
@@ -539,7 +542,7 @@ class CleanAugmentation(BaseAugmentation):
                         color=self._object_color_map.get(readable_name, None),
                         distance=distance_to_object,
                     ),
-                    bbox=image_annotation["bbox"],
+                    bbox=self._get_bbox(image_annotation),
                     image_name=image_name,
                     annotation_id=annotation_id,
                     room_name=room_name,
@@ -625,7 +628,7 @@ class FillPourAugmentation(BaseAugmentation):
                 continue
 
             # Ignore too small objects
-            bbox = image_annotation["bbox"]
+            bbox = self._get_bbox(image_annotation)
             if compute_bbox_area(bbox) < class_thresholds[object_class][0]:
                 continue
 
@@ -649,7 +652,7 @@ class FillPourAugmentation(BaseAugmentation):
                         color=self._object_color_map.get(readable_name, None),
                         distance=distance_to_object,
                     ),
-                    bbox=image_annotation["bbox"],
+                    bbox=self._get_bbox(image_annotation),
                     image_name=image_name,
                     annotation_id=annotation_id,
                     room_name=room_name,
@@ -740,7 +743,7 @@ class ToggleAugmentation(BaseAugmentation):
                         color=self._object_color_map.get(readable_name, None),
                         distance=distance_to_object,
                     ),
-                    bbox=image_annotation["bbox"],
+                    bbox=self._get_bbox(image_annotation),
                     image_name=image_name,
                     annotation_id=annotation_id,
                     room_name=room_name,
@@ -826,7 +829,7 @@ class OpenCloseAugmentation(BaseAugmentation):
                         color=self._object_color_map.get(object_class, None),
                         distance=distance_to_object,
                     ),
-                    bbox=image_annotation["bbox"],
+                    bbox=self._get_bbox(image_annotation),
                     image_name=image_name,
                     annotation_id=annotation_id,
                     room_name=room_name,
@@ -908,7 +911,7 @@ class SearchAugmentation(BaseAugmentation):
             objects_in_image[readable_name] = True
 
             # Ignore too small objects
-            bbox = image_annotation["bbox"]
+            bbox = self._get_bbox(image_annotation)
             if compute_bbox_area(bbox) < class_thresholds[object_class][0]:
                 continue
 
@@ -919,7 +922,7 @@ class SearchAugmentation(BaseAugmentation):
                 continue
 
             search_object_ids.append(object_type)
-            search_object_bboxes.append(image_annotation["bbox"])
+            search_object_bboxes.append(self._get_bbox(image_annotation))
             search_object_attributes.append(
                 SimBotObjectAttributes(
                     readable_name=readable_name,
@@ -1050,3 +1053,91 @@ class SearchAugmentation(BaseAugmentation):
             for room_annotation in room_metadata[: self.max_negative_examples_per_room]:
                 final_metadata.update(room_annotation)
         return final_metadata
+
+
+class PickupAugmentation(BaseAugmentation):
+    """Pickup Augmentations."""
+
+    def __init__(
+        self,
+        pickup_classes: list[str],
+        action_type: str = "Pickup",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 5000,
+    ) -> None:
+        super().__init__()
+        self.min_interaction_distance = min_interaction_distance
+        self.max_examples_per_class = max_examples_per_class
+        self.action_type = action_type
+
+        # Force pickup special monitors
+        self.action_objects = pickup_classes
+
+    def __call__(
+        self,
+        annotations: dict[str, Any],
+        robot_position: NDArray[np.float32],
+        image_name: str,
+        class_thresholds: dict[str, list[int]],
+        room_name: str,
+    ) -> list[AugmentationInstruction]:
+        """Get new annotations for the selected classes."""
+        pickup_instructions_dict = defaultdict(list)
+        annotation_id = 0
+        for _, annotation in annotations.items():
+            should_ignore_ann = self._should_ignore_annotation_for_image(
+                annotation, robot_position, class_thresholds
+            )
+            if should_ignore_ann:
+                continue
+            image_annotation = annotation["image_annotation"]
+            object_annotation = annotation["object_annotation"]
+            object_type = image_annotation["object_type"]
+
+            object_asset = get_object_asset_from_object_id(object_type, self._assets_to_labels)
+            object_class = self._assets_to_labels[object_asset]
+            readable_name = self._special_object_type_map.get(object_asset, object_class)
+
+            distance_to_object = self._compute_distance_to_object(
+                object_annotation, robot_position
+            )
+
+            if distance_to_object <= self.min_interaction_distance:
+                instruction = AugmentationInstruction(
+                    action_type=self.action_type,
+                    object_id=object_type,
+                    attributes=SimBotObjectAttributes(
+                        readable_name=readable_name,
+                        color=self._object_color_map.get(readable_name, None),
+                        distance=distance_to_object,
+                    ),
+                    bbox=self._get_bbox(image_annotation),
+                    image_name=image_name,
+                    annotation_id=annotation_id,
+                    room_name=room_name,
+                )
+                annotation_id += 1
+                pickup_instructions_dict[object_class].append(instruction)
+
+        pickup_instructions = self._merge_instructions(pickup_instructions_dict, annotation_id)
+        return pickup_instructions
+
+    @classmethod
+    def from_yaml_config(
+        cls,
+        pickup_classes: list[str],
+        action_type: str = "Pickup",
+        min_interaction_distance: float = 1.5,
+        max_examples_per_class: int = 5000,
+    ) -> BaseAugmentation:
+        """Instantiate the class."""
+        return cls(
+            pickup_classes=pickup_classes,
+            action_type=action_type,
+            min_interaction_distance=min_interaction_distance,
+            max_examples_per_class=max_examples_per_class,
+        )
+
+    def post_process_metadata(self, pickup_metadata: dict[str, Any]) -> dict[str, Any]:
+        """Post process the metadata for the pickup actions."""
+        return self._downsample_augmentation_metadata(action_type_metadata=pickup_metadata)

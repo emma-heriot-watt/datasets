@@ -335,11 +335,12 @@ class PickupParaphraser(BaseParaphraser):
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="pickup")
         self._instruction_options = [
+            "collect",
+            "fetch",
+            "get",
+            "grab",
             "pick up",
             "take",
-            "grab",
-            "collect",
-            "get",
         ]
 
         self._available_templates = {

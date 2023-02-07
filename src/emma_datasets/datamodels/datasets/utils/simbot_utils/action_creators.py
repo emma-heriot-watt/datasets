@@ -10,6 +10,7 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
     FillParaphraser,
     GotoParaphraser,
     OpenParaphraser,
+    PickupParaphraser,
     PourParaphraser,
     SearchParaphraser,
     ToggleParaphraser,
@@ -189,3 +190,11 @@ class PourActionCreator(BaseActionCreator):
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         self.action_type = "Pour"
         self.paraphraser = PourParaphraser(object_synonyms)
+
+
+class PickupActionCreator(BaseActionCreator):
+    """Pickup action class."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        self.action_type = "Pickup"
+        self.paraphraser = PickupParaphraser(object_synonyms)

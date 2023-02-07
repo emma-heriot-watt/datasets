@@ -16,18 +16,12 @@
 			"max_examples_per_class": 1000
 		}
 	},
-	"Pour": {
-		"FillPourAugmentation": {
-			"fillable_object_types": [
-				"Bowl_01",
-				"CoffeePot_01",
-				"CoffeeMug_Boss",
-				"CoffeeMug_Yellow"
-			],
-			"filling_classes": ["Sink"],
-			"action_type": "Pour",
+	"Close": {
+		"OpenCloseAugmentation": {
+			"action_type_classes": ["Fuse Box"],
+			"action_type": "Close",
 			"min_interaction_distance": 1.5,
-			"max_examples_per_class": 1000
+			"max_examples_per_class": 5000
 		}
 	},
 	"Fill": {
@@ -44,20 +38,57 @@
 			"max_examples_per_class": 1000
 		}
 	},
-	"Close": {
-		"OpenCloseAugmentation": {
-			"action_type_classes": ["Fuse Box"],
-			"action_type": "Close",
-			"min_interaction_distance": 1.5,
-			"max_examples_per_class": 5000
-		}
-	},
 	"Goto": {
 		"GoToAugmentation": {
 			"goto_classes": ["Whiteboard", "Robot Arm", "Wall Shelf", "Fuse Box"],
 			"action_type": "Goto",
 			"min_interaction_distance": 2.5,
 			"max_examples_per_class": 5000
+		}
+	},
+	"Pickup": {
+		"PickupAugmentation": {
+			"pickup_classes": [
+				"Action Figure",
+				"Apple",
+				"Banana",
+				"Bread",
+				"Burger",
+				"Cake",
+				"Can",
+				"Carrot",
+				"Cereal Box",
+				"Coffee Beans",
+				"Coffee Pot",
+				"Control Panel",
+				"Cup",
+				"Donut",
+				"Floppy Disk",
+				"Hammer",
+				"Knife",
+				"Lid",
+				"Milk",
+				"Mug",
+				"Plate",
+				"Printer Cartridge"
+			],
+			"action_type": "Pickup",
+			"min_interaction_distance": 1.5,
+			"max_examples_per_class": 2000
+		}
+	},
+	"Pour": {
+		"FillPourAugmentation": {
+			"fillable_object_types": [
+				"Bowl_01",
+				"CoffeePot_01",
+				"CoffeeMug_Boss",
+				"CoffeeMug_Yellow"
+			],
+			"filling_classes": ["Sink"],
+			"action_type": "Pour",
+			"min_interaction_distance": 1.5,
+			"max_examples_per_class": 1000
 		}
 	},
 	"Open": {
@@ -116,8 +147,9 @@
 	},
 	"Toggle": {
 		"ToggleAugmentation": {
-			"min_interaction_distance": 1.5,
 			"toggle_classes": ["Robot Arm", "Button", "Lever"],
+			"action_type": "Toggle",
+			"min_interaction_distance": 1.5,
 			"max_examples_per_class": 5000
 		}
 	}

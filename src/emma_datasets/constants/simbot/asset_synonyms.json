@@ -196,7 +196,14 @@
 	"Laser": ["Laser"],
 	"Screwdriver": ["Screw Driver"],
 	"CoffeeUnMaker_01": ["Coffee Unmaker", "Unmaker", "Coffee Time Machine"],
-	"Printer_3D": ["Printer"],
+	"Printer_3D": [
+		"Printer",
+		"Printer",
+		"Printer",
+		"Printer",
+		"three d Printer",
+		"three deer Printer"
+	],
 	"FuseBox_02": ["Fuse Box", "Circuit Box", "Power Box"],
 	"FuseBox_01": ["Fuse Box", "Circuit Box", "Power Box"],
 	"SM_Prop_Lighting_Cable_Bulb_01": ["Light Bulb"],
@@ -241,7 +248,7 @@
 		"Garbage Can"
 	],
 	"TrashCan_01": ["Trash Can", "Trash", "Litter Box", "Bin", "Garbage Can"],
-	"Cereal_Box_01": ["Cereal Box", "Cereal"],
+	"Cereal_Box_01": ["Cereal Box", "Cereal", "Box with Cereal"],
 	"SM_Item_Clipboard_01": ["Clipboard"],
 	"Radio_01_Broken": ["Radio"],
 	"Radio_01": ["Radio"],
@@ -304,10 +311,15 @@
 	"Printer_Cartridge": ["Printer Cartridge", "Ink Cartridge", "Cartridge"],
 	"Printer_Cartridge_Lever": ["Printer Cartridge", "Lever Cartridge"],
 	"Printer_Cartridge_Figure": [
+		"Action Cartridge",
+		"Action Figure Cartridge",
+		"Action Printer Cartridge",
 		"Printer Cartridge",
 		"Cartridge",
+		"Figure Cartridge",
 		"Action Figure Cartridge",
-		"Cartridge with the Figure"
+		"Cartridge with the Figure",
+		"Cartridge with the Action Figure"
 	],
 	"Printer_Cartridge_Mug": [
 		"Printer Cartridge",

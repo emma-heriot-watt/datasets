@@ -236,7 +236,7 @@ def load_simbot_annotations(
                     "train_annotation_instructions.json"
                 ),
                 augmentation_images_json_path=base_dir.joinpath(
-                    "train_augmentation_instructions_new_classes_v2.json"
+                    "train_augmentation_instructions_new_classes_fix_negative_object_ids_v3.json"
                 ),
                 num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=train_num_sticky_notes_instructions,
@@ -248,7 +248,7 @@ def load_simbot_annotations(
                     "valid_annotation_instructions.json"
                 ),
                 augmentation_images_json_path=base_dir.joinpath(
-                    "valid_augmentation_instructions_new_classes_v2.json"
+                    "valid_augmentation_instructions_new_classes_fix_negative_object_ids_v3.json"
                 ),
                 num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,
