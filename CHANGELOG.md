@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.0](https://github.com/emma-simbot/datasets/compare/v1.19.0...v1.20.0) (2023-02-13)
+
+
+### Features
+
+* Bull should be a synonym of bowl ([#617](https://github.com/emma-simbot/datasets/issues/617)) ([9eddace](https://github.com/emma-simbot/datasets/commit/9eddace326793e74224249d2cda3bd00ff335a7c))
+
 ## [1.19.0](https://github.com/emma-simbot/datasets/compare/v1.18.0...v1.19.0) (2023-02-07)
 
 
