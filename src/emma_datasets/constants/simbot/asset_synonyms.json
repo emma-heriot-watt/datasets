@@ -186,7 +186,7 @@
 	"FuseBox_01_Lever": ["Lever", "Handle", "Switch"],
 	"AP_Prop_Cellotape_01": ["Tape"],
 	"AP_Item_Tape_01": ["Tape"],
-	"Bowl_01": ["Bowl", "Bowl", "Bowl", "Ball"],
+	"Bowl_01": ["Bowl", "Bowl", "Bowl", "Bowl", "Ball", "Bull"],
 	"SM_Prop_NotePad_01": ["Notepad"],
 	"AP_Prop_Print_Tube_01": ["Print Tube"],
 	"LaserBase_toy": ["Laser Toy"],
