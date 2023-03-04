@@ -644,7 +644,6 @@
 		"sign_tall_poster_tam_2": "Poster"
 	},
 	"special_asset_to_readable_name": {
-		"AP_Bld_Wall_Glass_Large_Door_01": "Glass Door",
 		"AP_Prop_Shelf_Wall_04": "Freeze Ray Shelf",
 		"AP_Prop_Shelf_Wall_FreezeRay": "Freeze Ray Shelf",
 		"AP_Prop_Shelf_Wall_Laser": "Laser Shelf",
@@ -658,19 +657,17 @@
 		"ColorChanger_Button_Blue": "Blue Button",
 		"ColorChanger_Button_Green": "Green Button",
 		"ColorChanger_Button_Red": "Red Button",
-		"ManagerDesk": "Manager Desk",
+		"ManagerDesk": "Desk",
+		"Desk_01": "Desk",
 		"PinBoard_01": "Pin Board",
 		"PinBoard_02": "Pin Board",
 		"ReceptionDesk": "Reception Desk",
-		"SM_Bld_Wall_Metal_Slide_02": "Metal Door",
 		"Sticky Note": "Sticky Note",
 		"StickyNote": "Sticky Note",
-		"TableRoundSmall_02": "Small Round Table",
-		"TableRound_02": "Round Table",
-		"Table_Metal_01": "Metal Table",
 		"V_Monitor_Embiggenator": "Embiggenator Monitor",
 		"V_Monitor_FreezeRay": "Freeze Ray Monitor",
 		"V_Monitor_Gravity": "Gravity Monitor",
-		"V_Monitor_Laser": "Laser Monitor"
+		"V_Monitor_Laser": "Laser Monitor",
+		"V_Monitor_Portal": "Portal Generator Monitor"
 	}
 }
