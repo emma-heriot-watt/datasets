@@ -46,15 +46,12 @@ class ObjectClassDecoder:
 
     def get_candidate_object_in_frame(
         self,
-        mission_id: str,
-        action_id: int,
         frame_index: int,
         target_class_label: str,
+        features_path: Path,
     ) -> list[int]:
         """Get a list of object indices matching the target object name."""
-        features = self.load_features(
-            mission_id=mission_id, action_id=action_id, frame_index=frame_index
-        )
+        features = self.load_features(features_path, frame_index)
         if not features:
             return []
         candidate_objects = self._get_candidate_objects_from_features(
@@ -86,13 +83,14 @@ class ObjectClassDecoder:
         return candidate_objects
 
     def get_target_object_mask(
-        self, mission_id: str, action_id: int, frame_index: int, target_class_label: str
+        self,
+        frame_index: int,
+        target_class_label: str,
+        features_path: Path,
     ) -> Optional[list[list[int]]]:
         """Get the mask of an object that matches the target object name."""
         # Load the features from the Goto action
-        features = self.load_features(
-            mission_id=mission_id, action_id=action_id, frame_index=frame_index
-        )
+        features = self.load_features(features_path, frame_index)
         if not features:
             return None
         candidate_objects = self._get_candidate_objects_from_features(
@@ -110,14 +108,9 @@ class ObjectClassDecoder:
         compressed_mask = compress_simbot_mask(mask.tolist())
         return compressed_mask
 
-    def load_features(
-        self, mission_id: str, action_id: int, frame_index: int
-    ) -> Optional[dict[str, Any]]:
+    def load_features(self, features_path: Path, frame_index: int) -> Optional[dict[str, Any]]:
         """Get the mask of an object that matches the target object name."""
         # Load the features from the Goto action
-        features_path = settings.paths.simbot_features.joinpath(
-            f"{mission_id}_action{action_id}.pt"
-        )
         if not features_path.exists():
             return None
         return self._load_frame_features(features_path=features_path, frame_index=frame_index)

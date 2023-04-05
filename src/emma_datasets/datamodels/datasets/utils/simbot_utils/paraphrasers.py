@@ -1,7 +1,12 @@
 import random
+import string
 from copy import deepcopy
 
-from emma_datasets.constants.simbot.simbot import get_arena_definitions, get_objects_asset_synonyms
+from emma_datasets.constants.simbot.simbot import (
+    get_arena_definitions,
+    get_objects_asset_synonyms,
+    get_pickable_objects_ids,
+)
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
     get_object_asset_from_object_id,
     get_object_readable_name_from_object_id,
@@ -194,9 +199,11 @@ class GotoParaphraser(BaseParaphraser):
 
         self._instruction_options = [
             "go to",
+            "go back to",
             "go towards",
             "move to",
             "move closer to",
+            "navigate to",
             "get closer to",
             "move towards",
             "head to",
@@ -239,6 +246,7 @@ class ToggleParaphraser(BaseParaphraser):
             "toggle",
             "start",
             "activate",
+            "fire",
             "turn on",
             "switch on",
             "turn off",
@@ -371,13 +379,18 @@ class PlaceParaphraser(BaseParaphraser):
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="place")
-        # TODO: Use random nouns to place, e.g. Place the donut on the ....
         self._instruction_options = [
+            "leave the {pickable_object} in",
+            "leave the {pickable_object} on",
             "place it on",
-            "leave it on",
+            "place the {pickable_object} on",
+            "place the {pickable_object} in",
             "put it on",
-            "set it on",
+            "put the {pickable_object} in",
+            "put the {pickable_object} on",
+            "put down the {pickable_object} on",
             "put it down on",
+            "insert it in",
         ]
 
         self._available_templates = {
@@ -385,6 +398,8 @@ class PlaceParaphraser(BaseParaphraser):
             "place_color": self._verb_color_templates,
             "place_location": self._verb_location_templates,
         }
+
+        self._pickable_object_ids = get_pickable_objects_ids()
 
     def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
         """Get a place instruction."""
@@ -400,6 +415,14 @@ class PlaceParaphraser(BaseParaphraser):
         instruction = self._get_instruction(
             object_id=object_id, attributes=attributes, available_types=available_types
         )
+
+        missing_formating_values = [
+            tup[1] for tup in string.Formatter().parse(instruction) if tup[1] is not None
+        ]
+        if missing_formating_values:
+            pickable_object_id = random.choice(self._pickable_object_ids)
+            pickable_object = random.choice(self.object_synonyms[pickable_object_id]).lower()
+            instruction = instruction.format(pickable_object=pickable_object)
         return instruction
 
 
@@ -492,6 +515,14 @@ class PourParaphraser(BaseParaphraser):
             "pour the coffee into",
             "pour the cereal into",
             "pour the milk into",
+            "pour some water into",
+            "pour some coffee into",
+            "pour some cereal into",
+            "pour some milk into",
+            "put the water in the",
+            "put the coffee in the",
+            "put the cereal in the",
+            "put the milk in the",
         ]
 
         self._available_templates = {
@@ -522,7 +553,7 @@ class ScanParaphraser(BaseParaphraser):
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="scan")
-        self._instruction_options = ["Scan"]
+        self._instruction_options = ["scan", "examine", "survey", "study", "eye", "inspect"]
 
         self._available_templates = {
             "scan": self._verb_templates,

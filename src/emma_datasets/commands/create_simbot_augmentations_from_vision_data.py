@@ -14,9 +14,19 @@ from numpy.typing import NDArray
 from rich.progress import Progress, TaskID
 from torch.utils.data import DataLoader, IterableDataset
 
-from emma_datasets.common import Settings, get_progress
-from emma_datasets.constants.simbot.simbot import get_class_thresholds, get_objects_asset_synonyms
-from emma_datasets.datamodels.datasets.utils.simbot_utils.action_creators import (
+from emma_datasets.augmentations.simbot_augmentators import (
+    BreakAugmentation,
+    CleanAugmentation,
+    FillPourAugmentation,
+    GoToAugmentation,
+    OpenCloseAugmentation,
+    PickupAugmentation,
+    PlaceAugmentation,
+    ScanAugmentation,
+    SearchAugmentation,
+    ToggleAugmentation,
+)
+from emma_datasets.augmentations.simbot_augmentators.action_creators import (
     BaseActionCreator,
     BreakActionCreator,
     CleanActionCreator,
@@ -25,21 +35,16 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.action_creators import
     GotoActionCreator,
     OpenActionCreator,
     PickupActionCreator,
+    PlaceActionCreator,
     PourActionCreator,
+    ScanActionCreator,
     SearchActionCreator,
     ToggleActionCreator,
 )
-from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
-    BaseAugmentation,
-    BreakAugmentation,
-    CleanAugmentation,
-    FillPourAugmentation,
-    GoToAugmentation,
-    OpenCloseAugmentation,
-    PickupAugmentation,
-    SearchAugmentation,
-    ToggleAugmentation,
-)
+from emma_datasets.augmentations.simbot_augmentators.base_augmentator import BaseAugmentation
+from emma_datasets.augmentations.simbot_augmentators.clip_image_diversity import CLIProcessor
+from emma_datasets.common import Settings, get_progress
+from emma_datasets.constants.simbot.simbot import get_class_thresholds, get_objects_asset_synonyms
 
 
 settings = Settings()
@@ -131,7 +136,7 @@ class AugmentationVisionDataset(IterableDataset[dict[Any, Any]]):
             for action_type, annotations_per_action_type in metadata_per_action_type.items():
                 final_metadata.update(
                     self.vision_data_augmentations[action_type].post_process_metadata(
-                        annotations_per_action_type
+                        annotations_per_action_type, self._class_thresholds
                     )
                 )
                 progress.advance(task_id)
@@ -227,7 +232,6 @@ class AugmentationVisionDataset(IterableDataset[dict[Any, Any]]):
 
         image_annotations = metadata["image_annotations"]
         objects_annotations = metadata["response"]["objects"]
-        room = metadata["cdf"]["scene"]["roomLocation"][0]
 
         image_annotations_dict = {
             image_ann["object_id"]: image_ann for image_ann in image_annotations
@@ -238,7 +242,10 @@ class AugmentationVisionDataset(IterableDataset[dict[Any, Any]]):
 
         annotations = {}
         for object_id, image_ann in image_annotations_dict.items():
-            if object_id == "Unassigned":
+            is_valid = self._object_id_is_valid(
+                object_id, image_annotations_dict, objects_annotations_dict
+            )
+            if not is_valid:
                 continue
 
             bbox = image_ann["bbox"]
@@ -251,6 +258,26 @@ class AugmentationVisionDataset(IterableDataset[dict[Any, Any]]):
                 "object_annotation": objects_annotations_dict[object_id],
             }
 
+        room = metadata["cdf"]["scene"]["roomLocation"][0]
+        robot_position = self._get_robot_position(objects_annotations_dict)
+
+        return (annotations, room, robot_position)
+
+    def _object_id_is_valid(
+        self,
+        object_id: str,
+        image_annotations_dict: dict[str, Any],
+        objects_annotations_dict: dict[str, Any],
+    ) -> bool:
+        if object_id == "Unassigned":
+            return False
+
+        if object_id not in image_annotations_dict:
+            return False
+
+        return object_id in objects_annotations_dict
+
+    def _get_robot_position(self, objects_annotations_dict: dict[str, Any]) -> NDArray[np.float32]:
         # https://alexaprizesim-ldg5293.slack.com/archives/C02SQAFVDFY/p1666968772331429
         robot_position = np.array(
             [
@@ -259,8 +286,7 @@ class AugmentationVisionDataset(IterableDataset[dict[Any, Any]]):
                 objects_annotations_dict["TAM_1"]["position"]["z"],
             ]
         )
-
-        return (annotations, room, robot_position)
+        return robot_position
 
     def _write_to_cache(
         self, final_instructions: list[dict[str, Any]], worker_output_json: Path
@@ -381,14 +407,16 @@ def string_to_class(class_str: str) -> BaseAugmentation:
         "Clean": CleanAugmentation,
         "Pour": FillPourAugmentation,
         "Pickup": PickupAugmentation,
+        "Place": PlaceAugmentation,
         "Fill": FillPourAugmentation,
         "Close": OpenCloseAugmentation,
         "Goto": GoToAugmentation,
         "Open": OpenCloseAugmentation,
+        "Scan": ScanAugmentation,
         "Search": SearchAugmentation,
         "Toggle": ToggleAugmentation,
     }
-    return switcher[class_str]
+    return switcher[class_str]  # type: ignore[return-value]
 
 
 if __name__ == "__main__":
@@ -399,6 +427,12 @@ if __name__ == "__main__":
         type=Path,
         help="Path to the root directory containing the vision datasets",
         default=Path("/home/ubuntu/data/object_detection"),
+    )
+
+    parser.add_argument(
+        "--report_path",
+        type=Path,
+        help="Path to the output report csv file",
     )
 
     parser.add_argument(
@@ -451,6 +485,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     root_vision_path = args.root_vision_path
+    report_path = args.report_path
     input_metadata_txt_path = args.input_metadata_txt_path
 
     metadata_files = load_all_metadata_files(
@@ -467,9 +502,11 @@ if __name__ == "__main__":
         CloseActionCreator(object_synonyms),
         GotoActionCreator(object_synonyms),
         FillActionCreator(object_synonyms),
+        PlaceActionCreator(object_synonyms),
         PickupActionCreator(object_synonyms),
         PourActionCreator(object_synonyms),
         OpenActionCreator(object_synonyms),
+        ScanActionCreator(object_synonyms),
         SearchActionCreator(object_synonyms),
         ToggleActionCreator(object_synonyms),
     ]
@@ -477,11 +514,15 @@ if __name__ == "__main__":
     with open(args.augmentation_config) as fp:
         augmentation_config = json.load(fp)
 
+    diverse_image_selector = CLIProcessor()
     for augmentation, augmentation_dict in augmentation_config.items():
         class_name = list(augmentation_dict.keys())[0]
         augmentation_class = string_to_class(augmentation)
         vision_data_augmentations[augmentation] = augmentation_class.from_yaml_config(
-            **augmentation_dict[class_name]
+            **augmentation_dict[class_name],
+            root_vision_path=root_vision_path,
+            report_path=report_path,
+            diverse_image_selector=diverse_image_selector,
         )
 
     dataset = AugmentationVisionDataset(

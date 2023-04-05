@@ -42,3 +42,28 @@ def get_class_thresholds() -> dict[str, list[float]]:
 def get_object_manifest() -> dict[str, Any]:
     """Load the object manifest."""
     return read_json(OBJECT_MANIFEST_JSON)
+
+
+@lru_cache(maxsize=1)
+def get_pickable_objects_ids() -> list[str]:
+    """Get all the pickable object ids from the object manifest."""
+    object_manifest = get_object_manifest()
+
+    pickable_object_ids = []
+    for _, object_metadata in object_manifest.items():
+        object_id = object_metadata["ObjectID"]
+        if "PICKUPABLE" in object_metadata["ObjectProperties"]:
+            pickable_object_ids.append(object_id)
+    return pickable_object_ids
+
+
+@lru_cache(maxsize=1)
+def get_object_name_list_by_property(obj_property: str) -> list[str]:
+    """Get a list of objects with a given property."""
+    obj_manifest = get_object_manifest().values()
+    obj_property = obj_property.upper()
+    return [
+        instance["ReadableName"].lower()
+        for instance in obj_manifest
+        if obj_property in instance["ObjectProperties"]
+    ]

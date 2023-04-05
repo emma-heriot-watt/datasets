@@ -8,21 +8,22 @@ from emma_datasets.datamodels.constants import DatasetSplit
 from emma_datasets.datamodels.datasets import SimBotInstructionInstance
 from emma_datasets.datamodels.datasets.alfred import AlfredMetadata
 from emma_datasets.datamodels.datasets.utils.simbot_utils.ambiguous_data import (
-    AmbiguousGotoProcessor,
     ClarificationFilter,
+    VisionAugmentationFilter,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
     SyntheticLowLevelActionSampler,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
-    ClarificationTargetExtractor,
     HoldingObject,
-    create_instruction_dict,
-    get_action_types_for_instruction,
-    instruction_has_spatial_info,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
     InstructionParaphraser,
+)
+from emma_datasets.datamodels.datasets.utils.simbot_utils.preprocessing import (
+    HumanIntructionsPreprocessor,
+    SyntheticIntructionsPreprocessor,
+    create_instruction_dict,
 )
 from emma_datasets.db import DatasetDb
 from emma_datasets.io.paths import get_all_file_paths
@@ -51,107 +52,74 @@ def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
     return restructured_data
 
 
-def load_simbot_instruction_data(  # noqa: WPS231
+def load_simbot_instruction_data(
     trajectory_json_path: Path,
-    sticky_notes_images_json_path: Path,
-    augmentation_images_json_path: Path,
+    sticky_notes_images_json_path: Optional[Path] = None,
+    augmentation_images_json_path: Optional[Path] = None,
     annotation_images_json_path: Optional[Path] = None,
     num_additional_synthetic_instructions: int = -1,
     num_sticky_notes_instructions: int = -1,
+    skip_goto_rooms: bool = True,
+    use_synthetic_action_sampler: bool = False,
 ) -> list[dict[Any, Any]]:
     """Loads and reformats the SimBot annotations for creating Simbot instructions."""
     with open(trajectory_json_path) as fp:
         data = json.load(fp)
 
-    clarification_target_extractor = ClarificationTargetExtractor()
-    synthetic_action_sampler = SyntheticLowLevelActionSampler()
+    human_instruction_processor = HumanIntructionsPreprocessor(skip_goto_rooms=skip_goto_rooms)
 
-    ambiguous_goto_processor = AmbiguousGotoProcessor()
+    synthetic_instruction_processor = SyntheticIntructionsPreprocessor(
+        skip_goto_rooms=skip_goto_rooms,
+        use_synthetic_action_sampler=use_synthetic_action_sampler,
+        num_additional_synthetic_instructions=num_additional_synthetic_instructions,
+    )
+
     holding_object_processor = HoldingObject()
-    total_sampled_synthetic_actions = 0
     instruction_data = []
 
+    # Trajectory data
     for mission_id, mission_annotations in data.items():
         actions = holding_object_processor(mission_annotations["actions"])
 
         instruction_idx = 0
-        for human_idx, human_annotation in enumerate(mission_annotations["human_annotations"]):
-            for instruction in human_annotation["instructions"]:
-                action_types = get_action_types_for_instruction(instruction, actions)
-
-                # Ignore look around actions that have spatial information
-                if instruction_has_spatial_info(instruction) and "Look" in action_types:
-                    continue
-
-                # Ignore look around actions if they are the first action in an instruction
-                elif action_types[0] == "Look":
-                    instruction["actions"] = instruction["actions"][1:]
-
-                instruction_dict = create_instruction_dict(
-                    instruction=instruction,
-                    actions=actions,
-                    mission_id=mission_id,
-                    annotation_id=str(human_idx),
-                    instruction_id=str(instruction_idx),
-                    clarification_extractor=clarification_target_extractor,
-                    synthetic=False,
-                )
-
-                instruction_data.append(instruction_dict)
-                instruction_idx += 1
-
-        for annot_idx, synthetic_annotation in enumerate(  # noqa: WPS352
-            mission_annotations["synthetic_annotations"]
-        ):
-            for instruction in synthetic_annotation["instructions"]:  # noqa: WPS440
-                instruction_dict = create_instruction_dict(
-                    instruction=instruction,
-                    actions=actions,
-                    mission_id=mission_id,
-                    annotation_id=f"synthetic_{annot_idx}",
-                    instruction_id=str(instruction_idx),
-                    synthetic=True,
-                )
-
-                instruction_data.extend(
-                    ambiguous_goto_processor(
-                        instruction_dict=instruction_dict,
-                        mission_id=mission_id,
-                        action=actions[instruction["actions"][0]],
-                    )
-                )
-                instruction_idx += 1
-
-                if (  # noqa: WPS337
-                    num_additional_synthetic_instructions == -1
-                    or total_sampled_synthetic_actions < num_additional_synthetic_instructions
-                ):
-
-                    instruction_dict = synthetic_action_sampler(
-                        mission_id=mission_id,
-                        annotation_id=f"synthetic_{annot_idx}",
-                        instruction_idx=instruction_idx,
-                        original_action=actions[instruction["actions"][0]],
-                    )
-
-                    instruction_data.append(instruction_dict)
-                    instruction_idx += 1
-
-                    total_sampled_synthetic_actions += 1
-    instruction_data.extend(
-        load_simbot_sticky_note_instruction_data(
-            sticky_notes_images_json_path=sticky_notes_images_json_path,
-            num_sticky_notes_instructions=num_sticky_notes_instructions,
-            synthetic_action_sampler=synthetic_action_sampler,
+        # Human annotations
+        instruction_dicts = human_instruction_processor.run(
+            human_annotations=mission_annotations["human_annotations"],
+            mission_id=mission_id,
+            actions=actions,
+            instruction_idx=instruction_idx,
         )
-    )
-    instruction_data.extend(
-        load_simbot_augmentation_instruction_data(
-            augmentation_images_json_path=augmentation_images_json_path,
-            paraphrase_when_creating_instruction=True,
+        instruction_data.extend(instruction_dicts)
+        instruction_idx += len(instruction_dicts)
+        # Synthetic annotations
+        instruction_dicts = synthetic_instruction_processor.run(
+            synthetic_annotations=mission_annotations["synthetic_annotations"],
+            mission_id=mission_id,
+            actions=actions,
+            instruction_idx=instruction_idx,
         )
-    )
+        instruction_data.extend(instruction_dicts)
 
+    # Sticky Note data
+    if sticky_notes_images_json_path is not None:
+        synthetic_action_sampler = SyntheticLowLevelActionSampler()
+        instruction_data.extend(
+            load_simbot_sticky_note_instruction_data(
+                sticky_notes_images_json_path=sticky_notes_images_json_path,
+                num_sticky_notes_instructions=num_sticky_notes_instructions,
+                synthetic_action_sampler=synthetic_action_sampler,
+            )
+        )
+    # Augmentation data
+    if augmentation_images_json_path is not None:
+        instruction_data.extend(
+            load_simbot_augmentation_instruction_data(
+                augmentation_images_json_path=augmentation_images_json_path,
+                paraphrase_when_creating_instruction=True,
+            )
+        )
+
+    # Additional manual annotations data
     if annotation_images_json_path is not None:
         instruction_data.extend(
             load_simbot_augmentation_instruction_data(
@@ -196,6 +164,7 @@ def load_simbot_augmentation_instruction_data(
     augmentation_images_json_path: Path, paraphrase_when_creating_instruction: bool = True
 ) -> list[dict[Any, Any]]:
     """Load the augmentation data."""
+    ambiguity_filter = VisionAugmentationFilter()
     with open(augmentation_images_json_path) as fp:
         data = json.load(fp)
     paraphraser = InstructionParaphraser()
@@ -203,6 +172,10 @@ def load_simbot_augmentation_instruction_data(
     for _, mission_metadata in data.items():
         if paraphrase_when_creating_instruction:
             instruction_instance = SimBotInstructionInstance(**mission_metadata)
+            instruction_instance.vision_augmentation = True
+            ambiguous = ambiguity_filter(instruction_instance)
+            if ambiguous:
+                continue
             mission_metadata["instruction"]["instruction"] = paraphraser.from_instruction_instance(
                 instruction_instance
             )
@@ -231,24 +204,24 @@ def load_simbot_annotations(
         source_per_split = {
             DatasetSplit.train: load_simbot_instruction_data(
                 trajectory_json_path=base_dir.joinpath("train.json"),
-                sticky_notes_images_json_path=base_dir.joinpath("train_sticky_notes.json"),
+                # sticky_notes_images_json_path=base_dir.joinpath("train_sticky_notes.json"),
                 annotation_images_json_path=base_dir.joinpath(
-                    "train_annotation_instructions.json"
+                    "train_annotation_instructions_v3.json"
                 ),
                 augmentation_images_json_path=base_dir.joinpath(
-                    "train_augmentation_instructions_new_classes_fix_negative_object_ids_v3.json"
+                    "train_augmentation_instructions_new_classes_v4_3.json"
                 ),
                 num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=train_num_sticky_notes_instructions,
             ),
             DatasetSplit.valid: load_simbot_instruction_data(
                 trajectory_json_path=base_dir.joinpath("valid.json"),
-                sticky_notes_images_json_path=base_dir.joinpath("valid_sticky_notes.json"),
+                # sticky_notes_images_json_path=base_dir.joinpath("valid_sticky_notes.json"),
                 annotation_images_json_path=base_dir.joinpath(
-                    "valid_annotation_instructions.json"
+                    "valid_annotation_instructions_v3.json"
                 ),
                 augmentation_images_json_path=base_dir.joinpath(
-                    "valid_augmentation_instructions_new_classes_fix_negative_object_ids_v3.json"
+                    "valid_augmentation_instructions_new_classes_v4_4.json"
                 ),
                 num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,

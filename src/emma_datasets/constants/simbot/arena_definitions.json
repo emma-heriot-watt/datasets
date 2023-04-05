@@ -568,7 +568,6 @@
 		"Shelves_Tall_01": "Shelf",
 		"Spoon_01": "Spoon",
 		"StickyNote": "Sticky Note",
-		"TAMPrototypeHead_01": "Computer",
 		"TableRoundSmall_02": "Table",
 		"TableRound_02": "Table",
 		"Table_Metal_01": "Table",
@@ -590,6 +589,7 @@
 		"V_Monitor_Gravity": "Computer",
 		"V_Monitor_Laser": "Computer",
 		"V_Monitor_Portal": "Computer",
+		"TAMPrototypeHead_01": "Computer",
 		"VendingMachine_01": "Vending Machine",
 		"VendingMachine_01_B4_Button": "Button",
 		"VendingMachine_01_E5_Button": "Button",
@@ -668,6 +668,7 @@
 		"V_Monitor_FreezeRay": "Freeze Ray Monitor",
 		"V_Monitor_Gravity": "Gravity Monitor",
 		"V_Monitor_Laser": "Laser Monitor",
-		"V_Monitor_Portal": "Portal Generator Monitor"
+		"V_Monitor_Portal": "Portal Generator Monitor",
+		"TAMPrototypeHead_01": "Emotion Tester"
 	}
 }

@@ -1,5 +1,4 @@
 import re
-from copy import deepcopy
 from typing import Any, Optional
 
 import spacy
@@ -242,87 +241,6 @@ class ClarificationTargetExtractor:
         return normalized_target
 
 
-def get_question_type(question: str) -> SimBotClarificationTypes:
-    """Get the type for a given question."""
-    question = question.lower()
-    question_types = {qtype.value: qtype for qtype in SimBotClarificationTypes}
-    if question.startswith("which"):
-        if question.split()[1] == "direction":
-            qtype = "which direction"
-        else:
-            qtype = "which+instruction_noun"
-    else:
-        qtype = " ".join(question.split()[:2])
-    return question_types.get(qtype, SimBotClarificationTypes.other)
-
-
-def get_question_target(
-    clarification_target_extractor: ClarificationTargetExtractor,
-    question: str,
-    question_type: SimBotClarificationTypes,
-) -> Optional[str]:
-    """Get the type for a given question."""
-    if question_type == SimBotClarificationTypes.other:
-        return None
-    if question_type == SimBotClarificationTypes.direction:
-        return None
-    return clarification_target_extractor(question, question_type)
-
-
-def prepare_instruction_question_answers(
-    clarification_target_extractor: ClarificationTargetExtractor, instruction: dict[str, Any]
-) -> dict[str, Any]:
-    """Add question types and targets."""
-    if "question_answers" not in instruction:
-        return instruction
-    for question_answer in instruction["question_answers"]:
-        question_answer["question_type"] = get_question_type(question=question_answer["question"])
-        question_answer["question_target"] = get_question_target(
-            clarification_target_extractor,
-            question=question_answer["question"],
-            question_type=question_answer["question_type"],
-        )
-    return instruction
-
-
-def create_instruction_dict(
-    instruction: dict[str, Any],
-    actions: list[dict[str, Any]],
-    mission_id: str,
-    annotation_id: str,
-    instruction_id: str,
-    clarification_extractor: Optional[ClarificationTargetExtractor] = None,
-    synthetic: bool = False,
-    ambiguous: bool = False,
-    paraphrasable: bool = False,
-    vision_augmentation: bool = False,
-    **kwargs: Any,
-) -> dict[str, Any]:
-    """Create an instruction dict."""
-    action_start_id = instruction["actions"][0]
-    action_end_id = instruction["actions"][-1]
-    instruction_actions = deepcopy(actions[action_start_id : action_end_id + 1])
-
-    # add the final label for the last action within an instruction
-    instruction_actions[-1]["final"] = True
-
-    if clarification_extractor is not None:
-        instruction = prepare_instruction_question_answers(clarification_extractor, instruction)
-
-    instruction_dict = {
-        "instruction": instruction,
-        "actions": instruction_actions,
-        "mission_id": mission_id,
-        "annotation_id": annotation_id,
-        "instruction_id": instruction_id,
-        "synthetic": synthetic,
-        "ambiguous": ambiguous,
-        "paraphrasable": paraphrasable,
-        "vision_augmentation": vision_augmentation,
-    }
-    return instruction_dict
-
-
 class HoldingObject:
     """Add the holding object to the actions."""
 
@@ -343,32 +261,3 @@ class HoldingObject:
             elif action["type"] == "Place":
                 holding_object = None
         return actions
-
-
-def instruction_has_spatial_info(instruction_dict: dict[str, Any]) -> bool:
-    """Check if an instruction dict has spatial information.
-
-    This check is done both in the raw instruction text and the question answer. It is used to
-    filter out look around actions from human instructions.
-    """
-    question_answers = instruction_dict.get("question_answers", [])
-    qa_concatenations = [f"{qa['question']} {qa['answer']}" for qa in question_answers]
-
-    concat_string = " ".join([instruction_dict["instruction"]] + qa_concatenations)
-
-    has_spatial_info = (
-        "left" in concat_string
-        or "right" in concat_string
-        or "behind" in concat_string
-        or "front" in concat_string
-    )
-    return has_spatial_info
-
-
-def get_action_types_for_instruction(
-    instruction_dict: dict[str, Any], actions: list[dict[str, Any]]
-) -> list[str]:
-    """Get the action types for an instruction."""
-    action_start_id = instruction_dict["actions"][0]
-    action_end_id = instruction_dict["actions"][-1]
-    return [action["type"] for action in actions[action_start_id : action_end_id + 1]]

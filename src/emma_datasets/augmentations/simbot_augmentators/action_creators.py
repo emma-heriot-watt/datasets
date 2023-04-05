@@ -11,7 +11,9 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
     GotoParaphraser,
     OpenParaphraser,
     PickupParaphraser,
+    PlaceParaphraser,
     PourParaphraser,
+    ScanParaphraser,
     SearchParaphraser,
     ToggleParaphraser,
 )
@@ -86,6 +88,10 @@ class BaseActionCreator:
 
             attributes = augmentation_instruction.attributes
             object_attributes = attributes[search_object_initial_candidate_idx]
+            synthetic_action[self.action_type.lower()]["selected_object"] = {
+                "id": object_id,
+                "attributes": object_attributes.dict(),
+            }
         else:
             object_id = augmentation_instruction.object_id
             object_attributes = augmentation_instruction.attributes
@@ -115,6 +121,14 @@ class ToggleActionCreator(BaseActionCreator):
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         self.action_type = "Toggle"
         self.paraphraser = ToggleParaphraser(object_synonyms)
+
+
+class ScanActionCreator(BaseActionCreator):
+    """Scan action class."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        self.action_type = "Scan"
+        self.paraphraser = ScanParaphraser(object_synonyms)
 
 
 class GotoActionCreator(BaseActionCreator):
@@ -198,3 +212,11 @@ class PickupActionCreator(BaseActionCreator):
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         self.action_type = "Pickup"
         self.paraphraser = PickupParaphraser(object_synonyms)
+
+
+class PlaceActionCreator(BaseActionCreator):
+    """Place action class."""
+
+    def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        self.action_type = "Place"
+        self.paraphraser = PlaceParaphraser(object_synonyms)

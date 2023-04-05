@@ -1,0 +1,12 @@
+from emma_datasets.augmentations.simbot_augmentators.break_augmentator import BreakAugmentation
+from emma_datasets.augmentations.simbot_augmentators.clean_augmentator import CleanAugmentation
+from emma_datasets.augmentations.simbot_augmentators.fill_augmentator import FillPourAugmentation
+from emma_datasets.augmentations.simbot_augmentators.goto_augmentator import GoToAugmentation
+from emma_datasets.augmentations.simbot_augmentators.open_close_augmentator import (
+    OpenCloseAugmentation,
+)
+from emma_datasets.augmentations.simbot_augmentators.pickup_augmentator import PickupAugmentation
+from emma_datasets.augmentations.simbot_augmentators.place_augmentator import PlaceAugmentation
+from emma_datasets.augmentations.simbot_augmentators.scan_augmentator import ScanAugmentation
+from emma_datasets.augmentations.simbot_augmentators.search_augmentator import SearchAugmentation
+from emma_datasets.augmentations.simbot_augmentators.toggle_augmentator import ToggleAugmentation

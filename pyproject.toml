@@ -76,6 +76,7 @@ datasets = "^2.2.2"
 requests = "^2.27.1"
 pandas = "^1.4.3"
 emma-common = { git = "https://github.com/emma-simbot/common" }
+faiss-cpu = "^1.7.3"
 
 [tool.poetry.group.spacy.dependencies]
 spacy = "^3.4.1"

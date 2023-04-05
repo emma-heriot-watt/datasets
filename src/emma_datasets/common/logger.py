@@ -10,6 +10,7 @@ def use_rich_for_logging() -> None:
         format="%(message)s",  # noqa: WPS323
         datefmt="[%X]",  # noqa: WPS323
         handlers=[RichHandler(markup=True, rich_tracebacks=True, tracebacks_show_locals=True)],
+        level=logging.INFO,
     )
 
 
