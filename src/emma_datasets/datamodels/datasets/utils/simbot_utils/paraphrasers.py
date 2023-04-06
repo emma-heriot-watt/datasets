@@ -615,6 +615,8 @@ class SearchParaphraser(BaseParaphraser):
             "look for",
             "seek",
             "trace",
+            "investigate the room for",
+            "explore the room for",
         ]
         self._no_prefix_instruction_options = [
             "where is",

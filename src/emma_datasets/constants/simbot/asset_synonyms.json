@@ -3,6 +3,7 @@
 		"Computer",
 		"Monitor",
 		"Computer Monitor",
+		"Office Computer",
 		"PC",
 		"Desktop",
 		"Screen",
@@ -12,13 +13,20 @@
 		"Emotion Tester",
 		"Emotion Tester",
 		"Emotion Tester",
+		"Emotion Tester",
+		"Emotion Test",
 		"Emotion Machine",
 		"Emotion Tester Machine",
 		"Machine of Emotions",
 		"Emotion Testing",
 		"Emotion Testing Machine",
 		"In Motion Machine",
-		"Emission Machine"
+		"Emission Machine",
+		"Robot Prototype",
+		"Prototype",
+		"Happy Machine",
+		"Harpie Machine",
+		"Sad Machine"
 	],
 	"V_Monitor_Gravity": [
 		"Computer",
@@ -157,8 +165,8 @@
 		"Slice of Coast",
 		"Slice of Ghost"
 	],
-	"ForkLift": ["Forklift", "Lift"],
-	"Fork_Lift": ["Forklift", "Lift"],
+	"ForkLift": ["Forklift", "Forklift Truck", "Lift"],
+	"Fork_Lift": ["Forklift", "Forklift Truck", "Lift"],
 	"AP_Prop_Couch_06": ["Couch"],
 	"Manager_Chair": ["Chair"],
 	"Office_Chair": ["Chair"],
@@ -231,6 +239,7 @@
 		"Carrot Machine",
 		"Carrot Maker",
 		"Carrot Maker",
+		"Carrot Maker Device",
 		"Machine For Carrots",
 		"Quantum Carrot Maker",
 		"Card Machine",
@@ -403,9 +412,16 @@
 		"Embiggenator",
 		"Innovator"
 	],
-	"DartBoard": ["Dart Board", "Board", "Target", "Bullseye"],
+	"DartBoard": ["Dart Board", "Board", "Target", "Bullseye", "Bulls Eye"],
 	"Pear_01": ["Pear"],
-	"FuseBox_01_Lever": ["Lever", "Handle", "Switch", "Lever", "Leather"],
+	"FuseBox_01_Lever": [
+		"Lever",
+		"Handle",
+		"Switch",
+		"Lever",
+		"Leather",
+		"Power Lever"
+	],
 	"AP_Prop_Cellotape_01": ["Tape"],
 	"AP_Item_Tape_01": ["Tape"],
 	"Bowl_01": ["Bowl", "Bowl", "Bowl", "Bowl", "Ball", "Bull"],
@@ -485,7 +501,7 @@
 	"Cereal_Box_01": ["Cereal Box", "Cereal", "Box with Cereal"],
 	"SM_Item_Clipboard_01": ["Clipboard"],
 	"Radio_01_Broken": ["Radio"],
-	"Radio_01": ["Radio"],
+	"Radio_01": ["Radio", "Music"],
 	"Laser_Tip": ["Laser Tip"],
 	"Laser_Tip_Broken": ["Laser Tip"],
 	"Floppy_AntiVirus_Broken": [
@@ -496,7 +512,15 @@
 		"Broken Floppy",
 		"Broken Floppy Disk"
 	],
-	"Floppy_AntiVirus": ["Floppy Disk", "Floppy", "Disk", "Antivirus"],
+	"Floppy_AntiVirus": [
+		"Floppy Disk",
+		"Floppy",
+		"Disk",
+		"Antivirus",
+		"Antivirus Software",
+		"Computer Antivirus",
+		"Computer Antivirus Program"
+	],
 	"Floppy_Virus_Broken": [
 		"Floppy Disk",
 		"Floppy",
@@ -505,7 +529,13 @@
 		"Broken Floppy",
 		"Broken Floppy Disk"
 	],
-	"Floppy_Virus": ["Floppy Disk", "Floppy", "Disk"],
+	"Floppy_Virus": [
+		"Floppy Disk",
+		"Floppy",
+		"Disk",
+		"Computer Virus",
+		"Computer Virus Program"
+	],
 	"ColorChanger_Button_Red": [
 		"Button",
 		"Red Button",
@@ -572,8 +602,8 @@
 		"Cartridge with the Hammer"
 	],
 	"SandwichHalf_01": ["Sandwich"],
-	"PBJ_Sandwich": ["Sandwich"],
-	"Burger_04": ["Sandwich"],
+	"PBJ_Sandwich": ["Sandwich", "Peanut Butter and Jelly Sandwich"],
+	"Burger_04": ["Burger", "Sandwich"],
 	"BananaBunch_01": ["Banana"],
 	"Banana_01": ["Banana"],
 	"Table_Metal_01": ["Table"],
@@ -692,7 +722,14 @@
 	],
 	"PaperCup_Crushed_01": ["Cup", "Paper Cup", "Crushed Cup"],
 	"PaperCup_01": ["Cup", "Paper Cup"],
-	"CoffeeMug_Boss": ["Mug", "Cup", "Coffee Mug", "Coffee Cup"],
+	"CoffeeMug_Boss": [
+		"Mug",
+		"Cup",
+		"Coffee Mug",
+		"Coffee Cup",
+		"Manager's Special Mug",
+		"Boss's Mug"
+	],
 	"KitchenCabinet_01": ["Cabinet", "Closet"],
 	"AP_Prop_Cabinets_01": ["Cabinet", "Closet"],
 	"KitchenCabinet_02": ["Cabinet", "Closet"],
