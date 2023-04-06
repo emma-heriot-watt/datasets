@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.0](https://github.com/emma-simbot/datasets/compare/v1.22.0...v1.23.0) (2023-04-06)
+
+
+### Features
+
+* Add some synonyms ([#625](https://github.com/emma-simbot/datasets/issues/625)) ([5701eac](https://github.com/emma-simbot/datasets/commit/5701eac20bac64f54499457d8938d0ce1183dc58))
+
 ## [1.22.0](https://github.com/emma-simbot/datasets/compare/v1.21.0...v1.22.0) (2023-04-05)
 
 
