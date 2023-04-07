@@ -41,6 +41,7 @@ class AmbiguityProcessor:
         self._min_center_coord = 110
         self._max_center_coord = 180
         self._area_percentage = 0.8
+        self._object_assets_to_names = get_arena_definitions()["asset_to_label"]
 
     def ambiguous_across_frames(
         self,
@@ -101,9 +102,15 @@ class AmbiguityProcessor:
 
     def holding_object(self, action: SimBotAction, target_class_label: str) -> bool:
         """Check if the agent is holding the target object."""
+        if action.inventory_object_id is None:
+            return False
+        holding_object = get_object_label_from_object_id(
+            action.inventory_object_id,
+            self._object_assets_to_names,
+        )
         if target_class_label == "Slice":
-            return action.holding_object in {"Apple", "Pie", "Cake", "Bread"}
-        return action.holding_object == target_class_label
+            return holding_object in {"Apple", "Pie", "Cake", "Bread"}
+        return holding_object == target_class_label
 
     def check_no_salient_object(
         self,

@@ -1,6 +1,7 @@
 import random
 import string
 from copy import deepcopy
+from typing import Optional
 
 from emma_datasets.constants.simbot.simbot import (
     get_arena_definitions,
@@ -16,6 +17,41 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.simbot_datamodels impo
     SimBotInstructionInstance,
     SimBotObjectAttributes,
 )
+
+
+class InventoryObjectGenerator:
+    """Generate an object that could be in the agent inventory for each instruction."""
+
+    def __init__(self) -> None:
+        pickable_objects = get_pickable_objects_ids()
+        # Note that pickup is missing in purpose from inventory_choices
+        self.inventory_choices = {
+            "goto": pickable_objects,
+            "toggle": pickable_objects,
+            "open": pickable_objects,
+            "close": pickable_objects,
+            "place": pickable_objects,
+            "scan": pickable_objects,
+            "break": ["Hammer"],
+            "pour": [
+                "CoffeeMug_Yellow",
+                "CoffeeMug_Boss",
+                "CoffeePot_01",
+                "Bowl_01",
+                "MilkCarton_01",
+                "CoffeeBeans_01",
+            ],
+            "clean": ["FoodPlate_01"],
+            "fill": ["CoffeeMug_Yellow", "CoffeeMug_Boss", "CoffeePot_01", "Bowl_01"],
+            "search": pickable_objects,
+        }
+
+    def __call__(self, action_type: str) -> Optional[str]:
+        """Get a random object."""
+        action_inventory_choices = self.inventory_choices.get(action_type, None)
+        if action_inventory_choices is None or not action_inventory_choices:
+            return None
+        return random.choice(action_inventory_choices)
 
 
 class InstructionParaphraser:
@@ -37,27 +73,34 @@ class InstructionParaphraser:
             "fill": FillParaphraser(object_synonyms),
             "search": SearchParaphraser(object_synonyms),
         }
+        self._inventory_object_generator = InventoryObjectGenerator()
 
     def __call__(
         self,
         action_type: str,
         object_id: str,
         object_attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
     ) -> str:
         """Paraphrase."""
         paraphraser = self.paraphraser_map.get(action_type, None)
         if paraphraser is None:
             raise AssertionError(f"Action {action_type} cannot be paraphrased")
+        if paraphraser.requires_inventory and inventory_object_id is None:
+            inventory_object_id = self._inventory_object_generator(action_type=action_type)
         instruction = paraphraser(object_id, object_attributes)
         return instruction
 
-    def from_instruction_instance(self, instruction_instance: SimBotInstructionInstance) -> str:
+    def from_instruction_instance(
+        self, instruction_instance: SimBotInstructionInstance
+    ) -> tuple[str, Optional[str]]:
         """Paraphrase an instruction from a SimbotInstructionInstance."""
         cond1 = len(instruction_instance.actions) == 1
         action = instruction_instance.actions[0]
         action_type = action.type.lower()
         action_data = action.get_action_data
         cond2 = action_type in ParaphrasableActions
+        inventory_object_id = None
         if cond1 and cond2:
             # For instruction instances that have multiple objects e.g, search we pick one at random
             if isinstance(action_data["object"]["attributes"], list):
@@ -71,14 +114,16 @@ class InstructionParaphraser:
                 object_attributes = SimBotObjectAttributes(**action_data["object"]["attributes"])
                 object_id = action_data["object"]["id"]
 
-            instruction = self(
-                action_type=action_type,
-                object_id=object_id,
-                object_attributes=object_attributes,
-            )
+            paraphraser = self.paraphraser_map.get(action_type, None)
+            if paraphraser is None:
+                raise AssertionError(f"Action {action_type} cannot be paraphrased")
+            # If the action type does not require an inventory object, set it with probability 0.5
+            if paraphraser.requires_inventory or random.random() < 1 / 2:
+                inventory_object_id = self._inventory_object_generator(action_type=action_type)
+            instruction = paraphraser(object_id, object_attributes, inventory_object_id)
         else:
             instruction = instruction_instance.instruction.instruction
-        return instruction
+        return instruction, inventory_object_id
 
 
 class BaseParaphraser:
@@ -129,8 +174,14 @@ class BaseParaphraser:
             "now",
             "please",
         ]
+        self.requires_inventory = False
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Paraphrase."""
         raise NotImplementedError
 
@@ -218,7 +269,12 @@ class GotoParaphraser(BaseParaphraser):
             "goto_color_location": self._verb_color_location_templates,
         }
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a goto instruction."""
         available_types = ["goto"]
         object_color = attributes.color
@@ -260,7 +316,12 @@ class ToggleParaphraser(BaseParaphraser):
             "toggle_location": self._verb_location_templates,
         }
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a toggle instruction."""
         available_types = ["toggle"]
         object_color = attributes.color
@@ -290,7 +351,12 @@ class OpenParaphraser(BaseParaphraser):
             "open_location": self._verb_location_templates,
         }
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a open instruction."""
         available_types = ["open"]
         object_color = attributes.color
@@ -320,7 +386,12 @@ class CloseParaphraser(BaseParaphraser):
             "close_location": self._verb_location_templates,
         }
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a close instruction."""
         available_types = ["close"]
         object_color = attributes.color
@@ -357,7 +428,12 @@ class PickupParaphraser(BaseParaphraser):
             "pickup_location": self._verb_location_templates,
         }
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a pickup instruction."""
         available_types = ["pickup"]
         object_color = attributes.color
@@ -399,9 +475,14 @@ class PlaceParaphraser(BaseParaphraser):
             "place_location": self._verb_location_templates,
         }
 
-        self._pickable_object_ids = get_pickable_objects_ids()
+        self.requires_inventory = True
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a place instruction."""
         available_types = ["place"]
         object_color = attributes.color
@@ -419,9 +500,8 @@ class PlaceParaphraser(BaseParaphraser):
         missing_formating_values = [
             tup[1] for tup in string.Formatter().parse(instruction) if tup[1] is not None
         ]
-        if missing_formating_values:
-            pickable_object_id = random.choice(self._pickable_object_ids)
-            pickable_object = random.choice(self.object_synonyms[pickable_object_id]).lower()
+        if missing_formating_values and inventory_object_id is not None:
+            pickable_object = random.choice(self.object_synonyms[inventory_object_id]).lower()
             instruction = instruction.format(pickable_object=pickable_object)
         return instruction
 
@@ -449,8 +529,14 @@ class BreakParaphraser(BaseParaphraser):
             "break_color": self._verb_color_templates,
             "break_location": self._verb_location_templates,
         }
+        self.requires_inventory = True
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a break instruction."""
         available_types = ["break"]
         object_color = attributes.color
@@ -490,14 +576,27 @@ class CleanParaphraser(BaseParaphraser):
             "clean_full": self._full_templates,
             "clean_object": self._verb_templates,
         }
+        self.requires_inventory = True
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a clean instruction."""
-        available_types = ["clean_full", "clean_object"]
+        if inventory_object_id is None:
+            instruction = random.choice(self._instruction_options)
+        else:
+            available_types = ["clean_full", "clean_object"]
+            instruction = self._get_instruction(
+                object_id=inventory_object_id,
+                attributes=SimBotObjectAttributes(
+                    readable_name=get_object_readable_name_from_object_id(inventory_object_id)
+                ),
+                available_types=available_types,
+            )
 
-        instruction = self._get_instruction(
-            object_id=object_id, attributes=attributes, available_types=available_types
-        )
         if random.random() < (1 / 2):
             instruction = self._add_suffix(instruction, self._suffix_option)
         return instruction
@@ -530,8 +629,14 @@ class PourParaphraser(BaseParaphraser):
             "pour_color": self._verb_color_templates,
             "pour_location": self._verb_location_templates,
         }
+        self.requires_inventory = True
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a pour instruction."""
         available_types = ["pour"]
         object_color = attributes.color
@@ -561,7 +666,12 @@ class ScanParaphraser(BaseParaphraser):
             "scan_location": self._verb_location_templates,
         }
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a scan instruction."""
         available_types = ["scan"]
         object_color = attributes.color
@@ -590,14 +700,27 @@ class FillParaphraser(BaseParaphraser):
             "fill_full": self._full_templates,
             "fill_object": self._verb_templates,
         }
+        self.requires_inventory = True
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a fill instruction."""
-        available_types = ["fill_full", "fill_object"]
+        if inventory_object_id is None:
+            instruction = random.choice(self._instruction_options)
+        else:
+            available_types = ["fill_full", "fill_object"]
+            instruction = self._get_instruction(
+                object_id=inventory_object_id,
+                attributes=SimBotObjectAttributes(
+                    readable_name=get_object_readable_name_from_object_id(inventory_object_id)
+                ),
+                available_types=available_types,
+            )
 
-        instruction = self._get_instruction(
-            object_id=object_id, attributes=attributes, available_types=available_types
-        )
         if random.random() < (1 / 2):
             instruction = self._add_suffix(instruction, self._suffix_option)
         return instruction
@@ -628,7 +751,12 @@ class SearchParaphraser(BaseParaphraser):
             "search_color": self._verb_color_templates,
         }
 
-    def __call__(self, object_id: str, attributes: SimBotObjectAttributes) -> str:
+    def __call__(
+        self,
+        object_id: str,
+        attributes: SimBotObjectAttributes,
+        inventory_object_id: Optional[str] = None,
+    ) -> str:
         """Get a search instruction."""
         available_types = ["search"]
         object_color = attributes.color

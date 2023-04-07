@@ -241,23 +241,21 @@ class ClarificationTargetExtractor:
         return normalized_target
 
 
-class HoldingObject:
-    """Add the holding object to the actions."""
+class InventoryObjectfromTrajectory:
+    """Add the inventory object to the actions."""
 
     def __init__(self) -> None:
         self._object_assets_to_names = get_arena_definitions()["asset_to_label"]
 
     def __call__(self, actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        """Add the holding object to actions."""
-        holding_object = None
+        """Add the inventory object to actions."""
+        inventory_object = None
         for action in actions:
-            action["holding_object"] = holding_object
+            action["inventory_object_id"] = inventory_object
             # Update the object that will be held after the current action
             if action["type"] == "Pickup":
-                holding_object = get_object_label_from_object_id(
-                    action["pickup"]["object"]["id"],
-                    self._object_assets_to_names,
-                )
+                inventory_object = action["pickup"]["object"]["id"]
+
             elif action["type"] == "Place":
-                holding_object = None
+                inventory_object = None
         return actions

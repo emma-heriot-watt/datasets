@@ -51,7 +51,7 @@ class SimBotAction(BaseModel):
     id: int
     type: str
     color_images: list[str] = Field(..., alias="colorImages")
-    holding_object: Optional[str] = None
+    inventory_object_id: Optional[str] = None
     final: Optional[bool] = False
 
     @root_validator(pre=True)

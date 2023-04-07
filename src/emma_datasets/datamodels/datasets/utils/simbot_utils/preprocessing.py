@@ -69,6 +69,7 @@ def create_instruction_dict(
     ambiguous: bool = False,
     paraphrasable: bool = False,
     vision_augmentation: bool = False,
+    inventory_object_id: Optional[str] = None,
     **kwargs: Any,
 ) -> dict[str, Any]:
     """Create an instruction dict."""
@@ -92,6 +93,7 @@ def create_instruction_dict(
         "ambiguous": ambiguous,
         "paraphrasable": paraphrasable,
         "vision_augmentation": vision_augmentation,
+        "inventory_object_id": inventory_object_id,
     }
     return instruction_dict
 

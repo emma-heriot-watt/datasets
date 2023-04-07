@@ -15,7 +15,7 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations imp
     SyntheticLowLevelActionSampler,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
-    HoldingObject,
+    InventoryObjectfromTrajectory,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
     InstructionParaphraser,
@@ -74,12 +74,12 @@ def load_simbot_instruction_data(
         num_additional_synthetic_instructions=num_additional_synthetic_instructions,
     )
 
-    holding_object_processor = HoldingObject()
+    inventory_object_processor = InventoryObjectfromTrajectory()
     instruction_data = []
 
     # Trajectory data
     for mission_id, mission_annotations in data.items():
-        actions = holding_object_processor(mission_annotations["actions"])
+        actions = inventory_object_processor(mission_annotations["actions"])
 
         instruction_idx = 0
         # Human annotations
@@ -176,9 +176,13 @@ def load_simbot_augmentation_instruction_data(
             ambiguous = ambiguity_filter(instruction_instance)
             if ambiguous:
                 continue
-            mission_metadata["instruction"]["instruction"] = paraphraser.from_instruction_instance(
-                instruction_instance
-            )
+            (
+                instruction,
+                inventory_object_id,
+            ) = paraphraser.from_instruction_instance(instruction_instance)
+            mission_metadata["instruction"]["instruction"] = instruction
+            if inventory_object_id is not None:
+                mission_metadata["actions"][0]["inventory_object_id"] = inventory_object_id
         mission_metadata["vision_augmentation"] = True
         instruction_dict = create_instruction_dict(**mission_metadata)
         instruction_data.append(instruction_dict)
