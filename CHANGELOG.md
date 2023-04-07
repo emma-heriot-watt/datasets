@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.0](https://github.com/emma-simbot/datasets/compare/v1.23.0...v1.24.0) (2023-04-07)
+
+
+### Features
+
+* Add paraphrasing for the inventory object ([#627](https://github.com/emma-simbot/datasets/issues/627)) ([8e439cc](https://github.com/emma-simbot/datasets/commit/8e439cc042eae126c4a6992ef39995179852f89b))
+
 ## [1.23.0](https://github.com/emma-simbot/datasets/compare/v1.22.0...v1.23.0) (2023-04-06)
 
 
