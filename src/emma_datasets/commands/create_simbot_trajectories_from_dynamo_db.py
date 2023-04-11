@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import random
 import shutil
 import subprocess  # noqa: S404
 from argparse import ArgumentParser
@@ -13,6 +14,9 @@ from botocore.exceptions import ClientError
 
 from emma_datasets.common import get_progress
 from emma_datasets.constants.simbot.simbot import get_arena_definitions
+from emma_datasets.datamodels.datasets.utils.simbot_utils.high_level_key_processor import (
+    HighLevelKeyProcessor,
+)
 
 
 logging.basicConfig()
@@ -80,6 +84,8 @@ class CDFTrajectoryCreator:
         cache_path: str = "storage/datasets/simbot/trajectories_sessions",
         s3_sessions_bucket_url: str = "s3://emma-simbot-live-challenge/",
         s3_results_bucket_url: str = "s3://emma-simbot/results/simbot-trajectories/missions/",
+        prefix_inclusion_probability: float = 0.2,
+        paraphrases_per_template: int = 10,
     ):
         self.output_json = output_json
         self.output_feature_directory = output_feature_directory
@@ -115,6 +121,11 @@ class CDFTrajectoryCreator:
         # We are losing information here since different assets can be mapped to the same label
         # Thats ok though, we just want to object label for paraphrasing later on
         self._labels_to_assets = {label: asset for asset, label in assets_to_labels.items()}
+
+        self._high_level_key_processor = HighLevelKeyProcessor(
+            prefix_inclusion_probability=prefix_inclusion_probability,
+            paraphrases_per_template=paraphrases_per_template,
+        )
 
     def should_skip_session_turn_for_trajectory(self, session_turn: dict[str, Any]) -> bool:
         """Skip turns that should not be added to the trajectory.
@@ -358,8 +369,11 @@ class CDFTrajectoryCreator:
 
     def get_high_level_instruction(self, session_id: str) -> str:
         """Get the high level description from the session id."""
-        # TODO: high level description from the key within the session id
-        return "get the apple from the fridge"
+        # the session had has the following form: T.DATE/high-level-key
+        high_level_key = self._high_level_key_processor(session_id.split("/")[1])
+
+        paraphrases = high_level_key.paraphrases
+        return random.choice(paraphrases)
 
     def extract_index_from_special_token(self, token: str) -> int:
         """Extract the token index from a special token."""
