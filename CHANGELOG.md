@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.0](https://github.com/emma-simbot/datasets/compare/v1.26.0...v1.27.0) (2023-04-11)
+
+
+### Features
+
+* call high level paraphrasing when creating trajectory dbs ([#631](https://github.com/emma-simbot/datasets/issues/631)) ([cb732a5](https://github.com/emma-simbot/datasets/commit/cb732a5d7488b30ca0a8bf745721338a60027e08))
+
 ## [1.26.0](https://github.com/emma-simbot/datasets/compare/v1.25.0...v1.26.0) (2023-04-11)
 
 
