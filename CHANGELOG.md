@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.0](https://github.com/emma-simbot/datasets/compare/v1.25.0...v1.26.0) (2023-04-11)
+
+
+### Features
+
+* Highlevel key decode v2 ([#629](https://github.com/emma-simbot/datasets/issues/629)) ([a066b45](https://github.com/emma-simbot/datasets/commit/a066b457bf23e57571cc777f6df21ec5299ea8c4))
+
+
+### Bug Fixes
+
+* Allow the paraphraser to generate only complete instructions ([#630](https://github.com/emma-simbot/datasets/issues/630)) ([102a456](https://github.com/emma-simbot/datasets/commit/102a456561f2ad0a79518f1db02677925dc3e273))
+
 ## [1.25.0](https://github.com/emma-simbot/datasets/compare/v1.24.0...v1.25.0) (2023-04-11)
 
 
