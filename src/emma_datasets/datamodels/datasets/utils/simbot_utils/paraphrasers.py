@@ -1,5 +1,4 @@
 import random
-import string
 from copy import deepcopy
 from typing import Optional
 
@@ -88,7 +87,7 @@ class InstructionParaphraser:
             raise AssertionError(f"Action {action_type} cannot be paraphrased")
         if paraphraser.requires_inventory and inventory_object_id is None:
             inventory_object_id = self._inventory_object_generator(action_type=action_type)
-        instruction = paraphraser(object_id, object_attributes)
+        instruction = paraphraser(object_id, object_attributes, inventory_object_id)
         return instruction
 
     def from_instruction_instance(
@@ -114,16 +113,31 @@ class InstructionParaphraser:
                 object_attributes = SimBotObjectAttributes(**action_data["object"]["attributes"])
                 object_id = action_data["object"]["id"]
 
+            inventory_object_id = self.sample_inventory_object(action_type=action_type)
             paraphraser = self.paraphraser_map.get(action_type, None)
             if paraphraser is None:
                 raise AssertionError(f"Action {action_type} cannot be paraphrased")
-            # If the action type does not require an inventory object, set it with probability 0.5
-            if paraphraser.requires_inventory or random.random() < 1 / 2:
-                inventory_object_id = self._inventory_object_generator(action_type=action_type)
             instruction = paraphraser(object_id, object_attributes, inventory_object_id)
         else:
             instruction = instruction_instance.instruction.instruction
         return instruction, inventory_object_id
+
+    def sample_inventory_object(self, action_type: str) -> Optional[str]:
+        """Sample an inventory object."""
+        paraphraser = self.paraphraser_map.get(action_type, None)
+        if paraphraser is None:
+            return None
+        # If the action type does not require an inventory object, set it with probability 0.5
+        if paraphraser.requires_inventory or random.random() < 1 / 2:
+            return self._inventory_object_generator(action_type=action_type)
+        return None
+
+    def is_inventory_required(self, action_type: str) -> bool:
+        """Is the inventory required for the action?"""
+        paraphraser = self.paraphraser_map.get(action_type, None)
+        if paraphraser is None:
+            return False
+        return paraphraser.requires_inventory
 
 
 class BaseParaphraser:
@@ -140,7 +154,8 @@ class BaseParaphraser:
         self._assets_to_labels = arena_definitions["asset_to_label"]
         self._special_name_cases = arena_definitions["special_asset_to_readable_name"]
         self._full_templates = [
-            "{verb}",  # By convention the full instruction will be provided in `verb` entry.
+            # By convention the full instruction will be provided in `verb` entry.
+            "{verb}",
         ]
         self._verb_templates = [
             "{verb} the {object}.",
@@ -194,23 +209,9 @@ class BaseParaphraser:
         selected_type = random.choice(available_types)
         selected_template = random.choice(self._available_templates[selected_type])
 
-        object_name = get_object_readable_name_from_object_id(
-            object_id=object_id,
-            object_assets_to_names=self._assets_to_labels,
-            special_name_cases=self._special_name_cases,
+        object_name = self._sample_target_object_synonym(
+            object_id=object_id, template_type=selected_type
         )
-
-        object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
-        object_class = self._assets_to_labels[object_asset]
-
-        # If its not a `special case` object then the object class and the object readable name should be the same.
-        # Therefore you can always sample a synonym.
-        if object_name == object_class:
-            object_name = random.choice(self.object_synonyms[object_asset])
-        # If the template is not a verb_template we can use any synonym
-        elif self._available_templates[selected_type] != self._verb_templates:
-            object_name = random.choice(self.object_synonyms[object_asset])
-
         instruction_options = deepcopy(self._instruction_options)
         if self._no_prefix_instruction_options:
             instruction_options.extend(self._no_prefix_instruction_options)
@@ -240,6 +241,25 @@ class BaseParaphraser:
         if instruction.endswith("."):
             instruction = instruction[:-1]
         return f"{instruction} {suffix}".lower()
+
+    def _sample_target_object_synonym(self, object_id: str, template_type: str) -> str:
+        object_name = get_object_readable_name_from_object_id(
+            object_id=object_id,
+            object_assets_to_names=self._assets_to_labels,
+            special_name_cases=self._special_name_cases,
+        )
+
+        object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
+        object_class = self._assets_to_labels[object_asset]
+
+        # If its not a `special case` object then the object class and the object readable name should be the same.
+        # Therefore you can always sample a synonym.
+        if object_name == object_class:
+            object_name = random.choice(self.object_synonyms[object_asset])
+        # If the template is not a verb_template we can use any synonym
+        elif self._available_templates[template_type] != self._verb_templates:
+            object_name = random.choice(self.object_synonyms[object_asset])
+        return object_name
 
 
 class GotoParaphraser(BaseParaphraser):
@@ -458,15 +478,15 @@ class PlaceParaphraser(BaseParaphraser):
         self._instruction_options = [
             "leave the {pickable_object} in",
             "leave the {pickable_object} on",
-            "place it on",
             "place the {pickable_object} on",
             "place the {pickable_object} in",
-            "put it on",
             "put the {pickable_object} in",
             "put the {pickable_object} on",
             "put down the {pickable_object} on",
-            "put it down on",
-            "insert it in",
+            "put the {pickable_object} down on",
+            "insert the {pickable_object} in",
+            "set the {pickable_object} at",
+            "set the {pickable_object} on",
         ]
 
         self._available_templates = {
@@ -497,12 +517,10 @@ class PlaceParaphraser(BaseParaphraser):
             object_id=object_id, attributes=attributes, available_types=available_types
         )
 
-        missing_formating_values = [
-            tup[1] for tup in string.Formatter().parse(instruction) if tup[1] is not None
-        ]
-        if missing_formating_values and inventory_object_id is not None:
-            pickable_object = random.choice(self.object_synonyms[inventory_object_id]).lower()
-            instruction = instruction.format(pickable_object=pickable_object)
+        if inventory_object_id is None:
+            raise AssertionError("PlaceParaphraser requires inventory.")
+        pickable_object = random.choice(self.object_synonyms[inventory_object_id]).lower()
+        instruction = instruction.format(pickable_object=pickable_object)
         return instruction
 
 
@@ -573,8 +591,7 @@ class CleanParaphraser(BaseParaphraser):
         self._suffix_option = "in the sink."
 
         self._available_templates = {
-            "clean_full": self._full_templates,
-            "clean_object": self._verb_templates,
+            "clean": self._verb_templates,
         }
         self.requires_inventory = True
 
@@ -586,16 +603,14 @@ class CleanParaphraser(BaseParaphraser):
     ) -> str:
         """Get a clean instruction."""
         if inventory_object_id is None:
-            instruction = random.choice(self._instruction_options)
-        else:
-            available_types = ["clean_full", "clean_object"]
-            instruction = self._get_instruction(
-                object_id=inventory_object_id,
-                attributes=SimBotObjectAttributes(
-                    readable_name=get_object_readable_name_from_object_id(inventory_object_id)
-                ),
-                available_types=available_types,
-            )
+            raise AssertionError("CleanParaphraser requires inventory.")
+        instruction = self._get_instruction(
+            object_id=inventory_object_id,
+            attributes=SimBotObjectAttributes(
+                readable_name=get_object_readable_name_from_object_id(inventory_object_id)
+            ),
+            available_types=["clean"],
+        )
 
         if random.random() < (1 / 2):
             instruction = self._add_suffix(instruction, self._suffix_option)
@@ -608,20 +623,18 @@ class PourParaphraser(BaseParaphraser):
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="pour")
         self._instruction_options = [
-            "pour it into",
-            "pour it in",
-            "pour the water into",
-            "pour the coffee into",
-            "pour the cereal into",
-            "pour the milk into",
-            "pour some water into",
-            "pour some coffee into",
-            "pour some cereal into",
-            "pour some milk into",
-            "put the water in the",
-            "put the coffee in the",
-            "put the cereal in the",
-            "put the milk in the",
+            "pour {pourable_object} into the",
+            "pour the {pourable_object} into the",
+            "pour some {pourable_object} into the",
+            "pour {pourable_object} in the",
+            "pour the {pourable_object} in the",
+            "pour some {pourable_object} in the",
+            "put {pourable_object} into the",
+            "put the {pourable_object} into the",
+            "put some {pourable_object} into the",
+            "put {pourable_object} in the",
+            "put the {pourable_object} in the",
+            "put some {pourable_object} in the",
         ]
 
         self._available_templates = {
@@ -630,6 +643,14 @@ class PourParaphraser(BaseParaphraser):
             "pour_location": self._verb_location_templates,
         }
         self.requires_inventory = True
+        self._pourable_inventory_mapping = {
+            "Bowl_01": ["water"],
+            "CoffeeMug_Boss": ["water", "coffee"],
+            "CoffeeMug_Yellow": ["water", "coffee"],
+            "CoffeePot_01": ["water", "coffee"],
+            "CoffeeBeans_01": ["coffee beans", "beans"],
+            "MilkCarton_01": ["milk"],
+        }
 
     def __call__(
         self,
@@ -650,6 +671,11 @@ class PourParaphraser(BaseParaphraser):
         instruction = self._get_instruction(
             object_id=object_id, attributes=attributes, available_types=available_types
         )
+        if inventory_object_id is None:
+            raise AssertionError("PourParaphraser requires inventory.")
+        pourable_object = random.choice(self._pourable_inventory_mapping[inventory_object_id])
+        instruction = instruction.format(pourable_object=pourable_object)
+
         return instruction
 
 
@@ -694,11 +720,14 @@ class FillParaphraser(BaseParaphraser):
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="fill")
         self._instruction_options = ["fill"]
+        self._suffix_options = [
+            "with water",
+            "with water from the sink",
+            "in the sink",
+        ]
 
-        self._suffix_option = "with water."
         self._available_templates = {
-            "fill_full": self._full_templates,
-            "fill_object": self._verb_templates,
+            "fill": self._verb_templates,
         }
         self.requires_inventory = True
 
@@ -710,19 +739,16 @@ class FillParaphraser(BaseParaphraser):
     ) -> str:
         """Get a fill instruction."""
         if inventory_object_id is None:
-            instruction = random.choice(self._instruction_options)
-        else:
-            available_types = ["fill_full", "fill_object"]
-            instruction = self._get_instruction(
-                object_id=inventory_object_id,
-                attributes=SimBotObjectAttributes(
-                    readable_name=get_object_readable_name_from_object_id(inventory_object_id)
-                ),
-                available_types=available_types,
-            )
-
+            raise AssertionError("FillParaphraser requires inventory.")
+        instruction = self._get_instruction(
+            object_id=inventory_object_id,
+            attributes=SimBotObjectAttributes(
+                readable_name=get_object_readable_name_from_object_id(inventory_object_id)
+            ),
+            available_types=["fill"],
+        )
         if random.random() < (1 / 2):
-            instruction = self._add_suffix(instruction, self._suffix_option)
+            instruction = self._add_suffix(instruction, random.choice(self._suffix_options))
         return instruction
 
 

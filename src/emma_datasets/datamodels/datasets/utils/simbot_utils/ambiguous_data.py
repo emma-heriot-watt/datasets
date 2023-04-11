@@ -208,6 +208,7 @@ class AmbiguousGotoProcessor(AmbiguityProcessor):
             features_path=features_path,
             target_class_label=target_class_label,
         )
+
         if ambiguous_in_frame:
             new_intruction_dict = self._try_to_fix_ambiguous_in_frame(
                 instruction_dict=instruction_dict,
@@ -215,6 +216,7 @@ class AmbiguousGotoProcessor(AmbiguityProcessor):
                 target_readable_name=target_readable_name,
             )
             instruction_dict["ambiguous"] = True
+            instruction_dict["paraphrasable"] = True
 
         if new_intruction_dict is not None:
             return [instruction_dict, new_intruction_dict]
