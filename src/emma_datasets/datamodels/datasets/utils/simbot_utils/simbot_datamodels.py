@@ -130,6 +130,7 @@ class SimBotInstructionInstance(BaseInstance):
     synthetic: bool = False
     ambiguous: bool = False
     vision_augmentation: bool = False
+    cdf_augmentation: bool = False
 
     class Config:
         """Custom configuration to allows additional fields."""
@@ -152,6 +153,7 @@ class SimBotInstructionInstance(BaseInstance):
         belong to multiple instances, to avoid duplicates the feature path is directly the path to
         the image.
         """
+        # The instance comes from the vision data augmentations
         if self.vision_augmentation:
             template = "{feature_path}.pt"
             color_image = self.actions[0].color_images[0]
@@ -160,6 +162,17 @@ class SimBotInstructionInstance(BaseInstance):
                 settings.paths.simbot_features.joinpath(template.format(feature_path=feature_path))
             ]
 
+        # The instance comes from the cdf augmentations
+        elif self.cdf_augmentation:
+            template = "{feature_path}.pt"
+            color_images = [action.color_images[0] for action in self.actions]
+            feature_paths = [Path(color_image).stem for color_image in color_images]
+            return [
+                settings.paths.simbot_features.joinpath(template.format(feature_path=feature_path))
+                for feature_path in feature_paths
+            ]
+
+        # The instance comes from the simbot annotations
         template = "{mission_id}_action{action_id}.pt"
         return [
             settings.paths.simbot_features.joinpath(

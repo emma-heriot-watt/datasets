@@ -3,10 +3,7 @@ from pathlib import Path
 from pydantic import parse_obj_as
 
 from emma_datasets.datamodels.datasets import SimBotInstructionInstance, SimBotMissionInstance
-from emma_datasets.datamodels.datasets.simbot import (
-    load_simbot_instruction_data,
-    load_simbot_mission_data,
-)
+from emma_datasets.datamodels.datasets.simbot import load_simbot_data, load_simbot_mission_data
 
 
 def test_can_load_simbot_mission_data(simbot_instances_path: Path) -> None:
@@ -32,10 +29,11 @@ def test_can_load_simbot_instruction_data(
 
     instances = parse_obj_as(
         list[SimBotInstructionInstance],
-        load_simbot_instruction_data(
-            simbot_instances_path,
-            simbot_sticky_notes_path,
-            augmentation_images_json_path,
+        load_simbot_data(
+            simbot_trajectory_json_path=simbot_instances_path,
+            synthetic_trajectory_json_path=simbot_instances_path,
+            sticky_notes_images_json_path=simbot_sticky_notes_path,
+            augmentation_images_json_path=augmentation_images_json_path,
         ),
     )
     assert instances, "The file doesn't contain any instances."

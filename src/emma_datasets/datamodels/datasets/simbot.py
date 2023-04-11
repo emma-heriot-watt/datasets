@@ -21,8 +21,8 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
     InstructionParaphraser,
 )
 from emma_datasets.datamodels.datasets.utils.simbot_utils.preprocessing import (
-    HumanIntructionsPreprocessor,
     SyntheticIntructionsPreprocessor,
+    TrajectoryInstructionProcessor,
     create_instruction_dict,
 )
 from emma_datasets.db import DatasetDb
@@ -52,21 +52,21 @@ def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
     return restructured_data
 
 
-def load_simbot_instruction_data(
+def load_simbot_trajectory_instruction_data(
     trajectory_json_path: Path,
-    sticky_notes_images_json_path: Optional[Path] = None,
-    augmentation_images_json_path: Optional[Path] = None,
-    annotation_images_json_path: Optional[Path] = None,
-    num_additional_synthetic_instructions: int = -1,
-    num_sticky_notes_instructions: int = -1,
     skip_goto_rooms: bool = True,
     use_synthetic_action_sampler: bool = False,
+    num_additional_synthetic_instructions: int = -1,
 ) -> list[dict[Any, Any]]:
-    """Loads and reformats the SimBot annotations for creating Simbot instructions."""
+    """Loads the SimBot annotations for creating SimBot trajectories."""
+    trajectory_instruction_data = []
     with open(trajectory_json_path) as fp:
         data = json.load(fp)
 
-    human_instruction_processor = HumanIntructionsPreprocessor(skip_goto_rooms=skip_goto_rooms)
+    human_instruction_processor = TrajectoryInstructionProcessor(
+        skip_goto_rooms=skip_goto_rooms,
+        cdf_augmentation=False,
+    )
 
     synthetic_instruction_processor = SyntheticIntructionsPreprocessor(
         skip_goto_rooms=skip_goto_rooms,
@@ -75,9 +75,6 @@ def load_simbot_instruction_data(
     )
 
     inventory_object_processor = InventoryObjectfromTrajectory()
-    instruction_data = []
-
-    # Trajectory data
     for mission_id, mission_annotations in data.items():
         actions = inventory_object_processor(mission_annotations["actions"])
 
@@ -89,8 +86,9 @@ def load_simbot_instruction_data(
             actions=actions,
             instruction_idx=instruction_idx,
         )
-        instruction_data.extend(instruction_dicts)
+        trajectory_instruction_data.extend(instruction_dicts)
         instruction_idx += len(instruction_dicts)
+
         # Synthetic annotations
         instruction_dicts = synthetic_instruction_processor.run(
             synthetic_annotations=mission_annotations["synthetic_annotations"],
@@ -98,7 +96,70 @@ def load_simbot_instruction_data(
             actions=actions,
             instruction_idx=instruction_idx,
         )
-        instruction_data.extend(instruction_dicts)
+        trajectory_instruction_data.extend(instruction_dicts)
+    return trajectory_instruction_data
+
+
+def load_synthetic_trajectory_instruction_data(trajectory_json_path: Path) -> list[dict[Any, Any]]:
+    """Loads the annotations for creating synthetic (CDF) trajectories."""
+    trajectory_instruction_data = []
+    with open(trajectory_json_path) as fp:
+        data = json.load(fp)
+
+    trajectory_instruction_processor = TrajectoryInstructionProcessor(
+        skip_goto_rooms=False,
+        cdf_augmentation=True,
+    )
+    inventory_object_processor = InventoryObjectfromTrajectory()
+
+    for mission_id, mission_annotations in data.items():
+        actions = inventory_object_processor(mission_annotations["actions"])
+
+        instruction_idx = 0
+        instruction_dicts = trajectory_instruction_processor.run(
+            human_annotations=mission_annotations["human_annotations"],
+            mission_id=mission_id,
+            actions=actions,
+            instruction_idx=instruction_idx,
+        )
+        trajectory_instruction_data.extend(instruction_dicts)
+        instruction_idx += len(instruction_dicts)
+
+    return trajectory_instruction_data
+
+
+def load_simbot_data(
+    simbot_trajectory_json_path: Optional[Path] = None,
+    synthetic_trajectory_json_path: Optional[Path] = None,
+    sticky_notes_images_json_path: Optional[Path] = None,
+    augmentation_images_json_path: Optional[Path] = None,
+    annotation_images_json_path: Optional[Path] = None,
+    num_additional_synthetic_instructions: int = -1,
+    num_sticky_notes_instructions: int = -1,
+    skip_goto_rooms: bool = True,
+    use_synthetic_action_sampler: bool = False,
+) -> list[dict[Any, Any]]:
+    """Loads and reformats the SimBot annotations for creating Simbot instructions."""
+    instruction_data = []
+
+    # SimBot human + synthetic trajectory data
+    if simbot_trajectory_json_path is not None:
+        instruction_data.extend(
+            load_simbot_trajectory_instruction_data(
+                trajectory_json_path=simbot_trajectory_json_path,
+                skip_goto_rooms=skip_goto_rooms,
+                use_synthetic_action_sampler=use_synthetic_action_sampler,
+                num_additional_synthetic_instructions=num_additional_synthetic_instructions,
+            )
+        )
+
+    # Synthetically generated trajectory data
+    if synthetic_trajectory_json_path is not None:
+        instruction_data.extend(
+            load_synthetic_trajectory_instruction_data(
+                trajectory_json_path=synthetic_trajectory_json_path,
+            )
+        )
 
     # Sticky Note data
     if sticky_notes_images_json_path is not None:
@@ -206,8 +267,9 @@ def load_simbot_annotations(
         }
     else:
         source_per_split = {
-            DatasetSplit.train: load_simbot_instruction_data(
-                trajectory_json_path=base_dir.joinpath("train.json"),
+            DatasetSplit.train: load_simbot_data(
+                simbot_trajectory_json_path=base_dir.joinpath("train.json"),
+                synthetic_trajectory_json_path=base_dir.joinpath("train_trajectories.json"),
                 # sticky_notes_images_json_path=base_dir.joinpath("train_sticky_notes.json"),
                 annotation_images_json_path=base_dir.joinpath(
                     "train_annotation_instructions_v3.json"
@@ -218,8 +280,9 @@ def load_simbot_annotations(
                 num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=train_num_sticky_notes_instructions,
             ),
-            DatasetSplit.valid: load_simbot_instruction_data(
-                trajectory_json_path=base_dir.joinpath("valid.json"),
+            DatasetSplit.valid: load_simbot_data(
+                simbot_trajectory_json_path=base_dir.joinpath("valid.json"),
+                synthetic_trajectory_json_path=base_dir.joinpath("valid_trajectories.json"),
                 # sticky_notes_images_json_path=base_dir.joinpath("valid_sticky_notes.json"),
                 annotation_images_json_path=base_dir.joinpath(
                     "valid_annotation_instructions_v3.json"
@@ -256,6 +319,7 @@ def unwrap_instructions(db_path: Path) -> list[dict[Any, Any]]:
                 "actions": instruction_instance.actions[: action_index + 1],
                 "synthetic": instruction_instance.synthetic,
                 "vision_augmentation": instruction_instance.vision_augmentation,
+                "cdf_augmentation": instruction_instance.cdf_augmentation,
             }
             unwrapped_instances.append(instruction_dict)
     return unwrapped_instances

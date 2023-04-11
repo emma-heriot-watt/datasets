@@ -69,6 +69,7 @@ def create_instruction_dict(
     ambiguous: bool = False,
     paraphrasable: bool = False,
     vision_augmentation: bool = False,
+    cdf_augmentation: bool = False,
     inventory_object_id: Optional[str] = None,
     **kwargs: Any,
 ) -> dict[str, Any]:
@@ -93,6 +94,7 @@ def create_instruction_dict(
         "ambiguous": ambiguous,
         "paraphrasable": paraphrasable,
         "vision_augmentation": vision_augmentation,
+        "cdf_augmentation": cdf_augmentation,
         "inventory_object_id": inventory_object_id,
     }
     return instruction_dict
@@ -142,12 +144,13 @@ def instruction_is_goto_room(
     )
 
 
-class HumanIntructionsPreprocessor:
+class TrajectoryInstructionProcessor:
     """Preprocess the instruction instances for the human annotations."""
 
-    def __init__(self, skip_goto_rooms: bool = True) -> None:
+    def __init__(self, skip_goto_rooms: bool = True, cdf_augmentation: bool = False) -> None:
         self._clarification_target_extractor = ClarificationTargetExtractor()
         self.skip_goto_rooms = skip_goto_rooms
+        self.cdf_augmentation = cdf_augmentation
 
     def run(  # noqa: WPS231
         self,
@@ -181,6 +184,7 @@ class HumanIntructionsPreprocessor:
                     instruction_id=str(instruction_idx),
                     clarification_extractor=self._clarification_target_extractor,
                     synthetic=False,
+                    cdf_augmentation=self.cdf_augmentation,
                 )
                 instruction_data.append(instruction_dict)
                 instruction_idx += 1
