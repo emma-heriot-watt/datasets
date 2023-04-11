@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.0](https://github.com/emma-simbot/datasets/compare/v1.24.0...v1.25.0) (2023-04-11)
+
+
+### Features
+
+* create trajectories db from CDF sessions ([#626](https://github.com/emma-simbot/datasets/issues/626)) ([11dc112](https://github.com/emma-simbot/datasets/commit/11dc112c8ba005966f71d29f5211f54d6b134c44))
+
 ## [1.24.0](https://github.com/emma-simbot/datasets/compare/v1.23.0...v1.24.0) (2023-04-07)
 
 
