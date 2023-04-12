@@ -28,8 +28,8 @@ class DecodedKey(BaseModel):
         default=None, alias="to-receptacle-is-container"
     )
 
-    convert_object: Optional[str] = Field(default=None, alias="convert-object")
-    convert_object_color: Optional[str] = Field(default=None, alias="convert-object-color")
+    convert_object: Optional[str] = Field(default=None, alias="converted-object")
+    convert_object_color: Optional[str] = Field(default=None, alias="converted-object-color")
 
 
 class HighLevelKey(BaseModel):
