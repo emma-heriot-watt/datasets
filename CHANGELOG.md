@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.1](https://github.com/emma-simbot/datasets/compare/v1.27.0...v1.27.1) (2023-04-12)
+
+
+### Bug Fixes
+
+* action creators with inventory paraphrasing ([#632](https://github.com/emma-simbot/datasets/issues/632)) ([9083719](https://github.com/emma-simbot/datasets/commit/9083719d5adce6081be9099a256d7ef00f7d971e))
+
 ## [1.27.0](https://github.com/emma-simbot/datasets/compare/v1.26.0...v1.27.0) (2023-04-11)
 
 
