@@ -5,7 +5,7 @@ import random
 import shutil
 import subprocess  # noqa: S404
 from argparse import ArgumentParser
-from typing import Any
+from typing import Any, Optional
 
 import boto3
 import torch
@@ -112,6 +112,8 @@ class CDFTrajectoryCreator:
             "highlight",
         }
         self._act_intent = "<act><one_match>"
+        self._search_intent = "<search>"
+        self._goto_object_action_type = "goto object"
 
         arena_definitions = get_arena_definitions()
         assets_to_labels = arena_definitions["asset_to_label"]
@@ -119,15 +121,22 @@ class CDFTrajectoryCreator:
         assets_to_labels.update(special_names)
 
         # We are losing information here since different assets can be mapped to the same label
-        # Thats ok though, we just want to object label for paraphrasing later on
         self._labels_to_assets = {label: asset for asset, label in assets_to_labels.items()}
+
+        # We need to add here anything that we want to preserve when doing the inverse map
+        self._labels_to_assets["Apple"] = "Apple"
 
         self._high_level_key_processor = HighLevelKeyProcessor(
             prefix_inclusion_probability=prefix_inclusion_probability,
             paraphrases_per_template=paraphrases_per_template,
         )
 
-    def should_skip_session_turn_for_trajectory(self, session_turn: dict[str, Any]) -> bool:
+    def should_skip_session_turn_for_trajectory(  # noqa: WPS231
+        self,
+        session_turn: dict[str, Any],
+        previous_session_turn: Optional[dict[str, Any]] = None,
+        add_goto_action_after_search: bool = True,
+    ) -> bool:
         """Skip turns that should not be added to the trajectory.
 
         These generally are: 1) Turns where the agent spoke, either to a confirmation or to any
@@ -137,6 +146,39 @@ class CDFTrajectoryCreator:
         """
         interaction_intent_type = session_turn["intent"]["physical_interaction"]["type"]
         interaction_action = session_turn["actions"]["interaction"]
+
+        # Skip any gotos that triggers act no match + search
+        # We have already gone to the object from the find routine
+        if previous_session_turn is not None:
+            previous_interaction_intent_type = previous_session_turn["intent"][
+                "physical_interaction"
+            ]["type"]
+            previous_interaction_action = previous_session_turn["actions"]["interaction"]
+
+            try:  # noqa: WPS229
+                previous_entity = previous_interaction_action["goto"]["object"]["name"]
+                current_entity = interaction_action["goto"]["object"]["name"]
+                entity_condition = previous_entity == current_entity
+            except KeyError:
+                entity_condition = False
+
+            should_skip_unecessary_goto = (
+                previous_interaction_intent_type == self._search_intent
+                and previous_interaction_action["type"] == self._goto_object_action_type
+                and interaction_action["type"] == self._goto_object_action_type
+                and entity_condition
+            )
+            if should_skip_unecessary_goto:
+                return True
+
+        # Add the last goto action after the search is complete + successful
+        if add_goto_action_after_search:
+            return (
+                interaction_intent_type != self._search_intent
+                or interaction_action is None
+                or interaction_action["type"] != self._goto_object_action_type
+            )
+        # Add only interaction actions, not from the search
         return interaction_intent_type != self._act_intent or interaction_action is None
 
     def check_if_session_is_successful(self, session_id: str) -> bool:
@@ -207,21 +249,24 @@ class CDFTrajectoryCreator:
                 self._client.download_from_s3(local_path, s3_url, is_folder=True)
 
                 # Create the sequence of actions
-                session_actions = self.create_actions_for_session(session_id, session_turns)
+                for add_goto in (True, False):
+                    session_actions = self.create_actions_for_session(
+                        session_id, session_turns, add_goto_action_after_search=add_goto
+                    )
 
-                missions[mission_id] = {
-                    "human_annotations": [
-                        {
-                            "instructions": [
-                                {
-                                    "instruction": instruction,
-                                    "actions": self._get_action_ids(session_actions),
-                                }
-                            ]
-                        }
-                    ],
-                    "actions": session_actions,
-                }
+                    missions[f"{mission_id}_add_goto{add_goto}"] = {
+                        "human_annotations": [
+                            {
+                                "instructions": [
+                                    {
+                                        "instruction": instruction,
+                                        "actions": self._get_action_ids(session_actions),
+                                    }
+                                ]
+                            }
+                        ],
+                        "actions": session_actions,
+                    }
 
                 progress.advance(task_id)
 
@@ -231,19 +276,30 @@ class CDFTrajectoryCreator:
         shutil.rmtree(self.cache_path)
 
     def create_actions_for_session(
-        self, session_id: str, session_turns: list[Any]
+        self,
+        session_id: str,
+        session_turns: list[Any],
+        add_goto_action_after_search: bool = False,
     ) -> list[dict[str, Any]]:
         """Create all actions for a trajectory."""
         actions = []
         action_id = 0
+        previous_session_turn = None
         for session_turn_dict in session_turns:
             session_turn = json.loads(session_turn_dict["turn"])
             should_skip_turn = self.should_skip_session_turn_for_trajectory(
-                session_turn=session_turn
+                session_turn=session_turn,
+                previous_session_turn=previous_session_turn,
+                add_goto_action_after_search=add_goto_action_after_search,
             )
+
+            previous_session_turn = session_turn
 
             if should_skip_turn:
                 continue
+
+            if add_goto_action_after_search:
+                add_goto_action_after_search = False
 
             interaction_action = session_turn["actions"]["interaction"]
 
