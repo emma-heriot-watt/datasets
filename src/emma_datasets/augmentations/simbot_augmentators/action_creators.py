@@ -9,6 +9,7 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.paraphrasers import (
     CloseParaphraser,
     FillParaphraser,
     GotoParaphraser,
+    InventoryObjectGenerator,
     OpenParaphraser,
     PickupParaphraser,
     PlaceParaphraser,
@@ -28,6 +29,7 @@ class BaseActionCreator:
     def __init__(self) -> None:
         self.action_type = "Base"
         self.paraphraser: BaseParaphraser
+        self._inventory_object_generator = InventoryObjectGenerator()
 
     def __call__(self, augmentation_instruction: AugmentationInstruction) -> dict[str, Any]:
         """Create an instruction dict from an augmentation instruction."""
@@ -96,8 +98,12 @@ class BaseActionCreator:
             object_id = augmentation_instruction.object_id
             object_attributes = augmentation_instruction.attributes
 
+        inventory_object_id = None
+        if self.paraphraser.requires_inventory:
+            inventory_object_id = self._inventory_object_generator(action_type=self.action_type)
+
         synthetic_instruction = {
-            "instruction": self.paraphraser(object_id, object_attributes),
+            "instruction": self.paraphraser(object_id, object_attributes, inventory_object_id),
             "actions": [0],
         }
         mission_id = self._create_mission_id(augmentation_instruction)
@@ -119,6 +125,7 @@ class ToggleActionCreator(BaseActionCreator):
     """Toggle action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Toggle"
         self.paraphraser = ToggleParaphraser(object_synonyms)
 
@@ -127,6 +134,7 @@ class ScanActionCreator(BaseActionCreator):
     """Scan action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Scan"
         self.paraphraser = ScanParaphraser(object_synonyms)
 
@@ -135,6 +143,7 @@ class GotoActionCreator(BaseActionCreator):
     """Goto action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Goto"
         self.paraphraser = GotoParaphraser(object_synonyms)
 
@@ -143,6 +152,7 @@ class SearchActionCreator(BaseActionCreator):
     """Search action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Search"
         self.paraphraser = SearchParaphraser(object_synonyms)
 
@@ -162,6 +172,7 @@ class OpenActionCreator(BaseActionCreator):
     """Open action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Open"
         self.paraphraser = OpenParaphraser(object_synonyms)
 
@@ -170,6 +181,7 @@ class CloseActionCreator(BaseActionCreator):
     """Close action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Close"
         self.paraphraser = CloseParaphraser(object_synonyms)
 
@@ -178,6 +190,7 @@ class BreakActionCreator(BaseActionCreator):
     """Break action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Break"
         self.paraphraser = BreakParaphraser(object_synonyms)
 
@@ -186,6 +199,7 @@ class CleanActionCreator(BaseActionCreator):
     """Clean action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Clean"
         self.paraphraser = CleanParaphraser(object_synonyms)
 
@@ -194,6 +208,7 @@ class FillActionCreator(BaseActionCreator):
     """Fill action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Fill"
         self.paraphraser = FillParaphraser(object_synonyms)
 
@@ -202,6 +217,7 @@ class PourActionCreator(BaseActionCreator):
     """Pour action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Pour"
         self.paraphraser = PourParaphraser(object_synonyms)
 
@@ -210,6 +226,7 @@ class PickupActionCreator(BaseActionCreator):
     """Pickup action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Pickup"
         self.paraphraser = PickupParaphraser(object_synonyms)
 
@@ -218,5 +235,6 @@ class PlaceActionCreator(BaseActionCreator):
     """Place action class."""
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
+        super().__init__()
         self.action_type = "Place"
         self.paraphraser = PlaceParaphraser(object_synonyms)

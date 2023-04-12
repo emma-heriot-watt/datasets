@@ -47,7 +47,7 @@ class InventoryObjectGenerator:
 
     def __call__(self, action_type: str) -> Optional[str]:
         """Get a random object."""
-        action_inventory_choices = self.inventory_choices.get(action_type, None)
+        action_inventory_choices = self.inventory_choices.get(action_type.lower(), None)
         if action_inventory_choices is None or not action_inventory_choices:
             return None
         return random.choice(action_inventory_choices)
@@ -604,10 +604,17 @@ class CleanParaphraser(BaseParaphraser):
         """Get a clean instruction."""
         if inventory_object_id is None:
             raise AssertionError("CleanParaphraser requires inventory.")
+
+        readable_name = get_object_readable_name_from_object_id(
+            object_id=inventory_object_id,
+            object_assets_to_names=self._assets_to_labels,
+            special_name_cases=self._special_name_cases,
+        )
+
         instruction = self._get_instruction(
             object_id=inventory_object_id,
             attributes=SimBotObjectAttributes(
-                readable_name=get_object_readable_name_from_object_id(inventory_object_id)
+                readable_name=readable_name,
             ),
             available_types=["clean"],
         )
@@ -740,10 +747,17 @@ class FillParaphraser(BaseParaphraser):
         """Get a fill instruction."""
         if inventory_object_id is None:
             raise AssertionError("FillParaphraser requires inventory.")
+
+        readable_name = get_object_readable_name_from_object_id(
+            object_id=inventory_object_id,
+            object_assets_to_names=self._assets_to_labels,
+            special_name_cases=self._special_name_cases,
+        )
+
         instruction = self._get_instruction(
             object_id=inventory_object_id,
             attributes=SimBotObjectAttributes(
-                readable_name=get_object_readable_name_from_object_id(inventory_object_id)
+                readable_name=readable_name,
             ),
             available_types=["fill"],
         )
