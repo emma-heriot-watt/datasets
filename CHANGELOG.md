@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.4](https://github.com/emma-simbot/datasets/compare/v1.27.3...v1.27.4) (2023-04-13)
+
+
+### Bug Fixes
+
+* Add source objects for pour ([#640](https://github.com/emma-simbot/datasets/issues/640)) ([3a6bc0e](https://github.com/emma-simbot/datasets/commit/3a6bc0e0ab96b9cbce781be16af0966efcf5e2cd))
+
 ## [1.27.3](https://github.com/emma-simbot/datasets/compare/v1.27.2...v1.27.3) (2023-04-12)
 
 
