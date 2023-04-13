@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.28.1](https://github.com/emma-simbot/datasets/compare/v1.28.0...v1.28.1) (2023-04-13)
+
+
+### Bug Fixes
+
+* missing image name when creating the trajectory db ([#643](https://github.com/emma-simbot/datasets/issues/643)) ([c5e7809](https://github.com/emma-simbot/datasets/commit/c5e7809e0a9600f4df68d1bdb9b32cf1e671c582))
+
 ## [1.28.0](https://github.com/emma-simbot/datasets/compare/v1.27.5...v1.28.0) (2023-04-13)
 
 
