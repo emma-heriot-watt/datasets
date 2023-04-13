@@ -1,4 +1,5 @@
 import json
+import logging
 import random
 from pathlib import Path
 from typing import Any, Literal, Optional
@@ -31,6 +32,9 @@ from emma_datasets.io.paths import get_all_file_paths
 
 settings = Settings()
 random.seed(42)  # noqa: WPS432
+logging.basicConfig()
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def load_simbot_mission_data(filepath: Path) -> list[dict[Any, Any]]:
@@ -143,7 +147,8 @@ def load_simbot_data(
     instruction_data = []
 
     # SimBot human + synthetic trajectory data
-    if simbot_trajectory_json_path is not None:
+    if simbot_trajectory_json_path is not None and simbot_trajectory_json_path.exists():
+        logger.info("Loading SimBot trajectory data")
         instruction_data.extend(
             load_simbot_trajectory_instruction_data(
                 trajectory_json_path=simbot_trajectory_json_path,
@@ -154,7 +159,8 @@ def load_simbot_data(
         )
 
     # Synthetically generated trajectory data
-    if synthetic_trajectory_json_path is not None:
+    if synthetic_trajectory_json_path is not None and synthetic_trajectory_json_path.exists():
+        logger.info("Loading synthetic CDF trajectory data")
         instruction_data.extend(
             load_synthetic_trajectory_instruction_data(
                 trajectory_json_path=synthetic_trajectory_json_path,
@@ -162,7 +168,8 @@ def load_simbot_data(
         )
 
     # Sticky Note data
-    if sticky_notes_images_json_path is not None:
+    if sticky_notes_images_json_path is not None and sticky_notes_images_json_path.exists():
+        logger.info("Loading sticky note data")
         synthetic_action_sampler = SyntheticLowLevelActionSampler()
         instruction_data.extend(
             load_simbot_sticky_note_instruction_data(
@@ -172,7 +179,8 @@ def load_simbot_data(
             )
         )
     # Augmentation data
-    if augmentation_images_json_path is not None:
+    if augmentation_images_json_path is not None and augmentation_images_json_path.exists():
+        logger.info("Loading vision augmentation data")
         instruction_data.extend(
             load_simbot_augmentation_instruction_data(
                 augmentation_images_json_path=augmentation_images_json_path,
@@ -181,7 +189,8 @@ def load_simbot_data(
         )
 
     # Additional manual annotations data
-    if annotation_images_json_path is not None:
+    if annotation_images_json_path is not None and annotation_images_json_path.exists():
+        logger.info("Loading manual annotation data")
         instruction_data.extend(
             load_simbot_augmentation_instruction_data(
                 augmentation_images_json_path=annotation_images_json_path,
@@ -347,8 +356,12 @@ def filter_clarifications(db_path: Path) -> list[dict[Any, Any]]:  # noqa: WPS23
     qa_filter = ClarificationFilter()
     for _, _, sample in db:
         instruction_instance = SimBotInstructionInstance.parse_raw(sample)
+        # Do not use synthetic trajectory data like "pour it in the coffee maker"
+        # We should not be using instructions with pronouns for NLU because the model needs to
+        # learn to predict the missing inventory
         if instruction_instance.synthetic:
-            filtered_instances.append(instruction_instance.dict())
+            if instruction_instance.vision_augmentation:
+                filtered_instances.append(instruction_instance.dict())
             continue
 
         if qa_filter.skip_instruction(instruction_instance.instruction.instruction):

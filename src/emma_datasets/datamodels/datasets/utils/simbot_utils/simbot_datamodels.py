@@ -11,7 +11,20 @@ from emma_datasets.datamodels.constants import MediaType
 
 settings = Settings()
 
-ParaphrasableActions = {"goto", "toggle", "open", "close", "pickup", "place", "search"}
+ParaphrasableActions = {
+    "goto",
+    "toggle",
+    "open",
+    "close",
+    "pickup",
+    "place",
+    "search",
+    "pour",
+    "fill",
+    "clean",
+    "scan",
+    "break",
+}
 
 
 class SimBotClarificationTypes(Enum):

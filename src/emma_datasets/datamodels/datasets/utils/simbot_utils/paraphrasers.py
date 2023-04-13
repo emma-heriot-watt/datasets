@@ -630,18 +630,18 @@ class PourParaphraser(BaseParaphraser):
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="pour")
         self._instruction_options = [
-            "pour {pourable_object} into the",
-            "pour the {pourable_object} into the",
-            "pour some {pourable_object} into the",
-            "pour {pourable_object} in the",
-            "pour the {pourable_object} in the",
-            "pour some {pourable_object} in the",
-            "put {pourable_object} into the",
-            "put the {pourable_object} into the",
-            "put some {pourable_object} into the",
-            "put {pourable_object} in the",
-            "put the {pourable_object} in the",
-            "put some {pourable_object} in the",
+            "pour {pourable_object} {preposition} the",
+            "pour the {pourable_object} {preposition} the",
+            "pour some {pourable_object} {preposition} the",
+            "put {pourable_object} {prepostiion} the",
+            "put the {pourable_object} {prepostiion} the",
+            "put some {pourable_object} {prepostiion} the",
+            "pour {pourable_object} from the {inventory_object} {preposition} the",
+            "pour the {pourable_object} from the {inventory_object} {preposition} the",
+            "pour some {pourable_object} from the {inventory_object} {preposition} the",
+            "put {pourable_object} from the {inventory_object} {preposition} the",
+            "put the {pourable_object} from the {inventory_object} {preposition} the",
+            "put some {pourable_object} from the {inventory_object} {preposition} the",
         ]
 
         self._available_templates = {
@@ -651,13 +651,15 @@ class PourParaphraser(BaseParaphraser):
         }
         self.requires_inventory = True
         self._pourable_inventory_mapping = {
-            "Bowl_01": ["water"],
+            "Bowl_01": ["water", "milk", "cereal"],
+            "Cereal_Box_01": ["cereal"],
             "CoffeeMug_Boss": ["water", "coffee"],
             "CoffeeMug_Yellow": ["water", "coffee"],
             "CoffeePot_01": ["water", "coffee"],
             "CoffeeBeans_01": ["coffee beans", "beans"],
             "MilkCarton_01": ["milk"],
         }
+        self._prepositions = ["in", "into"]
 
     def __call__(
         self,
@@ -680,8 +682,15 @@ class PourParaphraser(BaseParaphraser):
         )
         if inventory_object_id is None:
             raise AssertionError("PourParaphraser requires inventory.")
-        pourable_object = random.choice(self._pourable_inventory_mapping[inventory_object_id])
-        instruction = instruction.format(pourable_object=pourable_object)
+
+        instruction_extra_slots = {
+            "pourable_object": random.choice(
+                self._pourable_inventory_mapping[inventory_object_id]
+            ),
+            "inventory_object": random.choice(self.object_synonyms[inventory_object_id]),
+            "preposition": random.choice(self._prepositions),
+        }
+        instruction = instruction.format(**instruction_extra_slots)
 
         return instruction
 
