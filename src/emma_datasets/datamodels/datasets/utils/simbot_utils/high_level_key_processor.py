@@ -2,17 +2,70 @@ import random
 import re
 from typing import Any, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 
 from emma_datasets.constants.simbot.high_level_templates import OBJECT_META_TEMPLATE
-from emma_datasets.constants.simbot.simbot import get_object_synonym
+from emma_datasets.constants.simbot.simbot import get_arena_definitions, get_object_synonym
+
+
+def get_previous_key(deconstructed_highlevel_key: str) -> str:
+    """Get the previous decoded key after deconstructing a high level key.
+
+    Used to populate the DecodedKey basemodel.
+    """
+    if "_" in deconstructed_highlevel_key:
+        return deconstructed_highlevel_key.split("_")[-1:][0]
+    return deconstructed_highlevel_key
+
+
+def parse_deconstructed_highlevel_key_parts(  # noqa: WPS231
+    decoded_key_values: dict[str, Any], part: str, parts: list[str], part_idx: int
+) -> dict[str, Any]:
+    """Parse a part of the deconstructed highlevel key.
+
+    Used to populate the DecodedKey basemodel.
+    """
+    # If the part does not contain any dashes then this is a key on its own
+    # Initialize it to true
+    if "_" not in part:
+        decoded_key_values[part] = True
+
+    # If the part does contain dashes then it contains a value for the previous key and the name of the current key
+    elif 1 <= part_idx < len(parts) - 1:
+        split_part_by_value = part.split("_")
+        decoded_current_key = split_part_by_value[-1]
+        decoded_previous_key_value = "_".join(split_part_by_value[:-1])
+
+        previous_key = get_previous_key(parts[part_idx - 1])
+
+        decoded_key_values[previous_key] = decoded_previous_key_value
+        decoded_key_values[decoded_current_key] = True
+
+    elif part_idx == len(parts) - 1:
+        if "_" not in part:
+            decoded_key_values[part] = True
+        else:
+            previous_key = get_previous_key(parts[part_idx - 1])
+            # If the last part in the highlevel key has also a decode key include it
+            if "-" in part:
+                split_part_by_value = part.split("_")
+                decoded_current_key = split_part_by_value[-1]
+                decoded_key_values[previous_key] = "_".join(split_part_by_value[:-1])
+                decoded_key_values[decoded_current_key] = True
+            # Else the last part should be the value of the previous key
+            else:
+                decoded_key_values[previous_key] = part
+    return decoded_key_values
 
 
 class DecodedKey(BaseModel):
     """Decoded key base model."""
 
+    raw_high_level_key: str
+
     action: str
 
+    interaction_object: Optional[str] = Field(default=None, alias="interaction-object")
     target_object: Optional[str] = Field(default=None, alias="target-object")
     target_object_color: Optional[str] = Field(default=None, alias="target-object-color")
 
@@ -21,6 +74,8 @@ class DecodedKey(BaseModel):
     from_receptacle_is_container: Optional[bool] = Field(
         default=None, alias="from-receptacle-is-container"
     )
+    # This is populated if from_receptacle is provided and from_receptacle_is_container == True
+    from_container: Optional[str] = Field(default=None, alias="from-container")
 
     to_receptacle: Optional[str] = Field(default=None, alias="to-receptacle")
     to_receptacle_color: Optional[str] = Field(default=None, alias="to-receptacle-color")
@@ -28,15 +83,101 @@ class DecodedKey(BaseModel):
         default=None, alias="to-receptacle-is-container"
     )
 
-    convert_object: Optional[str] = Field(default=None, alias="converted-object")
-    convert_object_color: Optional[str] = Field(default=None, alias="converted-object-color")
+    # This is populated if to_receptacle is provided and to_receptacle_is_container == True
+    to_container: Optional[str] = Field(default=None, alias="to-container")
+
+    converted_object: Optional[str] = Field(default=None, alias="converted-object")
+    converted_object_color: Optional[str] = Field(default=None, alias="converted-object-color")
+
+    @validator("interaction_object", "target_object", "converted_object")
+    @classmethod
+    def validate_objects_in_key(cls, field_value: str) -> str:
+        """Verify that the object fields are defined in the arena."""
+        arena_definitions = get_arena_definitions()
+        assets_to_labels = arena_definitions["asset_to_label"]
+        if field_value not in assets_to_labels:
+            raise AssertionError(
+                f"Expecting objects to be within the arena definitions, but found {field_value}"
+            )
+        return field_value
+
+    @classmethod
+    def get_field_names(cls, alias: bool = False) -> list[str]:
+        """Get the field names in a list of strings."""
+        return list(
+            cls.schema(by_alias=alias).get("properties").keys()  # type:ignore[union-attr]
+        )
+
+    @classmethod
+    def from_raw_string(cls, highlevel_key: str) -> "DecodedKey":
+        """Parse a raw highlevel key."""
+        highlevel_key = "-".join(highlevel_key.split("-")[:-1])
+
+        parts = highlevel_key.split("--")
+
+        decoded_key_values: dict[str, Any] = {"raw_high_level_key": highlevel_key}
+        for part_idx, part in enumerate(parts):
+            decoded_key_values = parse_deconstructed_highlevel_key_parts(
+                decoded_key_values=decoded_key_values, part=part, parts=parts, part_idx=part_idx
+            )
+
+        can_replace_from_reptacle_from_container = (
+            "from-receptacle" in decoded_key_values
+            and decoded_key_values["from-receptacle"] is not None
+            and "from-receptacle-is-container" in decoded_key_values
+            and decoded_key_values["from-receptacle-is-container"]
+        )
+        if can_replace_from_reptacle_from_container:
+            decoded_key_values["from-container"] = decoded_key_values["from-receptacle"]
+            decoded_key_values["from-receptacle"] = None
+
+        can_replace_to_reptacle_to_container = (
+            "to-receptacle" in decoded_key_values
+            and decoded_key_values["to-receptacle"] is not None
+            and "to-receptacle-is-container" in decoded_key_values
+            and decoded_key_values["to-receptacle-is-container"]
+        )
+        if can_replace_to_reptacle_to_container:
+            decoded_key_values["to-container"] = decoded_key_values["to-receptacle"]
+            decoded_key_values["to-receptacle"] = None
+
+        return cls(**decoded_key_values)
+
+    def field_has_object_id(self, field: str) -> bool:
+        """Check whether a field contains an object id that should be mapped to a synonym."""
+        return field in {
+            "interaction_object",
+            "target_object",
+            "from_receptacle",
+            "to_receptacle",
+            "converted_object",
+            "to_container",
+            "from_container",
+        }
+
+    def get_interacted_objects(self) -> list[str]:
+        """Retun the list of objects the agent interacted with during the session."""
+        objects_in_key = [
+            self.interaction_object,
+            self.target_object,
+            self.from_receptacle,
+            self.to_receptacle,
+            self.from_container,
+            self.to_container,
+            self.converted_object,
+        ]
+        interacted_objects = []
+        for object_in_key in objects_in_key:
+            if object_in_key is not None:
+                interacted_objects.append(object_in_key)
+        return interacted_objects
 
 
 class HighLevelKey(BaseModel):
     """High level key base model."""
 
-    raw_high_level_key: str
-    descriptions: list[str]
+    decoded_key: DecodedKey
+    high_level_description: str
     paraphrases: list[str]
 
 
@@ -50,15 +191,7 @@ class HighLevelKeyProcessor:
     ):
         self.prefix_inclusion_probability = prefix_inclusion_probability
         self.paraphrases_per_template = paraphrases_per_template
-        self.entity_meta = [
-            "target_object",
-            "from_container",
-            "from_receptacle",
-            "to_container",
-            "to_receptacle",
-            "converted_object_color",
-            "converted_object",
-        ]
+        self.decoded_key_fields = DecodedKey.get_field_names(alias=False)
 
         self._prefixes = [
             "i would like to",
@@ -76,217 +209,58 @@ class HighLevelKeyProcessor:
             "please",
         ]
 
-        self._articles = ["a", "the", ""]
-
     def __call__(self, highlevel_key: str) -> HighLevelKey:
         """Generate description, paraphrases and plans from a given high-levle key."""
-        decoded_key = self.decode_key(highlevel_key)
+        decoded_key = DecodedKey.from_raw_string(highlevel_key=highlevel_key)
 
-        self.template_metadata = self._get_template_metadata(decoded_key)
-
-        highlevel_data: dict[str, Any] = {}
-
-        selected_description_templates = self._get_matching_templates(
-            self.template_metadata["description_templates"]
-        )
-        description = self._generate_descriptions(selected_description_templates)
-        highlevel_data["descriptions"] = description
-
-        selected_instruction_templates = self._get_matching_templates(
-            self.template_metadata["instruction_templates"]
-        )
-        paraphrases = self._generate_example_utterances(
-            selected_instruction_templates,
-        )
-        highlevel_data["paraphrases"] = paraphrases
-        highlevel_data["raw_high_level_key"] = highlevel_key
-        return HighLevelKey.parse_obj(highlevel_data)
-
-    def decode_key(self, highlevel_key: str) -> DecodedKey:
-        """Decodes the high level key.
-
-        A high level key looks like this:
-        action--pickup_target-object--carrot_target-object-color--black_from-receptacle--fridge_from-receptacle-is-container-HtLkD
-        """
-        # Remove the random string at the end of the key
-        highlevel_key = "-".join(highlevel_key.split("-")[:-1])
-
-        key_values: dict[str, Any] = {}
-        kv_splits = highlevel_key.split("_")
-        for kv in kv_splits:
-            kv_pair = kv.split("--")
-            if len(kv_pair) == 1:
-                key_values[kv_pair[0]] = True
-            else:
-                key_values[kv_pair[0]] = kv_pair[1]
-        return DecodedKey.parse_obj(key_values)
-
-    def _get_template_metadata(self, decoded_key: DecodedKey) -> dict[str, Any]:
-        """Get the template metadata for the decoded key."""
         template_metadata = OBJECT_META_TEMPLATE[decoded_key.action]
-        template_metadata["prefix"] = self._prefixes
-        template_metadata["article"] = self._articles
+        if decoded_key.action == "interact":
+            template_metadata = template_metadata[decoded_key.interaction_object]
 
-        template_metadata["target_object"] = self._handle_target_object(decoded_key)
-
-        from_container, from_receptacle = self._handle_from_container_and_receptacle(decoded_key)
-        template_metadata["from_container"] = from_container
-        template_metadata["from_receptacle"] = from_receptacle
-
-        to_container, to_receptacle = self._handle_to_container_and_receptacle(decoded_key)
-        template_metadata["to_container"] = to_container
-        template_metadata["to_receptacle"] = to_receptacle
-
-        template_metadata = self._handle_converted_object_color(decoded_key, template_metadata)
-
-        return template_metadata
-
-    def _get_matching_templates(self, templates: list[str]) -> list[str]:
-        selected_template = []
-        for template in templates:
-            template_entities = re.findall(r"\{(.*?)\}", template)
-            template_entities = [e for e in template_entities if e in self.entity_meta]
-            meta_entities = [
-                k
-                for k, v in self.template_metadata.items()
-                if k in self.entity_meta and len(v) > 0  # noqa: WPS507
-            ]
-            if len(template_entities) == len(meta_entities) and all(  # noqa: WPS337
-                te in template_entities for te in meta_entities
-            ):
-                selected_template.append(template)
-        return selected_template
-
-    def _generate_descriptions(self, templates: list[str]) -> list[str]:  # noqa: WPS231
-        descriptions = []
-        matching_templates = self._get_matching_templates(templates)
-        for template in matching_templates:
-            value_selections: dict[str, Any] = {}
-            for k, v in self.template_metadata.items():
-                if not v:
-                    value_selections[k] = None
-                    continue
-
-                ling_variants = list(v)
-                if k.lower() in {  # noqa: WPS337
-                    "prefix",
-                    "article",
-                    "verb",
-                    "instruction_templates",
-                    "description_templates",
-                }:
-                    continue
-                else:
-                    value_selections[k] = ling_variants[0]
-
-            description = template.format(**value_selections)
-            description = f"{description}"
-            description = description.replace("\xa0", " ")
-            description = description.replace("  ", " ")
-            descriptions.append(description)
-
-        return descriptions
-
-    def _get_value_selections_per_template(self) -> dict[str, Any]:  # noqa: WPS231
-        value_selections: dict[str, Any] = {}
-        for k, v in self.template_metadata.items():
-            if not v:
-                value_selections[k] = None
-                continue
-            ling_variants = list(v)
-            if k.lower() in {"instruction_templates", "description_templates"}:
-                continue
-            elif k.lower() == "prefix":
-                if random.random() < self.prefix_inclusion_probability:
-                    value_selections[k] = random.choice(ling_variants).lower()
-                else:
-                    value_selections[k] = ""
-            else:
-                value_selections[k] = random.choice(ling_variants).lower()
-        return value_selections
-
-    def _generate_example_utterances(self, templates: list[str]) -> list[str]:
-        paraphrased_utterances = set()
-        for template in templates:
-            for _ in range(self.paraphrases_per_template):
-                value_selections = self._get_value_selections_per_template()
-                annotated_data = template.format(**value_selections)
-                annotated_data = f"{annotated_data}"
-                annotated_data = annotated_data.replace("\xa0", " ")
-                annotated_data = annotated_data.replace("  ", " ")
-                paraphrased_utterances.add(annotated_data.strip())
-        return list(paraphrased_utterances)
-
-    def _handle_target_object(self, decoded_key: DecodedKey) -> list[str]:
-        target_synonyms: list[str] = []
-
-        target = decoded_key.target_object
-        if target is None:
-            return target_synonyms
-
-        target_synonyms = get_object_synonym(target)
-
-        target_color = decoded_key.target_object_color
-        if target_color:
-            target = f"{target_color} {target}"
-            if target_synonyms:
-                target_synonyms = [f"{target_color} {synonym}" for synonym in target_synonyms]
-
-        return [synonym.lower() for synonym in target_synonyms]
-
-    def _handle_from_container_and_receptacle(
-        self, decoded_key: DecodedKey
-    ) -> tuple[list[str], list[str]]:
-        from_container: list[str] = []
-        from_receptacle: list[str] = []
-
-        receptacle_str = decoded_key.from_receptacle
-        if not receptacle_str:
-            return from_container, from_receptacle
-
-        if decoded_key.from_receptacle_color:
-            receptacle_str = f"{decoded_key.from_receptacle_color} {receptacle_str}"
-
-        if decoded_key.from_receptacle_is_container:
-            from_container = [receptacle_str]
-        else:
-            from_receptacle = [receptacle_str]
-
-        return from_container, from_receptacle
-
-    def _handle_to_container_and_receptacle(
-        self, decoded_key: DecodedKey
-    ) -> tuple[list[str], list[str]]:
-        to_container = []
-        to_receptacle = []
-
-        receptacle_container = decoded_key.to_receptacle
-
-        if decoded_key.to_receptacle_color:
-            receptacle_container = f"{decoded_key.to_receptacle_color} {decoded_key.to_receptacle}"
-
-        if receptacle_container:
-            if decoded_key.to_receptacle_is_container:
-                to_container = [receptacle_container]
-            else:
-                to_receptacle = [receptacle_container]
-        return to_container, to_receptacle
-
-    def _handle_converted_object_color(
-        self, decoded_key: DecodedKey, template_metadata: dict[str, Any]
-    ) -> dict[str, Any]:
-        converted_object = decoded_key.convert_object
-        converted_object_color = decoded_key.convert_object_color
-
-        if decoded_key.convert_object_color:
-            if decoded_key.convert_object:
-                converted_object = f"{converted_object} {decoded_key.convert_object_color}"
-            else:
-                converted_object = decoded_key.convert_object_color
-
-        if decoded_key.action in {"timemachine", "colorchanger"}:
-            template_metadata["converted_object_color"] = (
-                converted_object_color if converted_object_color else []
+        for decoded_key_field in self.decoded_key_fields:
+            decoded_key_value = getattr(decoded_key, decoded_key_field)
+            should_get_object_synonym = (
+                decoded_key.field_has_object_id(decoded_key_field)
+                and decoded_key_value is not None
             )
-            template_metadata["converted_object"] = converted_object if converted_object else []
-        return template_metadata
+            if should_get_object_synonym:
+                template_metadata[decoded_key_field] = get_object_synonym(decoded_key_value)
+            else:
+                template_metadata[decoded_key_field] = decoded_key_value
+
+        formatted_paraphrases = self.get_paraphrases(template_metadata)
+        return HighLevelKey(
+            decoded_key=decoded_key,
+            paraphrases=formatted_paraphrases,
+            high_level_description="",
+        )
+
+    def get_paraphrases(self, template_metadata: dict[str, Any]) -> list[str]:  # noqa: WPS231
+        """Get the instruction paraphrases for a highlevel key."""
+        paraphrases = template_metadata["paraphrases"]
+
+        formatted_paraphrases = []
+        for paraphrase in paraphrases:
+            formatting_fields = re.findall(r"\{(.*?)\}", paraphrase)
+            formatting_dict = {}
+            for field in formatting_fields:
+                formatting_value = template_metadata.get(field, None)
+
+                if formatting_value is not None and isinstance(formatting_value, list):
+                    formatting_dict[field] = random.choice(formatting_value)
+                else:
+                    formatting_dict[field] = formatting_value
+
+            # If any field that needs formatting in the paraphrased template is None, skip the paraphrasing template
+            if any([formatting_value is None for formatting_value in formatting_dict.values()]):
+                continue
+
+            formatted_paraphrase = paraphrase.format(**formatting_dict).lower()
+            formatted_paraphrases.append(self._append_prefix(formatted_paraphrase))
+        return formatted_paraphrases
+
+    def _append_prefix(self, input_instruction: str) -> str:
+        if random.random() < self.prefix_inclusion_probability:
+            random_prefix = random.choice(self._prefixes)
+            input_instruction = f"{random_prefix} {input_instruction}"
+        return input_instruction

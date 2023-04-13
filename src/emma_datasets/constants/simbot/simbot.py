@@ -1,4 +1,3 @@
-from collections import defaultdict
 from functools import lru_cache
 from typing import Any
 
@@ -71,17 +70,7 @@ def get_object_name_list_by_property(obj_property: str) -> list[str]:
 
 
 @lru_cache(maxsize=1)
-def get_object_synonym(readable_name: str) -> list[str]:
-    """Get the synonyms for an object."""
-    labels_to_synonyms = defaultdict(list)
-    arena_definitions = get_arena_definitions()
-    assets_to_labels = arena_definitions["asset_to_label"]
-
-    object_synonyms = get_objects_asset_synonyms()
-    for object_asset, object_label in assets_to_labels.items():
-        if object_asset == "Sticky Note":
-            continue
-
-        asset_synonyms = object_synonyms[object_asset]
-        labels_to_synonyms[object_label.lower()].extend(asset_synonyms)
-    return labels_to_synonyms[readable_name]
+def get_object_synonym(object_id: str) -> list[str]:
+    """Get the synonyms for an object asset."""
+    asset_synonyms = get_objects_asset_synonyms()
+    return asset_synonyms[object_id]

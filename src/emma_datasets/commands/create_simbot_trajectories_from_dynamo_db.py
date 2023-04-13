@@ -15,6 +15,7 @@ from botocore.exceptions import ClientError
 from emma_datasets.common import get_progress
 from emma_datasets.constants.simbot.simbot import get_arena_definitions
 from emma_datasets.datamodels.datasets.utils.simbot_utils.high_level_key_processor import (
+    HighLevelKey,
     HighLevelKeyProcessor,
 )
 
@@ -68,6 +69,7 @@ class SessionClient:
         if is_folder:
             command = f"{command} --recursive"
         logger.debug(f"Downloading {s3_url} into {local_path}")
+
         subprocess.call(  # noqa: S603
             command.split(), stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL
         )
@@ -119,6 +121,7 @@ class CDFTrajectoryCreator:
         assets_to_labels = arena_definitions["asset_to_label"]
         special_names = arena_definitions["special_asset_to_readable_name"]
         assets_to_labels.update(special_names)
+        self._assets_to_labels = assets_to_labels
 
         # We are losing information here since different assets can be mapped to the same label
         self._labels_to_assets = {label: asset for asset, label in assets_to_labels.items()}
@@ -174,9 +177,16 @@ class CDFTrajectoryCreator:
         # Add the last goto action after the search is complete + successful
         if add_goto_action_after_search:
             return (
-                interaction_intent_type != self._search_intent
+                (interaction_intent_type != self._search_intent and session_turn["idx"] > 0)
                 or interaction_action is None
                 or interaction_action["type"] != self._goto_object_action_type
+            )
+
+        if session_turn["idx"] == 0 and not add_goto_action_after_search:
+            return (
+                interaction_action is None
+                or interaction_intent_type != self._act_intent
+                or interaction_action["type"] == self._goto_object_action_type
             )
         # Add only interaction actions, not from the search
         return interaction_intent_type != self._act_intent or interaction_action is None
@@ -234,7 +244,8 @@ class CDFTrajectoryCreator:
                     progress.advance(task_id)
                     continue
 
-                instruction = self.get_high_level_instruction(session_id)
+                high_level_key = self.process_highl_level_key(session_id=session_id)
+                instruction = random.choice(high_level_key.paraphrases)
 
                 # This should be unique across all missions
                 # The sessions_ids have the form T.DATE/MISSION-GOAL-RANDOM-STRING
@@ -242,18 +253,26 @@ class CDFTrajectoryCreator:
 
                 # Get the session turns the session
                 session_turns = self._client.get_all_session_turns_for_session(session_id)
+                if not session_turns:
+                    continue
 
                 # Download all files from s3
                 local_path = os.path.join(self.cache_path, session_id)
                 s3_url = os.path.join(self._s3_sessions_bucket_url, session_id)
                 self._client.download_from_s3(local_path, s3_url, is_folder=True)
 
+                agent_interacted_objects_assets = (
+                    high_level_key.decoded_key.get_interacted_objects()
+                )
+
                 # Create the sequence of actions
                 for add_goto in (True, False):
                     session_actions = self.create_actions_for_session(
-                        session_id, session_turns, add_goto_action_after_search=add_goto
+                        session_id=session_id,
+                        session_turns=session_turns,
+                        agent_interacted_objects_assets=agent_interacted_objects_assets,
+                        add_goto_action_after_search=add_goto,
                     )
-
                     missions[f"{mission_id}_add_goto{add_goto}"] = {
                         "human_annotations": [
                             {
@@ -279,6 +298,7 @@ class CDFTrajectoryCreator:
         self,
         session_id: str,
         session_turns: list[Any],
+        agent_interacted_objects_assets: list[str],
         add_goto_action_after_search: bool = False,
     ) -> list[dict[str, Any]]:
         """Create all actions for a trajectory."""
@@ -322,9 +342,14 @@ class CDFTrajectoryCreator:
                 frame_features, os.path.join(self.output_feature_directory, f"{prediction_id}.pt")
             )
 
-            # TODO: we should get the object asset here, possibly from the CDF json?
             entity = image_features[frame_index]["entity_labels"][object_index]
-            object_asset = self._labels_to_assets[entity]
+
+            # Did the agent interacted with the object? If yes add in the trajectory data
+            object_asset = self._agent_interacted_with_object_entity(
+                entity, agent_interacted_objects_assets
+            )
+            if object_asset is None:
+                continue
 
             action_dict = self.make_action(
                 action_id=action_id,
@@ -423,13 +448,11 @@ class CDFTrajectoryCreator:
             session_ids = [line.strip() for line in fp.readlines()]
         return session_ids
 
-    def get_high_level_instruction(self, session_id: str) -> str:
+    def process_highl_level_key(self, session_id: str) -> HighLevelKey:
         """Get the high level description from the session id."""
         # the session had has the following form: T.DATE/high-level-key
         high_level_key = self._high_level_key_processor(session_id.split("/")[1])
-
-        paraphrases = high_level_key.paraphrases
-        return random.choice(paraphrases)
+        return high_level_key
 
     def extract_index_from_special_token(self, token: str) -> int:
         """Extract the token index from a special token."""
@@ -465,6 +488,18 @@ class CDFTrajectoryCreator:
         frame_features["bbox_probas"] = frame_features["bbox_probas"].cpu()
         frame_features["cnn_features"] = frame_features["cnn_features"].cpu()
         return {"frames": [{"features": frame_features}]}  # type: ignore[dict-item]
+
+    def _agent_interacted_with_object_entity(
+        self, entity: str, agent_interacted_objects_assets: list[str]
+    ) -> Optional[str]:
+        for object_asset, object_label in self._assets_to_labels.items():
+            agent_interacted_with_object = (
+                object_label.lower() == entity.lower()
+                and object_asset in agent_interacted_objects_assets
+            )
+            if agent_interacted_with_object:
+                return object_asset
+        return None
 
 
 if __name__ == "__main__":

@@ -144,6 +144,7 @@ class SimBotInstructionInstance(BaseInstance):
     ambiguous: bool = False
     vision_augmentation: bool = False
     cdf_augmentation: bool = False
+    cdf_highlevel_key: Optional[str] = None
 
     class Config:
         """Custom configuration to allows additional fields."""
@@ -197,6 +198,10 @@ class SimBotInstructionInstance(BaseInstance):
     @property
     def paraphrasable(self) -> bool:
         """Check if the instance allows for paraphrasing."""
+        # All instances comming from CDF augmentations are paraphrasable
+        if self.cdf_augmentation:
+            return True
+
         cond1 = len(self.actions) == 1  # number of actions
         cond2 = self.actions[0].type.lower() in ParaphrasableActions  # action type
         cond3 = self.synthetic  # synthetic and not Goto room

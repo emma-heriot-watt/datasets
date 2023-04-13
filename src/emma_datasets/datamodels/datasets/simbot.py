@@ -117,6 +117,9 @@ def load_synthetic_trajectory_instruction_data(trajectory_json_path: Path) -> li
     inventory_object_processor = InventoryObjectfromTrajectory()
 
     for mission_id, mission_annotations in data.items():
+        # T.20230412__action--pickup_target-object--Apple_from-receptacle--FridgeUpper_02_from-receptacle-is-container-citxf_add_gotoFalse
+        cdf_highlevel_key = mission_id.split("__")[1].split("_add")[0]
+
         actions = inventory_object_processor(mission_annotations["actions"])
 
         instruction_idx = 0
@@ -125,10 +128,10 @@ def load_synthetic_trajectory_instruction_data(trajectory_json_path: Path) -> li
             mission_id=mission_id,
             actions=actions,
             instruction_idx=instruction_idx,
+            cdf_highlevel_key=cdf_highlevel_key,
         )
         trajectory_instruction_data.extend(instruction_dicts)
         instruction_idx += len(instruction_dicts)
-
     return trajectory_instruction_data
 
 
@@ -329,6 +332,7 @@ def unwrap_instructions(db_path: Path) -> list[dict[Any, Any]]:
                 "synthetic": instruction_instance.synthetic,
                 "vision_augmentation": instruction_instance.vision_augmentation,
                 "cdf_augmentation": instruction_instance.cdf_augmentation,
+                "cdf_highlevel_key": instruction_instance.cdf_highlevel_key,
             }
             unwrapped_instances.append(instruction_dict)
     return unwrapped_instances

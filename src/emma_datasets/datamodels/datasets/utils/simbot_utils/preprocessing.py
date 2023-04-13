@@ -70,7 +70,7 @@ def create_instruction_dict(
     paraphrasable: bool = False,
     vision_augmentation: bool = False,
     cdf_augmentation: bool = False,
-    inventory_object_id: Optional[str] = None,
+    cdf_highlevel_key: Optional[str] = None,
     **kwargs: Any,
 ) -> dict[str, Any]:
     """Create an instruction dict."""
@@ -95,7 +95,7 @@ def create_instruction_dict(
         "paraphrasable": paraphrasable,
         "vision_augmentation": vision_augmentation,
         "cdf_augmentation": cdf_augmentation,
-        "inventory_object_id": inventory_object_id,
+        "cdf_highlevel_key": cdf_highlevel_key,
     }
     return instruction_dict
 
@@ -158,6 +158,7 @@ class TrajectoryInstructionProcessor:
         mission_id: str,
         actions: list[dict[str, Any]],
         instruction_idx: int,
+        cdf_highlevel_key: Optional[str] = None,
     ) -> list[dict[str, Any]]:
         """Run the preprocesing."""
         instruction_data = []
@@ -185,6 +186,7 @@ class TrajectoryInstructionProcessor:
                     clarification_extractor=self._clarification_target_extractor,
                     synthetic=False,
                     cdf_augmentation=self.cdf_augmentation,
+                    cdf_highlevel_key=cdf_highlevel_key,
                 )
                 instruction_data.append(instruction_dict)
                 instruction_idx += 1

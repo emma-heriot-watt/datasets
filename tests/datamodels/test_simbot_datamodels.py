@@ -31,7 +31,6 @@ def test_can_load_simbot_instruction_data(
         list[SimBotInstructionInstance],
         load_simbot_data(
             simbot_trajectory_json_path=simbot_instances_path,
-            synthetic_trajectory_json_path=simbot_instances_path,
             sticky_notes_images_json_path=simbot_sticky_notes_path,
             augmentation_images_json_path=augmentation_images_json_path,
         ),
