@@ -336,7 +336,9 @@ class CDFTrajectoryCreator:
             frame_index = action_metadata["frame_index"] - 1
             object_index = action_metadata["object_index"] - 1
 
-            frame_features = self._format_feature_dict(image_features[frame_index])
+            frame_features = self._format_feature_dict(
+                image_features[frame_index], image_name=f"{prediction_id}.png"
+            )
 
             torch.save(
                 frame_features, os.path.join(self.output_feature_directory, f"{prediction_id}.pt")
@@ -481,13 +483,15 @@ class CDFTrajectoryCreator:
         return [action["id"] for action in session_actions]
 
     def _format_feature_dict(
-        self, frame_features: dict[str, torch.Tensor]
+        self,
+        frame_features: dict[str, torch.Tensor],
+        image_name: str,
     ) -> dict[str, list[dict[str, torch.Tensor]]]:
         frame_features["bbox_features"] = frame_features["bbox_features"].cpu()
         frame_features["bbox_coords"] = frame_features["bbox_coords"].cpu()
         frame_features["bbox_probas"] = frame_features["bbox_probas"].cpu()
         frame_features["cnn_features"] = frame_features["cnn_features"].cpu()
-        return {"frames": [{"features": frame_features}]}  # type: ignore[dict-item]
+        return {"frames": [{"features": frame_features, "image": image_name}]}  # type: ignore[dict-item]
 
     def _agent_interacted_with_object_entity(
         self, entity: str, agent_interacted_objects_assets: list[str]
