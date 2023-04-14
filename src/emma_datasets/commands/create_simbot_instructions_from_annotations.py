@@ -1,3 +1,4 @@
+# flake8: noqa WPS226
 import json
 import random
 from argparse import ArgumentParser
@@ -12,8 +13,95 @@ from emma_datasets.common import Settings
 
 settings = Settings()
 
+from pydantic import BaseModel, validator
 
-def merge_all_annotations(root_annotation_path: Path) -> dict[str, Any]:
+from emma_datasets.common.logger import get_logger
+
+
+logger = get_logger(__name__)
+
+
+class AnnotationModel(BaseModel):
+    """A simple model to validate the basic components of an annotation instruction."""
+
+    actions: list[dict[str, Any]]
+    instruction: dict[str, Any]
+    vision_augmentation: bool
+
+    @validator("instruction")
+    @classmethod
+    def validate_instruction(cls, field_value: dict[str, Any]) -> dict[str, Any]:
+        """Verify instruction is correct."""
+        if "instruction" not in field_value or not field_value["instruction"]:
+            raise AssertionError(f"Missing instruction in {field_value}")
+
+        single_action = (
+            "actions" not in field_value
+            or len(field_value["actions"]) > 1
+            or field_value["actions"][0] != 0
+        )
+        if single_action:
+            raise AssertionError("Instructions should exactly one action")
+        return field_value
+
+    @validator("actions")
+    @classmethod
+    def validation_actions(  # noqa: WPS231, WPS238
+        cls, field_value: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
+        """Verify action is correct."""
+        if len(field_value) > 1:
+            raise AssertionError("Instructions should exactly one action")
+
+        action_type = field_value[0]["type"].lower()
+        action_metadata = field_value[0][action_type]
+        if "object" not in action_metadata:
+            raise AssertionError(f"There is no object property in {field_value}")
+
+        if not isinstance(action_metadata["object"]["id"], str) and action_type != "search":
+            raise AssertionError(f"Incorrect object id in {field_value}")
+
+        if not isinstance(action_metadata["object"]["id"], list) and action_type == "search":
+            raise AssertionError(f"Incorrect object id in {field_value}")
+
+        if isinstance(action_metadata["object"]["id"][0], list):
+            raise AssertionError(f"Incorrect list of object id in {field_value}")
+
+        wrong_mask = (
+            "mask" not in action_metadata["object"] or not action_metadata["object"]["mask"]
+        )
+        if wrong_mask:
+            if action_type == "search":
+                raise AssertionError(
+                    f"Expecting a list of bbox-like mask with a single element {field_value}"
+                )
+            raise AssertionError(f"Expecting a bbox-like mask {field_value}")
+
+        if action_type == "search":
+            if (
+                len(action_metadata["object"]["mask"]) != 1
+                or len(action_metadata["object"]["mask"][0]) != 4
+            ):
+                raise AssertionError(
+                    f"Expecting a list of bbox-like mask with a single element {field_value}"
+                )
+        else:
+            if len(action_metadata["object"]["mask"]) != 4:
+                raise AssertionError(
+                    f"Expecting a list of mask with a single element {field_value}"
+                )
+        return field_value
+
+    @validator("vision_augmentation")
+    @classmethod
+    def validation_vision_augmentation(cls, field_value: bool) -> bool:
+        """Verify the visual_augmentation is correct."""
+        if not field_value:
+            raise AssertionError("Instances should have the vision_augmentation property to True")
+        return field_value
+
+
+def merge_all_annotations(root_annotation_path: Path) -> dict[str, Any]:  # noqa: WPS231
     """Merge all annotations within the root annotation path in a single annotation dict."""
     merged_annotations = {}
     for annotation_path in root_annotation_path.iterdir():
@@ -23,6 +111,20 @@ def merge_all_annotations(root_annotation_path: Path) -> dict[str, Any]:
             annotation_keys = list(annotations.keys())
             if any([key in merged_annotations for key in annotation_keys]):
                 raise AssertionError("Found multiple annotations.")
+            annotation = annotations[annotation_keys[0]]
+
+            for annotation_key in annotation_keys:
+                print(annotation_path, annotation_key)
+                annotation = annotations[annotation_key]
+                try:
+                    AnnotationModel(
+                        instruction=annotation["instruction"],
+                        actions=annotation["actions"],
+                        vision_augmentation=annotation["vision_augmentation"],
+                    )
+                except Exception:
+                    logger.error(f"Skipping {annotation_key}")
+                    annotations.pop(annotation_key, None)
             merged_annotations.update(annotations)
     return merged_annotations
 
