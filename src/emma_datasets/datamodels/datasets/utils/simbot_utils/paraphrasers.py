@@ -252,7 +252,7 @@ class BaseParaphraser:
         object_asset = get_object_asset_from_object_id(object_id, self._assets_to_labels)
         object_class = self._assets_to_labels[object_asset]
 
-        # If its not a `special case` object then the object class and the object readable name should be the same.
+        # If it's not a `special case` object then the object class and the object readable name should be the same.
         # Therefore you can always sample a synonym.
         if object_name == object_class:
             object_name = random.choice(self.object_synonyms[object_asset])
