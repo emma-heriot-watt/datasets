@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.29.2](https://github.com/emma-simbot/datasets/compare/v1.29.1...v1.29.2) (2023-04-17)
+
+
+### Bug Fixes
+
+* Add emotion tester synonyms ([#651](https://github.com/emma-simbot/datasets/issues/651)) ([e7352c0](https://github.com/emma-simbot/datasets/commit/e7352c014a300cf160278fbdffc014d18e8602d4))
+
 ## [1.29.1](https://github.com/emma-simbot/datasets/compare/v1.29.0...v1.29.1) (2023-04-17)
 
 
