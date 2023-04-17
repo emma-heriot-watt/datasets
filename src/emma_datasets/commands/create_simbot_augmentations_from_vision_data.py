@@ -60,7 +60,7 @@ class AugmentationVisionDataset(IterableDataset[dict[Any, Any]]):
         augmentations: A list of available object augmentations.
         action_creators: A list of available action creators. Each action creator is applied to to each object augmentation
         dataset_version: Should be > v4 as previous versions have different json format
-        coordinate_margin: The minimum width, minimum height for a bounding box.
+        min_bbox_area: The minimum area for a bounding box.
     """
 
     def __init__(
@@ -71,7 +71,7 @@ class AugmentationVisionDataset(IterableDataset[dict[Any, Any]]):
         metadata_files: list[Path],
         vision_data_augmentations: dict[str, BaseAugmentation],
         action_creators: list[BaseActionCreator],
-        coordinate_margin: float = 10,
+        min_bbox_area: float = 10,
     ) -> None:
         self.output_json_file = output_json_file
         self.output_image_dir = output_image_dir
@@ -82,7 +82,7 @@ class AugmentationVisionDataset(IterableDataset[dict[Any, Any]]):
         self.action_creators = {
             action_creator.action_type: action_creator for action_creator in action_creators
         }
-        self._coordinate_margin = coordinate_margin
+        self._min_bbox_area = min_bbox_area
         self._class_thresholds = get_class_thresholds()
         self._start = 0
         self._end = len(self.metadata_files)
@@ -250,7 +250,8 @@ class AugmentationVisionDataset(IterableDataset[dict[Any, Any]]):
 
             bbox = image_ann["bbox"]
             (xmin, ymin, xmax, ymax) = bbox
-            if (xmax - xmin) < self._coordinate_margin or (ymax - ymin) < self._coordinate_margin:
+            area = (xmax - xmin) * (ymax - ymin)
+            if area < self._min_bbox_area:
                 continue
 
             annotations[object_id] = {
@@ -532,7 +533,7 @@ if __name__ == "__main__":
         metadata_files=metadata_files,
         vision_data_augmentations=vision_data_augmentations,
         action_creators=action_creators,
-        coordinate_margin=10,
+        min_bbox_area=5,
     )
 
     dataset.configure_worker_folders(args.num_workers)

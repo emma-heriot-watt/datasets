@@ -59,11 +59,12 @@ class CleanAugmentation(BaseAugmentation):
             should_ignore_ann = self._should_ignore_annotation_for_image(
                 annotation, robot_position, class_thresholds
             )
-            if should_ignore_ann:
-                continue
             image_annotation = annotation["image_annotation"]
             object_annotation = annotation["object_annotation"]
             object_type = image_annotation["object_type"]
+
+            if should_ignore_ann or not object_annotation["currentStates"]["FILLED"]:
+                continue
 
             object_asset = get_object_asset_from_object_id(object_type, self._assets_to_labels)
             object_class = self._assets_to_labels[object_asset]
@@ -73,6 +74,7 @@ class CleanAugmentation(BaseAugmentation):
                 object_annotation, robot_position
             )
             if distance_to_object <= self.min_interaction_distance:
+
                 cleaning_object_type = random.choice(self.cleanable_object_types)
                 cleaning_object_asset = get_object_asset_from_object_id(
                     object_type, self._assets_to_labels

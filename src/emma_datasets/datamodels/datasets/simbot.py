@@ -284,10 +284,10 @@ def load_simbot_annotations(
                 synthetic_trajectory_json_path=base_dir.joinpath("train_trajectories.json"),
                 # sticky_notes_images_json_path=base_dir.joinpath("train_sticky_notes.json"),
                 annotation_images_json_path=base_dir.joinpath(
-                    "train_annotation_instructions_v4.json"
+                    "train_annotation_instructions_v4.2.json"
                 ),
                 augmentation_images_json_path=base_dir.joinpath(
-                    "train_augmentation_images_new_classes_v6.json"
+                    "train_augmentation_images_new_classes_v6.2.json"
                 ),
                 num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=train_num_sticky_notes_instructions,
@@ -297,10 +297,10 @@ def load_simbot_annotations(
                 # synthetic_trajectory_json_path=base_dir.joinpath("valid_trajectories.json"),
                 # sticky_notes_images_json_path=base_dir.joinpath("valid_sticky_notes.json"),
                 annotation_images_json_path=base_dir.joinpath(
-                    "valid_annotation_instructions_v4.json"
+                    "valid_annotation_instructions_v4.2.json"
                 ),
                 augmentation_images_json_path=base_dir.joinpath(
-                    "valid_augmentation_images_new_classes_v6.json"
+                    "valid_augmentation_images_new_classes_v6.2.json"
                 ),
                 num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,

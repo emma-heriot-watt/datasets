@@ -65,6 +65,10 @@ class FillPourAugmentation(BaseAugmentation):
             if object_type == "Unassigned" or not object_type:
                 continue
 
+            # Ignore empty sink images
+            if not object_annotation["currentStates"]["FILLED"]:
+                continue
+
             object_asset = get_object_asset_from_object_id(object_type, self._assets_to_labels)
             object_class = self._assets_to_labels[object_asset]
             readable_name = self._special_object_type_map.get(object_asset, object_class)

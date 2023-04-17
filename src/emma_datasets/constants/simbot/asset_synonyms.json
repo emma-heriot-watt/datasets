@@ -165,8 +165,22 @@
 		"Slice of Coast",
 		"Slice of Ghost"
 	],
-	"ForkLift": ["Forklift", "Forklift Truck", "Lift"],
-	"Fork_Lift": ["Forklift", "Forklift Truck", "Lift"],
+	"ForkLift": [
+		"Forklift",
+		"Forklift Truck",
+		"Lift",
+		"Lifter",
+		"Lifting Machine",
+		"Lifting Truck"
+	],
+	"Fork_Lift": [
+		"Forklift",
+		"Forklift Truck",
+		"Lift",
+		"Lifter",
+		"Lifting Machine",
+		"Lifting Truck"
+	],
 	"AP_Prop_Couch_06": ["Couch"],
 	"Manager_Chair": ["Chair"],
 	"Office_Chair": ["Chair"],
@@ -278,7 +292,7 @@
 		"Toolbox"
 	],
 	"Cutting_Board": ["Cutting Board"],
-	"Dart": ["Dart"],
+	"Dart": ["Dart", "Arrow"],
 	"FulllPaperTray_01": ["Tray"],
 	"SM_Prop_FolderTray_01": ["Tray"],
 	"EmptyPaperTray": ["Tray", "Paper Tray"],
@@ -542,7 +556,15 @@
 		"Red Color Changer Button"
 	],
 	"VendingMachine_01_B4_Button": ["Button", "Vending Machine Button"],
-	"Security_Button": ["Button", "Security Button"],
+	"Security_Button": [
+		"Button",
+		"Security Button",
+		"Security Button",
+		"Security Button",
+		"Emergency Button",
+		"Danger Button",
+		"Warning Button"
+	],
 	"VendingMachine_01_E5_Button": ["Button", "Vending Machine Button"],
 	"VendingMachine_01_E7_Button": ["Button", "Vending Machine Button"],
 	"SM_Prop_Buttons_02": ["Button"],
