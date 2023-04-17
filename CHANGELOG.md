@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.29.1](https://github.com/emma-simbot/datasets/compare/v1.29.0...v1.29.1) (2023-04-17)
+
+
+### Bug Fixes
+
+* use only filled sinks during clean and fill augmentation ([#650](https://github.com/emma-simbot/datasets/issues/650)) ([3ec910a](https://github.com/emma-simbot/datasets/commit/3ec910a4b3e5e4767e0d4dcb21a8a5c88cdeae7e))
+
 ## [1.29.0](https://github.com/emma-simbot/datasets/compare/v1.28.1...v1.29.0) (2023-04-14)
 
 
