@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.30.0](https://github.com/emma-simbot/datasets/compare/v1.29.2...v1.30.0) (2023-04-18)
+
+
+### Features
+
+* use wandb report, update coffee maker templates ([#653](https://github.com/emma-simbot/datasets/issues/653)) ([089a2e9](https://github.com/emma-simbot/datasets/commit/089a2e964bcb6f71fd480aef178aae296fb7fa4d))
+
 ## [1.29.2](https://github.com/emma-simbot/datasets/compare/v1.29.1...v1.29.2) (2023-04-17)
 
 
