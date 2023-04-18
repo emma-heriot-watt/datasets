@@ -1,16 +1,21 @@
 import json
 import logging
+import math
 import os
 import random
 import shutil
 import subprocess  # noqa: S404
 from argparse import ArgumentParser
-from typing import Any, Optional
+from collections import Counter
+from typing import Any, Literal, Optional
 
 import boto3
+import numpy as np
+import pandas as pd
 import torch
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
+from pydantic import BaseModel, Field
 
 from emma_datasets.common import get_progress
 from emma_datasets.constants.simbot.simbot import get_arena_definitions
@@ -23,6 +28,54 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.high_level_key_process
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+
+class CDFTrajectoryMetadata(BaseModel):
+    """A basemodel for the wandb metadata for each CDF."""
+
+    name: str = Field(alias="Name")
+    state: str = Field(alias="State")
+    notes: str = Field(alias="Notes")
+    user: str = Field(alias="User")
+    tags: Optional[str] = Field(alias="Tags")
+    created: str = Field(alias="Created")
+    runtime: int = Field(alias="Runtime")
+    sweep: str = Field(alias="Sweep")
+    cdf_floor_plan: int = Field(alias="cdf/floor_plan")
+    cdf_layout: str = Field(alias="cdf/layout")
+    cdf_room: str = Field(alias="cdf/room")
+    cdf_scene_id: str = Field(alias="cdf/scene_id")
+    high_level_key: str = Field(alias="high_level_key")
+    high_level_key_action: str = Field(alias="high_level_key/action")
+    high_level_key_converted_object: str = Field(alias="high_level_key/converted_object")
+    high_level_key_from_receptacle: str = Field(alias="high_level_key/from_receptacle")
+    high_level_key_from_receptacle_is_container: bool = Field(
+        alias="high_level_key/from_receptacle_is_container"
+    )
+    high_level_key_interaction_object: str = Field(alias="high_level_key/interaction_object")
+    high_level_key_target_object: str = Field(alias="high_level_key/target_object")
+    high_level_key_target_object_color: str = Field(alias="high_level_key/target_object_color")
+    high_level_key_to_receptacle: str = Field(alias="high_level_key/to_receptacle")
+    high_level_key_to_receptacle_is_container: bool = Field(
+        alias="high_level_key/to_receptacle_is_container"
+    )
+    preparation_session_id: str = Field(alias="preparation_session_id")
+    session_id: str = Field(alias="session_id")
+    is_success: int = Field(alias="is_success")
+    subgoal_success_rate: float = Field(alias="subgoal_success_rate")
+
+    @property
+    def converted_high_level_key(self) -> str:
+        """Converted high level key for each session."""
+        return self.session_id
+
+    @property
+    def target_action_object(self) -> str:
+        """Get the action_object pair.
+
+        Used to make stratified splits.
+        """
+        return f"{self.high_level_key_action}_{self.high_level_key_target_object}"
 
 
 class SessionClient:
@@ -81,25 +134,32 @@ class CDFTrajectoryCreator:
     def __init__(
         self,
         sessions_file: str,
-        output_json: str,
+        train_output_json: str,
+        valid_output_json: str,
         output_feature_directory: str,
         cache_path: str = "storage/datasets/simbot/trajectories_sessions",
         s3_sessions_bucket_url: str = "s3://emma-simbot-live-challenge/",
         s3_results_bucket_url: str = "s3://emma-simbot/results/simbot-trajectories/missions/",
         prefix_inclusion_probability: float = 0.2,
         paraphrases_per_template: int = 10,
+        split_valid_perc: float = 0.2,
+        failed_sessions_txt: str = "failed_sessions.txt",
     ):
-        self.output_json = output_json
+        self.output_json = {"train": train_output_json, "valid": valid_output_json}
         self.output_feature_directory = output_feature_directory
         os.makedirs(self.output_feature_directory, exist_ok=True)
         self.cache_path = cache_path
         os.makedirs(self.cache_path, exist_ok=True)
 
+        self.split_valid_perc = split_valid_perc
+        self.failed_sessions_txt = failed_sessions_txt
+
         self._s3_sessions_bucket_url = s3_sessions_bucket_url
         self._s3_results_bucket_url = s3_results_bucket_url
 
         self._client = SessionClient()
-        self._session_ids = self.read_all_sessions_from_file(sessions_file)
+        cdf_metadata = self.read_all_sessions_from_file(sessions_file)
+        self._session_ids_per_split = self.split_sessions(cdf_metadata)
 
         self._action_set = {
             "goto",
@@ -133,6 +193,36 @@ class CDFTrajectoryCreator:
             prefix_inclusion_probability=prefix_inclusion_probability,
             paraphrases_per_template=paraphrases_per_template,
         )
+
+    def split_sessions(
+        self, cdf_metadata_list: list[CDFTrajectoryMetadata]
+    ) -> dict[Literal["train", "valid"], list[CDFTrajectoryMetadata]]:
+        """Split the sessions into train and validation."""
+        all_objectives = np.array(
+            [cdf_metadata.target_action_object for cdf_metadata in cdf_metadata_list]
+        )
+
+        objective_counts = Counter(all_objectives)
+        train_sessions = []
+        valid_sessions = []
+        for objective, count in objective_counts.items():
+            if count == 1:
+                train_sessions.append(
+                    cdf_metadata_list[np.where(all_objectives == objective)[0][0]]
+                )
+                continue
+
+            objective_indices = np.where(all_objectives == objective)[0]
+            random.shuffle(objective_indices)  # type: ignore[arg-type]
+
+            valid_upper_bound = math.ceil(self.split_valid_perc * len(objective_indices))
+            valid_indices = objective_indices[:valid_upper_bound]
+            train_indices = objective_indices[valid_upper_bound:]
+
+            train_sessions.extend([cdf_metadata_list[idx] for idx in train_indices])
+            valid_sessions.extend([cdf_metadata_list[idx] for idx in valid_indices])
+
+        return {"train": train_sessions, "valid": valid_sessions}
 
     def should_skip_session_turn_for_trajectory(  # noqa: WPS231
         self,
@@ -226,19 +316,31 @@ class CDFTrajectoryCreator:
         # A session is valid if all challenges are completed
         return all(all_challenges_completed)
 
-    def create_trajectories(self) -> None:
+    def run(self) -> None:
         """Create trajectory annotations."""
+        for split in ("train", "valid"):
+            self.create_trajectories_for_split(
+                split=split,  # type: ignore[arg-type]
+                sessions_for_split=self._session_ids_per_split[split],  # type:ignore[index]
+            )
+
+    def create_trajectories_for_split(  # noqa: WPS231
+        self, split: Literal["train", "valid"], sessions_for_split: list[CDFTrajectoryMetadata]
+    ) -> None:
+        """Create trajectory annotations for train and validation split."""
         progress = get_progress()
         task_id = progress.add_task(
-            "Creating trajectory annotations",
+            f"Creating {split} trajectory annotations",
             visible=True,
             start=True,
-            total=len(self._session_ids),
+            total=len(sessions_for_split),
             comment="",
         )
         missions = {}
         with progress:
-            for session_id in self._session_ids:
+            for session in sessions_for_split:
+                session_id = session.session_id
+
                 is_valid_session = self.check_if_session_is_successful(session_id)
                 if not is_valid_session:
                     progress.advance(task_id)
@@ -266,30 +368,35 @@ class CDFTrajectoryCreator:
                 )
 
                 # Create the sequence of actions
-                for add_goto in (True, False):
-                    session_actions = self.create_actions_for_session(
-                        session_id=session_id,
-                        session_turns=session_turns,
-                        agent_interacted_objects_assets=agent_interacted_objects_assets,
-                        add_goto_action_after_search=add_goto,
-                    )
-                    missions[f"{mission_id}_add_goto{add_goto}"] = {
-                        "human_annotations": [
-                            {
-                                "instructions": [
-                                    {
-                                        "instruction": instruction,
-                                        "actions": self._get_action_ids(session_actions),
-                                    }
-                                ]
-                            }
-                        ],
-                        "actions": session_actions,
-                    }
+                try:
+                    for add_goto in (True, False):
+                        session_actions = self.create_actions_for_session(  # noqa: WPS220
+                            session_id=session_id,
+                            session_turns=session_turns,
+                            agent_interacted_objects_assets=agent_interacted_objects_assets,
+                            add_goto_action_after_search=add_goto,
+                        )
+                        missions[f"{mission_id}_add_goto{add_goto}"] = {  # noqa: WPS220
+                            "human_annotations": [
+                                {
+                                    "instructions": [
+                                        {
+                                            "instruction": instruction,
+                                            "actions": self._get_action_ids(session_actions),
+                                        }
+                                    ]
+                                }
+                            ],
+                            "actions": session_actions,
+                        }
+                except Exception:
+                    missions.pop(f"{mission_id}_add_gotoFalse", None)
+                    missions.pop(f"{mission_id}_add_gotoTrue", None)
+                    logger.error(f"Could not create trajectory for {session_id}")
 
                 progress.advance(task_id)
 
-        with open(self.output_json, "w") as fp:
+        with open(self.output_json[split], "w") as fp:
             json.dump(missions, fp, indent=4)
 
         shutil.rmtree(self.cache_path)
@@ -444,10 +551,32 @@ class CDFTrajectoryCreator:
             action_tokens[index:],
         )
 
-    def read_all_sessions_from_file(self, sessions_file: str) -> list[str]:
+    def read_all_sessions_from_file(self, sessions_file: str) -> list[CDFTrajectoryMetadata]:
         """Read all the input sessions."""
-        with open(sessions_file) as fp:
-            session_ids = [line.strip() for line in fp.readlines()]
+        data_frame = pd.read_csv(sessions_file)
+
+        successful_indices = data_frame["is_success"] > 0
+        successful_sessions = data_frame[successful_indices]
+
+        session_ids = []
+        for _, row in successful_sessions.iterrows():
+            cdf_metadata = CDFTrajectoryMetadata.parse_obj(row.to_dict())
+            session_ids.append(cdf_metadata)
+
+        failed_indices = data_frame["is_success"] == 0
+        failed_sessions = data_frame[failed_indices]
+
+        if failed_sessions.shape[0]:
+            failed_session_names = []
+            for _, failed_session in successful_sessions.iterrows():
+                logger.warning(failed_session["Name"])
+                failed_session_names.append(failed_session["Name"])
+
+            with open(self.failed_sessions_txt, "w") as fp:
+                for line in failed_session_names:
+                    fp.write(f"{line}\n")
+
+            logger.warning(f"Failed {failed_sessions.shape[0]}/{data_frame.shape[0]}")
         return session_ids
 
     def process_highl_level_key(self, session_id: str) -> HighLevelKey:
@@ -516,9 +645,15 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--output_json",
+        "--train_output_json",
         help="Path to output json",
-        default="trajectories.json",
+        default="train_trajectories.json",
+    )
+
+    parser.add_argument(
+        "--valid_output_json",
+        help="Path to output json",
+        default="valid_trajectories.json",
     )
 
     parser.add_argument(
@@ -531,6 +666,7 @@ if __name__ == "__main__":
 
     CDFTrajectoryCreator(
         sessions_file=args.sessions_file,
-        output_json=args.output_json,
+        train_output_json=args.train_output_json,
+        valid_output_json=args.valid_output_json,
         output_feature_directory=args.output_feature_directory,
-    ).create_trajectories()
+    ).run()

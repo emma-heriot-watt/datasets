@@ -1,7 +1,13 @@
 # flake8: noqa WPS226
+import random
 from types import MappingProxyType
 
 from emma_datasets.constants.simbot.simbot import get_object_synonym
+
+
+def merge_strings(string1: str, string2: str) -> str:
+    """Dummy way to prevent noqas."""
+    return f"{string1} {string2}"
 
 
 OBJECT_META_TEMPLATE = MappingProxyType(
@@ -298,6 +304,59 @@ OBJECT_META_TEMPLATE = MappingProxyType(
                     "use the {machine_synonym} to turn the {target_object} into a {converted_object}",
                     "use the {machine_synonym} to turn the {target_object} to a {converted_object_color} {converted_object}",
                     "use the {machine_synonym} to turn the {target_object} to a {converted_object}",
+                ],
+            },
+            "CoffeeUnMaker_01": {
+                "machine_synonym": get_object_synonym("CoffeeUnMaker_01"),
+                "paraphrases": [
+                    merge_strings(
+                        string1="activate the {machine_synonym} to turn the coffee",
+                        string2=f"into {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                    ),
+                    merge_strings(
+                        string1="activate the {machine_synonym} to turn the {target_object}",
+                        string2=f"into {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                    ),
+                    merge_strings(
+                        string1="activate the {machine_synonym} to change the coffee",
+                        string2=f"into {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                    ),
+                    merge_strings(
+                        string1="activate the {machine_synonym} to change the {target_object}",
+                        string2=f"into {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                    ),
+                    merge_strings(
+                        string1="use the {machine_synonym} to turn the coffee",
+                        string2=f"into {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                    ),
+                    merge_strings(
+                        string1="use the {machine_synonym} to turn the {target_object}",
+                        string2=f"into {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                    ),
+                    merge_strings(
+                        string1="use the {machine_synonym} to change the coffee",
+                        string2=f"into {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                    ),
+                    merge_strings(
+                        string1="use the {machine_synonym} to change the {target_object}",
+                        string2=f"into {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                    ),
+                    merge_strings(
+                        string1=f"turn the coffee to {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                        string2="by using the {machine_synonym}",
+                    ),
+                    merge_strings(
+                        string1=f"turn the coffee to a {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                        string2="by using the {machine_synonym}",
+                    ),
+                    merge_strings(
+                        string1=f"turn the coffee into {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                        string2="by using the {machine_synonym}",
+                    ),
+                    merge_strings(
+                        string1=f"turn the coffee into a {random.choice(get_object_synonym('CoffeeBeans_01'))}",
+                        string2="by using the {machine_synonym}",
+                    ),
                 ],
             },
         },

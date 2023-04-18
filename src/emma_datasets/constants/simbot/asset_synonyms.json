@@ -718,14 +718,7 @@
 	"SM_Prop_Folder_PVC_02": ["Folder"],
 	"PieFruitSlice_01": ["Pie", "Fruit Pie"],
 	"PieFruit_01": ["Pie", "Fruit Pie"],
-	"CoffeeMug_Yellow": [
-		"Mug",
-		"Coffee Mug",
-		"Coffee Cup",
-		"Cup",
-		"Yellow Mug",
-		"Yellow Cup"
-	],
+	"CoffeeMug_Yellow": ["Mug", "Coffee Mug", "Coffee Cup", "Cup"],
 	"CoffeeCup_Open_Empty_02": [
 		"Mug",
 		"Coffee Mug",
