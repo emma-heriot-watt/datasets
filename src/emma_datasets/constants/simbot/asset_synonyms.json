@@ -414,7 +414,10 @@
 		"Sing",
 		"Stink",
 		"Sting",
-		"Shrink"
+		"Shrink",
+		"Tap",
+		"Kitchen Sink",
+		"Kitchen Tap"
 	],
 	"AP_Prop_Plant_01": ["Plant"],
 	"AP_Prop_Plant_09": ["Plant"],
@@ -777,5 +780,6 @@
 	"AP_Prop_Whiteboard_Devices_09": ["Board", "White Board", "Whiteboard"],
 	"WaterCooler_01": ["Water Cooler", "Cooler"],
 	"SM_Prop_Drink_Dispenser_01": ["Cooler", "Dispenser"],
-	"MissionItemHolder": ["Item"]
+	"MissionItemHolder": ["Item"],
+	"Water": ["Water"]
 }

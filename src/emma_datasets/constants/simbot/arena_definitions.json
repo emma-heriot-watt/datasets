@@ -641,7 +641,8 @@
 		"sign_tall_caution_robotics": "Door Sign",
 		"sign_tall_caution_shrink": "Door Sign",
 		"sign_tall_poster_tam_1": "Poster",
-		"sign_tall_poster_tam_2": "Poster"
+		"sign_tall_poster_tam_2": "Poster",
+		"Water": "Water"
 	},
 	"special_asset_to_readable_name": {
 		"AP_Prop_Shelf_Wall_04": "Freeze Ray Shelf",

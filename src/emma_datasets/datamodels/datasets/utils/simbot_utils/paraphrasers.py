@@ -336,6 +336,8 @@ class ToggleParaphraser(BaseParaphraser):
             "toggle_location": self._verb_location_templates,
         }
 
+        self._replace_sink_to_water_proba = 0.2
+
     def __call__(
         self,
         object_id: str,
@@ -344,6 +346,13 @@ class ToggleParaphraser(BaseParaphraser):
     ) -> str:
         """Get a toggle instruction."""
         available_types = ["toggle"]
+        replace_sink = (
+            object_id == "KitchenCounterSink_01"
+            and random.random() < self._replace_sink_to_water_proba
+        )
+        if replace_sink:
+            object_id = "Water"
+
         object_color = attributes.color
         if object_color is not None:
             available_types.append("toggle_color")

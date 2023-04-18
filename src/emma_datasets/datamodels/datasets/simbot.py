@@ -280,28 +280,28 @@ def load_simbot_annotations(
     else:
         source_per_split = {
             DatasetSplit.train: load_simbot_data(
-                simbot_trajectory_json_path=base_dir.joinpath("train.json"),
+                # simbot_trajectory_json_path=base_dir.joinpath("train.json"),
                 synthetic_trajectory_json_path=base_dir.joinpath("train_trajectories.json"),
                 # sticky_notes_images_json_path=base_dir.joinpath("train_sticky_notes.json"),
-                annotation_images_json_path=base_dir.joinpath(
-                    "train_annotation_instructions_v4.2.json"
-                ),
-                augmentation_images_json_path=base_dir.joinpath(
-                    "train_augmentation_images_new_classes_v6.2.json"
-                ),
+                # annotation_images_json_path=base_dir.joinpath(
+                #     "train_annotation_instructions_v4.2.json"
+                # ),
+                # augmentation_images_json_path=base_dir.joinpath(
+                #     "train_augmentation_images_new_classes_v6.2.json"
+                # ),
                 num_additional_synthetic_instructions=train_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=train_num_sticky_notes_instructions,
             ),
             DatasetSplit.valid: load_simbot_data(
-                simbot_trajectory_json_path=base_dir.joinpath("valid.json"),
-                # synthetic_trajectory_json_path=base_dir.joinpath("valid_trajectories.json"),
+                # simbot_trajectory_json_path=base_dir.joinpath("valid.json"),
+                synthetic_trajectory_json_path=base_dir.joinpath("valid_trajectories.json"),
                 # sticky_notes_images_json_path=base_dir.joinpath("valid_sticky_notes.json"),
-                annotation_images_json_path=base_dir.joinpath(
-                    "valid_annotation_instructions_v4.2.json"
-                ),
-                augmentation_images_json_path=base_dir.joinpath(
-                    "valid_augmentation_images_new_classes_v6.2.json"
-                ),
+                # annotation_images_json_path=base_dir.joinpath(
+                #     "valid_annotation_instructions_v4.2.json"
+                # ),
+                # augmentation_images_json_path=base_dir.joinpath(
+                #     "valid_augmentation_images_new_classes_v6.2.json"
+                # ),
                 num_additional_synthetic_instructions=valid_num_additional_synthetic_instructions,
                 num_sticky_notes_instructions=valid_num_sticky_notes_instructions,
             ),
