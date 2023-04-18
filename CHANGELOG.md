@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.31.0](https://github.com/emma-simbot/datasets/compare/v1.30.0...v1.31.0) (2023-04-18)
+
+
+### Features
+
+* kitchen sink synonyms ([#655](https://github.com/emma-simbot/datasets/issues/655)) ([53bb885](https://github.com/emma-simbot/datasets/commit/53bb8859d1b1c1619f6b410b8b64caf7251ade64))
+
 ## [1.30.0](https://github.com/emma-simbot/datasets/compare/v1.29.2...v1.30.0) (2023-04-18)
 
 
