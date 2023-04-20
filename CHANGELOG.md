@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.32.0](https://github.com/emma-simbot/datasets/compare/v1.31.0...v1.32.0) (2023-04-20)
+
+
+### Features
+
+* add spawnable objects as synonyms ([#657](https://github.com/emma-simbot/datasets/issues/657)) ([89d072a](https://github.com/emma-simbot/datasets/commit/89d072a406a18ea432043912d2fccad60eac75a0))
+
 ## [1.31.0](https://github.com/emma-simbot/datasets/compare/v1.30.0...v1.31.0) (2023-04-18)
 
 
