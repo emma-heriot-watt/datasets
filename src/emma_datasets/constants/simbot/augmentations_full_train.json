@@ -4,7 +4,7 @@
 			"break_classes": ["Bowl", "Mug", "Plate", "Record", "Trophy"],
 			"action_type": "Break",
 			"min_interaction_distance": 1.5,
-			"max_examples_per_class": 3000
+			"max_examples_per_class": 2000
 		}
 	},
 	"Clean": {
@@ -13,13 +13,12 @@
 			"cleaning_classes": ["Sink"],
 			"min_interaction_distance": 1.5,
 			"action_type": "Clean",
-			"max_examples_per_class": 2000
+			"max_examples_per_class": 1000
 		}
 	},
 	"Close": {
 		"OpenCloseAugmentation": {
 			"action_type_classes": [
-				"Candy Bar",
 				"Door",
 				"Fridge",
 				"Freezer",
@@ -34,7 +33,7 @@
 			],
 			"action_type": "Close",
 			"min_interaction_distance": 3,
-			"max_examples_per_class": 3000
+			"max_examples_per_class": 2000
 		}
 	},
 	"Fill": {
@@ -43,9 +42,7 @@
 				"Bowl_01",
 				"CoffeePot_01",
 				"CoffeeMug_Boss",
-				"CoffeeMug_Yellow",
-				"CoffeeUnMaker_01",
-				"CoffeeMaker_01"
+				"CoffeeMug_Yellow"
 			],
 			"filling_classes": ["Sink"],
 			"action_type": "Fill",
@@ -56,45 +53,74 @@
 	"Goto": {
 		"GoToAugmentation": {
 			"goto_classes": [
+				"Action Figure",
+				"Apple",
 				"Bookshelf",
+				"Banana",
+				"Bread",
+				"Burger",
 				"Bowl",
+				"Cake",
 				"Can",
+				"Candy Bar",
+				"Candy Jar",
+				"Carrot",
+				"Cabinet",
+				"Cereal Box",
+				"Coffee Beans",
 				"Coffee Maker",
+				"Coffee Pot",
 				"Coffee Unmaker",
 				"Color Changer",
 				"Counter",
 				"Computer",
+				"Dart",
+				"Donut",
 				"Embiggenator",
 				"Embiggenator Monitor",
-				"Everything's A Carrot Machine",
 				"Emotion Tester",
+				"Everything's A Carrot Machine",
+				"Fan",
 				"Floppy Disk",
+				"Forklift",
 				"Freeze Ray",
 				"Fridge",
 				"Freezer",
 				"Fuse Box",
 				"Generator",
 				"Gravity Monitor",
+				"Gravity Pad",
 				"Hammer",
 				"Freeze Ray Monitor",
 				"Freeze Ray Shelf",
 				"Laser Monitor",
 				"Laser Shelf",
+				"Laser",
 				"Light Switch",
 				"Microwave",
 				"Mug",
+				"Packing Box",
+				"Pie",
+				"Pear",
 				"Plate",
 				"Printer",
+				"Printer Cartridge",
 				"Portal Generator Monitor",
+				"Radio",
+				"Record",
 				"Robot Arm",
+				"Sandwich",
 				"Sink",
 				"Table",
 				"Time Machine",
+				"Tray",
+				"Trophy",
+				"Vending Machine",
 				"Whiteboard"
 			],
 			"action_type": "Goto",
 			"min_interaction_distance": 2.5,
-			"max_examples_per_class": 3000
+			"max_examples_per_class": 2500
 		}
 	},
 	"Pickup": {
@@ -116,6 +142,8 @@
 				"Control Panel",
 				"Computer",
 				"Cup",
+				"Circuit Board",
+				"Control Panel",
 				"Dart",
 				"Donut",
 				"Fan",
@@ -124,8 +152,7 @@
 				"Hammer",
 				"Jar",
 				"Knife",
-				"Circuit Board",
-				"Control Panel",
+				"Laser Tip",
 				"Lever",
 				"Lid",
 				"Milk",
@@ -143,7 +170,7 @@
 			],
 			"action_type": "Pickup",
 			"min_interaction_distance": 1.5,
-			"max_examples_per_class": 3000
+			"max_examples_per_class": 2000
 		}
 	},
 	"Pour": {
@@ -180,7 +207,7 @@
 			],
 			"action_type": "Open",
 			"min_interaction_distance": 3,
-			"max_examples_per_class": 3000
+			"max_examples_per_class": 2000
 		}
 	},
 	"Search": {
@@ -198,6 +225,7 @@
 				"Cake",
 				"Can",
 				"Candy Bar",
+				"Candy Jar",
 				"Carrot",
 				"Cereal Box",
 				"Circuit Board",
@@ -211,6 +239,7 @@
 				"Counter",
 				"Cup",
 				"Dart",
+				"Dart Board",
 				"Donut",
 				"Door",
 				"Drawer",
@@ -245,6 +274,7 @@
 				"Microwave",
 				"Milk",
 				"Mug",
+				"Packing Box",
 				"Pear",
 				"Pie",
 				"Plate",
@@ -259,6 +289,7 @@
 				"Sink",
 				"Spoon",
 				"Table",
+				"Tray",
 				"Tesla Coil",
 				"Time Machine",
 				"Toaster",
@@ -268,7 +299,7 @@
 			],
 			"action_type": "Search",
 			"min_interaction_distance": 0,
-			"max_negative_examples_per_room": 1500,
+			"max_negative_examples_per_room": 1000,
 			"max_examples_per_object": 3000
 		}
 	},
@@ -300,11 +331,15 @@
 				"Counter",
 				"Cup",
 				"Dart",
+				"Dart Board",
+				"Candy Bar",
+				"Candy Jar",
 				"Donut",
 				"Door",
 				"Drawer",
 				"Embiggenator",
 				"Embiggenator Monitor",
+				"Emotion Tester",
 				"Everything's A Carrot Machine",
 				"Fan",
 				"Fire Alarm",
@@ -333,6 +368,7 @@
 				"Microwave",
 				"Milk",
 				"Mug",
+				"Packing Box",
 				"Pear",
 				"Pie",
 				"Plate",
@@ -350,6 +386,7 @@
 				"Tesla Coil",
 				"Time Machine",
 				"Toaster",
+				"Tray",
 				"Trophy",
 				"Vending Machine",
 				"Whiteboard"
@@ -386,29 +423,30 @@
 			],
 			"action_type": "Toggle",
 			"min_interaction_distance": 1.5,
-			"max_examples_per_class": 3000
+			"max_examples_per_class": 2000
 		}
 	},
 	"Place": {
 		"PlaceAugmentation": {
 			"place_classes": [
 				"Bookshelf",
+				"Candy Jar",
 				"Counter Top",
-				"Dart Board",
-				"Desk",
 				"Coffee Maker",
 				"Coffee Unmaker",
 				"Color Changer",
 				"Counter",
 				"Cutting Board",
+				"Desk",
 				"Everything's A Carrot Machine",
 				"Embiggenator",
 				"Gravity Pad",
+				"Laser",
 				"Laser Shelf",
 				"Freeze Ray Shelf",
 				"Fuse Box",
+				"Packing Box",
 				"Plate",
-				"Portal Generator Monitor",
 				"Printer",
 				"Sink",
 				"Table",
@@ -428,7 +466,7 @@
 			],
 			"action_type": "Place",
 			"min_interaction_distance": 3,
-			"max_examples_per_class": 3000
+			"max_examples_per_class": 2000
 		}
 	}
 }

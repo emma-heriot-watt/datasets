@@ -328,6 +328,8 @@ class ToggleParaphraser(BaseParaphraser):
             "turn off",
             "switch off",
             "power up",
+            "shut down",
+            "power off",
         ]
 
         self._available_templates = {

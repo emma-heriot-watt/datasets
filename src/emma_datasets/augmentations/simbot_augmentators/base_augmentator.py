@@ -68,6 +68,8 @@ class BaseAugmentation(abc.ABC):
             "V_Monitor_Portal": "Portal Generator Monitor",
             "Bookshelf_Wooden_01": "Bookshelf",
             "TAMPrototypeHead_01": "Emotion Tester",
+            "PackingBox": "Packing Box",
+            "CandyJar_01": "Candy Jar",
         }
         self._special_object_class_map = {
             object_class: object_type

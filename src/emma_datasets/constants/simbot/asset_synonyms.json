@@ -48,7 +48,9 @@
 		"PC",
 		"Desktop",
 		"Screen",
-		"Computer Screen"
+		"Computer Screen",
+		"New Computer",
+		"Brand New Computer"
 	],
 	"Lab_Terminal": ["Machine Panel"],
 	"V_Monitor_Laser": [
@@ -322,7 +324,7 @@
 		"Freeze Machine",
 		"Freezing Machine"
 	],
-	"ManagerDesk": ["Desk"],
+	"ManagerDesk": ["Desk", "Manager's Desk", "Manager Desk"],
 	"AP_Prop_Desk_Green_model": ["Desk"],
 	"AP_Prop_Desk_Blue": ["Desk"],
 	"AP_Prop_Desk_Red": ["Desk"],
@@ -402,8 +404,18 @@
 	],
 	"Record_01": ["Record", "Disk", "Vinyl"],
 	"SM_Prop_PalletStack_02": ["Pallets"],
-	"PortalGenerator": ["Generator", "Generator Machine"],
-	"AP_Prop_Generator_Large_02": ["Generator"],
+	"PortalGenerator": [
+		"Generator",
+		"Generator Machine",
+		"Portal Generator",
+		"Portal Generator Machine"
+	],
+	"AP_Prop_Generator_Large_02": [
+		"Generator",
+		"Generator Machine",
+		"Portal Generator",
+		"Portal Generator Machine"
+	],
 	"LightSwitch_01": ["Light Switch", "Switch", "Light"],
 	"KitchenCounterSink_01": [
 		"Sink",
@@ -455,7 +467,7 @@
 	"AP_Prop_Print_Tube_01": ["Print Tube"],
 	"LaserBase_toy": ["Laser Toy"],
 	"CandyBar_01": ["Candy Bar", "Candy"],
-	"CandyJar_01": ["Jar", "Candy Jar", "Container"],
+	"CandyJar_01": ["Jar", "Candy Jar", "Glass Jar"],
 	"FridgeLower_02": ["Fridge", "Refrigerator"],
 	"Laser": ["Laser", "Laser Cannon"],
 	"Screwdriver": [
@@ -498,7 +510,16 @@
 	],
 	"SM_Prop_Server_Node_01": ["Server"],
 	"Unassigned": ["Unassigned"],
-	"Hammer": ["Hammer"],
+	"Hammer": [
+		"Hammer",
+		"Hammer",
+		"Hammer",
+		"Hammer",
+		"Hammer",
+		"Something to break the record with",
+		"Something to break the trophy with",
+		"Something to break the bowl with"
+	],
 	"SM_Prop_Scales_01": ["Scale"],
 	"AP_Prop_Photocopier_01": ["Photocopier"],
 	"SM_Prop_Warehouse_Platform_Trolley_01": ["Dolly"],
@@ -545,7 +566,11 @@
 		"Antivirus",
 		"Antivirus Software",
 		"Computer Antivirus",
-		"Computer Antivirus Program"
+		"Computer Antivirus Program",
+		"Computer Antivirus Disk",
+		"Antivirus",
+		"Antivirus Disk",
+		"Antivirus Program"
 	],
 	"Floppy_Virus_Broken": [
 		"Floppy Disk",
@@ -553,14 +578,19 @@
 		"Disk",
 		"Broken Disk",
 		"Broken Floppy",
-		"Broken Floppy Disk"
+		"Broken Floppy Disk",
+		"Broken Virus Disk"
 	],
 	"Floppy_Virus": [
 		"Floppy Disk",
 		"Floppy",
 		"Disk",
 		"Computer Virus",
-		"Computer Virus Program"
+		"Computer Virus Program",
+		"Computer Virus Disk",
+		"Virus",
+		"Virus Disk",
+		"Virus Program"
 	],
 	"ColorChanger_Button_Red": [
 		"Button",
@@ -654,7 +684,15 @@
 	"SM_Prop_Paper_05": ["Paper"],
 	"SM_Prop_Paper_Pile_01": ["Paper"],
 	"SM_Prop_FlatPackCardboardBoxes_03": ["Boxes"],
-	"PackingBox": ["Boxes"],
+	"PackingBox": [
+		"Packing Box",
+		"Boxes",
+		"Box",
+		"Shipping Box",
+		"Wrapping Box",
+		"Packaging Box",
+		"Package Box"
+	],
 	"SM_Prop_Warehouse_Boxes_Stacked_03": ["Boxes"],
 	"Warehouse_Boxes": ["Boxes"],
 	"SM_Prop_Warehouse_Boxes_Stacked_04": ["Boxes"],
@@ -755,7 +793,9 @@
 		"Coffee Mug",
 		"Coffee Cup",
 		"Manager's Special Mug",
-		"Boss's Mug"
+		"Boss's Mug",
+		"Manager's Mug",
+		"Manager Mug"
 	],
 	"KitchenCabinet_01": ["Cabinet", "Closet"],
 	"AP_Prop_Cabinets_01": ["Cabinet", "Closet"],
