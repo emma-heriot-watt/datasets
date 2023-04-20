@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.34.1](https://github.com/emma-simbot/datasets/compare/v1.34.0...v1.34.1) (2023-04-20)
+
+
+### Bug Fixes
+
+* inventory from cdfs and manual annotations for NLU ([#660](https://github.com/emma-simbot/datasets/issues/660)) ([f8c2b3d](https://github.com/emma-simbot/datasets/commit/f8c2b3dfb5fa25fb974856f111b9440c09fba130))
+
 ## [1.34.0](https://github.com/emma-simbot/datasets/compare/v1.33.0...v1.34.0) (2023-04-20)
 
 
