@@ -423,7 +423,12 @@
 	"AP_Prop_Plant_09": ["Plant"],
 	"AP_Prop_Barrel_Water_01": ["Water Barrel"],
 	"AP_Prop_Barrel_Open_01": ["Water Barrel"],
-	"CoffeeBeans_01": ["Coffee Beans", "Beans", "Coffee Bag"],
+	"CoffeeBeans_01": [
+		"Coffee Beans",
+		"Beans",
+		"Coffee Bag",
+		"Bag of Coffee Beans"
+	],
 	"AP_Prop_Bin_Rubbish_01": ["Trash"],
 	"SM_Prop_Warehouse_Light_04": ["Light"],
 	"Embiggenator": [

@@ -642,7 +642,11 @@
 		"sign_tall_caution_shrink": "Door Sign",
 		"sign_tall_poster_tam_1": "Poster",
 		"sign_tall_poster_tam_2": "Poster",
-		"Water": "Water"
+		"Water": "Water",
+		"Printer_3D_1_Spawned_FuseBox_01_Lever_1": "Lever",
+		"Printer_3D_1_Spawned_Hammer_1": "Hammer",
+		"Printer_3D_1_Spawned_ActionFigure_1": "Action Figure",
+		"EAC_Machine_Spawned_Carrot_01_1": "Carrot"
 	},
 	"special_asset_to_readable_name": {
 		"AP_Prop_Shelf_Wall_04": "Freeze Ray Shelf",
