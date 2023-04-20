@@ -247,9 +247,11 @@ class InventoryObjectfromTrajectory:
     def __init__(self) -> None:
         self._object_assets_to_names = get_arena_definitions()["asset_to_label"]
 
-    def __call__(self, actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    def __call__(
+        self, actions: list[dict[str, Any]], initial_inventory: Optional[str] = None
+    ) -> list[dict[str, Any]]:
         """Add the inventory object to actions."""
-        inventory_object = None
+        inventory_object = initial_inventory
         for action in actions:
             action["inventory_object_id"] = inventory_object
             # Update the object that will be held after the current action

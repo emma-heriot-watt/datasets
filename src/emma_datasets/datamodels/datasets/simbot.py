@@ -15,6 +15,9 @@ from emma_datasets.datamodels.datasets.utils.simbot_utils.ambiguous_data import 
 from emma_datasets.datamodels.datasets.utils.simbot_utils.data_augmentations import (
     SyntheticLowLevelActionSampler,
 )
+from emma_datasets.datamodels.datasets.utils.simbot_utils.high_level_key_processor import (
+    DecodedKey,
+)
 from emma_datasets.datamodels.datasets.utils.simbot_utils.instruction_processing import (
     InventoryObjectfromTrajectory,
 )
@@ -119,8 +122,12 @@ def load_synthetic_trajectory_instruction_data(trajectory_json_path: Path) -> li
     for mission_id, mission_annotations in data.items():
         # T.20230412__action--pickup_target-object--Apple_from-receptacle--FridgeUpper_02_from-receptacle-is-container-citxf_add_gotoFalse
         cdf_highlevel_key = mission_id.split("__")[1].split("_add")[0]
+        decoded_key = DecodedKey.from_raw_string(cdf_highlevel_key)
+        initial_inventory = None
+        if "pickup" not in decoded_key.action:
+            initial_inventory = decoded_key.target_object
 
-        actions = inventory_object_processor(mission_annotations["actions"])
+        actions = inventory_object_processor(mission_annotations["actions"], initial_inventory)
 
         instruction_idx = 0
         instruction_dicts = trajectory_instruction_processor.run(
@@ -358,14 +365,29 @@ def filter_clarifications(db_path: Path) -> list[dict[Any, Any]]:  # noqa: WPS23
     filtered_instances = []
     db = DatasetDb(db_path)
     qa_filter = ClarificationFilter()
+    paraphraser = InstructionParaphraser()
+
     for _, _, sample in db:
         instruction_instance = SimBotInstructionInstance.parse_raw(sample)
-        # Do not use synthetic trajectory data like "pour it in the coffee maker"
-        # We should not be using instructions with pronouns for NLU because the model needs to
-        # learn to predict the missing inventory
         if instruction_instance.synthetic:
-            if instruction_instance.vision_augmentation:
-                filtered_instances.append(instruction_instance.dict())
+            # Do not use synthetic trajectory data like "pour it in the coffee maker"
+            # We should not be using instructions with pronouns for NLU because the model needs to
+            # learn to predict the missing inventory
+            if not instruction_instance.vision_augmentation:
+                continue
+            # Do not use manual annotations that require inventory but do not have it
+            action_requires_inventory = paraphraser.is_inventory_required(
+                instruction_instance.actions[0].type.lower()
+            )
+            is_inventory_required_but_missing = (
+                not instruction_instance.paraphrasable
+                and action_requires_inventory
+                and instruction_instance.actions[0].inventory_object_id is None
+            )
+            if is_inventory_required_but_missing:
+                continue
+
+            filtered_instances.append(instruction_instance.dict())
             continue
 
         if qa_filter.skip_instruction(instruction_instance.instruction.instruction):
