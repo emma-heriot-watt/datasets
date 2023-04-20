@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.34.0](https://github.com/emma-simbot/datasets/compare/v1.33.0...v1.34.0) (2023-04-20)
+
+
+### Features
+
+* Add paraphrases for more cdf missions ([#661](https://github.com/emma-simbot/datasets/issues/661)) ([a4591d7](https://github.com/emma-simbot/datasets/commit/a4591d767f9ebc14262716250127825e6d8d16dc))
+
 ## [1.33.0](https://github.com/emma-simbot/datasets/compare/v1.32.0...v1.33.0) (2023-04-20)
 
 
