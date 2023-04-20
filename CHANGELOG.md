@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.0](https://github.com/emma-simbot/datasets/compare/v1.32.0...v1.33.0) (2023-04-20)
+
+
+### Features
+
+* add synonyms for generator ([#658](https://github.com/emma-simbot/datasets/issues/658)) ([913f23d](https://github.com/emma-simbot/datasets/commit/913f23dcf362b5a47701c24f07ecacc013dd2a8e))
+
 ## [1.32.0](https://github.com/emma-simbot/datasets/compare/v1.31.0...v1.32.0) (2023-04-20)
 
 
