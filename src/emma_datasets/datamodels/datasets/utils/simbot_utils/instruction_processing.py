@@ -257,7 +257,16 @@ class InventoryObjectfromTrajectory:
             # Update the object that will be held after the current action
             if action["type"] == "Pickup":
                 inventory_object = action["pickup"]["object"]["id"]
-
             elif action["type"] == "Place":
                 inventory_object = None
+            elif self._action_deletes_inventory(action["type"], inventory_object):
+                inventory_object = None
         return actions
+
+    def _action_deletes_inventory(self, action_type: str, inventory_object: Optional[str]) -> bool:
+        pour_coffee_beans = (
+            action_type == "Pour"
+            and inventory_object is not None
+            and inventory_object.startswith("CoffeeBeans")
+        )
+        return pour_coffee_beans

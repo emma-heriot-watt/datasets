@@ -137,6 +137,7 @@ class CDFTrajectoryCreator:
         train_output_json: str,
         valid_output_json: str,
         output_feature_directory: str,
+        upsample_factor: int = 1,
         cache_path: str = "storage/datasets/simbot/trajectories_sessions",
         s3_sessions_bucket_url: str = "s3://emma-simbot-live-challenge/",
         s3_results_bucket_url: str = "s3://emma-simbot/results/simbot-trajectories/missions/",
@@ -151,6 +152,7 @@ class CDFTrajectoryCreator:
         self.cache_path = cache_path
         os.makedirs(self.cache_path, exist_ok=True)
 
+        self.upsample_factor = upsample_factor
         self.split_valid_perc = split_valid_perc
         self.failed_sessions_txt = failed_sessions_txt
 
@@ -224,10 +226,11 @@ class CDFTrajectoryCreator:
 
         return {"train": train_sessions, "valid": valid_sessions}
 
-    def should_skip_session_turn_for_trajectory(  # noqa: WPS231
+    def should_skip_session_turn_for_trajectory(  # noqa: WPS212, WPS231
         self,
         session_turn: dict[str, Any],
         previous_session_turn: Optional[dict[str, Any]] = None,
+        is_last_turn: bool = False,
         add_goto_action_after_search: bool = True,
     ) -> bool:
         """Skip turns that should not be added to the trajectory.
@@ -237,12 +240,34 @@ class CDFTrajectoryCreator:
         avoid noise in the data. 2) Turns that correspond to search routines, we generally dont
         want the policy model to handle this. 3) Turns where there is no interaction action.
         """
-        interaction_intent_type = session_turn["intent"]["physical_interaction"]["type"]
-        interaction_action = session_turn["actions"]["interaction"]
+        # Remove turns after a failed action
+        environment = session_turn["intent"].get("environment", None)
+        if environment is not None and environment["type"].startswith("<failure>"):
+            return True
 
+        actions = session_turn["actions"]
+        interaction_action = actions.get("interaction", None)
+
+        # Remove turns of failed actions
+        failed_action = (
+            interaction_action is not None
+            and not is_last_turn  # last turn utterances dont have status
+            and not interaction_action["status"]["success"]
+        )
+        if failed_action:
+            return True
+
+        interaction_intent_type = session_turn["intent"]["physical_interaction"]["type"]
+
+        prev_environment = session_turn["intent"].get("environment", None)
+        current_turn_is_after_error = prev_environment is not None and prev_environment[
+            "type"
+        ].startswith("<failure>")
+
+        current_interaction_type = interaction_action["type"]
         # Skip any gotos that triggers act no match + search
         # We have already gone to the object from the find routine
-        if previous_session_turn is not None:
+        if previous_session_turn is not None and current_turn_is_after_error:
             previous_interaction_intent_type = previous_session_turn["intent"][
                 "physical_interaction"
             ]["type"]
@@ -258,7 +283,7 @@ class CDFTrajectoryCreator:
             should_skip_unecessary_goto = (
                 previous_interaction_intent_type == self._search_intent
                 and previous_interaction_action["type"] == self._goto_object_action_type
-                and interaction_action["type"] == self._goto_object_action_type
+                and current_interaction_type == self._goto_object_action_type
                 and entity_condition
             )
             if should_skip_unecessary_goto:
@@ -269,14 +294,14 @@ class CDFTrajectoryCreator:
             return (
                 (interaction_intent_type != self._search_intent and session_turn["idx"] > 0)
                 or interaction_action is None
-                or interaction_action["type"] != self._goto_object_action_type
+                or current_interaction_type != self._goto_object_action_type
             )
 
         if session_turn["idx"] == 0 and not add_goto_action_after_search:
             return (
                 interaction_action is None
                 or interaction_intent_type != self._act_intent
-                or interaction_action["type"] == self._goto_object_action_type
+                or current_interaction_type == self._goto_object_action_type
             )
         # Add only interaction actions, not from the search
         return interaction_intent_type != self._act_intent or interaction_action is None
@@ -339,19 +364,15 @@ class CDFTrajectoryCreator:
         missions = {}
         with progress:
             for session in sessions_for_split:
+                logger.info(session)
                 session_id = session.session_id
 
                 is_valid_session = self.check_if_session_is_successful(session_id)
-                if not is_valid_session:
+                high_level_key = self.process_highl_level_key(session_id=session_id)
+
+                if not is_valid_session or high_level_key is None:
                     progress.advance(task_id)
                     continue
-
-                high_level_key = self.process_highl_level_key(session_id=session_id)
-                instruction = random.choice(high_level_key.paraphrases)
-
-                # This should be unique across all missions
-                # The sessions_ids have the form T.DATE/MISSION-GOAL-RANDOM-STRING
-                mission_id = session_id.replace("/", "__")
 
                 # Get the session turns the session
                 session_turns = self._client.get_all_session_turns_for_session(session_id)
@@ -363,45 +384,72 @@ class CDFTrajectoryCreator:
                 s3_url = os.path.join(self._s3_sessions_bucket_url, session_id)
                 self._client.download_from_s3(local_path, s3_url, is_folder=True)
 
-                agent_interacted_objects_assets = (
-                    high_level_key.decoded_key.get_interacted_objects()
-                )
-
-                # Create the sequence of actions
                 try:
-                    for add_goto in (True, False):
-                        session_actions = self.create_actions_for_session(  # noqa: WPS220
-                            session_id=session_id,
-                            session_turns=session_turns,
-                            agent_interacted_objects_assets=agent_interacted_objects_assets,
-                            add_goto_action_after_search=add_goto,
-                        )
-                        missions[f"{mission_id}_add_goto{add_goto}"] = {  # noqa: WPS220
-                            "human_annotations": [
-                                {
-                                    "instructions": [
-                                        {
-                                            "instruction": instruction,
-                                            "actions": self._get_action_ids(session_actions),
-                                        }
-                                    ]
-                                }
-                            ],
-                            "actions": session_actions,
-                        }
+                    missions_dict = self.create_mission_for_session(
+                        high_level_key=high_level_key,
+                        session_id=session_id,
+                        session_turns=session_turns,
+                    )
                 except Exception:
-                    missions.pop(f"{mission_id}_add_gotoFalse", None)
-                    missions.pop(f"{mission_id}_add_gotoTrue", None)
                     logger.error(f"Could not create trajectory for {session_id}")
+
+                missions.update(missions_dict)
+
+                with open(self.output_json[split], "w") as fp:
+                    json.dump(missions, fp, indent=4)
 
                 progress.advance(task_id)
 
-        with open(self.output_json[split], "w") as fp:
+        with open(self.output_json[split], "w") as fp:  # noqa: WPS440
             json.dump(missions, fp, indent=4)
 
         shutil.rmtree(self.cache_path)
 
-    def create_actions_for_session(
+    def create_mission_for_session(
+        self, high_level_key: HighLevelKey, session_id: str, session_turns: list[Any]
+    ) -> dict[str, Any]:
+        """Create all missions for a trajectory."""
+        # This should be unique across all missions
+        # The sessions_ids have the form T.DATE/MISSION-GOAL-RANDOM-STRING
+        mission_id = session_id.replace("/", "__")
+
+        agent_interacted_objects_assets = high_level_key.decoded_key.get_interacted_objects()
+        instruction = random.choice(high_level_key.paraphrases)
+
+        missions_dict = {}
+        for add_goto in (True, False):
+            session_actions = self.create_actions_for_session(
+                session_id=session_id,
+                session_turns=session_turns,
+                agent_interacted_objects_assets=agent_interacted_objects_assets,
+                add_goto_action_after_search=add_goto,
+            )
+            if not session_actions:
+                continue
+
+            # make sure that when add_goto = False the first action is not a goto
+            if not add_goto:
+                first_action = session_actions[0]
+                first_action_type = first_action["type"]
+                if first_action_type.lower() == "goto":
+                    session_actions = session_actions[1:]
+
+            missions_dict[f"{mission_id}_add_goto{add_goto}"] = {
+                "human_annotations": [
+                    {
+                        "instructions": [
+                            {
+                                "instruction": instruction,
+                                "actions": self._get_action_ids(session_actions),
+                            }
+                        ]
+                    }
+                ],
+                "actions": session_actions,
+            }
+        return missions_dict
+
+    def create_actions_for_session(  # noqa: WPS210, WPS231
         self,
         session_id: str,
         session_turns: list[Any],
@@ -409,14 +457,15 @@ class CDFTrajectoryCreator:
         add_goto_action_after_search: bool = False,
     ) -> list[dict[str, Any]]:
         """Create all actions for a trajectory."""
-        actions = []
+        actions: list[dict[str, Any]] = []
         action_id = 0
         previous_session_turn = None
-        for session_turn_dict in session_turns:
+        for idx, session_turn_dict in enumerate(session_turns):
             session_turn = json.loads(session_turn_dict["turn"])
             should_skip_turn = self.should_skip_session_turn_for_trajectory(
                 session_turn=session_turn,
                 previous_session_turn=previous_session_turn,
+                is_last_turn=idx == len(session_turns) - 1,
                 add_goto_action_after_search=add_goto_action_after_search,
             )
 
@@ -438,27 +487,45 @@ class CDFTrajectoryCreator:
             action_metadata = self.get_metadata_from_raw_action(decoded_action)
 
             image_features_path = os.path.join(self.cache_path, session_id, f"{prediction_id}.pt")
-            image_features = torch.load(image_features_path)
+            if not os.path.exists(image_features_path):
+                logger.warning(
+                    f"{image_features_path} does not exist, maybe the session is not on s3"
+                )
+                continue
 
+            image_features = torch.load(image_features_path, map_location=torch.device("cpu"))
             frame_index = action_metadata["frame_index"] - 1
             object_index = action_metadata["object_index"] - 1
-
             frame_features = self._format_feature_dict(
                 image_features[frame_index], image_name=f"{prediction_id}.png"
             )
-
-            torch.save(
-                frame_features, os.path.join(self.output_feature_directory, f"{prediction_id}.pt")
-            )
-
             entity = image_features[frame_index]["entity_labels"][object_index]
 
             # Did the agent interacted with the object? If yes add in the trajectory data
             object_asset = self._agent_interacted_with_object_entity(
                 entity, agent_interacted_objects_assets
             )
+
             if object_asset is None:
-                continue
+                object_asset = self._manually_fix_object_asset(
+                    session_id=session_id,
+                    prediction_id=prediction_id,
+                    entity=entity,
+                    agent_interacted_objects_assets=agent_interacted_objects_assets,
+                )
+                if object_asset is None:
+                    return []
+
+            if actions:
+                previous_action = actions[-1]
+                previous_action_type = previous_action["type"]
+
+                if previous_action_type.lower() == action_metadata["action_type"] == "goto":
+                    continue
+
+            torch.save(
+                frame_features, os.path.join(self.output_feature_directory, f"{prediction_id}.pt")
+            )
 
             action_dict = self.make_action(
                 action_id=action_id,
@@ -581,8 +648,13 @@ class CDFTrajectoryCreator:
 
     def process_highl_level_key(self, session_id: str) -> HighLevelKey:
         """Get the high level description from the session id."""
-        # the session had has the following form: T.DATE/high-level-key
-        high_level_key = self._high_level_key_processor(session_id.split("/")[1])
+        try:
+            # the session had has the following form: T.DATE/high-level-key
+            high_level_key = self._high_level_key_processor(session_id.split("/")[1])
+        except Exception:
+            logger.error(f"Could not convert the session id {session_id} to a high level key")
+            return None
+
         return high_level_key
 
     def extract_index_from_special_token(self, token: str) -> int:
@@ -625,6 +697,15 @@ class CDFTrajectoryCreator:
     def _agent_interacted_with_object_entity(
         self, entity: str, agent_interacted_objects_assets: list[str]
     ) -> Optional[str]:
+        if entity.lower() == "red button":
+            return "ColorChanger_Button_Red"
+
+        elif entity.lower() == "green button":
+            return "ColorChanger_Button_Green"
+
+        elif entity.lower() == "blue button":
+            return "ColorChanger_Button_Blue"
+
         for object_asset, object_label in self._assets_to_labels.items():
             agent_interacted_with_object = (
                 object_label.lower() == entity.lower()
@@ -633,6 +714,34 @@ class CDFTrajectoryCreator:
             if agent_interacted_with_object:
                 return object_asset
         return None
+
+    def _manually_fix_object_asset(  # noqa: WPS231
+        self,
+        session_id: str,
+        prediction_id: str,
+        entity: str,
+        agent_interacted_objects_assets: list[str],
+    ) -> Optional[str]:
+        if entity.lower() == "bowl" and "FoodPlate_01" in agent_interacted_objects_assets:
+            object_asset = "FoodPlate_01"
+        elif entity.lower() == "plate" and "Bowl_01" in agent_interacted_objects_assets:
+            object_asset = "Bowl_01"
+        else:
+            msg = f"I AM ABOUT TO SKIP session {session_id} because in {prediction_id} the {entity} was not found in {agent_interacted_objects_assets}"
+            logger.warning(msg)
+            while True:
+                candidate_asset = input(  # noqa: WPS421
+                    "Enter an object asset. Write none if you want to skip the session: "
+                )
+                if candidate_asset == "none":
+                    logger.warning("Skipping the session")
+                    return None
+                elif candidate_asset not in self._assets_to_labels:
+                    logger.warning(f"{candidate_asset} is not in the arena assets")
+                else:
+                    object_asset = candidate_asset
+                    break
+        return object_asset
 
 
 if __name__ == "__main__":
@@ -662,6 +771,19 @@ if __name__ == "__main__":
         default="trajectories_features",
     )
 
+    parser.add_argument(
+        "--failed_sessions_txt",
+        help="Path to output failed sessions txt file",
+        default="failed_sessions.txt",
+    )
+
+    parser.add_argument(
+        "--upsample_factor",
+        help="Upsample factor for the trajectories",
+        type=int,
+        default=100,
+    )
+
     args = parser.parse_args()
 
     CDFTrajectoryCreator(
@@ -669,4 +791,6 @@ if __name__ == "__main__":
         train_output_json=args.train_output_json,
         valid_output_json=args.valid_output_json,
         output_feature_directory=args.output_feature_directory,
+        upsample_factor=args.upsample_factor,
+        failed_sessions_txt=args.failed_sessions_txt,
     ).run()

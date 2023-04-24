@@ -144,6 +144,12 @@ def instruction_is_goto_room(
     )
 
 
+def instruction_is_look(instruction_dict: dict[str, Any], actions: list[dict[str, Any]]) -> bool:
+    """Determine whether the instruction is a look instruction."""
+    action_types = get_action_types_for_instruction(instruction_dict, actions)
+    return all([len(action_types) == 1, action_types[0].lower() == "look"])
+
+
 class TrajectoryInstructionProcessor:
     """Preprocess the instruction instances for the human annotations."""
 
@@ -167,15 +173,18 @@ class TrajectoryInstructionProcessor:
             for instruction in human_annotation["instructions"]:
                 if self.skip_goto_rooms and instruction_is_goto_room(instruction, actions):
                     continue
+
                 action_types = get_action_types_for_instruction(instruction, actions)
 
-                # Ignore look around actions that have spatial information
-                if instruction_has_spatial_info(instruction) and "Look" in action_types:
-                    continue
-
                 # Ignore look around actions if they are the first action in an instruction
-                elif action_types[0] == "Look":
+                if action_types[0] == "Look":
+                    # Ignore look around actions that have spatial information
+                    if instruction_has_spatial_info(instruction):
+                        continue  # noqa: WPS220
                     instruction["actions"] = instruction["actions"][1:]
+
+                if "Look" in action_types[1:]:
+                    continue
 
                 instruction_dict = create_instruction_dict(
                     instruction=instruction,
@@ -222,6 +231,9 @@ class SyntheticIntructionsPreprocessor:
         for annot_idx, synthetic_annotation in enumerate(synthetic_annotations):
             for instruction in synthetic_annotation["instructions"]:
                 if self.skip_goto_rooms and instruction_is_goto_room(instruction, actions):
+                    continue
+
+                if instruction_is_look(instruction, actions):
                     continue
 
                 instruction_dict = create_instruction_dict(

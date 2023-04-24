@@ -27,7 +27,7 @@ def parse_deconstructed_highlevel_key_parts(  # noqa: WPS231
     """
     # If the part does not contain any dashes then this is a key on its own
     # Initialize it to true
-    if "_" not in part:
+    if "_" not in part and part_idx != len(parts) - 1:
         decoded_key_values[part] = True
 
     # If the part does contain dashes then it contains a value for the previous key and the name of the current key
@@ -43,7 +43,11 @@ def parse_deconstructed_highlevel_key_parts(  # noqa: WPS231
 
     elif part_idx == len(parts) - 1:
         if "_" not in part:
-            decoded_key_values[part] = True
+            if "-" in part:
+                decoded_key_values[part] = True
+            else:
+                previous_key = get_previous_key(parts[part_idx - 1])
+                decoded_key_values[previous_key] = part
         else:
             previous_key = get_previous_key(parts[part_idx - 1])
             # If the last part in the highlevel key has also a decode key include it
@@ -68,6 +72,12 @@ class DecodedKey(BaseModel):
     interaction_object: Optional[str] = Field(default=None, alias="interaction-object")
     target_object: Optional[str] = Field(default=None, alias="target-object")
     target_object_color: Optional[str] = Field(default=None, alias="target-object-color")
+    target_object_is_ambiguous: Optional[bool] = Field(
+        default=None, alias="target-object-is-ambiguous"
+    )
+
+    stacked_object: Optional[str] = Field(default=None, alias="stacked-object")
+    stacked_object_color: Optional[str] = Field(default=None, alias="stacked-object-color")
 
     from_receptacle: Optional[str] = Field(default=None, alias="from-receptacle")
     from_receptacle_color: Optional[str] = Field(default=None, alias="from-receptacle-color")
@@ -89,7 +99,7 @@ class DecodedKey(BaseModel):
     converted_object: Optional[str] = Field(default=None, alias="converted-object")
     converted_object_color: Optional[str] = Field(default=None, alias="converted-object-color")
 
-    @validator("interaction_object", "target_object", "converted_object")
+    @validator("interaction_object", "target_object", "converted_object", "stacked_object")
     @classmethod
     def validate_objects_in_key(cls, field_value: str) -> str:
         """Verify that the object fields are defined in the arena."""
@@ -111,11 +121,16 @@ class DecodedKey(BaseModel):
     @classmethod
     def from_raw_string(cls, highlevel_key: str) -> "DecodedKey":
         """Parse a raw highlevel key."""
+        decoded_key_values: dict[str, Any] = {"raw_high_level_key": highlevel_key}
+
         highlevel_key = "-".join(highlevel_key.split("-")[:-1])
 
-        parts = highlevel_key.split("--")
+        if "target-object-is-ambiguous" in highlevel_key:
+            decoded_key_values["target-object-is-ambiguous"] = True
+            highlevel_key = highlevel_key.replace("target-object-is-ambiguous", "")
+            highlevel_key = highlevel_key.replace("__", "_")
 
-        decoded_key_values: dict[str, Any] = {"raw_high_level_key": highlevel_key}
+        parts = highlevel_key.split("--")
         for part_idx, part in enumerate(parts):
             decoded_key_values = parse_deconstructed_highlevel_key_parts(
                 decoded_key_values=decoded_key_values, part=part, parts=parts, part_idx=part_idx
@@ -140,7 +155,6 @@ class DecodedKey(BaseModel):
         if can_replace_to_reptacle_to_container:
             decoded_key_values["to-container"] = decoded_key_values["to-receptacle"]
             decoded_key_values["to-receptacle"] = None
-
         return cls(**decoded_key_values)
 
     def field_has_object_id(self, field: str) -> bool:
@@ -153,6 +167,7 @@ class DecodedKey(BaseModel):
             "converted_object",
             "to_container",
             "from_container",
+            "stacked_object",
         }
 
     def get_interacted_objects(self) -> list[str]:
@@ -214,8 +229,13 @@ class HighLevelKeyProcessor:
         decoded_key = DecodedKey.from_raw_string(highlevel_key=highlevel_key)
 
         template_metadata = OBJECT_META_TEMPLATE[decoded_key.action]
+
         if decoded_key.action == "interact":
-            template_metadata = template_metadata[decoded_key.interaction_object]
+            secondary_key = decoded_key.interaction_object
+            if secondary_key == "YesterdayMachine_01" and decoded_key.target_object == "Carrot_01":
+                secondary_key = "YesterdayMachine_01_from_Carrot"
+
+            template_metadata = template_metadata[secondary_key]
 
         for decoded_key_field in self.decoded_key_fields:
             decoded_key_value = getattr(decoded_key, decoded_key_field)
@@ -228,16 +248,20 @@ class HighLevelKeyProcessor:
             else:
                 template_metadata[decoded_key_field] = decoded_key_value
 
-        formatted_paraphrases = self.get_paraphrases(template_metadata)
+        formatted_paraphrases = self.get_paraphrases(template_metadata, decoded_key=decoded_key)
         return HighLevelKey(
             decoded_key=decoded_key,
             paraphrases=formatted_paraphrases,
             high_level_description="",
         )
 
-    def get_paraphrases(self, template_metadata: dict[str, Any]) -> list[str]:  # noqa: WPS231
+    def get_paraphrases(  # noqa: WPS231
+        self, template_metadata: dict[str, Any], decoded_key: DecodedKey
+    ) -> list[str]:
         """Get the instruction paraphrases for a highlevel key."""
         paraphrases = template_metadata["paraphrases"]
+
+        is_ambiguous = decoded_key.target_object_is_ambiguous
 
         formatted_paraphrases = []
         for paraphrase in paraphrases:
@@ -253,6 +277,10 @@ class HighLevelKeyProcessor:
 
             # If any field that needs formatting in the paraphrased template is None, skip the paraphrasing template
             if any([formatting_value is None for formatting_value in formatting_dict.values()]):
+                continue
+
+            # Disambiguate only by color
+            if is_ambiguous and formatting_dict.get("target_object_color", None) is None:
                 continue
 
             formatted_paraphrase = paraphrase.format(**formatting_dict).lower()

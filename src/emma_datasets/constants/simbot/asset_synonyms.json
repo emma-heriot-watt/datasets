@@ -30,7 +30,8 @@
 		"Happy Computer",
 		"Harpie Machine",
 		"Sad Machine",
-		"Sad Computer"
+		"Sad Computer",
+		"Computer"
 	],
 	"V_Monitor_Gravity": [
 		"Computer",
@@ -402,7 +403,7 @@
 		"Tesla Boil",
 		"Boil"
 	],
-	"Record_01": ["Record", "Disk", "Vinyl"],
+	"Record_01": ["Record", "Record", "Record Disk", "Music Disk", "Vinyl"],
 	"SM_Prop_PalletStack_02": ["Pallets"],
 	"PortalGenerator": [
 		"Generator",
@@ -668,7 +669,7 @@
 	],
 	"SandwichHalf_01": ["Sandwich"],
 	"PBJ_Sandwich": ["Sandwich", "Peanut Butter and Jelly Sandwich"],
-	"Burger_04": ["Burger", "Sandwich"],
+	"Burger_04": ["Burger", "Hamburger", "Cheeseburger"],
 	"BananaBunch_01": ["Banana"],
 	"Banana_01": ["Banana"],
 	"Table_Metal_01": ["Table"],
@@ -767,22 +768,14 @@
 	"PieFruit_01": ["Pie", "Fruit Pie"],
 	"CoffeeMug_Yellow": ["Mug", "Coffee Mug", "Coffee Cup", "Cup"],
 	"CoffeeCup_Open_Empty_02": [
-		"Mug",
-		"Coffee Mug",
 		"Coffee Cup",
 		"Cup",
-		"Empty Mug",
-		"Empty Coffee Mug",
 		"Empty Coffee Cup",
 		"Empty Cup"
 	],
 	"CoffeeCup_Open_Empty_01": [
-		"Mug",
-		"Coffee Mug",
 		"Coffee Cup",
 		"Cup",
-		"Empty Mug",
-		"Empty Coffee Mug",
 		"Empty Coffee Cup",
 		"Empty Cup"
 	],

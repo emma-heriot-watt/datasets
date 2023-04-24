@@ -230,8 +230,14 @@ class BaseParaphraser:
             allowed_prefix = True
         else:
             allowed_prefix = verb not in self._no_prefix_instruction_options
-        if allowed_prefix and random.random() < 1 / 2:
-            instruction = self._add_prefix(instruction, random.choice(self._prefix_options))
+        if allowed_prefix:
+            # Add the prefix "go", e.g. "Go get the bowl"
+            if self._action_type != "goto" and random.random() < 1 / 2:
+                instruction = self._add_prefix(instruction, "go")
+
+            # Add a random prefix, e.g. "I need you to go get the bowl"
+            if random.random() < 1 / 2:
+                instruction = self._add_prefix(instruction, random.choice(self._prefix_options))
         return instruction.lower()
 
     def _add_prefix(self, instruction: str, prefix: str) -> str:
@@ -641,18 +647,20 @@ class PourParaphraser(BaseParaphraser):
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="pour")
         self._instruction_options = [
-            "pour {pourable_object} {preposition} the",
-            "pour the {pourable_object} {preposition} the",
-            "pour some {pourable_object} {preposition} the",
-            "put {pourable_object} {preposition} the",
-            "put the {pourable_object} {preposition} the",
-            "put some {pourable_object} {preposition} the",
-            "pour {pourable_object} from the {inventory_object} {preposition} the",
-            "pour the {pourable_object} from the {inventory_object} {preposition} the",
-            "pour some {pourable_object} from the {inventory_object} {preposition} the",
-            "put {pourable_object} from the {inventory_object} {preposition} the",
-            "put the {pourable_object} from the {inventory_object} {preposition} the",
-            "put some {pourable_object} from the {inventory_object} {preposition} the",
+            "pour {pourable_object} {preposition}",
+            "pour the {pourable_object} {preposition}",
+            "pour some {pourable_object} {preposition}",
+            "put {pourable_object} {preposition}",
+            "put the {pourable_object} {preposition}",
+            "put some {pourable_object} {preposition}",
+            "pour {pourable_object} from the {inventory_object} {preposition}",
+            "pour the {pourable_object} from the {inventory_object} {preposition}",
+            "pour some {pourable_object} from the {inventory_object} {preposition}",
+            "put {pourable_object} from the {inventory_object} {preposition}",
+            "put the {pourable_object} from the {inventory_object} {preposition}",
+            "put some {pourable_object} from the {inventory_object} {preposition}",
+            "fill",
+            "fill up",
         ]
 
         self._available_templates = {
@@ -694,15 +702,16 @@ class PourParaphraser(BaseParaphraser):
         if inventory_object_id is None:
             raise AssertionError("PourParaphraser requires inventory.")
 
+        pourable_object = random.choice(self._pourable_inventory_mapping[inventory_object_id])
+
         instruction_extra_slots = {
-            "pourable_object": random.choice(
-                self._pourable_inventory_mapping[inventory_object_id]
-            ),
+            "pourable_object": pourable_object,
             "inventory_object": random.choice(self.object_synonyms[inventory_object_id]),
             "preposition": random.choice(self._prepositions),
         }
         instruction = instruction.format(**instruction_extra_slots)
-
+        if "fill " in instruction:
+            instruction = self._add_suffix(instruction, f"with {pourable_object}")
         return instruction
 
 
@@ -746,7 +755,7 @@ class FillParaphraser(BaseParaphraser):
 
     def __init__(self, object_synonyms: dict[str, list[str]]) -> None:
         super().__init__(object_synonyms=object_synonyms, action_type="fill")
-        self._instruction_options = ["fill"]
+        self._instruction_options = ["fill", "fill up"]
         self._suffix_options = [
             "with water",
             "with water from the sink",
