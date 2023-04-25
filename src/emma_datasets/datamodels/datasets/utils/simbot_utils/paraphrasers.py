@@ -505,7 +505,32 @@ class PlaceParaphraser(BaseParaphraser):
             "set the {pickable_object} at",
             "set the {pickable_object} on",
         ]
-
+        self._put_down_classes = [
+            "Counter Top",
+            "Color Changer",
+            "Counter",
+            "Desk",
+            "Everything's A Carrot Machine",
+            "Embiggenator",
+            "Gravity Pad",
+            "Laser Shelf",
+            "Freeze Ray Shelf",
+            "Packing Box",
+            "Table",
+            "Cabinet",
+            "Drawer",
+            "Fridge",
+            "Freezer",
+        ]
+        self._put_down_templates = [
+            "leave the {pickable_object}.",
+            "leave down the {pickable_object}.",
+            "place the {pickable_object}.",
+            "put down the {pickable_object}.",
+            "put the {pickable_object} down.",
+            "set down the {pickable_object}.",
+            "set the {pickable_object} down.",
+        ]
         self._available_templates = {
             "place": self._verb_templates,
             "place_color": self._verb_color_templates,
@@ -521,18 +546,25 @@ class PlaceParaphraser(BaseParaphraser):
         inventory_object_id: Optional[str] = None,
     ) -> str:
         """Get a place instruction."""
-        available_types = ["place"]
-        object_color = attributes.color
-        if object_color is not None:
-            available_types.append("place_color")
-
-        object_location = attributes.location
-        if object_location is not None:
-            available_types.append("place_location")
-
-        instruction = self._get_instruction(
-            object_id=object_id, attributes=attributes, available_types=available_types
+        object_name = get_object_readable_name_from_object_id(
+            object_id=object_id,
+            object_assets_to_names=self._assets_to_labels,
+            special_name_cases=self._special_name_cases,
         )
+        if random.random() < 0.1 and object_name in self._put_down_classes:  # noqa: WPS459
+            instruction = random.choice(self._put_down_templates)
+        else:
+            available_types = ["place"]
+            object_color = attributes.color
+            if object_color is not None:
+                available_types.append("place_color")
+
+            object_location = attributes.location
+            if object_location is not None:
+                available_types.append("place_location")
+            instruction = self._get_instruction(
+                object_id=object_id, attributes=attributes, available_types=available_types
+            )
 
         if inventory_object_id is None:
             raise AssertionError("PlaceParaphraser requires inventory.")
