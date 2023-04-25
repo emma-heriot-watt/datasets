@@ -168,7 +168,8 @@ OBJECT_META_TEMPLATE = MappingProxyType(
                 "put the {target_object} into the {to_receptacle}",
                 "put {target_object}",
                 "put {target_object} in the {to_receptacle}",
-                "put {target_object} into the {to_receptacle}put the {target_object} on the {to_receptacle}",
+                "put {target_object} into the {to_receptacle}",
+                "put the {target_object} on the {to_receptacle}",
             ],
         },
         "fill": {
