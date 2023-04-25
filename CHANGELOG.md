@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.34.3](https://github.com/emma-simbot/datasets/compare/v1.34.2...v1.34.3) (2023-04-25)
+
+
+### Bug Fixes
+
+* Comma missing in templates ([#667](https://github.com/emma-simbot/datasets/issues/667)) ([428b9f5](https://github.com/emma-simbot/datasets/commit/428b9f5eb522cfd3d60c5b35fef1aa78f3b76c09))
+
 ## [1.34.2](https://github.com/emma-simbot/datasets/compare/v1.34.1...v1.34.2) (2023-04-24)
 
 
