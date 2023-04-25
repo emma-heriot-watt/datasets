@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.34.4](https://github.com/emma-simbot/datasets/compare/v1.34.3...v1.34.4) (2023-04-25)
+
+
+### Bug Fixes
+
+* Put down paraphrases for place ([#668](https://github.com/emma-simbot/datasets/issues/668)) ([42095b7](https://github.com/emma-simbot/datasets/commit/42095b76ec8eb66968b5327f7a1d9c099f269a24))
+
 ## [1.34.3](https://github.com/emma-simbot/datasets/compare/v1.34.2...v1.34.3) (2023-04-25)
 
 
