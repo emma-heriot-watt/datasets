@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.34.5](https://github.com/emma-simbot/datasets/compare/v1.34.4...v1.34.5) (2023-04-26)
+
+
+### Bug Fixes
+
+* Cereal was not an inventory for pour ([#670](https://github.com/emma-simbot/datasets/issues/670)) ([1e3df25](https://github.com/emma-simbot/datasets/commit/1e3df25f2b1e3c85c44bf732aa65d62912888ef3))
+
 ## [1.34.4](https://github.com/emma-simbot/datasets/compare/v1.34.3...v1.34.4) (2023-04-25)
 
 
