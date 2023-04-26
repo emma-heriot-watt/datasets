@@ -39,6 +39,7 @@ class InventoryObjectGenerator:
                 "Bowl_01",
                 "MilkCarton_01",
                 "CoffeeBeans_01",
+                "Cereal_Box_01",
             ],
             "clean": ["FoodPlate_01"],
             "fill": ["CoffeeMug_Yellow", "CoffeeMug_Boss", "CoffeePot_01", "Bowl_01"],
@@ -703,7 +704,7 @@ class PourParaphraser(BaseParaphraser):
         self.requires_inventory = True
         self._pourable_inventory_mapping = {
             "Bowl_01": ["water", "milk", "cereal"],
-            "Cereal_Box_01": ["cereal"],
+            "Cereal_Box_01": ["cereal", "cereal", "cereal box"],
             "CoffeeMug_Boss": ["water", "coffee"],
             "CoffeeMug_Yellow": ["water", "coffee"],
             "CoffeePot_01": ["water", "coffee"],
