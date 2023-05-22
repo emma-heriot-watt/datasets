@@ -9,7 +9,7 @@ settings = Settings()
 
 ARENA_JSON = settings.paths.constants.joinpath("simbot", "arena_definitions.json")
 SYNTHETIC_JSON = settings.paths.constants.joinpath("simbot", "low_level_actions_templates.json")
-OBJECT_ASSET_SYNONYMS_JSON = settings.paths.constants.joinpath("simbot/asset_synonyms.json")
+OBJECT_ASSET_SYNONYMS_JSON = settings.paths.constants.joinpath("simbot/asset_synonyms_emnlp.json")
 CLASS_THRESHOLDS_JSON = settings.paths.constants.joinpath("simbot/class_thresholds2.json")
 OBJECT_MANIFEST_JSON = settings.paths.constants.joinpath("simbot/ObjectManifest.json")
 

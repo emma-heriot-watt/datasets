@@ -176,19 +176,20 @@ class BaseParaphraser:
             "{verb} the {object} on your {location}.",
         ]
         self._prefix_options = [
-            "I would like to",
-            "I need to",
-            "I need you to",
-            "I am telling you to",
-            "you should",
-            "we need to",
-            "let's",
-            "can you",
-            "could you",
-            "okay",
-            "okay now",
+            # "I would like to",
+            # "I need to",
+            # "I need you to",
+            # "I am telling you to",
+            # "you should",
+            # "we need to",
+            # "let's",
+            # "can you",
+            # "could you",
+            # "okay",
+            # "okay now",
+            "robot",
             "now",
-            "please",
+            # "please",
         ]
         self.requires_inventory = False
 
@@ -237,7 +238,7 @@ class BaseParaphraser:
                 instruction = self._add_prefix(instruction, "go")
 
             # Add a random prefix, e.g. "I need you to go get the bowl"
-            if random.random() < 1 / 2:
+            if random.random() < 0.05:  # noqa: WPS432, WPS459
                 instruction = self._add_prefix(instruction, random.choice(self._prefix_options))
         return instruction.lower()
 
@@ -505,6 +506,13 @@ class PlaceParaphraser(BaseParaphraser):
             "insert the {pickable_object} in",
             "set the {pickable_object} at",
             "set the {pickable_object} on",
+            "deliver the {pickable_object} to",
+            "deliver the {pickable_object} in",
+            "deliver the {pickable_object} on",
+            "deliver it to",
+            "deliver it in",
+            "deliver it on",
+            "deliver to",
         ]
         self._put_down_classes = [
             "Counter Top",
