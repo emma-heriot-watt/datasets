@@ -7,7 +7,7 @@ authors = [
 	"Alessandro Suglia <alessandro.suglia@gmail.com>",
 ]
 readme = "README.md"
-repository = "https://github.com/emma-simbot/datasets"
+repository = "https://github.com/emma-heriot-watt/datasets"
 
 packages = [{ include = "emma_datasets", from = "src" }]
 
@@ -40,29 +40,8 @@ cmd = "pytest --cov=src -m 'not slow'"
 help = "Run all the tests and get the coverage"
 cmd = "pytest -v --junitxml=pytest.xml --cov=src -m 'not slow and not multiprocessing'"
 
-[tool.poe.tasks.update-torch-cuda]
-## See https://github.com/python-poetry/poetry/issues/2543
-help = "Update torch to use the latest CUDA version"
-shell = "python scripts/update_torch_cuda.py"
-
-[tool.poe.tasks.outdated]
-help = 'Show all outdated top-level dependencies'
-shell = """
-			poetry show --outdated | grep --file=<(poetry show --tree | grep '^\\w' | sed 's/^\\([^ ]*\\).*/^\\1\\\\s/')
-		"""
-interpreter = "bash"
-
-
-[[tool.poe.tasks.postinstall]]
-help = 'Download the spacy model if Spacy is installed (ignore if not)'
-shell = """
-echo -e "from contextlib import suppress\nwith suppress(ModuleNotFoundError):\n  from spacy.cli.download import download\n  download('en_core_web_sm')" | python3 -
-"""
-interpreter = "bash"
-
-
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.9,<3.11"
 pydantic = { extras = ["dotenv"], version = "^1.8.2" }
 rich = "^12.4.4"
 numpy = "^1.22.3"
@@ -75,14 +54,11 @@ rich-click = { extras = ["typer"], version = "^1.4" }
 datasets = "^2.2.2"
 requests = "^2.27.1"
 pandas = "^1.4.3"
-emma-common = { git = "https://github.com/emma-simbot/common" }
+emma-common = { git = "https://github.com/emma-heriot-watt/common" }
 faiss-cpu = "^1.7.3"
-
-[tool.poetry.group.spacy.dependencies]
-spacy = "^3.4.1"
-
-[tool.poetry.group.torch.dependencies]
 torch = "^1.11.0"
+spacy = "3.7.2"
+en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl" }
 
 [tool.poetry.group.dev.dependencies]
 wemake-python-styleguide = "^0.16.1"
