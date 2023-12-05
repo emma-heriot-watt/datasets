@@ -1,0 +1,280 @@
+{
+	"info": {
+		"description": "This is v2.0 of the VQA dataset.",
+		"url": "http://visualqa.org",
+		"version": "2.0",
+		"year": 2017,
+		"contributor": "VQA Team",
+		"date_created": "2017-04-26 17:00:44"
+	},
+	"task_type": "Open-Ended",
+	"data_type": "mscoco",
+	"license": {
+		"url": "http://creativecommons.org/licenses/by/4.0/",
+		"name": "Creative Commons Attribution 4.0 International License"
+	},
+	"data_subtype": "val2014",
+	"questions": [
+		{
+			"image_id": 6818,
+			"question": "What color is the wall?",
+			"question_id": 6818000
+		},
+		{
+			"image_id": 6818,
+			"question": "Is there a window?",
+			"question_id": 6818001
+		},
+		{
+			"image_id": 6818,
+			"question": "What room is this?",
+			"question_id": 6818002
+		},
+		{
+			"image_id": 403385,
+			"question": "Does this bathroom need repair?",
+			"question_id": 403385000
+		},
+		{
+			"image_id": 403385,
+			"question": "Is there enough toilet tissue in the bathroom?",
+			"question_id": 403385001
+		},
+		{
+			"image_id": 403385,
+			"question": "Is there a mop in the bathroom?",
+			"question_id": 403385002
+		},
+		{
+			"image_id": 37777,
+			"question": "What room is this?",
+			"question_id": 37777000
+		},
+		{
+			"image_id": 37777,
+			"question": "How many types of fruit can be seen?",
+			"question_id": 37777001
+		},
+		{
+			"image_id": 37777,
+			"question": "How many oranges are there?",
+			"question_id": 37777002
+		},
+		{
+			"image_id": 174482,
+			"question": "How many tires are visible?",
+			"question_id": 174482000
+		},
+		{
+			"image_id": 174482,
+			"question": "Is the bike locked up?",
+			"question_id": 174482001
+		},
+		{
+			"image_id": 174482,
+			"question": "What is the bicycle leaning against?",
+			"question_id": 174482002
+		},
+		{
+			"image_id": 174482,
+			"question": "What color is the bike?",
+			"question_id": 174482003
+		},
+		{
+			"image_id": 174482,
+			"question": "Is the U-Lock locked to the bike stand?",
+			"question_id": 174482004
+		},
+		{
+			"image_id": 174482,
+			"question": "How many bikes are pictured?",
+			"question_id": 174482005
+		},
+		{
+			"image_id": 174482,
+			"question": "What color is the bicycle?",
+			"question_id": 174482006
+		},
+		{
+			"image_id": 174482,
+			"question": "Is the bicycle in motion?",
+			"question_id": 174482007
+		},
+		{
+			"image_id": 46378,
+			"question": "Is the bird alive?",
+			"question_id": 46378000
+		},
+		{
+			"image_id": 46378,
+			"question": "What is the cat eating?",
+			"question_id": 46378001
+		},
+		{
+			"image_id": 46378,
+			"question": "Is the cat fluffy?",
+			"question_id": 46378002
+		},
+		{
+			"image_id": 517069,
+			"question": "Is someone sitting on the bench?",
+			"question_id": 517069000
+		},
+		{
+			"image_id": 517069,
+			"question": "Is it raining?",
+			"question_id": 517069001
+		},
+		{
+			"image_id": 517069,
+			"question": "What are they waiting for?",
+			"question_id": 517069002
+		},
+		{
+			"image_id": 517069,
+			"question": "Are they going to the same place?",
+			"question_id": 517069003
+		},
+		{
+			"image_id": 517069,
+			"question": "Is the bench a work of art?",
+			"question_id": 517069004
+		},
+		{
+			"image_id": 179765,
+			"question": "Does this vehicle have a proper windshield?",
+			"question_id": 179765000
+		},
+		{
+			"image_id": 179765,
+			"question": "What brand of motorcycle is this?",
+			"question_id": 179765001
+		},
+		{
+			"image_id": 179765,
+			"question": "How many bikes are there?",
+			"question_id": 179765002
+		},
+		{
+			"image_id": 182417,
+			"question": "What color is the plate?",
+			"question_id": 182417000
+		},
+		{
+			"image_id": 182417,
+			"question": "Will this cake be delicious?",
+			"question_id": 182417001
+		},
+		{
+			"image_id": 182417,
+			"question": "What utensil is clearly shown?",
+			"question_id": 182417002
+		},
+		{
+			"image_id": 182417,
+			"question": "Is the topping made from sugar?",
+			"question_id": 182417003
+		},
+		{
+			"image_id": 182417,
+			"question": "Is this healthy?",
+			"question_id": 182417004
+		},
+		{
+			"image_id": 190236,
+			"question": "How many screens are there?",
+			"question_id": 190236000
+		},
+		{
+			"image_id": 190236,
+			"question": "What company is this?",
+			"question_id": 190236001
+		},
+		{
+			"image_id": 190236,
+			"question": "Is this an enclosed office?",
+			"question_id": 190236002
+		},
+		{
+			"image_id": 190236,
+			"question": "How many electronic devices are there?",
+			"question_id": 190236003
+		},
+		{
+			"image_id": 331352,
+			"question": "Where is the sink?",
+			"question_id": 331352000
+		},
+		{
+			"image_id": 331352,
+			"question": "Is the toilet electric?",
+			"question_id": 331352001
+		},
+		{
+			"image_id": 331352,
+			"question": "How many slippers?",
+			"question_id": 331352002
+		},
+		{
+			"image_id": 87038,
+			"question": "Is the skateboarder falling?",
+			"question_id": 87038000
+		},
+		{
+			"image_id": 87038,
+			"question": "What sport is this?",
+			"question_id": 87038001
+		},
+		{
+			"image_id": 87038,
+			"question": "What is the person in the red hoodie doing?",
+			"question_id": 87038002
+		},
+		{
+			"image_id": 87038,
+			"question": "Is this a skate park?",
+			"question_id": 87038003
+		},
+		{ "image_id": 87038, "question": "Is it sunny?", "question_id": 87038004 },
+		{
+			"image_id": 480985,
+			"question": "How many wheels are shown on the bike?",
+			"question_id": 480985000
+		},
+		{
+			"image_id": 480985,
+			"question": "What color is the bike?",
+			"question_id": 480985001
+		},
+		{
+			"image_id": 480985,
+			"question": "What brand bike?",
+			"question_id": 480985002
+		},
+		{
+			"image_id": 252219,
+			"question": "Does the crosswalk sign indicate that it is safe to cross?",
+			"question_id": 252219000
+		},
+		{
+			"image_id": 252219,
+			"question": "Which person looks the smelliest?",
+			"question_id": 252219001
+		},
+		{
+			"image_id": 252219,
+			"question": "How many people are barefooted in the picture?",
+			"question_id": 252219002
+		},
+		{
+			"image_id": 252219,
+			"question": "How many parking meters are there?",
+			"question_id": 252219003
+		},
+		{
+			"image_id": 252219,
+			"question": "What is the guy bending over looking at?",
+			"question_id": 252219004
+		}
+	]
+}

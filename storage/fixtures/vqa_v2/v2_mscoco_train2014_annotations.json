@@ -1,0 +1,1169 @@
+{
+	"info": {
+		"description": "This is v2.0 of the VQA dataset.",
+		"url": "http://visualqa.org",
+		"version": "2.0",
+		"year": 2017,
+		"contributor": "VQA Team",
+		"date_created": "2017-04-26 17:00:44"
+	},
+	"license": {
+		"url": "http://creativecommons.org/licenses/by/4.0/",
+		"name": "Creative Commons Attribution 4.0 International License"
+	},
+	"data_subtype": "val2014",
+	"data_type": "mscoco",
+	"annotations": [
+		{
+			"question_type": "what color is the",
+			"multiple_choice_answer": "white",
+			"answers": [
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 6818,
+			"answer_type": "other",
+			"question_id": 6818000
+		},
+		{
+			"question_type": "is there a",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 6818,
+			"answer_type": "yes/no",
+			"question_id": 6818001
+		},
+		{
+			"question_type": "what room is",
+			"multiple_choice_answer": "bathroom",
+			"answers": [
+				{ "answer": "bathroom", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "bathroom", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "bathroom", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "bathroom", "answer_confidence": "maybe", "answer_id": 4 },
+				{ "answer": "bathroom", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "bathroom", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "bathroom", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "bathroom", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "bathroom", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "bathroom", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 6818,
+			"answer_type": "other",
+			"question_id": 6818002
+		},
+		{
+			"question_type": "does this",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 403385,
+			"answer_type": "yes/no",
+			"question_id": 403385000
+		},
+		{
+			"question_type": "is there",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "ibid", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 403385,
+			"answer_type": "yes/no",
+			"question_id": 403385001
+		},
+		{
+			"question_type": "is there a",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 403385,
+			"answer_type": "yes/no",
+			"question_id": 403385002
+		},
+		{
+			"question_type": "what room is",
+			"multiple_choice_answer": "kitchen",
+			"answers": [
+				{ "answer": "kitchen", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "kitchen", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "kitchen", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "kitchen", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "kitchen", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "kitchen", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "kitchen", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "kitchen", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "dining room", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "kitchen", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 37777,
+			"answer_type": "other",
+			"question_id": 37777000
+		},
+		{
+			"question_type": "how many",
+			"multiple_choice_answer": "2",
+			"answers": [
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 37777,
+			"answer_type": "number",
+			"question_id": 37777001
+		},
+		{
+			"question_type": "how many",
+			"multiple_choice_answer": "7",
+			"answers": [
+				{ "answer": "6", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "7", "answer_confidence": "maybe", "answer_id": 2 },
+				{ "answer": "6", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "7", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "7", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "7", "answer_confidence": "maybe", "answer_id": 6 },
+				{ "answer": "6", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "7", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "6", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "7", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 37777,
+			"answer_type": "number",
+			"question_id": 37777002
+		},
+		{
+			"answer_type": "number",
+			"multiple_choice_answer": "2",
+			"answers": [
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "9", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "8", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "10", "answer_confidence": "no", "answer_id": 4 },
+				{ "answer": "many", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "2", "answer_confidence": "maybe", "answer_id": 6 },
+				{ "answer": "9", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "10", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "12", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "2", "answer_confidence": "maybe", "answer_id": 10 }
+			],
+			"image_id": 174482,
+			"question_type": "how many",
+			"question_id": 174482000
+		},
+		{
+			"answer_type": "yes/no",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 174482,
+			"question_type": "is the",
+			"question_id": 174482001
+		},
+		{
+			"question_type": "what is the",
+			"multiple_choice_answer": "pole",
+			"answers": [
+				{ "answer": "nothing", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "bike rack", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "pole", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "bike stand", "answer_confidence": "yes", "answer_id": 4 },
+				{
+					"answer": "metal object",
+					"answer_confidence": "yes",
+					"answer_id": 5
+				},
+				{ "answer": "bike rack", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "kickstand", "answer_confidence": "maybe", "answer_id": 7 },
+				{ "answer": "pole", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "pole", "answer_confidence": "yes", "answer_id": 9 },
+				{
+					"answer": "metal pole",
+					"answer_confidence": "maybe",
+					"answer_id": 10
+				}
+			],
+			"image_id": 174482,
+			"answer_type": "other",
+			"question_id": 174482002
+		},
+		{
+			"answer_type": "other",
+			"multiple_choice_answer": "blue",
+			"answers": [
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "turquoise", "answer_confidence": "maybe", "answer_id": 2 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 3 },
+				{
+					"answer": "blue ,black and gray",
+					"answer_confidence": "yes",
+					"answer_id": 4
+				},
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 174482,
+			"question_type": "what color is the",
+			"question_id": 174482003
+		},
+		{
+			"answer_type": "yes/no",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 174482,
+			"question_type": "is the",
+			"question_id": 174482004
+		},
+		{
+			"answer_type": "number",
+			"multiple_choice_answer": "1",
+			"answers": [
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "1", "answer_confidence": "maybe", "answer_id": 2 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 174482,
+			"question_type": "how many",
+			"question_id": 174482005
+		},
+		{
+			"question_type": "what color is the",
+			"multiple_choice_answer": "blue",
+			"answers": [
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "teal", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "teal", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "blue", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 174482,
+			"answer_type": "other",
+			"question_id": 174482006
+		},
+		{
+			"question_type": "is the",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 174482,
+			"answer_type": "yes/no",
+			"question_id": 174482007
+		},
+		{
+			"question_type": "is the",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 46378,
+			"answer_type": "yes/no",
+			"question_id": 46378000
+		},
+		{
+			"question_type": "what is the",
+			"multiple_choice_answer": "bird",
+			"answers": [
+				{ "answer": "bird", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "bird", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "bird", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "bird", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "bird", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "dead bird", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "wpp;", "answer_confidence": "no", "answer_id": 7 },
+				{ "answer": "bird", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "bird", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "bird", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 46378,
+			"answer_type": "other",
+			"question_id": 46378001
+		},
+		{
+			"question_type": "is the",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 46378,
+			"answer_type": "yes/no",
+			"question_id": 46378002
+		},
+		{
+			"answer_type": "yes/no",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 517069,
+			"question_type": "is",
+			"question_id": 517069000
+		},
+		{
+			"question_type": "is it",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 517069,
+			"answer_type": "yes/no",
+			"question_id": 517069001
+		},
+		{
+			"question_type": "what are",
+			"multiple_choice_answer": "bus",
+			"answers": [
+				{ "answer": "bus", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "bus", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "bus", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "bus", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "bus", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "bus", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "bus", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "bus", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "bus", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "bus", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 517069,
+			"answer_type": "other",
+			"question_id": 517069002
+		},
+		{
+			"question_type": "are they",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 2 },
+				{ "answer": "maybe", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 10 }
+			],
+			"image_id": 517069,
+			"answer_type": "yes/no",
+			"question_id": 517069003
+		},
+		{
+			"answer_type": "yes/no",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 10 }
+			],
+			"image_id": 517069,
+			"question_type": "is the",
+			"question_id": 517069004
+		},
+		{
+			"question_type": "does this",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 179765,
+			"answer_type": "yes/no",
+			"question_id": 179765000
+		},
+		{
+			"question_type": "what brand",
+			"multiple_choice_answer": "honda",
+			"answers": [
+				{ "answer": "honda", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "honda", "answer_confidence": "maybe", "answer_id": 2 },
+				{ "answer": "honda", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "honda", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "honda", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "honda", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "honda", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "honda", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "honda", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "honda", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 179765,
+			"answer_type": "other",
+			"question_id": 179765001
+		},
+		{
+			"question_type": "how many",
+			"multiple_choice_answer": "1",
+			"answers": [
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 179765,
+			"answer_type": "number",
+			"question_id": 179765002
+		},
+		{
+			"question_type": "what color is the",
+			"multiple_choice_answer": "white",
+			"answers": [
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "white", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 182417,
+			"answer_type": "other",
+			"question_id": 182417000
+		},
+		{
+			"answer_type": "yes/no",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 182417,
+			"question_type": "none of the above",
+			"question_id": 182417001
+		},
+		{
+			"answer_type": "other",
+			"multiple_choice_answer": "spoon",
+			"answers": [
+				{ "answer": "spoon", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "spoon", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "spoon", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "spoon", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "spoons", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "spoon", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "spoon", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "spoon", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "spoon", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 182417,
+			"question_type": "what",
+			"question_id": 182417002
+		},
+		{
+			"question_type": "is the",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 182417,
+			"answer_type": "yes/no",
+			"question_id": 182417003
+		},
+		{
+			"question_type": "is this",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 182417,
+			"answer_type": "yes/no",
+			"question_id": 182417004
+		},
+		{
+			"question_type": "how many",
+			"multiple_choice_answer": "4",
+			"answers": [
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "4", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 190236,
+			"answer_type": "number",
+			"question_id": 190236000
+		},
+		{
+			"question_type": "what",
+			"multiple_choice_answer": "computer",
+			"answers": [
+				{ "answer": "computer", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "walmart", "answer_confidence": "no", "answer_id": 2 },
+				{ "answer": "att", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "ikea", "answer_confidence": "no", "answer_id": 4 },
+				{ "answer": "computer", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "unknown", "answer_confidence": "maybe", "answer_id": 6 },
+				{ "answer": "home office", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "don't know", "answer_confidence": "no", "answer_id": 8 },
+				{ "answer": "google", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "don't know", "answer_confidence": "no", "answer_id": 10 }
+			],
+			"image_id": 190236,
+			"answer_type": "other",
+			"question_id": 190236001
+		},
+		{
+			"question_type": "is this an",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 190236,
+			"answer_type": "yes/no",
+			"question_id": 190236002
+		},
+		{
+			"answer_type": "number",
+			"multiple_choice_answer": "6",
+			"answers": [
+				{ "answer": "6", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "6", "answer_confidence": "maybe", "answer_id": 2 },
+				{ "answer": "4", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "5", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "10", "answer_confidence": "maybe", "answer_id": 5 },
+				{ "answer": "6", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "at least 5", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "5", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "4", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "1", "answer_confidence": "no", "answer_id": 10 }
+			],
+			"image_id": 190236,
+			"question_type": "how many",
+			"question_id": 190236003
+		},
+		{
+			"question_type": "where is the",
+			"multiple_choice_answer": "above toilet",
+			"answers": [
+				{
+					"answer": "above toilet",
+					"answer_confidence": "yes",
+					"answer_id": 1
+				},
+				{
+					"answer": "no top of toilet",
+					"answer_confidence": "yes",
+					"answer_id": 2
+				},
+				{
+					"answer": "on toilet tank",
+					"answer_confidence": "yes",
+					"answer_id": 3
+				},
+				{
+					"answer": "on top of toilet tank",
+					"answer_confidence": "maybe",
+					"answer_id": 4
+				},
+				{
+					"answer": "above toilet",
+					"answer_confidence": "yes",
+					"answer_id": 5
+				},
+				{
+					"answer": "above toilet",
+					"answer_confidence": "yes",
+					"answer_id": 6
+				},
+				{
+					"answer": "above toilet",
+					"answer_confidence": "yes",
+					"answer_id": 7
+				},
+				{ "answer": "no sink", "answer_confidence": "yes", "answer_id": 8 },
+				{
+					"answer": "above toilet",
+					"answer_confidence": "yes",
+					"answer_id": 9
+				},
+				{
+					"answer": "above toilet",
+					"answer_confidence": "yes",
+					"answer_id": 10
+				}
+			],
+			"image_id": 331352,
+			"answer_type": "other",
+			"question_id": 331352000
+		},
+		{
+			"question_type": "is the",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 10 }
+			],
+			"image_id": 331352,
+			"answer_type": "yes/no",
+			"question_id": 331352001
+		},
+		{
+			"question_type": "how many",
+			"multiple_choice_answer": "2",
+			"answers": [
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "2", "answer_confidence": "no", "answer_id": 2 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "2", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 331352,
+			"answer_type": "number",
+			"question_id": 331352002
+		},
+		{
+			"question_type": "is the",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 87038,
+			"answer_type": "yes/no",
+			"question_id": 87038000
+		},
+		{
+			"answer_type": "other",
+			"multiple_choice_answer": "skateboarding",
+			"answers": [
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 1
+				},
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 2
+				},
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 3
+				},
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 4
+				},
+				{ "answer": "skating", "answer_confidence": "yes", "answer_id": 5 },
+				{
+					"answer": "skateboard",
+					"answer_confidence": "maybe",
+					"answer_id": 6
+				},
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 7
+				},
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 8
+				},
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 9
+				},
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 10
+				}
+			],
+			"image_id": 87038,
+			"question_type": "what sport is",
+			"question_id": 87038001
+		},
+		{
+			"question_type": "what is the person",
+			"multiple_choice_answer": "skateboarding",
+			"answers": [
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 1
+				},
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 2
+				},
+				{ "answer": "riding", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "riding bike", "answer_confidence": "yes", "answer_id": 4 },
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 5
+				},
+				{ "answer": "riding", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "biking", "answer_confidence": "yes", "answer_id": 7 },
+				{
+					"answer": "skateboarding",
+					"answer_confidence": "yes",
+					"answer_id": 8
+				},
+				{ "answer": "skating", "answer_confidence": "no", "answer_id": 9 },
+				{ "answer": "skating", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 87038,
+			"answer_type": "other",
+			"question_id": 87038002
+		},
+		{
+			"question_type": "is this a",
+			"multiple_choice_answer": "yes",
+			"answers": [
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 87038,
+			"answer_type": "yes/no",
+			"question_id": 87038003
+		},
+		{
+			"answer_type": "yes/no",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "yes", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 87038,
+			"question_type": "is it",
+			"question_id": 87038004
+		},
+		{
+			"question_type": "how many",
+			"multiple_choice_answer": "1",
+			"answers": [
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 480985,
+			"answer_type": "number",
+			"question_id": 480985000
+		},
+		{
+			"question_type": "what color is the",
+			"multiple_choice_answer": "black",
+			"answers": [
+				{ "answer": "red,black", "answer_confidence": "yes", "answer_id": 1 },
+				{
+					"answer": "red and black",
+					"answer_confidence": "maybe",
+					"answer_id": 2
+				},
+				{ "answer": "black", "answer_confidence": "yes", "answer_id": 3 },
+				{
+					"answer": "black and red",
+					"answer_confidence": "yes",
+					"answer_id": 4
+				},
+				{
+					"answer": "black, white and red",
+					"answer_confidence": "yes",
+					"answer_id": 5
+				},
+				{
+					"answer": "black and red",
+					"answer_confidence": "yes",
+					"answer_id": 6
+				},
+				{ "answer": "black", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "black", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "black", "answer_confidence": "yes", "answer_id": 9 },
+				{
+					"answer": "red and black",
+					"answer_confidence": "yes",
+					"answer_id": 10
+				}
+			],
+			"image_id": 480985,
+			"answer_type": "other",
+			"question_id": 480985001
+		},
+		{
+			"question_type": "what brand",
+			"multiple_choice_answer": "suzuki",
+			"answers": [
+				{ "answer": "suzuki", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "suzuki", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "suzuki", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "suzuki", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "suzuki", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "subaru", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "suzuki", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "subaru", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "buehl", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "subaru", "answer_confidence": "maybe", "answer_id": 10 }
+			],
+			"image_id": 480985,
+			"answer_type": "other",
+			"question_id": 480985002
+		},
+		{
+			"question_type": "does the",
+			"multiple_choice_answer": "no",
+			"answers": [
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "no", "answer_confidence": "maybe", "answer_id": 4 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "no", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 252219,
+			"answer_type": "yes/no",
+			"question_id": 252219000
+		},
+		{
+			"question_type": "which",
+			"multiple_choice_answer": "man in middle",
+			"answers": [
+				{ "answer": "elder", "answer_confidence": "no", "answer_id": 1 },
+				{
+					"answer": "man in middle",
+					"answer_confidence": "yes",
+					"answer_id": 2
+				},
+				{
+					"answer": "guy in middle",
+					"answer_confidence": "yes",
+					"answer_id": 3
+				},
+				{
+					"answer": "man in middle",
+					"answer_confidence": "yes",
+					"answer_id": 4
+				},
+				{ "answer": "bum", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "male", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "middle one", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "man by cart", "answer_confidence": "yes", "answer_id": 8 },
+				{
+					"answer": "homeless man",
+					"answer_confidence": "yes",
+					"answer_id": 9
+				},
+				{
+					"answer": "man with cart",
+					"answer_confidence": "yes",
+					"answer_id": 10
+				}
+			],
+			"image_id": 252219,
+			"answer_type": "other",
+			"question_id": 252219001
+		},
+		{
+			"question_type": "how many people are",
+			"multiple_choice_answer": "1",
+			"answers": [
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 6 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "1", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 252219,
+			"answer_type": "number",
+			"question_id": 252219002
+		},
+		{
+			"answer_type": "number",
+			"multiple_choice_answer": "0",
+			"answers": [
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 1 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 2 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 3 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 4 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "1", "answer_confidence": "no", "answer_id": 6 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 7 },
+				{ "answer": "0", "answer_confidence": "maybe", "answer_id": 8 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 9 },
+				{ "answer": "0", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 252219,
+			"question_type": "how many",
+			"question_id": 252219003
+		},
+		{
+			"answer_type": "other",
+			"multiple_choice_answer": "cup",
+			"answers": [
+				{ "answer": "cup", "answer_confidence": "maybe", "answer_id": 1 },
+				{ "answer": "ground", "answer_confidence": "maybe", "answer_id": 2 },
+				{ "answer": "phone", "answer_confidence": "yes", "answer_id": 3 },
+				{
+					"answer": "cup in his hand",
+					"answer_confidence": "yes",
+					"answer_id": 4
+				},
+				{ "answer": "phone", "answer_confidence": "yes", "answer_id": 5 },
+				{ "answer": "ground", "answer_confidence": "maybe", "answer_id": 6 },
+				{ "answer": "cup", "answer_confidence": "maybe", "answer_id": 7 },
+				{ "answer": "his drink", "answer_confidence": "yes", "answer_id": 8 },
+				{ "answer": "clothes", "answer_confidence": "maybe", "answer_id": 9 },
+				{ "answer": "cup", "answer_confidence": "yes", "answer_id": 10 }
+			],
+			"image_id": 252219,
+			"question_type": "what is the",
+			"question_id": 252219004
+		}
+	]
+}

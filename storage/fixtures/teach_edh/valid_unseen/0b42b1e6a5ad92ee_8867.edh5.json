@@ -1,0 +1,3496 @@
+{
+	"dialog_history": [
+		["Driver", "what do i do today"],
+		["Commander", "Hi, slice bread"],
+		["Commander", "bread on counter"],
+		["Commander", "knife in trash"],
+		["Driver", "knife??"],
+		["Commander", "1 slice"],
+		["Commander", "then toast"],
+		["Commander", "Use clean plate on wall rack"],
+		["Commander", "already clean"],
+		["Commander", "its checked off as clean"],
+		["Commander", "place toast on plate"],
+		["Driver", "should i toast the bread"],
+		["Commander", "yes i said toast"],
+		["Commander", "place toast on plate"],
+		["Commander", "1 slice only"]
+	],
+	"driver_action_history": [
+		{
+			"action_id": 100,
+			"action_idx": 33,
+			"obj_interaction_action": 0,
+			"action_name": "Text",
+			"time_start": 201.98402643203735,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 224.9864890575409,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 225.28675150871277,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 225.54215359687805,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 229.22736430168152,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 229.81753492355347,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 230.24739503860474,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 230.75913763046265,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 231.00237369537354,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 231.17161345481873,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 100,
+			"action_idx": 33,
+			"obj_interaction_action": 0,
+			"action_name": "Text",
+			"time_start": 244.22765254974365,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 252.32779574394226,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 200,
+			"action_idx": 15,
+			"obj_interaction_action": 1,
+			"action_name": "Pickup",
+			"time_start": 271.85787081718445,
+			"oid": "Knife|-01.01|+00.16|+00.54",
+			"x": 0.696113074204947,
+			"y": 0.9028268551236749
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 284.34711050987244,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 285.0313084125519,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 289.99736285209656,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 290.35602283477783,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 290.61519503593445,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 290.8581349849701,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 291.07960629463196,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 296.3198971748352,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 296.54796528816223,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 296.8909533023834,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 297.11433720588684,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 305.57728385925293,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 307.4375741481781,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 307.6773638725281,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 333.45734333992004,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 206,
+			"action_idx": 21,
+			"obj_interaction_action": 1,
+			"action_name": "Slice",
+			"time_start": 361.11320209503174,
+			"oid": "Bread|+00.69|+00.98|-00.03",
+			"x": 0.2137809187279152,
+			"y": 0.7067137809187279
+		},
+		{
+			"action_id": 201,
+			"action_idx": 16,
+			"obj_interaction_action": 1,
+			"action_name": "Place",
+			"time_start": 369.1032450199127,
+			"oid": "CounterTop|+00.93|+00.95|-00.21",
+			"x": 0.7049469964664311,
+			"y": 0.7826855123674912
+		},
+		{
+			"action_id": 4,
+			"action_idx": 4,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Left",
+			"time_start": 372.11311769485474,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 375.8434097766876,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 376.1314628124237,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 376.39412117004395,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 376.5928943157196,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 376.79218435287476,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 377.01725006103516,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 378.6835980415344,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 378.87142753601074,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 382.15329575538635,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 382.4823143482208,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 382.7325122356415,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 385.36341667175293,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 387.9634826183319,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 388.32466554641724,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 200,
+			"action_idx": 15,
+			"obj_interaction_action": 1,
+			"action_name": "Pickup",
+			"time_start": 393.7033987045288,
+			"oid": "Plate|-01.32|+00.56|+02.67",
+			"x": 0.09363957597173145,
+			"y": 0.8604240282685512
+		},
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 396.04331135749817,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 399.8034188747406,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 403.54341340065,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 403.91565990448,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 404.17165541648865,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 405.33324432373047,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 405.5121133327484,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 405.7564423084259,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 408.234849691391,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 408.51680994033813,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 409.6436746120453,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 409.8498024940491,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 410.2097613811493,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 411.5097186565399,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 411.7429270744324,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 5,
+			"action_idx": 5,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Right",
+			"time_start": 413.78291153907776,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 8,
+			"action_idx": 8,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Left",
+			"time_start": 419.3531219959259,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 420.5129177570343,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 4,
+			"action_idx": 4,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Left",
+			"time_start": 452.8430781364441,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 4,
+			"action_idx": 4,
+			"obj_interaction_action": 0,
+			"action_name": "Turn Left",
+			"time_start": 462.8630495071411,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 488.59277415275574,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 100,
+			"action_idx": 33,
+			"obj_interaction_action": 0,
+			"action_name": "Text",
+			"time_start": 503.533052444458,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 201,
+			"action_idx": 16,
+			"obj_interaction_action": 1,
+			"action_name": "Place",
+			"time_start": 508.9230148792267,
+			"oid": "CounterTop|+00.93|+00.95|-00.21",
+			"x": 0.6925795053003534,
+			"y": 0.7455830388692579
+		},
+		{
+			"action_id": 200,
+			"action_idx": 15,
+			"obj_interaction_action": 1,
+			"action_name": "Pickup",
+			"time_start": 527.3732764720917,
+			"oid": "Bread|+00.69|+00.98|-00.03|BreadSliced_6",
+			"x": 0.2508833922261484,
+			"y": 0.734982332155477
+		},
+		{
+			"action_id": 201,
+			"action_idx": 16,
+			"obj_interaction_action": 1,
+			"action_name": "Place",
+			"time_start": 536.2330815792084,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"x": 0.07597173144876325,
+			"y": 0.5106007067137809
+		},
+		{
+			"action_id": 204,
+			"action_idx": 19,
+			"obj_interaction_action": 1,
+			"action_name": "ToggleOn",
+			"time_start": 545.5629205703735,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"x": 0.0353356890459364,
+			"y": 0.6219081272084805
+		},
+		{
+			"action_id": 205,
+			"action_idx": 20,
+			"obj_interaction_action": 1,
+			"action_name": "ToggleOff",
+			"time_start": 554.308751821518,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"x": 0.026501766784452298,
+			"y": 0.6307420494699647
+		},
+		{
+			"action_id": 200,
+			"action_idx": 15,
+			"obj_interaction_action": 1,
+			"action_name": "Pickup",
+			"time_start": 559.4530897140503,
+			"oid": "Bread|+00.69|+00.98|-00.03|BreadSliced_6",
+			"x": 0.061837455830388695,
+			"y": 0.5282685512367491
+		},
+		{
+			"action_id": 201,
+			"action_idx": 16,
+			"obj_interaction_action": 1,
+			"action_name": "Place",
+			"time_start": 567.7781267166138,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"x": 0.06007067137809187,
+			"y": 0.5265017667844523
+		},
+		{
+			"action_id": 204,
+			"action_idx": 19,
+			"obj_interaction_action": 1,
+			"action_name": "ToggleOn",
+			"time_start": 577.6732683181763,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"x": 0.03356890459363958,
+			"y": 0.6254416961130742
+		},
+		{
+			"action_id": 200,
+			"action_idx": 15,
+			"obj_interaction_action": 1,
+			"action_name": "Pickup",
+			"time_start": 585.5634360313416,
+			"oid": "Bread|+00.69|+00.98|-00.03|BreadSliced_5",
+			"x": 0.22968197879858657,
+			"y": 0.7367491166077739
+		}
+	],
+	"driver_image_history": [
+		"driver.frame.201.98402643203735.jpeg",
+		"driver.frame.224.9864890575409.jpeg",
+		"driver.frame.225.28675150871277.jpeg",
+		"driver.frame.225.54215359687805.jpeg",
+		"driver.frame.229.22736430168152.jpeg",
+		"driver.frame.229.81753492355347.jpeg",
+		"driver.frame.230.24739503860474.jpeg",
+		"driver.frame.230.75913763046265.jpeg",
+		"driver.frame.231.00237369537354.jpeg",
+		"driver.frame.231.17161345481873.jpeg",
+		"driver.frame.244.22765254974365.jpeg",
+		"driver.frame.252.32779574394226.jpeg",
+		"driver.frame.271.85787081718445.jpeg",
+		"driver.frame.284.34711050987244.jpeg",
+		"driver.frame.285.0313084125519.jpeg",
+		"driver.frame.289.99736285209656.jpeg",
+		"driver.frame.290.35602283477783.jpeg",
+		"driver.frame.290.61519503593445.jpeg",
+		"driver.frame.290.8581349849701.jpeg",
+		"driver.frame.291.07960629463196.jpeg",
+		"driver.frame.296.3198971748352.jpeg",
+		"driver.frame.296.54796528816223.jpeg",
+		"driver.frame.296.8909533023834.jpeg",
+		"driver.frame.297.11433720588684.jpeg",
+		"driver.frame.305.57728385925293.jpeg",
+		"driver.frame.307.4375741481781.jpeg",
+		"driver.frame.307.6773638725281.jpeg",
+		"driver.frame.333.45734333992004.jpeg",
+		"driver.frame.361.11320209503174.jpeg",
+		"driver.frame.369.1032450199127.jpeg",
+		"driver.frame.372.11311769485474.jpeg",
+		"driver.frame.375.8434097766876.jpeg",
+		"driver.frame.376.1314628124237.jpeg",
+		"driver.frame.376.39412117004395.jpeg",
+		"driver.frame.376.5928943157196.jpeg",
+		"driver.frame.376.79218435287476.jpeg",
+		"driver.frame.377.01725006103516.jpeg",
+		"driver.frame.378.6835980415344.jpeg",
+		"driver.frame.378.87142753601074.jpeg",
+		"driver.frame.382.15329575538635.jpeg",
+		"driver.frame.382.4823143482208.jpeg",
+		"driver.frame.382.7325122356415.jpeg",
+		"driver.frame.385.36341667175293.jpeg",
+		"driver.frame.387.9634826183319.jpeg",
+		"driver.frame.388.32466554641724.jpeg",
+		"driver.frame.393.7033987045288.jpeg",
+		"driver.frame.396.04331135749817.jpeg",
+		"driver.frame.399.8034188747406.jpeg",
+		"driver.frame.403.54341340065.jpeg",
+		"driver.frame.403.91565990448.jpeg",
+		"driver.frame.404.17165541648865.jpeg",
+		"driver.frame.405.33324432373047.jpeg",
+		"driver.frame.405.5121133327484.jpeg",
+		"driver.frame.405.7564423084259.jpeg",
+		"driver.frame.408.234849691391.jpeg",
+		"driver.frame.408.51680994033813.jpeg",
+		"driver.frame.409.6436746120453.jpeg",
+		"driver.frame.409.8498024940491.jpeg",
+		"driver.frame.410.2097613811493.jpeg",
+		"driver.frame.411.5097186565399.jpeg",
+		"driver.frame.411.7429270744324.jpeg",
+		"driver.frame.413.78291153907776.jpeg",
+		"driver.frame.419.3531219959259.jpeg",
+		"driver.frame.420.5129177570343.jpeg",
+		"driver.frame.452.8430781364441.jpeg",
+		"driver.frame.462.8630495071411.jpeg",
+		"driver.frame.488.59277415275574.jpeg",
+		"driver.frame.503.533052444458.jpeg",
+		"driver.frame.508.9230148792267.jpeg",
+		"driver.frame.527.3732764720917.jpeg",
+		"driver.frame.536.2330815792084.jpeg",
+		"driver.frame.545.5629205703735.jpeg",
+		"driver.frame.554.308751821518.jpeg",
+		"driver.frame.559.4530897140503.jpeg",
+		"driver.frame.567.7781267166138.jpeg",
+		"driver.frame.577.6732683181763.jpeg",
+		"driver.frame.585.5634360313416.jpeg"
+	],
+	"driver_actions_future": [
+		{
+			"action_id": 201,
+			"action_idx": 16,
+			"obj_interaction_action": 1,
+			"action_name": "Place",
+			"time_start": 598.9828753471375,
+			"oid": "CounterTop|+00.93|+00.95|-00.21",
+			"x": 0.38162544169611307,
+			"y": 0.7632508833922261
+		},
+		{
+			"action_id": 205,
+			"action_idx": 20,
+			"obj_interaction_action": 1,
+			"action_name": "ToggleOff",
+			"time_start": 604.8717658519745,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"x": 0.05830388692579505,
+			"y": 0.5265017667844523
+		}
+	],
+	"driver_images_future": [
+		"driver.frame.598.9828753471375.jpeg",
+		"driver.frame.604.8717658519745.jpeg"
+	],
+	"interactions": [
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 191.90077829360962,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		},
+		{
+			"agent_id": 1,
+			"action_id": 100,
+			"time_start": 201.98402643203735,
+			"duration": 1,
+			"success": 1,
+			"utterance": "what do i do today",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "what do i do today",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 203.33728861808777,
+			"duration": 1,
+			"success": 1,
+			"utterance": "Hi, slice bread",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "Hi, slice bread",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 208.7321093082428,
+			"duration": 1,
+			"success": 1,
+			"query": "Bread|+00.69|+00.98|-00.03",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 216.8022108078003,
+			"duration": 1,
+			"success": 1,
+			"query": "Bread|+00.69|+00.98|-00.03",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 224.96004605293274,
+			"duration": 1,
+			"success": 1,
+			"utterance": "bread on counter",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "bread on counter",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 224.9864890575409,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [0.25, 3.0, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 225.28675150871277,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [0.5, 3.0, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 225.54215359687805,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [0.75, 3.0, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 229.22736430168152,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, 2.75, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 229.81753492355347,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, 2.5, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 230.24739503860474,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, 2.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 230.75913763046265,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, 2.0, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 231.00237369537354,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, 1.75, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 231.17161345481873,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, 1.5, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 231.41816186904907,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, 1.5, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 0,
+			"action_id": 502,
+			"time_start": 231.48963379859924,
+			"duration": 1,
+			"success": 1,
+			"query": "knife",
+			"obj_interaction_action": 0,
+			"action_idx": 32
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 232.03935718536377,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, 1.5, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 238.80516624450684,
+			"duration": 1,
+			"success": 1,
+			"utterance": "knife in trash",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "knife in trash",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 100,
+			"time_start": 244.22765254974365,
+			"duration": 1,
+			"success": 1,
+			"utterance": "knife??",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "knife??",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 252.32779574394226,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [1.0, 1.5, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 271.85787081718445,
+			"duration": 1,
+			"success": 1,
+			"x": 0.696113074204947,
+			"y": 0.9028268551236749,
+			"oid": "Knife|-01.01|+00.16|+00.54",
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 284.34711050987244,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, 1.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 285.0313084125519,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, 1.0, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 285.3697307109833,
+			"duration": 1,
+			"success": 1,
+			"utterance": "1 slice",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "1 slice",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 289.99736285209656,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, 0.75, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 290.35602283477783,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, 0.5, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 290.61519503593445,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, 0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 290.8581349849701,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, -0.0, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 291.07960629463196,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 291.37539625167847,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 291.4377956390381,
+			"duration": 1,
+			"success": 1,
+			"utterance": "then toast",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "then toast",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 291.51782870292664,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 291.56841945648193,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 291.61256527900696,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 295.42166686058044,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 296.3198971748352,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0.75, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 296.54796528816223,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0.5, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 296.8909533023834,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0.25, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 297.11433720588684,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [-0.0, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 0,
+			"action_id": 501,
+			"time_start": 301.45880365371704,
+			"duration": 1,
+			"success": 1,
+			"query": "Plate|-01.32|+00.56|+02.67",
+			"obj_interaction_action": 0,
+			"action_idx": 31
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 305.57728385925293,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [-0.25, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 307.4375741481781,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [-0.5, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 307.6773638725281,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [-0.75, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 326.1308524608612,
+			"duration": 1,
+			"success": 1,
+			"utterance": "Use clean plate on wall rack",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "Use clean plate on wall rack",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 333.45734333992004,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [-0.5, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 206,
+			"time_start": 361.11320209503174,
+			"duration": 1,
+			"success": 1,
+			"x": 0.2137809187279152,
+			"y": 0.7067137809187279,
+			"oid": "Bread|+00.69|+00.98|-00.03",
+			"obj_interaction_action": 1,
+			"action_idx": 21
+		},
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 362.79071974754333,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		},
+		{
+			"agent_id": 1,
+			"action_id": 201,
+			"time_start": 369.1032450199127,
+			"duration": 1,
+			"success": 1,
+			"x": 0.7049469964664311,
+			"y": 0.7826855123674912,
+			"oid": "CounterTop|+00.93|+00.95|-00.21",
+			"obj_interaction_action": 1,
+			"action_idx": 16
+		},
+		{
+			"agent_id": 1,
+			"action_id": 4,
+			"time_start": 372.11311769485474,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, 90],
+			"pose": [-0.5, -0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 4
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 375.8434097766876,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 376.1314628124237,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.0, -0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 376.39412117004395,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.25, -0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 376.5928943157196,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, -0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 376.79218435287476,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, -0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 377.01725006103516,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, -0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 378.6835980415344,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [1.0, -0.0, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 378.87142753601074,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [1.0, 0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 382.15329575538635,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.25, 0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 382.4823143482208,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.5, 0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 382.7325122356415,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.75, 0.25, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 385.36341667175293,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [1.75, 0.5, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 387.9634826183319,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [2.0, 0.5, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 388.32466554641724,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [2.25, 0.5, 0.9009992480278015, 0, 30.000028610229492, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 393.7033987045288,
+			"duration": 1,
+			"success": 1,
+			"x": 0.09363957597173145,
+			"y": 0.8604240282685512,
+			"oid": "Plate|-01.32|+00.56|+02.67",
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 396.04331135749817,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [2.25, 0.5, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 399.8034188747406,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [2.25, 0.5, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 403.54341340065,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [2.0, 0.5, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 403.91565990448,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.75, 0.5, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 404.17165541648865,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.5, 0.5, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 405.33324432373047,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [1.5, 0.25, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 405.5121133327484,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [1.5, -0.0, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 405.7564423084259,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [1.5, -0.25, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 405.9324703216553,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [1.5, -0.25, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 408.234849691391,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.25, -0.25, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 408.51680994033813,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [1.0, -0.25, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 409.6436746120453,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.75, -0.25, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 409.8498024940491,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.5, -0.25, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 410.2097613811493,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.25, -0.25, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 411.5097186565399,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.0, -0.25, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 411.7429270744324,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, -0.25, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 5,
+			"time_start": 413.78291153907776,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, -90],
+			"pose": [-0.25, -0.25, 0.9009992480278015, 0, 30.000024795532227, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 5
+		},
+		{
+			"agent_id": 1,
+			"action_id": 8,
+			"time_start": 419.3531219959259,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0.25, 0, 0, 0, 0],
+			"pose": [-0.5, -0.25, 0.9009992480278015, 0, 30.000024795532227, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 8
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 420.5129177570343,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.5, 0.0, 0.9009992480278015, 0, 30.000024795532227, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 420.71649193763733,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.5, 0.0, 0.9009992480278015, 0, 30.000024795532227, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 420.9143991470337,
+			"duration": 1,
+			"success": 0,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.5, 0.0, 0.9009992480278015, 0, 30.000024795532227, -270.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 429.97366285324097,
+			"duration": 1,
+			"success": 1,
+			"utterance": "already clean",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "already clean",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 445.760130405426,
+			"duration": 1,
+			"success": 1,
+			"utterance": "its checked off as clean",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "",
+			"is_corrected": 1
+		},
+		{
+			"agent_id": 1,
+			"action_id": 4,
+			"time_start": 452.8430781364441,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, 90],
+			"pose": [-0.5, 0.0, 0.9009992480278015, 0, 30.000028610229492, -180.0],
+			"obj_interaction_action": 0,
+			"action_idx": 4
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 455.64047741889954,
+			"duration": 1,
+			"success": 1,
+			"utterance": "place toast on plate",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "place toast on plate",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 4,
+			"time_start": 462.8630495071411,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, 0, 0, 0, 0, 90],
+			"pose": [-0.5, 0.0, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 4
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 488.59277415275574,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.5, -0.25, 0.9009992480278015, 0, 30.000024795532227, -90.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 100,
+			"time_start": 503.533052444458,
+			"duration": 1,
+			"success": 1,
+			"utterance": "should i toast the bread",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "should i toast the bread",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 201,
+			"time_start": 508.9230148792267,
+			"duration": 1,
+			"success": 1,
+			"x": 0.6925795053003534,
+			"y": 0.7455830388692579,
+			"oid": "CounterTop|+00.93|+00.95|-00.21",
+			"obj_interaction_action": 1,
+			"action_idx": 16
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 518.7278397083282,
+			"duration": 1,
+			"success": 1,
+			"utterance": "yes i said toast",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "yes i said toast",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 527.3732764720917,
+			"duration": 1,
+			"success": 1,
+			"x": 0.2508833922261484,
+			"y": 0.734982332155477,
+			"oid": "Bread|+00.69|+00.98|-00.03|BreadSliced_6",
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 531.4505636692047,
+			"duration": 1,
+			"success": 1,
+			"utterance": "place toast on plate",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "place toast on plate",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 201,
+			"time_start": 536.2330815792084,
+			"duration": 1,
+			"success": 1,
+			"x": 0.07597173144876325,
+			"y": 0.5106007067137809,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"obj_interaction_action": 1,
+			"action_idx": 16
+		},
+		{
+			"agent_id": 1,
+			"action_id": 204,
+			"time_start": 545.5629205703735,
+			"duration": 1,
+			"success": 1,
+			"x": 0.0353356890459364,
+			"y": 0.6219081272084805,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"obj_interaction_action": 1,
+			"action_idx": 19
+		},
+		{
+			"agent_id": 1,
+			"action_id": 205,
+			"time_start": 554.308751821518,
+			"duration": 1,
+			"success": 1,
+			"x": 0.026501766784452298,
+			"y": 0.6307420494699647,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"obj_interaction_action": 1,
+			"action_idx": 20
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 559.4530897140503,
+			"duration": 1,
+			"success": 1,
+			"x": 0.061837455830388695,
+			"y": 0.5282685512367491,
+			"oid": "Bread|+00.69|+00.98|-00.03|BreadSliced_6",
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		},
+		{
+			"agent_id": 1,
+			"action_id": 201,
+			"time_start": 567.7781267166138,
+			"duration": 1,
+			"success": 1,
+			"x": 0.06007067137809187,
+			"y": 0.5265017667844523,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"obj_interaction_action": 1,
+			"action_idx": 16
+		},
+		{
+			"agent_id": 1,
+			"action_id": 204,
+			"time_start": 577.6732683181763,
+			"duration": 1,
+			"success": 1,
+			"x": 0.03356890459363958,
+			"y": 0.6254416961130742,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"obj_interaction_action": 1,
+			"action_idx": 19
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 585.5634360313416,
+			"duration": 1,
+			"success": 1,
+			"x": 0.22968197879858657,
+			"y": 0.7367491166077739,
+			"oid": "Bread|+00.69|+00.98|-00.03|BreadSliced_5",
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		},
+		{
+			"agent_id": 1,
+			"action_id": 201,
+			"time_start": 592.1732931137085,
+			"duration": 1,
+			"success": 0,
+			"x": 0.0636042402826855,
+			"y": 0.49646643109540634,
+			"oid": null,
+			"obj_interaction_action": 1,
+			"action_idx": 16
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 598.480304479599,
+			"duration": 1,
+			"success": 1,
+			"utterance": "1 slice only",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "1 slice only",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 201,
+			"time_start": 598.9828753471375,
+			"duration": 1,
+			"success": 1,
+			"x": 0.38162544169611307,
+			"y": 0.7632508833922261,
+			"oid": "CounterTop|+00.93|+00.95|-00.21",
+			"obj_interaction_action": 1,
+			"action_idx": 16
+		},
+		{
+			"agent_id": 1,
+			"action_id": 205,
+			"time_start": 604.8717658519745,
+			"duration": 1,
+			"success": 1,
+			"x": 0.05830388692579505,
+			"y": 0.5265017667844523,
+			"oid": "Toaster|+00.98|+00.90|+00.33",
+			"obj_interaction_action": 1,
+			"action_idx": 20
+		}
+	],
+	"game_id": "0b42b1e6a5ad92ee_8867",
+	"instance_id": "0b42b1e6a5ad92ee_8867.edh5",
+	"pred_start_idx": 106,
+	"init_state_diff": {
+		"agents": {},
+		"objects": {
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_6": {
+				"name": "Bread_10_Slice_7",
+				"position": { "x": 0.9861, "y": 1.067, "z": 0.2894 },
+				"rotation": { "x": 0.0001, "y": 0.0001, "z": -0.0 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"isCooked": true,
+				"temperature": "Hot",
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 1.092,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_6",
+				"parentReceptacles": [
+					"CounterTop|+00.93|+00.95|-00.21",
+					"Toaster|+00.98|+00.90|+00.33"
+				],
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[1.0632, 1.134, 0.3049],
+						[1.0632, 1.134, 0.2744],
+						[1.0632, 1.0, 0.3049],
+						[1.0632, 1.0, 0.2744],
+						[0.909, 1.134, 0.3049],
+						[0.909, 1.134, 0.2744],
+						[0.909, 1.0, 0.3049],
+						[0.909, 1.0, 0.2744]
+					],
+					"center": { "x": 0.9861, "y": 1.067, "z": 0.2897 },
+					"size": { "x": 0.1541, "y": 0.134, "z": 0.0305 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[1.0632, 1.0, 0.3049],
+						[0.909, 1.0, 0.3049],
+						[0.909, 1.0, 0.2744],
+						[1.0632, 1.0, 0.2744],
+						[1.0632, 1.134, 0.3049],
+						[0.909, 1.134, 0.3049],
+						[0.909, 1.134, 0.2744],
+						[1.0632, 1.134, 0.2744]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"],
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "Toaster|+00.98|+00.90|+00.33",
+				"simbotIsCooked": true
+			},
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_5": {
+				"name": "Bread_10_Slice_6",
+				"position": { "x": 0.4991, "y": 1.2474, "z": -0.5 },
+				"rotation": { "x": 0.0, "y": 90.0, "z": 0.0 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"sliceable": false,
+				"isPickedUp": true,
+				"mass": 0.0583,
+				"distance": 0.4267,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_5",
+				"parentReceptacles": null,
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.5098, 1.3199, -0.4209],
+						[0.5098, 1.3199, -0.5791],
+						[0.5098, 1.1741, -0.4209],
+						[0.5098, 1.1741, -0.5791],
+						[0.4884, 1.3199, -0.4209],
+						[0.4884, 1.3199, -0.5791],
+						[0.4884, 1.1741, -0.4209],
+						[0.4884, 1.1741, -0.5791]
+					],
+					"center": { "x": 0.4991, "y": 1.247, "z": -0.5 },
+					"size": { "x": 0.0214, "y": 0.1458, "z": 0.1582 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.5098, 1.1741, -0.5791],
+						[0.5098, 1.1741, -0.4209],
+						[0.4884, 1.1741, -0.4209],
+						[0.4884, 1.1741, -0.5791],
+						[0.5098, 1.3199, -0.5791],
+						[0.5098, 1.3199, -0.4209],
+						[0.4884, 1.3199, -0.4209],
+						[0.4884, 1.3199, -0.5791]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"],
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": null
+			},
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_4": {
+				"name": "Bread_10_Slice_5",
+				"position": { "x": 0.689, "y": 0.9746, "z": -0.1297 },
+				"rotation": { "x": 359.8911, "y": 0.0025, "z": 0.0052 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 0.579,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_4",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.77, 1.0485, -0.1191],
+						[0.77, 1.0485, -0.1405],
+						[0.77, 0.9, -0.1191],
+						[0.77, 0.9, -0.1405],
+						[0.608, 1.0485, -0.1191],
+						[0.608, 1.0485, -0.1405],
+						[0.608, 0.9, -0.1191],
+						[0.608, 0.9, -0.1405]
+					],
+					"center": { "x": 0.689, "y": 0.9743, "z": -0.1298 },
+					"size": { "x": 0.1621, "y": 0.1485, "z": 0.0214 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.77, 0.9, -0.1191],
+						[0.608, 0.9, -0.1191],
+						[0.608, 0.9, -0.1401],
+						[0.77, 0.9, -0.1401],
+						[0.77, 1.0485, -0.1194],
+						[0.608, 1.0485, -0.1194],
+						[0.608, 1.0485, -0.1405],
+						[0.77, 1.0485, -0.1405]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"]
+			},
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_3": {
+				"name": "Bread_10_Slice_4",
+				"position": { "x": 0.6888, "y": 0.9764, "z": -0.1061 },
+				"rotation": { "x": 359.8961, "y": 0.0025, "z": 0.0052 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 0.5945,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_3",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.7688, 1.0525, -0.0955],
+						[0.7688, 1.0525, -0.1169],
+						[0.7688, 0.9, -0.0955],
+						[0.7688, 0.9, -0.1169],
+						[0.6087, 1.0525, -0.0955],
+						[0.6087, 1.0525, -0.1169],
+						[0.6087, 0.9, -0.0955],
+						[0.6087, 0.9, -0.1169]
+					],
+					"center": { "x": 0.6888, "y": 0.9762, "z": -0.1062 },
+					"size": { "x": 0.1601, "y": 0.1525, "z": 0.0214 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7688, 0.9, -0.0955],
+						[0.6087, 0.9, -0.0955],
+						[0.6087, 0.9, -0.1165],
+						[0.7688, 0.9, -0.1165],
+						[0.7688, 1.0524, -0.0958],
+						[0.6087, 1.0525, -0.0958],
+						[0.6087, 1.0524, -0.1169],
+						[0.7688, 1.0524, -0.1169]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"]
+			},
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_2": {
+				"name": "Bread_10_Slice_3",
+				"position": { "x": 0.6887, "y": 0.9777, "z": -0.0817 },
+				"rotation": { "x": 359.9242, "y": 0.0022, "z": 0.0046 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 0.611,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_2",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.7687, 1.0551, -0.0697],
+						[0.7687, 1.0551, -0.0937],
+						[0.7687, 0.9, -0.0697],
+						[0.7687, 0.9, -0.0937],
+						[0.6086, 1.0551, -0.0697],
+						[0.6086, 1.0551, -0.0937],
+						[0.6086, 0.9, -0.0697],
+						[0.6086, 0.9, -0.0937]
+					],
+					"center": { "x": 0.6886, "y": 0.9775, "z": -0.0817 },
+					"size": { "x": 0.1601, "y": 0.1551, "z": 0.0241 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7687, 0.9, -0.0697],
+						[0.6086, 0.9, -0.0697],
+						[0.6086, 0.9, -0.0934],
+						[0.7687, 0.9, -0.0934],
+						[0.7687, 1.0551, -0.07],
+						[0.6086, 1.0551, -0.07],
+						[0.6086, 1.055, -0.0937],
+						[0.7687, 1.055, -0.0937]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"]
+			},
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_1": {
+				"name": "Bread_10_Slice_2",
+				"position": { "x": 0.6887, "y": 0.9797, "z": -0.0527 },
+				"rotation": { "x": 359.9603, "y": 0.0014, "z": 0.0033 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 0.6314,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_1",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.7697, 1.059, -0.0379],
+						[0.7697, 1.059, -0.0676],
+						[0.7697, 0.9, -0.0379],
+						[0.7697, 0.9, -0.0676],
+						[0.6076, 1.059, -0.0379],
+						[0.6076, 1.059, -0.0676],
+						[0.6076, 0.9, -0.0379],
+						[0.6076, 0.9, -0.0676]
+					],
+					"center": { "x": 0.6887, "y": 0.9795, "z": -0.0528 },
+					"size": { "x": 0.1621, "y": 0.159, "z": 0.0297 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7697, 0.9, -0.0379],
+						[0.6076, 0.9, -0.0379],
+						[0.6076, 0.9, -0.0674],
+						[0.7697, 0.9, -0.0674],
+						[0.7697, 1.059, -0.0381],
+						[0.6076, 1.059, -0.0381],
+						[0.6076, 1.059, -0.0676],
+						[0.7697, 1.059, -0.0676]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"]
+			},
+			"Bread|+00.69|+00.98|-00.03|Bread_0": {
+				"name": "Bread_10_Slice_1",
+				"position": { "x": 0.6895, "y": 0.9793, "z": 0.0323 },
+				"visible": true,
+				"obstructed": false,
+				"sliceable": false,
+				"mass": 0.35,
+				"distance": 0.6947,
+				"objectId": "Bread|+00.69|+00.98|-00.03|Bread_0",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.7676, 1.0567, 0.0959],
+						[0.7676, 1.0567, -0.0347],
+						[0.7676, 0.9, 0.0959],
+						[0.7676, 0.9, -0.0347],
+						[0.6113, 1.0567, 0.0959],
+						[0.6113, 1.0567, -0.0347],
+						[0.6113, 0.9, 0.0959],
+						[0.6113, 0.9, -0.0347]
+					],
+					"center": { "x": 0.6895, "y": 0.9784, "z": 0.0306 },
+					"size": { "x": 0.1562, "y": 0.1567, "z": 0.1306 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7676, 0.9, 0.0959],
+						[0.6113, 0.9, 0.0959],
+						[0.6113, 0.9, -0.0347],
+						[0.7676, 0.9, -0.0347],
+						[0.7676, 1.0567, 0.0959],
+						[0.6113, 1.0567, 0.0959],
+						[0.6113, 1.0567, -0.0347],
+						[0.7676, 1.0567, -0.0347]
+					]
+				}
+			},
+			"Spoon|-00.91|+00.14|+00.64": { "distance": 1.8001 },
+			"DishSponge|-00.59|+00.94|+00.16": { "distance": 1.0733 },
+			"Bowl|-01.29|+00.93|-01.17": { "distance": 1.6814 },
+			"Vase|+00.91|+01.40|+01.44": { "distance": 2.1113 },
+			"ButterKnife|+01.04|+02.20|-01.19": { "distance": 1.6718 },
+			"PepperShaker|+00.83|+00.15|-00.69": { "distance": 0.9724 },
+			"Tomato|+00.84|+01.68|+01.44": { "distance": 2.1779 },
+			"Spatula|-00.59|+00.78|-00.57": { "distance": 0.8494 },
+			"Pot|-00.62|+00.93|+00.16": { "distance": 1.0978 },
+			"Apple|+01.15|+01.72|-00.66": { "distance": 1.2223 },
+			"Plate|+00.84|+01.13|+01.35": { "distance": 1.9561 },
+			"Lettuce|+01.15|+01.73|-00.40": {
+				"temperature": "RoomTemp",
+				"distance": 1.2266
+			},
+			"Pan|-01.10|+00.93|-00.91": { "distance": 1.4139 },
+			"Fork|+00.75|+00.15|-00.61": { "distance": 0.9099 },
+			"Knife|-00.81|+00.80|-00.75": { "distance": 1.0916 },
+			"CellPhone|-01.53|+00.56|+02.67": { "distance": 3.655 },
+			"Bread|+00.69|+00.98|+00.31": { "distance": 0.9278 },
+			"Statue|+01.19|+01.66|-02.10": { "distance": 2.0057 },
+			"Bread|+00.69|+00.98|-00.03": {
+				"isSliced": true,
+				"distance": 0.6451,
+				"parentReceptacles": null,
+				"axisAlignedBoundingBox": {
+					"cornerPoints": null,
+					"center": { "x": 0.0, "y": 0.0, "z": 0.0 },
+					"size": { "x": 0.0, "y": 0.0, "z": 0.0 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7474, 0.9159, 0.0885],
+						[0.6236, 0.9159, 0.0885],
+						[0.6236, 0.9159, -0.1601],
+						[0.7474, 0.9159, -0.1601],
+						[0.7474, 1.0265, 0.0885],
+						[0.6236, 1.0265, 0.0885],
+						[0.6236, 1.0265, -0.1601],
+						[0.7474, 1.0265, -0.1601]
+					]
+				}
+			},
+			"Lettuce|-00.92|+01.00|-01.39": {
+				"temperature": "RoomTemp",
+				"distance": 1.471
+			},
+			"PepperShaker|-01.06|+00.94|-00.92": { "distance": 1.3736 },
+			"Tomato|+00.84|+01.68|+00.97": { "distance": 1.765 },
+			"Knife|-01.84|+00.59|+02.80": { "distance": 3.9204 },
+			"Fork|+00.86|+00.11|-02.05": { "distance": 1.8484 },
+			"CellPhone|+00.84|+01.40|+01.16": { "distance": 1.8303 },
+			"Statue|+01.17|+02.20|-01.08": { "distance": 1.697 },
+			"Pan|+00.86|+00.10|-01.89": { "distance": 1.7174 },
+			"Floor|+00.00|+00.00|+00.00": {
+				"visible": false,
+				"obstructed": true,
+				"receptacleObjectIds": [
+					"Fridge|+00.97|+00.00|+01.25",
+					"ShelvingUnit|-01.64|+00.01|+02.72",
+					"Spoon|-00.91|+00.14|+00.64",
+					"GarbageCan|-00.95|-00.04|+00.58",
+					"Shelf|-01.64|+00.17|+02.72",
+					"Chair|-01.83|+00.00|-00.03",
+					"Chair|-01.85|+00.00|-00.96"
+				],
+				"distance": 1.0603
+			},
+			"StoveBurner|+00.84|+00.92|-01.10": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.842
+			},
+			"Cabinet|+00.65|+00.48|+00.24": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.9463
+			},
+			"StoveBurner|+01.08|+00.92|-01.50": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.3014
+			},
+			"StoveBurner|+00.84|+00.92|-01.50": { "distance": 1.1659 },
+			"Drawer|+00.64|+00.76|-00.65": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.4403
+			},
+			"Cabinet|+00.95|+02.16|-02.38": { "distance": 2.365 },
+			"CounterTop|-01.24|+00.97|-00.64": {
+				"receptacleObjectIds": [
+					"CellPhone|-01.17|+00.93|-00.12",
+					"Pan|-01.10|+00.93|-00.91",
+					"PepperShaker|-01.06|+00.94|-00.92",
+					"Bowl|-01.29|+00.93|-01.17",
+					"Lettuce|-00.92|+01.00|-01.39",
+					"HousePlant|-01.35|+00.92|-01.54",
+					"Vase|-00.55|+00.93|-01.39",
+					"Pot|-00.62|+00.93|+00.16",
+					"DishSponge|-00.59|+00.94|+00.16",
+					"Potato|-00.69|+00.95|-00.05"
+				],
+				"distance": 1.4974
+			},
+			"CounterTop|+00.93|+00.95|-00.21": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_6",
+					"Toaster|+00.98|+00.90|+00.33",
+					"Bread|+00.69|+00.98|+00.31",
+					"Vase|+01.20|+00.91|-00.03",
+					"Bread|+00.69|+00.98|-00.03|Bread_0",
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_2",
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_1",
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_4",
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_3",
+					"Bread|+00.86|+00.98|-00.38",
+					"Plate|-01.32|+00.56|+02.67",
+					"Knife|-01.01|+00.16|+00.54"
+				],
+				"distance": 0.7433,
+				"simbotIsReceptacleOf": [
+					"Knife|-01.01|+00.16|+00.54",
+					"Plate|-01.32|+00.56|+02.67"
+				]
+			},
+			"StoveBurner|+01.08|+00.92|-01.10": { "distance": 1.0215 },
+			"Drawer|+00.64|+00.27|-00.65": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.7566
+			},
+			"Drawer|+00.64|+00.55|-00.65": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.5456
+			},
+			"Cabinet|+00.65|+00.48|-01.72": { "distance": 1.3479 },
+			"CounterTop|+00.93|+00.95|-02.05": {
+				"receptacleObjectIds": [
+					"CoffeeMachine|+00.89|+00.90|-02.13",
+					"PepperShaker|+00.94|+00.90|-01.79",
+					"Bottle|+00.77|+00.91|-01.79",
+					"SaltShaker|+01.19|+00.90|-01.80"
+				],
+				"distance": 1.6949
+			},
+			"Cabinet|+00.95|+02.44|-01.78": { "distance": 2.1202 },
+			"Cabinet|+00.95|+02.16|-00.14": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.4843
+			},
+			"Cabinet|+00.95|+02.16|-00.76": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Lettuce|+01.15|+01.73|-00.40",
+					"CreditCard|+01.06|+01.66|-00.59",
+					"Apple|+01.15|+01.72|-00.66"
+				],
+				"distance": 1.463
+			},
+			"Sink|-00.70|+00.93|-00.65": { "distance": 0.9621 },
+			"Statue|-01.79|+00.51|-00.98": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.1272
+			},
+			"Bottle|+00.77|+00.91|-01.79": { "distance": 1.396 },
+			"Bread|+00.86|+00.98|-00.38": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.6259
+			},
+			"CreditCard|+01.06|+01.66|-00.59": { "distance": 1.1109 },
+			"CellPhone|-01.17|+00.93|-00.12": { "distance": 1.4679 },
+			"LightSwitch|-02.37|+01.22|+03.05": { "distance": 4.4248 },
+			"Potato|-00.69|+00.95|-00.05": { "distance": 1.0462 },
+			"Knife|-01.01|+00.16|+00.54": {
+				"position": { "x": 0.8591, "y": 0.9324, "z": -0.7294 },
+				"rotation": { "x": -0.0, "y": -0.0, "z": 0.0 },
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.6516,
+				"parentReceptacles": ["CounterTop|+00.93|+00.95|-00.21"],
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.9819, 0.9545, -0.7223],
+						[0.9819, 0.9545, -0.7365],
+						[0.9819, 0.9063, -0.7223],
+						[0.9819, 0.9063, -0.7365],
+						[0.6517, 0.9545, -0.7223],
+						[0.6517, 0.9545, -0.7365],
+						[0.6517, 0.9063, -0.7223],
+						[0.6517, 0.9063, -0.7365]
+					],
+					"center": { "x": 0.8168, "y": 0.9304, "z": -0.7294 },
+					"size": { "x": 0.3302, "y": 0.0482, "z": 0.0142 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.9819, 0.9063, -0.7223],
+						[0.6517, 0.9063, -0.7223],
+						[0.6517, 0.9063, -0.7365],
+						[0.9819, 0.9063, -0.7365],
+						[0.9819, 0.9545, -0.7223],
+						[0.6517, 0.9545, -0.7223],
+						[0.6517, 0.9545, -0.7365],
+						[0.9819, 0.9545, -0.7365]
+					]
+				},
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "CounterTop|+00.93|+00.95|-00.21"
+			},
+			"StoveKnob|+00.67|+00.90|-01.37": { "distance": 0.9712 },
+			"StoveKnob|+00.67|+00.90|-01.52": { "distance": 1.1042 },
+			"StoveKnob|+00.67|+00.90|-01.09": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.7233
+			},
+			"StoveKnob|+00.67|+00.90|-01.24": { "distance": 0.8507 },
+			"Fork|+00.97|+01.13|+00.97": { "distance": 1.6494 },
+			"Pan|+01.08|+00.95|-01.10": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.0225
+			},
+			"Lettuce|+01.03|+01.71|+01.35": { "distance": 2.1619 },
+			"Toaster|+00.98|+00.90|+00.33": {
+				"visible": true,
+				"obstructed": false,
+				"isToggled": true,
+				"receptacleObjectIds": ["Bread|+00.69|+00.98|-00.03|BreadSliced_6"],
+				"distance": 1.1072,
+				"simbotIsReceptacleOf": ["Bread|+00.69|+00.98|-00.03|BreadSliced_6"]
+			},
+			"Plate|-01.32|+00.56|+02.67": {
+				"position": { "x": 1.1147, "y": 0.9071, "z": -0.7294 },
+				"rotation": { "x": -0.0, "y": -0.0, "z": 0.0 },
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.8946,
+				"parentReceptacles": ["CounterTop|+00.93|+00.95|-00.21"],
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[1.2086, 0.929, -0.6361],
+						[1.2086, 0.929, -0.8239],
+						[1.2086, 0.9063, -0.6361],
+						[1.2086, 0.9063, -0.8239],
+						[1.0208, 0.929, -0.6361],
+						[1.0208, 0.929, -0.8239],
+						[1.0208, 0.9063, -0.6361],
+						[1.0208, 0.9063, -0.8239]
+					],
+					"center": { "x": 1.1147, "y": 0.9176, "z": -0.73 },
+					"size": { "x": 0.1878, "y": 0.0227, "z": 0.1878 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[1.2086, 0.9063, -0.6361],
+						[1.0208, 0.9063, -0.6361],
+						[1.0208, 0.9063, -0.8239],
+						[1.2086, 0.9063, -0.8239],
+						[1.2086, 0.929, -0.6361],
+						[1.0208, 0.929, -0.6361],
+						[1.0208, 0.929, -0.8239],
+						[1.2086, 0.929, -0.8239]
+					]
+				},
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "CounterTop|+00.93|+00.95|-00.21"
+			},
+			"Apple|-01.91|+00.57|-00.82": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.2047
+			},
+			"Pot|+00.91|+00.86|+01.16": { "distance": 1.7838 },
+			"Window|+00.02|+01.00|-02.64": { "distance": 2.155 },
+			"Window|-03.00|+01.00|-02.64": { "distance": 3.8892 },
+			"Spatula|+01.09|+01.14|+01.25": { "distance": 1.9581 },
+			"PaperTowelRoll|-00.75|+00.88|-00.75": { "distance": 1.0332 },
+			"CoffeeMachine|+00.89|+00.90|-02.13": { "distance": 1.7547 },
+			"Tomato|+01.06|+01.83|-01.13": { "distance": 1.3879 },
+			"GarbageCan|-00.95|-00.04|+00.58": {
+				"receptacleObjectIds": ["Spoon|-00.91|+00.14|+00.64"],
+				"distance": 1.8628
+			},
+			"Egg|+00.89|+01.16|+01.09": { "distance": 1.7364 },
+			"Sink|-00.70|+00.93|-00.65|SinkBasin": {
+				"receptacleObjectIds": [
+					"Mug|-00.70|+00.78|-00.40",
+					"Spatula|-00.59|+00.78|-00.57",
+					"Knife|-00.81|+00.80|-00.75",
+					"PaperTowelRoll|-00.75|+00.88|-00.75",
+					"Cup|-00.59|+00.78|-00.92"
+				],
+				"distance": 0.9688
+			},
+			"SaltShaker|+01.19|+00.90|-01.80": { "distance": 1.6051 },
+			"Microwave|+01.04|+01.68|-01.30": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.3671
+			},
+			"PepperShaker|+00.94|+00.90|-01.79": { "distance": 1.4685 },
+			"Vase|+01.20|+00.91|-00.03": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.058
+			},
+			"ButterKnife|+01.15|+01.66|-02.23": { "distance": 2.0961 },
+			"Fridge|+00.97|+00.00|+01.25": {
+				"receptacleObjectIds": [
+					"Pot|+00.91|+00.86|+01.16",
+					"Spatula|+01.09|+01.14|+01.25",
+					"Plate|+00.84|+01.13|+01.35",
+					"Fork|+00.97|+01.13|+00.97",
+					"Spoon|+00.97|+01.13|+01.16",
+					"Egg|+00.89|+01.16|+01.09",
+					"Vase|+00.91|+01.40|+01.44",
+					"CellPhone|+00.84|+01.40|+01.16",
+					"Lettuce|+01.03|+01.71|+01.35",
+					"Tomato|+00.84|+01.68|+01.44",
+					"Tomato|+00.84|+01.68|+00.97"
+				],
+				"distance": 2.0978
+			},
+			"SoapBottle|-01.92|+00.52|-00.09": { "distance": 2.2418 },
+			"Vase|-00.55|+00.93|-01.39": { "distance": 1.1948 },
+			"Bowl|-01.33|+00.89|+02.72": { "distance": 3.5823 },
+			"DishSponge|+00.71|+00.10|-02.21": { "distance": 1.9443 },
+			"Spoon|+00.97|+01.13|+01.16": { "distance": 1.821 },
+			"Cup|-00.59|+00.78|-00.92": { "distance": 0.9445 },
+			"HousePlant|-01.35|+00.92|-01.54": { "distance": 1.9126 },
+			"Mug|-00.70|+00.78|-00.40": {
+				"isFilledWithLiquid": true,
+				"fillLiquid": "water",
+				"isDirty": false,
+				"distance": 0.9614
+			},
+			"Shelf|-01.64|+00.17|+02.72": { "distance": 3.7978 },
+			"Shelf|-01.64|+00.55|+02.72": {
+				"receptacleObjectIds": [
+					"CellPhone|-01.53|+00.56|+02.67",
+					"Knife|-01.84|+00.59|+02.80"
+				],
+				"distance": 3.7435
+			},
+			"Shelf|-01.64|+00.88|+02.72": { "distance": 3.728 },
+			"ShelvingUnit|-01.64|+00.01|+02.72": { "distance": 3.8335 },
+			"Chair|-01.83|+00.00|-00.03": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.3152
+			},
+			"Chair|-01.85|+00.00|-00.96": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.333
+			},
+			"Faucet|-00.87|+01.16|-00.65": { "distance": 1.1579 }
+		}
+	},
+	"final_state_diff": {
+		"agents": {},
+		"objects": {
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_6": {
+				"name": "Bread_10_Slice_7",
+				"position": { "x": 0.9861, "y": 1.067, "z": 0.2894 },
+				"rotation": { "x": 0.0001, "y": 0.0001, "z": -0.0 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"isCooked": true,
+				"temperature": "Hot",
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 1.092,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_6",
+				"parentReceptacles": [
+					"CounterTop|+00.93|+00.95|-00.21",
+					"Toaster|+00.98|+00.90|+00.33"
+				],
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[1.0632, 1.134, 0.3049],
+						[1.0632, 1.134, 0.2744],
+						[1.0632, 1.0, 0.3049],
+						[1.0632, 1.0, 0.2744],
+						[0.909, 1.134, 0.3049],
+						[0.909, 1.134, 0.2744],
+						[0.909, 1.0, 0.3049],
+						[0.909, 1.0, 0.2744]
+					],
+					"center": { "x": 0.9861, "y": 1.067, "z": 0.2897 },
+					"size": { "x": 0.1541, "y": 0.134, "z": 0.0305 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[1.0632, 1.0, 0.3049],
+						[0.909, 1.0, 0.3049],
+						[0.909, 1.0, 0.2744],
+						[1.0632, 1.0, 0.2744],
+						[1.0632, 1.134, 0.3049],
+						[0.909, 1.134, 0.3049],
+						[0.909, 1.134, 0.2744],
+						[1.0632, 1.134, 0.2744]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"],
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "Toaster|+00.98|+00.90|+00.33",
+				"simbotIsCooked": true
+			},
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_5": {
+				"name": "Bread_10_Slice_6",
+				"position": { "x": 0.6887, "y": 0.9796, "z": -0.3818 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 0.4611,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_5",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.7677, 1.0521, -0.3711],
+						[0.7677, 1.0521, -0.3925],
+						[0.7677, 0.9063, -0.3711],
+						[0.7677, 0.9063, -0.3925],
+						[0.6095, 1.0521, -0.3711],
+						[0.6095, 1.0521, -0.3925],
+						[0.6095, 0.9063, -0.3711],
+						[0.6095, 0.9063, -0.3925]
+					],
+					"center": { "x": 0.6886, "y": 0.9792, "z": -0.3818 },
+					"size": { "x": 0.1582, "y": 0.1458, "z": 0.0214 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7677, 0.9063, -0.3711],
+						[0.6095, 0.9063, -0.3711],
+						[0.6095, 0.9063, -0.3925],
+						[0.7677, 0.9063, -0.3925],
+						[0.7677, 1.0521, -0.3711],
+						[0.6095, 1.0521, -0.3711],
+						[0.6095, 1.0521, -0.3925],
+						[0.7677, 1.0521, -0.3925]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"],
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "CounterTop|+00.93|+00.95|-00.21"
+			},
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_4": {
+				"name": "Bread_10_Slice_5",
+				"position": { "x": 0.689, "y": 0.9746, "z": -0.1297 },
+				"rotation": { "x": 359.8911, "y": 0.0025, "z": 0.0052 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 0.579,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_4",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.77, 1.0485, -0.1191],
+						[0.77, 1.0485, -0.1405],
+						[0.77, 0.9, -0.1191],
+						[0.77, 0.9, -0.1405],
+						[0.608, 1.0485, -0.1191],
+						[0.608, 1.0485, -0.1405],
+						[0.608, 0.9, -0.1191],
+						[0.608, 0.9, -0.1405]
+					],
+					"center": { "x": 0.689, "y": 0.9743, "z": -0.1298 },
+					"size": { "x": 0.1621, "y": 0.1485, "z": 0.0214 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.77, 0.9, -0.1191],
+						[0.608, 0.9, -0.1191],
+						[0.608, 0.9, -0.1401],
+						[0.77, 0.9, -0.1401],
+						[0.77, 1.0485, -0.1194],
+						[0.608, 1.0485, -0.1194],
+						[0.608, 1.0485, -0.1405],
+						[0.77, 1.0485, -0.1405]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"]
+			},
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_3": {
+				"name": "Bread_10_Slice_4",
+				"position": { "x": 0.6888, "y": 0.9764, "z": -0.1061 },
+				"rotation": { "x": 359.8961, "y": 0.0025, "z": 0.0052 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 0.5945,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_3",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.7688, 1.0525, -0.0955],
+						[0.7688, 1.0525, -0.1169],
+						[0.7688, 0.9, -0.0955],
+						[0.7688, 0.9, -0.1169],
+						[0.6087, 1.0525, -0.0955],
+						[0.6087, 1.0525, -0.1169],
+						[0.6087, 0.9, -0.0955],
+						[0.6087, 0.9, -0.1169]
+					],
+					"center": { "x": 0.6888, "y": 0.9762, "z": -0.1062 },
+					"size": { "x": 0.1601, "y": 0.1525, "z": 0.0214 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7688, 0.9, -0.0955],
+						[0.6087, 0.9, -0.0955],
+						[0.6087, 0.9, -0.1165],
+						[0.7688, 0.9, -0.1165],
+						[0.7688, 1.0524, -0.0958],
+						[0.6087, 1.0525, -0.0958],
+						[0.6087, 1.0524, -0.1169],
+						[0.7688, 1.0524, -0.1169]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"]
+			},
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_2": {
+				"name": "Bread_10_Slice_3",
+				"position": { "x": 0.6887, "y": 0.9777, "z": -0.0817 },
+				"rotation": { "x": 359.9242, "y": 0.0022, "z": 0.0046 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 0.611,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_2",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.7687, 1.0551, -0.0697],
+						[0.7687, 1.0551, -0.0937],
+						[0.7687, 0.9, -0.0697],
+						[0.7687, 0.9, -0.0937],
+						[0.6086, 1.0551, -0.0697],
+						[0.6086, 1.0551, -0.0937],
+						[0.6086, 0.9, -0.0697],
+						[0.6086, 0.9, -0.0937]
+					],
+					"center": { "x": 0.6886, "y": 0.9775, "z": -0.0817 },
+					"size": { "x": 0.1601, "y": 0.1551, "z": 0.0241 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7687, 0.9, -0.0697],
+						[0.6086, 0.9, -0.0697],
+						[0.6086, 0.9, -0.0934],
+						[0.7687, 0.9, -0.0934],
+						[0.7687, 1.0551, -0.07],
+						[0.6086, 1.0551, -0.07],
+						[0.6086, 1.055, -0.0937],
+						[0.7687, 1.055, -0.0937]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"]
+			},
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_1": {
+				"name": "Bread_10_Slice_2",
+				"position": { "x": 0.6887, "y": 0.9797, "z": -0.0527 },
+				"rotation": { "x": 359.9603, "y": 0.0014, "z": 0.0033 },
+				"visible": true,
+				"obstructed": false,
+				"cookable": true,
+				"sliceable": false,
+				"mass": 0.0583,
+				"distance": 0.6314,
+				"objectType": "BreadSliced",
+				"objectId": "Bread|+00.69|+00.98|-00.03|BreadSliced_1",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.7697, 1.059, -0.0379],
+						[0.7697, 1.059, -0.0676],
+						[0.7697, 0.9, -0.0379],
+						[0.7697, 0.9, -0.0676],
+						[0.6076, 1.059, -0.0379],
+						[0.6076, 1.059, -0.0676],
+						[0.6076, 0.9, -0.0379],
+						[0.6076, 0.9, -0.0676]
+					],
+					"center": { "x": 0.6887, "y": 0.9795, "z": -0.0528 },
+					"size": { "x": 0.1621, "y": 0.159, "z": 0.0297 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7697, 0.9, -0.0379],
+						[0.6076, 0.9, -0.0379],
+						[0.6076, 0.9, -0.0674],
+						[0.7697, 0.9, -0.0674],
+						[0.7697, 1.059, -0.0381],
+						[0.6076, 1.059, -0.0381],
+						[0.6076, 1.059, -0.0676],
+						[0.7697, 1.059, -0.0676]
+					]
+				},
+				"simbotObjectClass": ["BreadSliced", "Food"]
+			},
+			"Bread|+00.69|+00.98|-00.03|Bread_0": {
+				"name": "Bread_10_Slice_1",
+				"position": { "x": 0.6895, "y": 0.9793, "z": 0.0323 },
+				"visible": true,
+				"obstructed": false,
+				"sliceable": false,
+				"mass": 0.35,
+				"distance": 0.6947,
+				"objectId": "Bread|+00.69|+00.98|-00.03|Bread_0",
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.7676, 1.0567, 0.0959],
+						[0.7676, 1.0567, -0.0347],
+						[0.7676, 0.9, 0.0959],
+						[0.7676, 0.9, -0.0347],
+						[0.6113, 1.0567, 0.0959],
+						[0.6113, 1.0567, -0.0347],
+						[0.6113, 0.9, 0.0959],
+						[0.6113, 0.9, -0.0347]
+					],
+					"center": { "x": 0.6895, "y": 0.9784, "z": 0.0306 },
+					"size": { "x": 0.1562, "y": 0.1567, "z": 0.1306 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7676, 0.9, 0.0959],
+						[0.6113, 0.9, 0.0959],
+						[0.6113, 0.9, -0.0347],
+						[0.7676, 0.9, -0.0347],
+						[0.7676, 1.0567, 0.0959],
+						[0.6113, 1.0567, 0.0959],
+						[0.6113, 1.0567, -0.0347],
+						[0.7676, 1.0567, -0.0347]
+					]
+				}
+			},
+			"Spoon|-00.91|+00.14|+00.64": { "distance": 1.8001 },
+			"DishSponge|-00.59|+00.94|+00.16": { "distance": 1.0733 },
+			"Bowl|-01.29|+00.93|-01.17": { "distance": 1.6814 },
+			"Vase|+00.91|+01.40|+01.44": { "distance": 2.1113 },
+			"ButterKnife|+01.04|+02.20|-01.19": { "distance": 1.6718 },
+			"PepperShaker|+00.83|+00.15|-00.69": { "distance": 0.9724 },
+			"Tomato|+00.84|+01.68|+01.44": { "distance": 2.1779 },
+			"Spatula|-00.59|+00.78|-00.57": { "distance": 0.8494 },
+			"Pot|-00.62|+00.93|+00.16": { "distance": 1.0978 },
+			"Apple|+01.15|+01.72|-00.66": { "distance": 1.2223 },
+			"Plate|+00.84|+01.13|+01.35": { "distance": 1.9561 },
+			"Lettuce|+01.15|+01.73|-00.40": {
+				"temperature": "RoomTemp",
+				"distance": 1.2266
+			},
+			"Pan|-01.10|+00.93|-00.91": { "distance": 1.4139 },
+			"Fork|+00.75|+00.15|-00.61": { "distance": 0.9099 },
+			"Knife|-00.81|+00.80|-00.75": { "distance": 1.0916 },
+			"CellPhone|-01.53|+00.56|+02.67": { "distance": 3.655 },
+			"Bread|+00.69|+00.98|+00.31": { "distance": 0.9278 },
+			"Statue|+01.19|+01.66|-02.10": { "distance": 2.0057 },
+			"Bread|+00.69|+00.98|-00.03": {
+				"isSliced": true,
+				"distance": 0.6451,
+				"parentReceptacles": null,
+				"axisAlignedBoundingBox": {
+					"cornerPoints": null,
+					"center": { "x": 0.0, "y": 0.0, "z": 0.0 },
+					"size": { "x": 0.0, "y": 0.0, "z": 0.0 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.7474, 0.9159, 0.0885],
+						[0.6236, 0.9159, 0.0885],
+						[0.6236, 0.9159, -0.1601],
+						[0.7474, 0.9159, -0.1601],
+						[0.7474, 1.0265, 0.0885],
+						[0.6236, 1.0265, 0.0885],
+						[0.6236, 1.0265, -0.1601],
+						[0.7474, 1.0265, -0.1601]
+					]
+				}
+			},
+			"Lettuce|-00.92|+01.00|-01.39": {
+				"temperature": "RoomTemp",
+				"distance": 1.471
+			},
+			"PepperShaker|-01.06|+00.94|-00.92": { "distance": 1.3736 },
+			"Tomato|+00.84|+01.68|+00.97": { "distance": 1.765 },
+			"Knife|-01.84|+00.59|+02.80": { "distance": 3.9204 },
+			"Fork|+00.86|+00.11|-02.05": { "distance": 1.8484 },
+			"CellPhone|+00.84|+01.40|+01.16": { "distance": 1.8303 },
+			"Statue|+01.17|+02.20|-01.08": { "distance": 1.697 },
+			"Pan|+00.86|+00.10|-01.89": { "distance": 1.7174 },
+			"Floor|+00.00|+00.00|+00.00": {
+				"visible": false,
+				"obstructed": true,
+				"receptacleObjectIds": [
+					"Fridge|+00.97|+00.00|+01.25",
+					"ShelvingUnit|-01.64|+00.01|+02.72",
+					"Spoon|-00.91|+00.14|+00.64",
+					"GarbageCan|-00.95|-00.04|+00.58",
+					"Shelf|-01.64|+00.17|+02.72",
+					"Chair|-01.83|+00.00|-00.03",
+					"Chair|-01.85|+00.00|-00.96"
+				],
+				"distance": 1.0603
+			},
+			"StoveBurner|+00.84|+00.92|-01.10": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.842
+			},
+			"Cabinet|+00.65|+00.48|+00.24": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.9463
+			},
+			"StoveBurner|+01.08|+00.92|-01.50": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.3014
+			},
+			"StoveBurner|+00.84|+00.92|-01.50": { "distance": 1.1659 },
+			"Drawer|+00.64|+00.76|-00.65": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.4403
+			},
+			"Cabinet|+00.95|+02.16|-02.38": { "distance": 2.365 },
+			"CounterTop|-01.24|+00.97|-00.64": {
+				"receptacleObjectIds": [
+					"CellPhone|-01.17|+00.93|-00.12",
+					"Pan|-01.10|+00.93|-00.91",
+					"PepperShaker|-01.06|+00.94|-00.92",
+					"Bowl|-01.29|+00.93|-01.17",
+					"Lettuce|-00.92|+01.00|-01.39",
+					"HousePlant|-01.35|+00.92|-01.54",
+					"Vase|-00.55|+00.93|-01.39",
+					"Pot|-00.62|+00.93|+00.16",
+					"DishSponge|-00.59|+00.94|+00.16",
+					"Potato|-00.69|+00.95|-00.05"
+				],
+				"distance": 1.4974
+			},
+			"CounterTop|+00.93|+00.95|-00.21": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_6",
+					"Toaster|+00.98|+00.90|+00.33",
+					"Bread|+00.69|+00.98|+00.31",
+					"Vase|+01.20|+00.91|-00.03",
+					"Bread|+00.69|+00.98|-00.03|Bread_0",
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_1",
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_2",
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_4",
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_3",
+					"Bread|+00.86|+00.98|-00.38",
+					"Plate|-01.32|+00.56|+02.67",
+					"Knife|-01.01|+00.16|+00.54",
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_5"
+				],
+				"distance": 0.7433,
+				"simbotIsReceptacleOf": [
+					"Knife|-01.01|+00.16|+00.54",
+					"Plate|-01.32|+00.56|+02.67",
+					"Bread|+00.69|+00.98|-00.03|BreadSliced_5"
+				]
+			},
+			"StoveBurner|+01.08|+00.92|-01.10": { "distance": 1.0215 },
+			"Drawer|+00.64|+00.27|-00.65": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.7566
+			},
+			"Drawer|+00.64|+00.55|-00.65": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.5456
+			},
+			"Cabinet|+00.65|+00.48|-01.72": { "distance": 1.3479 },
+			"CounterTop|+00.93|+00.95|-02.05": {
+				"receptacleObjectIds": [
+					"CoffeeMachine|+00.89|+00.90|-02.13",
+					"PepperShaker|+00.94|+00.90|-01.79",
+					"Bottle|+00.77|+00.91|-01.79",
+					"SaltShaker|+01.19|+00.90|-01.80"
+				],
+				"distance": 1.6949
+			},
+			"Cabinet|+00.95|+02.44|-01.78": { "distance": 2.1202 },
+			"Cabinet|+00.95|+02.16|-00.14": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.4843
+			},
+			"Cabinet|+00.95|+02.16|-00.76": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Lettuce|+01.15|+01.73|-00.40",
+					"CreditCard|+01.06|+01.66|-00.59",
+					"Apple|+01.15|+01.72|-00.66"
+				],
+				"distance": 1.463
+			},
+			"Sink|-00.70|+00.93|-00.65": { "distance": 0.9621 },
+			"Statue|-01.79|+00.51|-00.98": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.1272
+			},
+			"Bottle|+00.77|+00.91|-01.79": { "distance": 1.396 },
+			"Bread|+00.86|+00.98|-00.38": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.6259
+			},
+			"CreditCard|+01.06|+01.66|-00.59": { "distance": 1.1109 },
+			"CellPhone|-01.17|+00.93|-00.12": { "distance": 1.4679 },
+			"LightSwitch|-02.37|+01.22|+03.05": { "distance": 4.4248 },
+			"Potato|-00.69|+00.95|-00.05": { "distance": 1.0462 },
+			"Knife|-01.01|+00.16|+00.54": {
+				"position": { "x": 0.8591, "y": 0.9324, "z": -0.7294 },
+				"rotation": { "x": -0.0, "y": -0.0, "z": 0.0 },
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.6516,
+				"parentReceptacles": ["CounterTop|+00.93|+00.95|-00.21"],
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[0.9819, 0.9545, -0.7223],
+						[0.9819, 0.9545, -0.7365],
+						[0.9819, 0.9063, -0.7223],
+						[0.9819, 0.9063, -0.7365],
+						[0.6517, 0.9545, -0.7223],
+						[0.6517, 0.9545, -0.7365],
+						[0.6517, 0.9063, -0.7223],
+						[0.6517, 0.9063, -0.7365]
+					],
+					"center": { "x": 0.8168, "y": 0.9304, "z": -0.7294 },
+					"size": { "x": 0.3302, "y": 0.0482, "z": 0.0142 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[0.9819, 0.9063, -0.7223],
+						[0.6517, 0.9063, -0.7223],
+						[0.6517, 0.9063, -0.7365],
+						[0.9819, 0.9063, -0.7365],
+						[0.9819, 0.9545, -0.7223],
+						[0.6517, 0.9545, -0.7223],
+						[0.6517, 0.9545, -0.7365],
+						[0.9819, 0.9545, -0.7365]
+					]
+				},
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "CounterTop|+00.93|+00.95|-00.21"
+			},
+			"StoveKnob|+00.67|+00.90|-01.37": { "distance": 0.9712 },
+			"StoveKnob|+00.67|+00.90|-01.52": { "distance": 1.1042 },
+			"StoveKnob|+00.67|+00.90|-01.09": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.7233
+			},
+			"StoveKnob|+00.67|+00.90|-01.24": { "distance": 0.8507 },
+			"Fork|+00.97|+01.13|+00.97": { "distance": 1.6494 },
+			"Pan|+01.08|+00.95|-01.10": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.0225
+			},
+			"Lettuce|+01.03|+01.71|+01.35": { "distance": 2.1619 },
+			"Toaster|+00.98|+00.90|+00.33": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": ["Bread|+00.69|+00.98|-00.03|BreadSliced_6"],
+				"distance": 1.1072,
+				"simbotIsReceptacleOf": ["Bread|+00.69|+00.98|-00.03|BreadSliced_6"]
+			},
+			"Plate|-01.32|+00.56|+02.67": {
+				"position": { "x": 1.1147, "y": 0.9071, "z": -0.7294 },
+				"rotation": { "x": -0.0, "y": -0.0, "z": 0.0 },
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.8946,
+				"parentReceptacles": ["CounterTop|+00.93|+00.95|-00.21"],
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[1.2086, 0.929, -0.6361],
+						[1.2086, 0.929, -0.8239],
+						[1.2086, 0.9063, -0.6361],
+						[1.2086, 0.9063, -0.8239],
+						[1.0208, 0.929, -0.6361],
+						[1.0208, 0.929, -0.8239],
+						[1.0208, 0.9063, -0.6361],
+						[1.0208, 0.9063, -0.8239]
+					],
+					"center": { "x": 1.1147, "y": 0.9176, "z": -0.73 },
+					"size": { "x": 0.1878, "y": 0.0227, "z": 0.1878 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[1.2086, 0.9063, -0.6361],
+						[1.0208, 0.9063, -0.6361],
+						[1.0208, 0.9063, -0.8239],
+						[1.2086, 0.9063, -0.8239],
+						[1.2086, 0.929, -0.6361],
+						[1.0208, 0.929, -0.6361],
+						[1.0208, 0.929, -0.8239],
+						[1.2086, 0.929, -0.8239]
+					]
+				},
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": "CounterTop|+00.93|+00.95|-00.21"
+			},
+			"Apple|-01.91|+00.57|-00.82": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.2047
+			},
+			"Pot|+00.91|+00.86|+01.16": { "distance": 1.7838 },
+			"Window|+00.02|+01.00|-02.64": { "distance": 2.155 },
+			"Window|-03.00|+01.00|-02.64": { "distance": 3.8892 },
+			"Spatula|+01.09|+01.14|+01.25": { "distance": 1.9581 },
+			"PaperTowelRoll|-00.75|+00.88|-00.75": { "distance": 1.0332 },
+			"CoffeeMachine|+00.89|+00.90|-02.13": { "distance": 1.7547 },
+			"Tomato|+01.06|+01.83|-01.13": { "distance": 1.3879 },
+			"GarbageCan|-00.95|-00.04|+00.58": {
+				"receptacleObjectIds": ["Spoon|-00.91|+00.14|+00.64"],
+				"distance": 1.8628
+			},
+			"Egg|+00.89|+01.16|+01.09": { "distance": 1.7364 },
+			"Sink|-00.70|+00.93|-00.65|SinkBasin": {
+				"receptacleObjectIds": [
+					"Mug|-00.70|+00.78|-00.40",
+					"Spatula|-00.59|+00.78|-00.57",
+					"Knife|-00.81|+00.80|-00.75",
+					"PaperTowelRoll|-00.75|+00.88|-00.75",
+					"Cup|-00.59|+00.78|-00.92"
+				],
+				"distance": 0.9688
+			},
+			"SaltShaker|+01.19|+00.90|-01.80": { "distance": 1.6051 },
+			"Microwave|+01.04|+01.68|-01.30": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.3671
+			},
+			"PepperShaker|+00.94|+00.90|-01.79": { "distance": 1.4685 },
+			"Vase|+01.20|+00.91|-00.03": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.058
+			},
+			"ButterKnife|+01.15|+01.66|-02.23": { "distance": 2.0961 },
+			"Fridge|+00.97|+00.00|+01.25": {
+				"receptacleObjectIds": [
+					"Pot|+00.91|+00.86|+01.16",
+					"Spatula|+01.09|+01.14|+01.25",
+					"Plate|+00.84|+01.13|+01.35",
+					"Fork|+00.97|+01.13|+00.97",
+					"Spoon|+00.97|+01.13|+01.16",
+					"Egg|+00.89|+01.16|+01.09",
+					"Vase|+00.91|+01.40|+01.44",
+					"CellPhone|+00.84|+01.40|+01.16",
+					"Lettuce|+01.03|+01.71|+01.35",
+					"Tomato|+00.84|+01.68|+01.44",
+					"Tomato|+00.84|+01.68|+00.97"
+				],
+				"distance": 2.0978
+			},
+			"SoapBottle|-01.92|+00.52|-00.09": { "distance": 2.2418 },
+			"Vase|-00.55|+00.93|-01.39": { "distance": 1.1948 },
+			"Bowl|-01.33|+00.89|+02.72": { "distance": 3.5823 },
+			"DishSponge|+00.71|+00.10|-02.21": { "distance": 1.9443 },
+			"Spoon|+00.97|+01.13|+01.16": { "distance": 1.821 },
+			"Cup|-00.59|+00.78|-00.92": { "distance": 0.9445 },
+			"HousePlant|-01.35|+00.92|-01.54": { "distance": 1.9126 },
+			"Mug|-00.70|+00.78|-00.40": {
+				"isFilledWithLiquid": true,
+				"fillLiquid": "water",
+				"isDirty": false,
+				"distance": 0.9614
+			},
+			"Shelf|-01.64|+00.17|+02.72": { "distance": 3.7978 },
+			"Shelf|-01.64|+00.55|+02.72": {
+				"receptacleObjectIds": [
+					"CellPhone|-01.53|+00.56|+02.67",
+					"Knife|-01.84|+00.59|+02.80"
+				],
+				"distance": 3.7435
+			},
+			"Shelf|-01.64|+00.88|+02.72": { "distance": 3.728 },
+			"ShelvingUnit|-01.64|+00.01|+02.72": { "distance": 3.8335 },
+			"Chair|-01.83|+00.00|-00.03": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.3152
+			},
+			"Chair|-01.85|+00.00|-00.96": {
+				"visible": false,
+				"obstructed": true,
+				"distance": 2.333
+			},
+			"Faucet|-00.87|+01.16|-00.65": { "distance": 1.1579 }
+		}
+	},
+	"state_changes": {
+		"agents": {},
+		"objects": {
+			"Bread|+00.69|+00.98|-00.03|BreadSliced_5": {
+				"simbotLastParentReceptacle": "CounterTop|+00.93|+00.95|-00.21"
+			}
+		}
+	},
+	"history_subgoals": [
+		"Navigate",
+		"Knife",
+		"Pickup",
+		"Knife",
+		"Navigate",
+		"Bread",
+		"Slice",
+		"Bread",
+		"Place",
+		"CounterTop",
+		"Navigate",
+		"Plate",
+		"Pickup",
+		"Plate",
+		"Navigate",
+		"CounterTop",
+		"Place",
+		"CounterTop",
+		"Pickup",
+		"Bread",
+		"Place",
+		"Toaster",
+		"ToggleOn",
+		"Toaster",
+		"ToggleOff",
+		"Toaster",
+		"Pickup",
+		"Bread",
+		"Place",
+		"Toaster",
+		"ToggleOn",
+		"Toaster",
+		"Pickup",
+		"Bread"
+	],
+	"future_subgoals": ["Place", "CounterTop", "ToggleOff", "Toaster"],
+	"expected_init_goal_conditions_total": 2,
+	"expected_init_goal_conditions_satisfied": 1,
+	"dialog_history_cleaned": [
+		["Driver", "what do i do today"],
+		["Commander", "Hi, slice bread"],
+		["Commander", "bread on counter"],
+		["Commander", "knife in trash"],
+		["Driver", "knife??"],
+		["Commander", "1 slice"],
+		["Commander", "then toast"],
+		["Commander", "Use clean plate on wall rack"],
+		["Commander", "already clean"],
+		["Commander", ""],
+		["Commander", "place toast on plate"],
+		["Driver", "should i toast the bread"],
+		["Commander", "yes i said toast"],
+		["Commander", "place toast on plate"],
+		["Commander", "1 slice only"]
+	]
+}

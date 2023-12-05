@@ -1,0 +1,610 @@
+{
+	"dialog_history": [
+		["Commander", "We need to make a salad today."],
+		["Driver", "What should I do today?"],
+		["Commander", "We will need a knife to slice items"]
+	],
+	"driver_action_history": [
+		{
+			"action_id": 100,
+			"action_idx": 33,
+			"obj_interaction_action": 0,
+			"action_name": "Text",
+			"time_start": 56.75792479515076,
+			"oid": null,
+			"x": null,
+			"y": null
+		}
+	],
+	"driver_image_history": ["driver.frame.56.75792479515076.jpeg"],
+	"driver_actions_future": [
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 66.42875814437866,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 67.4627537727356,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 67.78862118721008,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 68.04360008239746,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 2,
+			"action_idx": 2,
+			"obj_interaction_action": 0,
+			"action_name": "Forward",
+			"time_start": 68.30547189712524,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 68.55757260322571,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 68.77755284309387,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 69.41266250610352,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 69.62862706184387,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 9,
+			"action_idx": 9,
+			"obj_interaction_action": 0,
+			"action_name": "Pan Right",
+			"time_start": 70.1575129032135,
+			"oid": null,
+			"x": null,
+			"y": null
+		},
+		{
+			"action_id": 200,
+			"action_idx": 15,
+			"obj_interaction_action": 1,
+			"action_name": "Pickup",
+			"time_start": 73.41680121421814,
+			"oid": "Knife|+01.25|+00.94|+00.83",
+			"x": 0.6771217712177122,
+			"y": 0.6586715867158671
+		}
+	],
+	"driver_images_future": [
+		"driver.frame.66.42875814437866.jpeg",
+		"driver.frame.67.4627537727356.jpeg",
+		"driver.frame.67.78862118721008.jpeg",
+		"driver.frame.68.04360008239746.jpeg",
+		"driver.frame.68.30547189712524.jpeg",
+		"driver.frame.68.55757260322571.jpeg",
+		"driver.frame.68.77755284309387.jpeg",
+		"driver.frame.69.41266250610352.jpeg",
+		"driver.frame.69.62862706184387.jpeg",
+		"driver.frame.70.1575129032135.jpeg",
+		"driver.frame.73.41680121421814.jpeg"
+	],
+	"interactions": [
+		{
+			"agent_id": 0,
+			"action_id": 500,
+			"time_start": 38.203702211380005,
+			"duration": 1,
+			"success": 0,
+			"query": "",
+			"obj_interaction_action": 0,
+			"action_idx": 30
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 48.1824734210968,
+			"duration": 1,
+			"success": 1,
+			"utterance": "We need to make a salad today.",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "We need to make a salad today.",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 1,
+			"action_id": 100,
+			"time_start": 56.75792479515076,
+			"duration": 1,
+			"success": 1,
+			"utterance": "What should I do today?",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "What should I do today?",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 0,
+			"action_id": 100,
+			"time_start": 57.17999744415283,
+			"duration": 1,
+			"success": 1,
+			"utterance": "We will need a knife to slice items",
+			"obj_interaction_action": 0,
+			"action_idx": 33,
+			"corrected_utterance": "We will need a knife to slice items",
+			"is_corrected": 0
+		},
+		{
+			"agent_id": 0,
+			"action_id": 502,
+			"time_start": 60.618964433670044,
+			"duration": 1,
+			"success": 1,
+			"query": "knife",
+			"obj_interaction_action": 0,
+			"action_idx": 32
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 66.42875814437866,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [-0.75, 0.25, 0.9009991884231567, 0, 30.000003814697266, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 67.4627537727356,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.5, 0.25, 0.9009991884231567, 0, 30.000003814697266, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 67.78862118721008,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [-0.25, 0.25, 0.9009991884231567, 0, 30.000003814697266, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 68.04360008239746,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.0, 0.25, 0.9009991884231567, 0, 30.000003814697266, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 2,
+			"time_start": 68.30547189712524,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0.25, 0, 0, 0, 0, 0],
+			"pose": [0.25, 0.25, 0.9009991884231567, 0, 30.000003814697266, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 2
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 68.55757260322571,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0.25, -0.0, 0.9009991884231567, 0, 30.000003814697266, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 68.77755284309387,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0.25, -0.25, 0.9009991884231567, 0, 30.000003814697266, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 69.41266250610352,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0.25, -0.5, 0.9009991884231567, 0, 30.000003814697266, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 69.62862706184387,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0.25, -0.75, 0.9009991884231567, 0, 30.000003814697266, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 9,
+			"time_start": 70.1575129032135,
+			"duration": 1,
+			"success": 1,
+			"pose_delta": [0, -0.25, 0, 0, 0, 0],
+			"pose": [0.25, -1.0, 0.9009991884231567, 0, 30.000003814697266, -0.0],
+			"obj_interaction_action": 0,
+			"action_idx": 9
+		},
+		{
+			"agent_id": 1,
+			"action_id": 200,
+			"time_start": 73.41680121421814,
+			"duration": 1,
+			"success": 1,
+			"x": 0.6771217712177122,
+			"y": 0.6586715867158671,
+			"oid": "Knife|+01.25|+00.94|+00.83",
+			"obj_interaction_action": 1,
+			"action_idx": 15
+		}
+	],
+	"game_id": "7f5bf828ea7530fc_dc63",
+	"instance_id": "7f5bf828ea7530fc_dc63.edh0",
+	"pred_start_idx": 4,
+	"init_state_diff": {
+		"agents": {},
+		"objects": {
+			"CounterTop|+00.99|+00.95|+01.02": {
+				"receptacleObjectIds": [
+					"Bowl|+01.76|+00.91|+01.09",
+					"Pan|+01.28|+00.90|+01.19",
+					"Knife|+01.25|+00.94|+00.83",
+					"Tomato|+00.73|+00.97|+00.74",
+					"Bread|+00.22|+00.98|+00.74",
+					"Egg|+01.84|+00.94|+00.57",
+					"SaltShaker|+01.84|+00.90|+00.41"
+				]
+			},
+			"StoveBurner|+01.81|+00.91|-00.32": {
+				"receptacleObjectIds": [
+					"Pot|+01.81|+00.91|-00.32",
+					"Egg|+01.81|+00.96|-00.37"
+				]
+			},
+			"CounterTop|+00.99|+00.95|-01.52": {
+				"receptacleObjectIds": [
+					"CoffeeMachine|+00.50|+00.90|-01.60",
+					"ButterKnife|+00.30|+00.90|-01.30",
+					"Toaster|+00.13|+00.90|-01.59",
+					"Microwave|+01.75|+00.90|-00.84",
+					"Cup|+01.59|+00.91|-01.37",
+					"Fork|+01.59|+00.91|-01.46",
+					"DishSponge|+01.55|+00.92|-01.55",
+					"Lettuce|+01.80|+01.00|-01.63",
+					"Potato|+01.87|+00.95|-01.80",
+					"SoapBottle|+01.54|+00.90|-01.70",
+					"Knife|+01.94|+00.94|-01.55"
+				]
+			},
+			"Floor|+00.00|+00.00|+00.00": {
+				"receptacleObjectIds": [
+					"Fridge|-00.53|+00.00|-01.55",
+					"GarbageCan|+01.77|-00.03|+01.69",
+					"Ladle|+01.71|+00.08|+01.68",
+					"Chair|+01.07|+00.00|+01.75",
+					"Chair|+00.36|+00.00|+01.71"
+				]
+			},
+			"Fridge|-00.53|+00.00|-01.55": {
+				"receptacleObjectIds": [
+					"Cup|-00.64|+00.46|-01.61",
+					"Bread|-00.79|+00.53|-01.48",
+					"Spatula|-00.89|+00.75|-01.56",
+					"Ladle|-00.74|+00.79|-01.63",
+					"Bowl|-00.79|+01.68|-01.59",
+					"PepperShaker|-00.37|+01.05|-01.38"
+				]
+			},
+			"Chair|+01.07|+00.00|+01.75": {
+				"receptacleObjectIds": [
+					"Apple|+01.08|+00.62|+01.83",
+					"Ladle|+01.00|+00.61|+01.67"
+				]
+			},
+			"Chair|+00.36|+00.00|+01.71": {
+				"receptacleObjectIds": [
+					"Plate|+00.40|+00.57|+01.75",
+					"Fork|+00.35|+00.56|+01.66",
+					"Knife|+00.36|+00.59|+01.58",
+					"Egg|+00.25|+00.60|+01.79"
+				]
+			}
+		}
+	},
+	"final_state_diff": {
+		"agents": {},
+		"objects": {
+			"Mug|+01.74|+01.63|+00.49": { "distance": 1.0658 },
+			"Bowl|-00.79|+01.68|-01.59": { "distance": 2.6852 },
+			"PepperShaker|+01.73|+01.64|-01.72": { "distance": 2.2329 },
+			"Bread|-00.79|+00.53|-01.48": { "distance": 2.5145 },
+			"Knife|+01.25|+00.94|+00.83": {
+				"position": { "x": 1.0, "y": 1.2474, "z": 0.4991 },
+				"rotation": { "x": -0.0, "y": 0.0, "z": 0.0 },
+				"visible": true,
+				"obstructed": false,
+				"isPickedUp": true,
+				"distance": 0.4267,
+				"parentReceptacles": null,
+				"axisAlignedBoundingBox": {
+					"cornerPoints": [
+						[1.1281, 1.2619, 0.506],
+						[1.1281, 1.2619, 0.4922],
+						[1.1281, 1.2145, 0.506],
+						[1.1281, 1.2145, 0.4922],
+						[0.8036, 1.2619, 0.506],
+						[0.8036, 1.2619, 0.4922],
+						[0.8036, 1.2145, 0.506],
+						[0.8036, 1.2145, 0.4922]
+					],
+					"center": { "x": 0.9658, "y": 1.2382, "z": 0.4991 },
+					"size": { "x": 0.3245, "y": 0.0475, "z": 0.0139 }
+				},
+				"objectOrientedBoundingBox": {
+					"cornerPoints": [
+						[1.1281, 1.2145, 0.506],
+						[0.8036, 1.2145, 0.506],
+						[0.8036, 1.2145, 0.4922],
+						[1.1281, 1.2145, 0.4922],
+						[1.1281, 1.2619, 0.506],
+						[0.8036, 1.2619, 0.506],
+						[0.8036, 1.2619, 0.4922],
+						[1.1281, 1.2619, 0.4922]
+					]
+				},
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": null
+			},
+			"Tomato|+01.80|+01.07|-00.89": { "distance": 1.4038 },
+			"Ladle|+01.00|+00.61|+01.67": { "distance": 1.4547 },
+			"Fork|+01.71|+01.01|-00.73": { "distance": 1.2124 },
+			"Egg|+00.25|+00.60|+01.79": { "distance": 1.7381 },
+			"Cup|-00.64|+00.46|-01.61": { "distance": 2.5192 },
+			"Plate|+01.24|+00.77|-01.60": { "distance": 1.8697 },
+			"Bread|+00.22|+00.98|+00.74": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.9243
+			},
+			"Knife|+00.36|+00.59|+01.58": { "distance": 1.5066 },
+			"Plate|+00.40|+00.57|+01.75": { "distance": 1.6476 },
+			"Egg|+01.81|+00.96|-00.37": { "distance": 1.018 },
+			"Fork|+01.59|+00.91|-01.46": { "distance": 1.808 },
+			"Ladle|+01.71|+00.08|+01.68": { "distance": 1.7971 },
+			"CounterTop|+00.99|+00.95|+01.02": {
+				"receptacleObjectIds": [
+					"Bowl|+01.76|+00.91|+01.09",
+					"Pan|+01.28|+00.90|+01.19",
+					"Tomato|+00.73|+00.97|+00.74",
+					"Bread|+00.22|+00.98|+00.74",
+					"Egg|+01.84|+00.94|+00.57",
+					"SaltShaker|+01.84|+00.90|+00.41"
+				],
+				"distance": 0.7684
+			},
+			"StoveBurner|+01.81|+00.91|+00.08": { "distance": 0.8258 },
+			"StoveBurner|+01.81|+00.91|-00.32": {
+				"receptacleObjectIds": [
+					"Pot|+01.81|+00.91|-00.32",
+					"Egg|+01.81|+00.96|-00.37"
+				],
+				"distance": 0.9882
+			},
+			"StoveBurner|+01.54|+00.91|-00.32": { "distance": 0.7877 },
+			"CounterTop|+00.99|+00.95|-01.52": {
+				"receptacleObjectIds": [
+					"CoffeeMachine|+00.50|+00.90|-01.60",
+					"ButterKnife|+00.30|+00.90|-01.30",
+					"Toaster|+00.13|+00.90|-01.59",
+					"Microwave|+01.75|+00.90|-00.84",
+					"Cup|+01.59|+00.91|-01.37",
+					"Fork|+01.59|+00.91|-01.46",
+					"DishSponge|+01.55|+00.92|-01.55",
+					"SoapBottle|+01.54|+00.90|-01.70",
+					"Knife|+01.94|+00.94|-01.55",
+					"Lettuce|+01.80|+01.00|-01.63",
+					"Potato|+01.87|+00.95|-01.80"
+				],
+				"distance": 1.7666
+			},
+			"Floor|+00.00|+00.00|+00.00": {
+				"receptacleObjectIds": [
+					"Fridge|-00.53|+00.00|-01.55",
+					"GarbageCan|+01.77|-00.03|+01.69",
+					"Ladle|+01.71|+00.08|+01.68",
+					"Chair|+01.07|+00.00|+01.75",
+					"Chair|+00.36|+00.00|+01.71"
+				],
+				"distance": 1.3691
+			},
+			"Sink|+01.10|+00.91|-01.60": { "distance": 1.8527 },
+			"StoveBurner|+01.55|+00.91|+00.08": { "distance": 0.576 },
+			"Cabinet|+01.66|+02.30|+01.31": { "distance": 1.877 },
+			"Cabinet|+01.66|+02.30|+00.69": { "distance": 1.6066 },
+			"Cabinet|+01.66|+02.05|+00.67": { "distance": 1.3906 },
+			"Cabinet|+01.66|+02.06|+00.19": { "distance": 1.3344 },
+			"Cabinet|+01.66|+02.06|-00.59": { "distance": 1.5776 },
+			"Cabinet|+01.66|+02.05|-00.61": { "distance": 1.5774 },
+			"Cabinet|+01.66|+02.05|-01.21": { "distance": 1.9686 },
+			"Cabinet|+01.66|+02.05|-01.89": { "distance": 2.5194 },
+			"Toaster|+00.13|+00.90|-01.59": { "distance": 2.0336 },
+			"Plate|+01.81|+01.64|-00.45": { "distance": 1.2965 },
+			"SoapBottle|+01.54|+00.90|-01.70": { "distance": 2.0175 },
+			"Cup|+01.59|+00.91|-01.37": { "distance": 1.7272 },
+			"Egg|+01.84|+00.94|+00.57": { "distance": 0.8998 },
+			"Fork|+00.35|+00.56|+01.66": { "distance": 1.5897 },
+			"Ladle|-00.74|+00.79|-01.63": { "distance": 2.5648 },
+			"Apple|+01.08|+00.62|+01.83": {
+				"temperature": "RoomTemp",
+				"distance": 1.6094
+			},
+			"SaltShaker|+01.84|+00.90|+00.41": { "distance": 0.8554 },
+			"Pan|+01.28|+00.90|+01.19": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.9819
+			},
+			"Tomato|+00.73|+00.97|+00.74": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 0.5617
+			},
+			"Window|-00.37|+01.59|+03.35": { "distance": 3.4593 },
+			"Window|+00.78|+01.74|-01.89": { "distance": 2.312 },
+			"GarbageCan|+01.77|-00.03|+01.69": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.8756
+			},
+			"Spatula|-00.89|+00.75|-01.56": { "distance": 2.619 },
+			"Potato|+01.87|+00.95|-01.80": { "distance": 2.2286 },
+			"Sink|+01.10|+00.91|-01.60|SinkBasin": { "distance": 1.8587 },
+			"Knife|+01.94|+00.94|-01.55": { "distance": 2.0255 },
+			"ButterKnife|+00.30|+00.90|-01.30": { "distance": 1.6987 },
+			"StoveKnob|+01.36|+00.82|+00.09": { "distance": 0.4073 },
+			"StoveKnob|+01.36|+00.82|-00.18": { "distance": 0.5702 },
+			"StoveKnob|+01.36|+00.82|-00.32": { "distance": 0.6788 },
+			"StoveKnob|+01.36|+00.82|-00.05": { "distance": 0.4814 },
+			"Bread|+01.81|+01.71|-01.42": { "distance": 2.0217 },
+			"Lettuce|+01.80|+01.00|-01.63": { "distance": 2.0453 },
+			"PepperShaker|-00.37|+01.05|-01.38": { "distance": 2.1397 },
+			"Microwave|+01.75|+00.90|-00.84": { "distance": 1.3275 },
+			"Pot|+01.81|+00.91|-00.32": { "distance": 0.9882 },
+			"LightSwitch|+02.00|+01.26|+03.09": { "distance": 3.0361 },
+			"DishSponge|+01.55|+00.92|-01.55": { "distance": 1.8866 },
+			"CoffeeMachine|+00.50|+00.90|-01.60": { "distance": 1.9159 },
+			"Fridge|-00.53|+00.00|-01.55": { "distance": 2.5336 },
+			"Spoon|+01.17|+00.75|-01.49": { "distance": 1.759 },
+			"Bowl|+01.76|+00.91|+01.09": {
+				"visible": true,
+				"obstructed": false,
+				"distance": 1.1333
+			},
+			"Mug|+00.89|+00.76|-01.65": { "distance": 1.9132 },
+			"Chair|+01.07|+00.00|+01.75": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Apple|+01.08|+00.62|+01.83",
+					"Ladle|+01.00|+00.61|+01.67"
+				],
+				"distance": 1.7534
+			},
+			"Faucet|+01.11|+01.14|-01.76": { "distance": 2.0313 },
+			"Chair|+00.36|+00.00|+01.71": {
+				"visible": true,
+				"obstructed": false,
+				"receptacleObjectIds": [
+					"Plate|+00.40|+00.57|+01.75",
+					"Fork|+00.35|+00.56|+01.66",
+					"Knife|+00.36|+00.59|+01.58",
+					"Egg|+00.25|+00.60|+01.79"
+				],
+				"distance": 1.8323
+			}
+		}
+	},
+	"state_changes": {
+		"agents": {},
+		"objects": {
+			"Knife|+01.25|+00.94|+00.83": {
+				"isPickedUp": true,
+				"simbotPickedUp": 1,
+				"simbotLastParentReceptacle": null
+			}
+		}
+	},
+	"history_subgoals": [],
+	"future_subgoals": ["Navigate", "Knife", "Pickup", "Knife"],
+	"expected_init_goal_conditions_total": 4,
+	"expected_init_goal_conditions_satisfied": 2,
+	"dialog_history_cleaned": [
+		["Commander", "We need to make a salad today."],
+		["Driver", "What should I do today?"],
+		["Commander", "We will need a knife to slice items"]
+	]
+}

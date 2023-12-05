@@ -1,0 +1,336 @@
+{
+	"info": {
+		"description": "COCO 2017 Dataset",
+		"url": "http://cocodataset.org",
+		"version": "1.0",
+		"year": 2017,
+		"contributor": "COCO Consortium",
+		"date_created": "2017/09/01"
+	},
+	"licenses": [
+		{
+			"url": "http://creativecommons.org/licenses/by-nc-sa/2.0/",
+			"id": 1,
+			"name": "Attribution-NonCommercial-ShareAlike License"
+		},
+		{
+			"url": "http://creativecommons.org/licenses/by-nc/2.0/",
+			"id": 2,
+			"name": "Attribution-NonCommercial License"
+		},
+		{
+			"url": "http://creativecommons.org/licenses/by-nc-nd/2.0/",
+			"id": 3,
+			"name": "Attribution-NonCommercial-NoDerivs License"
+		},
+		{
+			"url": "http://creativecommons.org/licenses/by/2.0/",
+			"id": 4,
+			"name": "Attribution License"
+		},
+		{
+			"url": "http://creativecommons.org/licenses/by-sa/2.0/",
+			"id": 5,
+			"name": "Attribution-ShareAlike License"
+		},
+		{
+			"url": "http://creativecommons.org/licenses/by-nd/2.0/",
+			"id": 6,
+			"name": "Attribution-NoDerivs License"
+		},
+		{
+			"url": "http://flickr.com/commons/usage/",
+			"id": 7,
+			"name": "No known copyright restrictions"
+		},
+		{
+			"url": "http://www.usa.gov/copyright.shtml",
+			"id": 8,
+			"name": "United States Government Work"
+		}
+	],
+	"images": [
+		{
+			"license": 1,
+			"file_name": "000000262146.jpg",
+			"coco_url": "http://images.cocodataset.org/train2017/000000262146.jpg",
+			"height": 640,
+			"width": 480,
+			"date_captured": "2013-11-19 23:07:16",
+			"flickr_url": "http://farm6.staticflickr.com/5090/5341741494_1f653cdb80_z.jpg",
+			"id": 262146
+		},
+		{
+			"license": 2,
+			"file_name": "000000262145.jpg",
+			"coco_url": "http://images.cocodataset.org/train2017/000000262145.jpg",
+			"height": 427,
+			"width": 640,
+			"date_captured": "2013-11-20 02:07:55",
+			"flickr_url": "http://farm8.staticflickr.com/7187/6967031859_5f08387bde_z.jpg",
+			"id": 262145
+		},
+		{
+			"license": 1,
+			"file_name": "000000393243.jpg",
+			"coco_url": "http://images.cocodataset.org/train2017/000000393243.jpg",
+			"height": 640,
+			"width": 480,
+			"date_captured": "2013-11-20 13:20:35",
+			"flickr_url": "http://farm3.staticflickr.com/2294/1562760533_6893778f46_z.jpg",
+			"id": 393243
+		},
+		{
+			"license": 1,
+			"file_name": "000000327701.jpg",
+			"coco_url": "http://images.cocodataset.org/val2017/000000327701.jpg",
+			"height": 428,
+			"width": 640,
+			"date_captured": "2013-11-21 05:21:15",
+			"flickr_url": "http://farm5.staticflickr.com/4116/4749894768_c44e05fd92_z.jpg",
+			"id": 327701
+		},
+		{
+			"license": 1,
+			"file_name": "000000262148.jpg",
+			"coco_url": "http://images.cocodataset.org/train2017/000000262148.jpg",
+			"height": 512,
+			"width": 640,
+			"date_captured": "2013-11-20 05:50:03",
+			"flickr_url": "http://farm5.staticflickr.com/4028/4549977479_547e6b22ae_z.jpg",
+			"id": 262148
+		},
+		{
+			"license": 1,
+			"file_name": "000000458755.jpg",
+			"coco_url": "http://images.cocodataset.org/val2017/000000458755.jpg",
+			"height": 480,
+			"width": 640,
+			"date_captured": "2013-11-16 23:06:51",
+			"flickr_url": "http://farm6.staticflickr.com/5119/5878453277_eea657a01d_z.jpg",
+			"id": 458755
+		},
+		{
+			"license": 3,
+			"file_name": "000000393225.jpg",
+			"coco_url": "http://images.cocodataset.org/train2017/000000393225.jpg",
+			"height": 428,
+			"width": 640,
+			"date_captured": "2013-11-20 03:17:27",
+			"flickr_url": "http://farm9.staticflickr.com/8052/8445121630_a391bd4876_z.jpg",
+			"id": 393225
+		},
+		{
+			"license": 4,
+			"file_name": "000000393226.jpg",
+			"coco_url": "http://images.cocodataset.org/val2017/000000393226.jpg",
+			"height": 480,
+			"width": 640,
+			"date_captured": "2013-11-17 20:36:07",
+			"flickr_url": "http://farm9.staticflickr.com/8003/7321339838_42fe225709_z.jpg",
+			"id": 393226
+		}
+	],
+	"annotations": [
+		{
+			"image_id": 262145,
+			"id": 694,
+			"caption": "People shopping in an open market for vegetables."
+		},
+		{
+			"image_id": 262145,
+			"id": 1054,
+			"caption": "An open market full of people and piles of vegetables."
+		},
+		{
+			"image_id": 262145,
+			"id": 1456,
+			"caption": "People are shopping at an open air produce market."
+		},
+		{
+			"image_id": 262145,
+			"id": 5248,
+			"caption": "Large piles of carrots and potatoes at a crowded outdoor market."
+		},
+		{
+			"image_id": 262145,
+			"id": 5254,
+			"caption": "People shop for vegetables like carrots and potatoes at an open air market."
+		},
+		{
+			"image_id": 262146,
+			"id": 634780,
+			"caption": "a person skiing down a steep hill "
+		},
+		{
+			"image_id": 262146,
+			"id": 637393,
+			"caption": "A person skiing down a steep snowy hill."
+		},
+		{
+			"image_id": 262146,
+			"id": 640348,
+			"caption": "A person on snow skis going down a steep slope."
+		},
+		{
+			"image_id": 262146,
+			"id": 641836,
+			"caption": "A skier is skiing down a down hill slope. "
+		},
+		{
+			"image_id": 262146,
+			"id": 649789,
+			"caption": "A skier is shown taking on a very steep slope."
+		},
+		{
+			"image_id": 393243,
+			"id": 211126,
+			"caption": "A small child is eating a donut fed by another hand."
+		},
+		{
+			"image_id": 393243,
+			"id": 212533,
+			"caption": "A blonde boy looking at his donut hole."
+		},
+		{
+			"image_id": 393243,
+			"id": 220261,
+			"caption": "A boy is looking at a small doughnut with powdered sugar on his face."
+		},
+		{
+			"image_id": 393243,
+			"id": 222823,
+			"caption": "A little boy eating powered sugar covered flood."
+		},
+		{
+			"image_id": 393243,
+			"id": 224236,
+			"caption": "a child eats part of a sugar frosted donut"
+		},
+		{
+			"image_id": 327701,
+			"id": 80042,
+			"caption": "A woman is playing tennis with her children."
+		},
+		{
+			"image_id": 327701,
+			"id": 82709,
+			"caption": "A mother and her children play on a grass tennis court"
+		},
+		{
+			"image_id": 327701,
+			"id": 82778,
+			"caption": "A woman hitting a tennis ball with a racquet"
+		},
+		{
+			"image_id": 327701,
+			"id": 84086,
+			"caption": "The woman serves the tennis ball as a child watches."
+		},
+		{
+			"image_id": 327701,
+			"id": 87863,
+			"caption": "A woman hits a tennis ball with some kids."
+		},
+		{
+			"image_id": 262148,
+			"id": 284571,
+			"caption": "The skateboarder is putting on a show using the picnic table as his stage."
+		},
+		{
+			"image_id": 262148,
+			"id": 286347,
+			"caption": "A skateboarder pulling tricks on top of a picnic table."
+		},
+		{
+			"image_id": 262148,
+			"id": 286899,
+			"caption": "A man riding on a skateboard on top of a table."
+		},
+		{
+			"image_id": 262148,
+			"id": 287571,
+			"caption": "A skate boarder doing a trick on a picnic table."
+		},
+		{
+			"image_id": 262148,
+			"id": 288021,
+			"caption": "A person is riding a skateboard on a picnic table with a crowd watching."
+		},
+		{
+			"image_id": 458755,
+			"id": 294690,
+			"caption": "Young woman with sheep on straw covered floor."
+		},
+		{
+			"image_id": 458755,
+			"id": 295065,
+			"caption": "A child places his hands on the head and neck of a sheep while another sheep looks at his face."
+		},
+		{
+			"image_id": 458755,
+			"id": 296922,
+			"caption": "A person petting the head of a cute fluffy sheep."
+		},
+		{
+			"image_id": 458755,
+			"id": 300426,
+			"caption": "A child is petting a sheep while another sheep watches."
+		},
+		{
+			"image_id": 458755,
+			"id": 300753,
+			"caption": "A woman kneeling to pet animals while others wait. "
+		},
+		{
+			"image_id": 393225,
+			"id": 481891,
+			"caption": "A bowl of soup that has some carrots, shrimp, and noodles in it."
+		},
+		{
+			"image_id": 393225,
+			"id": 483397,
+			"caption": "The healthy food is in the bowl and ready to eat. "
+		},
+		{
+			"image_id": 393225,
+			"id": 484408,
+			"caption": "Soup has carrots and shrimp in it as it sits next to chopsticks."
+		},
+		{
+			"image_id": 393225,
+			"id": 485212,
+			"caption": "A tasty bowl of ramen is served for someone to enjoy. "
+		},
+		{
+			"image_id": 393225,
+			"id": 485599,
+			"caption": "Bowl of Asian noodle soup, with shrimp and carrots."
+		},
+		{
+			"image_id": 393226,
+			"id": 525437,
+			"caption": "A man who is walking across the street."
+		},
+		{
+			"image_id": 393226,
+			"id": 526781,
+			"caption": "A busy intersection with an ice cream truck driving by."
+		},
+		{
+			"image_id": 393226,
+			"id": 527105,
+			"caption": "a man walks behind an ice cream truck "
+		},
+		{
+			"image_id": 393226,
+			"id": 527621,
+			"caption": "A man is crossing a street near an icecream truck."
+		},
+		{
+			"image_id": 393226,
+			"id": 529862,
+			"caption": "The man is walking behind the concession bus."
+		}
+	]
+}

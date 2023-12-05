@@ -1,0 +1,156 @@
+{
+	"Break": {
+		"BreakAugmentation": {
+			"break_classes": ["Bowl", "Mug", "Plate", "Record", "Trophy"],
+			"action_type": "Break",
+			"min_interaction_distance": 1.5,
+			"max_examples_per_class": 5000
+		}
+	},
+	"Clean": {
+		"CleanAugmentation": {
+			"cleanable_object_types": ["FoodPlate_01"],
+			"cleaning_classes": ["Sink"],
+			"min_interaction_distance": 1.5,
+			"action_type": "Clean",
+			"max_examples_per_class": 1000
+		}
+	},
+	"Close": {
+		"OpenCloseAugmentation": {
+			"action_type_classes": ["Fuse Box"],
+			"action_type": "Close",
+			"min_interaction_distance": 1.5,
+			"max_examples_per_class": 5000
+		}
+	},
+	"Fill": {
+		"FillPourAugmentation": {
+			"fillable_object_types": [
+				"Bowl_01",
+				"CoffeePot_01",
+				"CoffeeMug_Boss",
+				"CoffeeMug_Yellow"
+			],
+			"filling_classes": ["Sink"],
+			"action_type": "Fill",
+			"min_interaction_distance": 1.5,
+			"max_examples_per_class": 1000
+		}
+	},
+	"Goto": {
+		"GoToAugmentation": {
+			"goto_classes": ["Whiteboard", "Robot Arm", "Wall Shelf", "Fuse Box"],
+			"action_type": "Goto",
+			"min_interaction_distance": 2.5,
+			"max_examples_per_class": 5000
+		}
+	},
+	"Pickup": {
+		"PickupAugmentation": {
+			"pickup_classes": [
+				"Action Figure",
+				"Apple",
+				"Banana",
+				"Bread",
+				"Burger",
+				"Cake",
+				"Can",
+				"Carrot",
+				"Cereal Box",
+				"Coffee Beans",
+				"Coffee Pot",
+				"Control Panel",
+				"Cup",
+				"Donut",
+				"Floppy Disk",
+				"Hammer",
+				"Knife",
+				"Lid",
+				"Milk",
+				"Mug",
+				"Plate",
+				"Printer Cartridge"
+			],
+			"action_type": "Pickup",
+			"min_interaction_distance": 1.5,
+			"max_examples_per_class": 2000
+		}
+	},
+	"Pour": {
+		"FillPourAugmentation": {
+			"fillable_object_types": [
+				"Bowl_01",
+				"CoffeePot_01",
+				"CoffeeMug_Boss",
+				"CoffeeMug_Yellow"
+			],
+			"filling_classes": ["Sink"],
+			"action_type": "Pour",
+			"min_interaction_distance": 1.5,
+			"max_examples_per_class": 1000
+		}
+	},
+	"Open": {
+		"OpenCloseAugmentation": {
+			"action_type_classes": ["Fuse Box"],
+			"action_type": "Open",
+			"min_interaction_distance": 1.5,
+			"max_examples_per_class": 5000
+		}
+	},
+	"Search": {
+		"SearchAugmentation": {
+			"search_classes": [
+				"Action Figure",
+				"Apple",
+				"Banana",
+				"Bowl",
+				"Can",
+				"Cereal Box",
+				"Coffee Maker",
+				"Coffee Unmaker",
+				"Color Changer",
+				"Control Panel",
+				"Cup",
+				"Donut",
+				"Embiggenator",
+				"Floppy Disk",
+				"Freeze Ray",
+				"Freezer",
+				"Fridge",
+				"Fuse Box",
+				"Generator",
+				"Gravity Pad",
+				"Hammer",
+				"Laser",
+				"Laser Tip",
+				"Lever",
+				"Knife",
+				"Milk",
+				"Microwave",
+				"Mug",
+				"Printer",
+				"Printer Cartridge",
+				"Robot Arm",
+				"Sandwich",
+				"Spoon",
+				"Sink",
+				"Time Machine",
+				"Trophy",
+				"Wall Shelf"
+			],
+			"min_interaction_distance": 0,
+			"max_negative_examples_per_room": 150,
+			"max_examples_per_object": 4000
+		}
+	},
+	"Toggle": {
+		"ToggleAugmentation": {
+			"toggle_classes": ["Robot Arm", "Button", "Lever"],
+			"action_type": "Toggle",
+			"min_interaction_distance": 1.5,
+			"max_examples_per_class": 5000
+		}
+	}
+}

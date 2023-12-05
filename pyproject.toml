@@ -1,0 +1,90 @@
+[tool.poetry]
+name = "emma-datasets"
+version = "1.35.0"
+description = ""
+authors = [
+	"Amit Parekh <amit.parekh@hw.ac.uk>",
+	"Alessandro Suglia <alessandro.suglia@gmail.com>",
+]
+readme = "README.md"
+repository = "https://github.com/emma-heriot-watt/datasets"
+
+packages = [{ include = "emma_datasets", from = "src" }]
+
+
+[tool.poe]
+envfile = ".env"
+
+[tool.poe.tasks]
+
+[tool.poe.tasks.format]
+help = "Format using the pre-commit hooks"
+cmd = "pre-commit run --all-files"
+
+[tool.poe.tasks.typecheck]
+help = "Check types with mypy"
+cmd = "mypy ."
+
+[tool.poe.tasks.lint]
+help = "Lint with flake8"
+cmd = "flake8 ."
+
+[tool.poe.tasks.test]
+help = "Run the fast Python tests"
+cmd = "pytest --cov=src -m 'not slow'"
+
+[tool.poe.tasks.test-everything]
+help = "Run all the tests and get the coverage"
+cmd = "pytest -v --junitxml=pytest.xml --cov=src -m 'not slow and not multiprocessing'"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+pydantic = { extras = ["dotenv"], version = ">=1.8.2,<2" }
+rich = ">=12.4.4"
+numpy = ">=1.22.3"
+orjson = ">=3.6.8"
+Pillow = ">=9.1.1"
+py7zr = ">=0.18.6"
+boto3 = "1.23.3"
+overrides = ">=6.1.0"
+typer = ">=0.4.0"
+datasets = ">=2.2.2"
+requests = ">=2.27.1"
+pandas = ">=1.4.3"
+emma-common = { git = "https://github.com/emma-heriot-watt/common.git" }
+faiss-cpu = ">=1.7.3"
+torch = ">=1.11.0,!=1.13.0,<2"
+spacy = "3.7.2"
+en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl" }
+transformers = ">=4.18.0"
+
+[tool.poetry.group.dev.dependencies]
+wemake-python-styleguide = ">=0.16.1"
+mypy = ">=0.950"
+pytest = ">=7.1.2"
+ipykernel = ">=6.13.0"
+pre-commit = ">=2.19.0"
+poethepoet = ">=0.13.1"
+pytest-cov = ">=3.0.0"
+jupyterlab = ">=3.3.3"
+isort = ">=5.10.1"
+black = { extras = ["jupyter"], version = ">=22.3" }
+pytest-cases = ">=3.6.13"
+deepdiff = ">=5.8.1"
+scikit-learn = ">=1.2.0"
+types-requests = ">=2.27.29"
+bandit = "!=1.7.4,!=1.7.5"
+
+[tool.black]
+line-length = 99
+
+[tool.isort]
+profile = "black"
+combine_as_imports = true
+lines_after_imports = 2
+line_length = 99
+known_first_party = ["emma_datasets"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "setuptools"]
+build-backend = "poetry.core.masonry.api"

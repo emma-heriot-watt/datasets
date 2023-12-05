@@ -1,0 +1,563 @@
+{
+	"version": "1",
+	"date": "220429",
+	"description": "Moments Annotations (val)",
+	"manifest": "s3://ego4d-consortium-sharing/public/v1/full_scale/manifest.csv",
+	"videos": [
+		{
+			"video_uid": "c922a13b-c85e-41e4-a523-f4305f6c0a81",
+			"split": "val",
+			"clips": [
+				{
+					"clip_uid": "63c1d2c4-286a-4b6d-bdf8-8de7a56310a6",
+					"video_start_sec": 1182.8876952666665,
+					"video_end_sec": 1662.0210286,
+					"video_start_frame": 35487,
+					"video_end_frame": 49861,
+					"clip_start_sec": 0,
+					"clip_end_sec": 479.13333333333344,
+					"clip_start_frame": 0,
+					"clip_end_frame": 14374,
+					"source_clip_uid": "b7fb5f28-d92c-4078-ac74-e742ac474e9c",
+					"annotations": [
+						{
+							"annotator_uid": "4482258218481544",
+							"labels": [
+								{
+									"start_time": 116.08176,
+									"end_time": 123.6333,
+									"label": "take_photo_/_record_video_with_a_camera",
+									"video_start_time": 1298.9694552666665,
+									"video_end_time": 1306.5209952666664,
+									"video_start_frame": 38969,
+									"video_end_frame": 39196,
+									"primary": true
+								},
+								{
+									"start_time": 303.26591,
+									"end_time": 325.3276,
+									"label": "hang_clothes_in_closet_/_on_hangers",
+									"video_start_time": 1486.1536052666665,
+									"video_end_time": 1508.2152952666665,
+									"video_start_frame": 44585,
+									"video_end_frame": 45247,
+									"primary": true
+								},
+								{
+									"start_time": 328.68334,
+									"end_time": 335.42606,
+									"label": "browse_through_clothing_items_on_rack_/_shelf_/_hanger",
+									"video_start_time": 1511.5710352666665,
+									"video_end_time": 1518.3137552666665,
+									"video_start_frame": 45348,
+									"video_end_frame": 45550,
+									"primary": true
+								},
+								{
+									"start_time": 402.58138,
+									"end_time": 452.54089,
+									"label": "withdraw_money_from_atm_/_operate_atm",
+									"video_start_time": 1585.4690752666666,
+									"video_end_time": 1635.4285852666665,
+									"video_start_frame": 47564,
+									"video_end_frame": 49063,
+									"primary": true
+								}
+							]
+						},
+						{
+							"annotator_uid": "2811294845609145",
+							"labels": [
+								{
+									"start_time": 120.85575,
+									"end_time": 123.834,
+									"label": "take_photo_/_record_video_with_a_camera",
+									"video_start_time": 1303.7434452666664,
+									"video_end_time": 1306.7216952666665,
+									"video_start_frame": 39113,
+									"video_end_frame": 39202,
+									"primary": true
+								},
+								{
+									"start_time": 314.66703,
+									"end_time": 324.329,
+									"label": "hang_clothes_in_closet_/_on_hangers",
+									"video_start_time": 1497.5547252666665,
+									"video_end_time": 1507.2166952666664,
+									"video_start_frame": 44927,
+									"video_end_frame": 45217,
+									"primary": true
+								},
+								{
+									"start_time": 328.67701,
+									"end_time": 332.58371,
+									"label": "browse_through_clothing_items_on_rack_/_shelf_/_hanger",
+									"video_start_time": 1511.5647052666666,
+									"video_end_time": 1515.4714052666666,
+									"video_start_frame": 45347,
+									"video_end_frame": 45465,
+									"primary": true
+								},
+								{
+									"start_time": 439.47007,
+									"end_time": 452.84283,
+									"label": "withdraw_money_from_atm_/_operate_atm",
+									"video_start_time": 1622.3577652666665,
+									"video_end_time": 1635.7305252666665,
+									"video_start_frame": 48671,
+									"video_end_frame": 49072,
+									"primary": true
+								}
+							]
+						},
+						{
+							"annotator_uid": "4319014881502824",
+							"labels": [
+								{
+									"start_time": 120.24752,
+									"end_time": 123.59559,
+									"label": "take_photo_/_record_video_with_a_camera",
+									"video_start_time": 1303.1352152666664,
+									"video_end_time": 1306.4832852666664,
+									"video_start_frame": 39094,
+									"video_end_frame": 39195,
+									"primary": true
+								},
+								{
+									"start_time": 272.39778,
+									"end_time": 293.10854,
+									"label": "browse_through_clothing_items_on_rack_/_shelf_/_hanger",
+									"video_start_time": 1455.2854752666665,
+									"video_end_time": 1475.9962352666664,
+									"video_start_frame": 43659,
+									"video_end_frame": 44280,
+									"primary": true
+								},
+								{
+									"start_time": 294.50579,
+									"end_time": 324.252,
+									"label": "hang_clothes_in_closet_/_on_hangers",
+									"video_start_time": 1477.3934852666664,
+									"video_end_time": 1507.1396952666664,
+									"video_start_frame": 44322,
+									"video_end_frame": 45215,
+									"primary": true
+								},
+								{
+									"start_time": 404.88018,
+									"end_time": 452.579,
+									"label": "withdraw_money_from_atm_/_operate_atm",
+									"video_start_time": 1587.7678752666664,
+									"video_end_time": 1635.4666952666664,
+									"video_start_frame": 47633,
+									"video_end_frame": 49064,
+									"primary": true
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"video_uid": "62d9a56e-920a-4343-9ce6-dac8ffa260ac",
+			"split": "val",
+			"clips": [
+				{
+					"clip_uid": "98a103b2-e8a5-4d22-863e-ac652598ad73",
+					"video_start_sec": 180.0210286,
+					"video_end_sec": 660.0210286,
+					"video_start_frame": 5401,
+					"video_end_frame": 19801,
+					"clip_start_sec": 0,
+					"clip_end_sec": 480.0,
+					"clip_start_frame": 0,
+					"clip_end_frame": 14400,
+					"source_clip_uid": "4648e766-f944-4b0e-b533-d3ba6e0f6bcc",
+					"annotations": [
+						{
+							"annotator_uid": "2469444329814364",
+							"labels": [
+								{
+									"start_time": 1.58234,
+									"end_time": 66.1137,
+									"label": "stir_/_mix_ingredients_in_a_bowl_or_pan_(before_cooking)",
+									"video_start_time": 181.60336859999998,
+									"video_end_time": 246.1347286,
+									"video_start_frame": 5448,
+									"video_end_frame": 7384,
+									"primary": true
+								},
+								{
+									"start_time": 67.88206,
+									"end_time": 70.27418,
+									"label": "wash_hands",
+									"video_start_time": 247.9030886,
+									"video_end_time": 250.2952086,
+									"video_start_frame": 7437,
+									"video_end_frame": 7509,
+									"primary": true
+								},
+								{
+									"start_time": 77.51228,
+									"end_time": 267.21134,
+									"label": "stir_/_mix_ingredients_in_a_bowl_or_pan_(before_cooking)",
+									"video_start_time": 257.53330860000005,
+									"video_end_time": 447.23236860000003,
+									"video_start_frame": 7726,
+									"video_end_frame": 13417,
+									"primary": true
+								},
+								{
+									"start_time": 284.97963,
+									"end_time": 292.37257,
+									"label": "clean_/_wipe_other_surface_or_object",
+									"video_start_time": 465.0006586,
+									"video_end_time": 472.3935986,
+									"video_start_frame": 13950,
+									"video_end_frame": 14172,
+									"primary": true
+								},
+								{
+									"start_time": 298.23321,
+									"end_time": 309.49451,
+									"label": "put_away_(or_take_out)_ingredients_in_storage",
+									"video_start_time": 478.2542386,
+									"video_end_time": 489.5155386,
+									"video_start_frame": 14348,
+									"video_end_frame": 14686,
+									"primary": true
+								},
+								{
+									"start_time": 323.05536,
+									"end_time": 323.77275,
+									"label": "throw_away_trash_/_put_trash_in_trash_can",
+									"video_start_time": 503.07638860000003,
+									"video_end_time": 503.7937786,
+									"video_start_frame": 15093,
+									"video_end_frame": 15114,
+									"primary": true
+								},
+								{
+									"start_time": 348.9099,
+									"end_time": 405.64867,
+									"label": "stir_/_mix_ingredients_in_a_bowl_or_pan_(before_cooking)",
+									"video_start_time": 528.9309286,
+									"video_end_time": 585.6696986000001,
+									"video_start_frame": 15868,
+									"video_end_frame": 17570,
+									"primary": true
+								},
+								{
+									"start_time": 406.45947,
+									"end_time": 431.94974,
+									"label": "wash_hands",
+									"video_start_time": 586.4804986,
+									"video_end_time": 611.9707686,
+									"video_start_frame": 17595,
+									"video_end_frame": 18359,
+									"primary": true
+								},
+								{
+									"start_time": 452.26299,
+									"end_time": 457.8578,
+									"label": "turn-on_/_light_the_stove_burner",
+									"video_start_time": 632.2840186,
+									"video_end_time": 637.8788286,
+									"video_start_frame": 18969,
+									"video_end_frame": 19137,
+									"primary": true
+								},
+								{
+									"start_time": 474.67673,
+									"end_time": 475.73285,
+									"label": "turn-on_/_light_the_stove_burner",
+									"video_start_time": 654.6977586,
+									"video_end_time": 655.7538786,
+									"video_start_frame": 19641,
+									"video_end_frame": 19673,
+									"primary": true
+								}
+							]
+						},
+						{
+							"annotator_uid": "2091930164263600",
+							"labels": [
+								{
+									"start_time": 308.03617,
+									"end_time": 309.286,
+									"label": "arrange_/_organize_items_in_fridge",
+									"video_start_time": 488.05719860000005,
+									"video_end_time": 489.3070286,
+									"video_start_frame": 14642,
+									"video_end_frame": 14680,
+									"primary": true
+								},
+								{
+									"start_time": 323.44338,
+									"end_time": 325.447,
+									"label": "throw_away_trash_/_put_trash_in_trash_can",
+									"video_start_time": 503.4644086,
+									"video_end_time": 505.4680286,
+									"video_start_frame": 15104,
+									"video_end_frame": 15164,
+									"primary": true
+								},
+								{
+									"start_time": 426.84011,
+									"end_time": 432.321,
+									"label": "wash_hands",
+									"video_start_time": 606.8611386,
+									"video_end_time": 612.3420286,
+									"video_start_frame": 18206,
+									"video_end_frame": 18371,
+									"primary": true
+								},
+								{
+									"start_time": 30.69097,
+									"end_time": 37.578,
+									"label": "measure_ingredient_in_a_measuring_cup_or_spoon",
+									"video_start_time": 210.7119986,
+									"video_end_time": 217.5990286,
+									"video_start_frame": 6322,
+									"video_end_frame": 6528,
+									"primary": false
+								}
+							]
+						},
+						{
+							"annotator_uid": "1874793652646140",
+							"labels": [
+								{
+									"start_time": 174.62627,
+									"end_time": 176.631,
+									"label": "measure_ingredient_in_a_measuring_cup_or_spoon",
+									"video_start_time": 354.6472986,
+									"video_end_time": 356.6520286,
+									"video_start_frame": 10640,
+									"video_end_frame": 10700,
+									"primary": false
+								},
+								{
+									"start_time": 300.7545,
+									"end_time": 305.987,
+									"label": "arrange_/_organize_items_in_fridge",
+									"video_start_time": 480.77552860000003,
+									"video_end_time": 486.00802860000005,
+									"video_start_frame": 14424,
+									"video_end_frame": 14581,
+									"primary": true
+								},
+								{
+									"start_time": 323.36273,
+									"end_time": 325.405,
+									"label": "throw_away_trash_/_put_trash_in_trash_can",
+									"video_start_time": 503.3837586,
+									"video_end_time": 505.4260286,
+									"video_start_frame": 15102,
+									"video_end_frame": 15163,
+									"primary": true
+								},
+								{
+									"start_time": 330.61279,
+									"end_time": 331.973,
+									"label": "put_away_(or_take_out)_ingredients_in_storage",
+									"video_start_time": 510.63381860000004,
+									"video_end_time": 511.99402860000004,
+									"video_start_frame": 15319,
+									"video_end_frame": 15360,
+									"primary": true
+								},
+								{
+									"start_time": 421.09936,
+									"end_time": 421.691,
+									"label": "put_away_(or_take_out)_dishes_/_utensils_in_storage",
+									"video_start_time": 601.1203886,
+									"video_end_time": 601.7120286,
+									"video_start_frame": 18034,
+									"video_end_frame": 18052,
+									"primary": false
+								},
+								{
+									"start_time": 427.19393,
+									"end_time": 432.163,
+									"label": "wash_hands",
+									"video_start_time": 607.2149586,
+									"video_end_time": 612.1840286,
+									"video_start_frame": 18217,
+									"video_end_frame": 18366,
+									"primary": true
+								},
+								{
+									"start_time": 451.58406,
+									"end_time": 455.012,
+									"label": "turn-on_/_light_the_stove_burner",
+									"video_start_time": 631.6050886,
+									"video_end_time": 635.0330286,
+									"video_start_frame": 18949,
+									"video_end_frame": 19051,
+									"primary": true
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"video_uid": "ce90f6f8-a6a8-47b5-bb4c-6e12698164a3",
+			"split": "val",
+			"clips": [
+				{
+					"clip_uid": "8f0c2e7c-e51a-451f-bdab-f659bd99ec48",
+					"video_start_sec": 450.0,
+					"video_end_sec": 930.0,
+					"video_start_frame": 13500,
+					"video_end_frame": 27900,
+					"clip_start_sec": 0,
+					"clip_end_sec": 480.0,
+					"clip_start_frame": 0,
+					"clip_end_frame": 14400,
+					"source_clip_uid": "96db48de-c60f-4a32-be8a-470162c100ce",
+					"annotations": [
+						{
+							"annotator_uid": "1888144347924016",
+							"labels": [
+								{
+									"start_time": 57.38913,
+									"end_time": 63.6113,
+									"label": "converse_/_interact_with_someone",
+									"video_start_time": 507.38913,
+									"video_end_time": 513.6113,
+									"video_start_frame": 15222,
+									"video_end_frame": 15408,
+									"primary": true
+								},
+								{
+									"start_time": 398.62555,
+									"end_time": 401.40513,
+									"label": "climb_up_/_down_a_ladder",
+									"video_start_time": 848.62555,
+									"video_end_time": 851.40513,
+									"video_start_frame": 25459,
+									"video_end_frame": 25542,
+									"primary": true
+								},
+								{
+									"start_time": 472.94541,
+									"end_time": 479.36998,
+									"label": "plaster_wall_/_surface",
+									"video_start_time": 922.94541,
+									"video_end_time": 929.3699799999999,
+									"video_start_frame": 27688,
+									"video_end_frame": 27881,
+									"primary": true
+								}
+							]
+						},
+						{
+							"annotator_uid": "2722076647807955",
+							"labels": [
+								{
+									"start_time": 1.16689,
+									"end_time": 480,
+									"label": "paint_using_paint_brush_/_roller",
+									"video_start_time": 451.16689,
+									"video_end_time": 930.0,
+									"video_start_frame": 13535,
+									"video_end_frame": 27900,
+									"primary": true
+								},
+								{
+									"start_time": 366.4153,
+									"end_time": 407.272,
+									"label": "climb_up_/_down_a_ladder",
+									"video_start_time": 816.4153,
+									"video_end_time": 857.2719999999999,
+									"video_start_frame": 24492,
+									"video_end_frame": 25718,
+									"primary": true
+								}
+							]
+						},
+						{
+							"annotator_uid": "3911765125516239",
+							"labels": [
+								{
+									"start_time": 0.43181,
+									"end_time": 9.191,
+									"label": "paint_using_paint_brush_/_roller",
+									"video_start_time": 450.43181,
+									"video_end_time": 459.191,
+									"video_start_frame": 13513,
+									"video_end_frame": 13776,
+									"primary": true
+								},
+								{
+									"start_time": 21.25644,
+									"end_time": 29.702,
+									"label": "paint_using_paint_brush_/_roller",
+									"video_start_time": 471.25644,
+									"video_end_time": 479.702,
+									"video_start_frame": 14138,
+									"video_end_frame": 14391,
+									"primary": true
+								},
+								{
+									"start_time": 36.0977,
+									"end_time": 59.601,
+									"label": "paint_using_paint_brush_/_roller",
+									"video_start_time": 486.09770000000003,
+									"video_end_time": 509.601,
+									"video_start_frame": 14583,
+									"video_end_frame": 15288,
+									"primary": true
+								},
+								{
+									"start_time": 59.601,
+									"end_time": 63.547,
+									"label": "converse_/_interact_with_someone",
+									"video_start_time": 509.601,
+									"video_end_time": 513.547,
+									"video_start_frame": 15288,
+									"video_end_frame": 15406,
+									"primary": true
+								},
+								{
+									"start_time": 64.22691,
+									"end_time": 218.052,
+									"label": "paint_using_paint_brush_/_roller",
+									"video_start_time": 514.22691,
+									"video_end_time": 668.052,
+									"video_start_frame": 15427,
+									"video_end_frame": 20042,
+									"primary": true
+								},
+								{
+									"start_time": 224.39789,
+									"end_time": 363.111,
+									"label": "paint_using_paint_brush_/_roller",
+									"video_start_time": 674.39789,
+									"video_end_time": 813.111,
+									"video_start_frame": 20232,
+									"video_end_frame": 24393,
+									"primary": true
+								},
+								{
+									"start_time": 368.7343,
+									"end_time": 480,
+									"label": "paint_using_paint_brush_/_roller",
+									"video_start_time": 818.7343000000001,
+									"video_end_time": 930.0,
+									"video_start_frame": 24562,
+									"video_end_frame": 27900,
+									"primary": true
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

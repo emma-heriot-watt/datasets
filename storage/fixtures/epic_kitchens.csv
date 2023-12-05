@@ -1,0 +1,20 @@
+narration_id,participant_id,video_id,narration_timestamp,start_timestamp,stop_timestamp,start_frame,stop_frame,narration,verb,verb_class,noun,noun_class,all_nouns,all_noun_classes
+P01_01_0,P01,P01_01,00:00:01.089,00:00:00.14,00:00:03.37,8,202,open door,open,3,door,3,['door'],[3]
+P01_01_1,P01,P01_01,00:00:02.629,00:00:04.37,00:00:06.17,262,370,turn on light,turn-on,6,light,114,['light'],[114]
+P01_01_10,P01,P01_01,00:00:23.340,00:00:24.97,00:00:26.20,1498,1572,open drawer,open,3,drawer,8,['drawer'],[8]
+P01_01_100,P01,P01_01,00:07:57.919,00:07:59.75,00:08:00.88,28785,28852,take cup,take,0,cup,13,['cup'],[13]
+P01_01_101,P01,P01_01,00:08:00.020,00:08:01.47,00:08:02.21,28888,28932,open cupboard,open,3,cupboard,3,['cupboard'],[3]
+P01_01_102,P01,P01_01,00:08:01.229,00:08:02.13,00:08:03.00,28927,28980,put cup into cupboard,put-into,5,cup,13,"['cup', 'cupboard']","[13, 3]"
+P01_01_103,P01,P01_01,00:08:03.919,00:08:05.22,00:08:07.21,29113,29232,take container and lid,take,0,container,21,"['container', 'lid']","[21, 6]"
+P01_01_104,P01,P01_01,00:08:07.610,00:08:08.38,00:08:09.12,29302,29347,put container on top of counter,put-on,1,container,21,"['container', 'top:counter']","[21, 42]"
+P01_01_105,P01,P01_01,00:08:09.860,00:08:12.00,00:08:12.74,29520,29564,open container,open,3,container,21,['container'],[21]
+P01_01_106,P01,P01_01,00:08:12.900,00:08:13.22,00:08:14.37,29593,29662,put container inside container,put-inside,5,container,21,"['container', 'container']","[21, 21]"
+P01_01_107,P01,P01_01,00:08:14.550,00:08:15.80,00:08:16.99,29748,29819,close lid,close,4,lid,6,['lid'],[6]
+P01_01_108,P01,P01_01,00:08:18.039,00:08:19.64,00:08:20.60,29978,30036,put container in cupboard,put-in,5,container,21,"['container', 'cupboard']","[21, 3]"
+P01_01_109,P01,P01_01,00:08:21.050,00:08:22.35,00:08:23.31,30141,30198,take plate,take,0,plate,2,['plate'],[2]
+P01_01_11,P01,P01_01,00:00:27.960,00:00:29.22,00:00:31.32,1753,1879,close fridge,close,4,fridge,12,['fridge'],[12]
+P01_01_110,P01,P01_01,00:08:25.669,00:08:24.66,00:08:27.92,30279,30475,put plate down,put-down,1,plate,2,['plate'],[2]
+P01_01_111,P01,P01_01,00:08:26.759,00:08:28.16,00:08:29.94,30489,30596,open drawer,open,3,drawer,8,['drawer'],[8]
+P01_01_112,P01,P01_01,00:08:29.879,00:08:29.29,00:08:31.54,30557,30692,take something,take,0,drawer,8,['drawer'],[8]
+P01_01_113,P01,P01_01,00:08:32.200,00:08:32.66,00:08:34.43,30759,30865,put down something,put-down,1,drawer,8,['drawer'],[8]
+P01_01_114,P01,P01_01,00:08:35.200,00:08:36.81,00:08:38.05,31008,31082,open drawer,open,3,drawer,8,['drawer'],[8]
